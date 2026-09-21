@@ -1,0 +1,4 @@
+# 짤랑 (com.jjallang.app) — Android / iOS
+# 게시자 ID: AdMob 앱 ID ca-app-pub-7274269921877899~7776628174 (Android),
+#            ca-app-pub-7274269921877899~7723464340 (iOS)
+google.com, pub-7274269921877899, DIRECT, f08c47fec0942fa0
