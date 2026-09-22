@@ -1,0 +1,146 @@
+/* 짤랑 — 소개·정책 공용 스타일. 외부 자원을 쓰지 않는다(감열지 한 장이 이 앱의 정체성이다). */
+:root {
+  color-scheme: light;
+  --paper: #f3f1ea;      /* 감열지 */
+  --sheet: #fffdf7;      /* 갓 뽑은 종이 */
+  --ink: #1b1d20;
+  --muted: #64686d;
+  --line: #d8d3c6;
+  --money: #12704a;      /* 금액 잉크 */
+  --night: #3f51b5;      /* 야간 가산 */
+  --over:  #b8531f;      /* 연장 가산 */
+  --holi:  #b3322f;      /* 휴일 가산 */
+  --font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 2rem; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font);
+       line-height: 1.8; overflow-wrap: anywhere; }
+a { color: var(--ink); text-underline-offset: .22em; text-decoration-thickness: 1px; }
+a:hover { color: var(--money); }
+a:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--money); outline-offset: 5px; border-radius: 3px; }
+.skip-link { position: absolute; z-index: 2; top: .5rem; left: 1rem; padding: .65rem 1rem;
+  background: var(--ink); color: #fff; transform: translateY(-180%); }
+.skip-link:focus { transform: translateY(0); color: #fff; }
+.shell { width: min(100% - 3rem, 1120px); margin-inline: auto; }
+
+/* 머리 · 꼬리 */
+.site-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  gap: .75rem 2rem; padding-block: 1.6rem; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: .6rem; font-size: 1.3rem; font-weight: 800;
+  letter-spacing: -.05em; text-decoration: none; }
+.brand-mark { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem;
+  border: 2px solid currentColor; border-radius: 50%; font-size: .72rem; font-weight: 800; }
+.brand-mark::after { content: "₩"; }
+.site-nav { display: flex; flex-wrap: wrap; gap: .25rem 1.4rem; font-size: .9rem; }
+.site-nav a { padding-block: .45rem; }
+.site-nav a[aria-current="page"] { font-weight: 750; text-decoration-thickness: 2px; }
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem 2rem;
+  margin-top: 4rem; padding-block: 2rem; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: .9rem; }
+
+/* 공통 조판 */
+.eyebrow { margin: 0 0 1rem; font-size: .78rem; font-weight: 700; letter-spacing: .12em; color: var(--money); }
+h1, h2, h3 { line-height: 1.4; letter-spacing: -.035em; word-break: keep-all; }
+p { margin: 0 0 1rem; }
+.section { padding-block: 4rem; border-top: 1px solid var(--line); }
+.section-intro { max-width: 42rem; color: var(--muted); }
+.section h2 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin: 0 0 1rem; }
+
+/* 첫 화면 */
+.hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 3rem; align-items: center; padding-block: 5rem; }
+.hero h1 { font-size: clamp(2.2rem, 4.6vw, 3.7rem); font-weight: 800; margin: 0 0 1.4rem; line-height: 1.26; }
+.hero-copy { max-width: 31rem; font-size: 1.08rem; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin-top: 2rem; }
+.button { display: inline-block; padding: .8rem 1.3rem; border: 1px solid var(--ink); border-radius: .55rem;
+  background: var(--ink); color: var(--sheet); text-decoration: none; font-weight: 700; }
+.button:hover { background: #33383d; color: var(--sheet); }
+.age-note { margin: 1.3rem 0 0; font-size: .85rem; color: var(--muted); }
+
+/* 영수증 한 장 — 이 앱의 결과물이 그대로 표지다 */
+.receipt { margin: 0; padding: 1.6rem 1.5rem 1.2rem; background: var(--sheet);
+  border: 1px solid var(--line); border-radius: .4rem; box-shadow: 0 18px 40px rgba(27,29,32,.09);
+  font-variant-numeric: tabular-nums; }
+.receipt-head { text-align: center; font-weight: 800; letter-spacing: .38em; font-size: .95rem; }
+.receipt-sub { text-align: center; color: var(--muted); font-size: .82rem; letter-spacing: .06em; margin-top: .3rem; }
+.rule { height: 0; border-top: 1px dashed var(--line); margin: .9rem 0; }
+.lines { margin: 0; }
+.line { display: flex; align-items: baseline; gap: .5rem; font-size: .92rem; margin-bottom: .45rem; }
+.line dt { margin: 0; color: var(--muted); white-space: nowrap; }
+.line .dots { flex: 1; border-bottom: 1px dotted var(--line); transform: translateY(-.25rem); }
+.line dd { margin: 0; font-family: var(--mono); }
+.line.night dt { color: var(--night); }
+.line.over dt { color: var(--over); }
+.total { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: .2rem; }
+.total span { color: var(--muted); font-size: .9rem; }
+.total strong { font-family: var(--mono); font-size: 1.85rem; letter-spacing: -.02em; color: var(--money); }
+.cut { margin-top: 1rem; padding-top: .8rem; border-top: 1px dashed var(--line);
+  color: var(--muted); font-size: .78rem; letter-spacing: .08em; text-align: center; }
+
+/* 세 걸음 */
+.steps { list-style: none; counter-reset: step; display: grid; gap: 1.25rem; padding: 0; margin: 2rem 0 0;
+  grid-template-columns: repeat(3, 1fr); }
+.step { background: var(--sheet); border: 1px solid var(--line); border-radius: .6rem; padding: 1.4rem 1.3rem; }
+.step-number { font-family: var(--mono); font-size: .8rem; color: var(--money); font-weight: 700; }
+.step h3 { font-size: 1.05rem; margin: .4rem 0 .5rem; }
+.step p { margin: 0; color: var(--muted); font-size: .95rem; }
+
+/* 가산 카드 */
+.rates { display: grid; gap: 1rem; grid-template-columns: repeat(4, 1fr); margin-top: 2rem; padding: 0; list-style: none; }
+.rate { background: var(--sheet); border: 1px solid var(--line); border-left: 3px solid var(--line);
+  border-radius: .5rem; padding: 1.1rem 1.1rem; }
+.rate.n { border-left-color: var(--night); } .rate.o { border-left-color: var(--over); }
+.rate.h { border-left-color: var(--holi); } .rate.w { border-left-color: var(--money); }
+.rate b { display: block; font-size: 1rem; }
+.rate .pct { font-family: var(--mono); font-size: 1.3rem; font-weight: 700; }
+.rate small { display: block; color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+
+/* 두 칸 단락 */
+.split { display: grid; grid-template-columns: .85fr 1.15fr; gap: 2.5rem; align-items: start; }
+.split h2 { margin-top: 0; }
+.split p { color: var(--muted); }
+
+/* 화면 */
+.shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin-top: 2rem; }
+.shot { margin: 0; }
+.shot img { width: 100%; height: auto; display: block; border: 1px solid var(--line);
+  border-radius: .7rem; background: var(--sheet); }
+.shot figcaption { margin-top: .7rem; color: var(--muted); font-size: .88rem; }
+
+/* 약속 목록 */
+.promises { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: .8rem; max-width: 46rem; }
+.promises li { display: flex; gap: .7rem; align-items: baseline; color: var(--muted); }
+.promises li::before { content: "·"; color: var(--money); font-weight: 800; }
+.promises b { color: var(--ink); }
+
+/* 문의 */
+.contact { display: grid; grid-template-columns: .85fr 1.15fr; gap: 2.5rem; }
+.contact-address { font-family: var(--mono); }
+.document-links { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; margin-top: 1rem; }
+
+/* 정책 문서 */
+.legal-shell { padding-block: 2.5rem 1rem; }
+.document-heading h1 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); margin: 0 0 1rem; }
+.source-note { color: var(--muted); font-size: .92rem; }
+.toc { margin: 1.5rem 0 2rem; background: var(--sheet); border: 1px solid var(--line); border-radius: .6rem; padding: .9rem 1.2rem; }
+.toc summary { cursor: pointer; font-weight: 700; }
+.toc ol { margin: .8rem 0 .3rem; padding-left: 1.3rem; color: var(--muted); }
+.table-help { color: var(--muted); font-size: .86rem; }
+.policy-body { max-width: 52rem; }
+.policy-body h2 { font-size: 1.25rem; margin: 2.6rem 0 .8rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
+.policy-body h3 { font-size: 1.05rem; margin: 1.8rem 0 .6rem; }
+.policy-body table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: .92rem;
+  display: block; overflow-x: auto; }
+.policy-body th, .policy-body td { border: 1px solid var(--line); padding: .6rem .75rem; text-align: left; vertical-align: top; }
+.policy-body th { background: var(--sheet); white-space: nowrap; }
+.policy-body blockquote { margin: 0 0 1rem; padding: .9rem 1.1rem; background: var(--sheet);
+  border-left: 3px solid var(--money); border-radius: .4rem; color: var(--muted); }
+.policy-body hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+@media (max-width: 900px) {
+  .hero, .split, .contact { grid-template-columns: 1fr; gap: 2rem; padding-block: 3rem; }
+  .steps, .rates, .shots { grid-template-columns: 1fr; }
+  .rates { grid-template-columns: repeat(2, 1fr); }
+}
