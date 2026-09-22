@@ -4,7 +4,8 @@
 # ///
 """짤랑 정책 문서 배포기 — 원문(Markdown) 한 벌에서 페이지 두 장을 만든다.
 
-원본은 이 저장소가 아니라 **앱 저장소**가 쥔다:
+**이 페이지가 정본이다.** 다른 곳에 같은 문서가 있어도 그것은 사본이다.
+원문 Markdown 은 이 저장소가 아니라 **앱 저장소**가 쥔다:
     SuperworkTF/jjallang · ops/legal/짤랑_개인정보처리방침.md · 짤랑_서비스이용약관.md
 고칠 일이 생기면 거기를 고치고, 그 파일을 `policies/*.md` 로 복사한 뒤 이 스크립트를 돌린다.
 손으로 HTML 을 고치지 마라 — 원문과 페이지가 갈리는 순간 어느 쪽이 사실인지 아무도 모른다.
@@ -35,25 +36,23 @@ HEAD = """<!doctype html>
   <meta name="description" content="{desc}">
   <meta name="theme-color" content="#f3f1ea">
   <title>{title}</title>
-  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="{up}styles.css">
 </head>
 <body>
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
-    <a class="brand" href="../" aria-label="짤랑 소개"><span class="brand-mark" aria-hidden="true"></span>짤랑</a>
+    <a class="brand" href="{up}" aria-label="짤랑 소개"><span class="brand-mark" aria-hidden="true"></span>짤랑</a>
     <nav class="site-nav" aria-label="주요 메뉴">
-      <a href="../">앱 소개</a>
-      <a href="../privacy/"{privacy_current}>개인정보처리방침</a>
-      <a href="../terms/"{terms_current}>이용약관</a>
+      <a href="{up}">앱 소개</a>
+      <a href="{up}privacy/"{privacy_current}>개인정보처리방침</a>
+      <a href="{up}terms/"{terms_current}>이용약관</a>
     </nav>
   </header>
   <main id="main" class="shell legal-shell" tabindex="-1">
     <header class="document-heading">
       <p class="eyebrow">짤랑 · 정책 문서</p>
       <h1>{title}</h1>
-      <p class="source-note">시행일 {effective} · <strong>이 페이지가 공식 게시 주소입니다.</strong><br>
-        <a href="{notion}">이전에 쓰던 Notion 사본 보기</a>
-      </p>
+      <p class="source-note">{note}</p>
     </header>
 """
 
@@ -61,13 +60,27 @@ FOOT = """    </article>
   </main>
   <footer class="site-footer shell">
     <p>짤랑 · 앱 소개와 정책 안내</p>
-    <a href="../../">전체 앱 안내</a>
+    <a href="{up}../">전체 앱 안내</a>
   </footer>
 </body>
 </html>
 """
 
 HEADING = re.compile(r"<h2>(.*?)</h2>", re.DOTALL)
+
+
+NOTES = {
+    # 공고 기간: 새 판은 날짜 주소에 서고, 현행은 canonical 자리에 그대로 둔다.
+    "upcoming": ('<strong>이 판은 {effective}부터 시행됩니다.</strong> 공고일 {announced}.<br>\n'
+                 '        지금 시행 중인 문서는 <a href="{current}">여기</a>에서 봅니다.'),
+    "current":  ('시행일 {effective} · 공고일 {announced} · <strong>이 페이지가 정본입니다.</strong><br>\n'
+                 '        <a href="{previous}">이전 시행본({previous_label}) 보기</a>'),
+}
+
+
+def note_for(meta: dict) -> str:
+    """머리말 한 문단. **어느 경우에도 다른 곳이 정본이라고 말하지 않는다.**"""
+    return NOTES[meta.get("status", "current")].format(**{k: escape(str(v)) for k, v in meta.items()})
 
 
 def build(key: str) -> tuple[Path, str]:
@@ -93,9 +106,12 @@ def build(key: str) -> tuple[Path, str]:
 
     html = HEADING.sub(anchor, html)
 
+    # 날짜 폴더(`privacy/2026-09-29/`)는 앱 뿌리에서 한 단계 더 깊다. 상대 경로를 그만큼 올린다.
+    up = "../" * (meta.get("output", key).strip("/").count("/") + 1)
+
     parts = [HEAD.format(
         title=escape(title), desc=escape(f"{title} — 짤랑 앱의 정책 문서"),
-        effective=escape(meta["effective"]), notion=escape(meta["notion_copy"], quote=True),
+        note=note_for(meta), up=up,
         privacy_current=' aria-current="page"' if key == "privacy" else "",
         terms_current=' aria-current="page"' if key == "terms" else "",
     )]
@@ -108,8 +124,8 @@ def build(key: str) -> tuple[Path, str]:
     parts.append(f'    <article class="policy-body" aria-label="{escape(title)} 본문">\n')
     parts.append(html)
     parts.append("\n")
-    parts.append(FOOT)
-    return APP / key / "index.html", "".join(parts)
+    parts.append(FOOT.format(up=up))
+    return APP / meta.get("output", key) / "index.html", "".join(parts)
 
 
 def main() -> int:

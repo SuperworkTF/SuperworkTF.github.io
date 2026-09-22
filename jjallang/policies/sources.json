@@ -1,16 +1,20 @@
 {
   "privacy": {
     "title": "개인정보처리방침",
-    "canonical": "https://superworktf.github.io/jjallang/privacy/",
-    "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_개인정보처리방침.md",
-    "notion_copy": "https://cautious-oxygen-897.notion.site/3c8f49ce71ed815c8247d7c3c7382c8b",
-    "effective": "2026년 9월 4일"
+    "output": "privacy/2026-09-29",
+    "status": "upcoming",
+    "effective": "2026-09-29",
+    "announced": "2026-09-22",
+    "current": "../",
+    "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_개인정보처리방침.md"
   },
   "terms": {
     "title": "서비스 이용약관",
-    "canonical": "https://superworktf.github.io/jjallang/terms/",
-    "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_서비스이용약관.md",
-    "notion_copy": "https://cautious-oxygen-897.notion.site/3c8f49ce71ed81e390ddd2efb05fe69e",
-    "effective": "2026년 9월 4일"
+    "output": "terms/2026-09-29",
+    "status": "upcoming",
+    "effective": "2026-09-29",
+    "announced": "2026-09-22",
+    "current": "../",
+    "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_서비스이용약관.md"
   }
 }
