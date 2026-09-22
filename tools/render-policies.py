@@ -270,11 +270,32 @@ def assert_public_source(source: str):
 STATUS_NOTES = {
     "upcoming": ('<strong>이 판은 {effective}부터 시행됩니다.</strong> 공고일 {announced}.'
                  ' 지금 시행 중인 문서는 <a href="{current}">여기</a>에서 봅니다.'),
-    "current": ('시행일 {effective} · 공고일 {announced} · <strong>이 페이지가 정본입니다.</strong>'
-                ' <a href="{previous}">이전 시행본({previous_label}) 보기</a>'),
     "dated": ('<strong>{effective} 시행본</strong>의 고정 주소입니다. 공고일 {announced}.'
               ' 정본 자리는 <a href="../">여기</a>입니다.'),
 }
+
+
+def current_note(metadata: dict) -> str:
+    """정본 자리의 머리말. **조각으로 세운다** — 앱마다 들 것이 다르다.
+
+    첫 판은 이전 시행본이 없고(짤랑 2026-09-04), 공고 없이 출시와 함께 선 판은 공고일도
+    없다. 한 덩어리로 박아 두면 없는 것을 있다고 적거나 `{previous}` 가 날것으로 새어 나온다.
+
+    개정이 공고된 동안 정본 자리는 **두 가지를 같이** 말해야 한다 — 이것이 지금 정본이라는
+    것과, 곧 바뀐다는 것. 하나만 말하면 읽는 사람이 다른 하나를 못 찾는다.
+    """
+    parts = [f'시행일 {metadata["effective"]}']
+    if metadata.get("announced"):
+        parts.append(f'공고일 {metadata["announced"]}')
+    line = ' · '.join(parts) + ' · <strong>이 페이지가 정본입니다.</strong>'
+    if metadata.get("previous"):
+        line += (f' <a href="{metadata["previous"]}">이전 시행본'
+                 f'({metadata["previous_label"]}) 보기</a>')
+    if metadata.get("upcoming"):
+        line += (f'<br>\n        <strong>개정 공고({metadata["upcoming_announced"]})</strong> — '
+                 f'{metadata["upcoming_effective"]}부터 시행되는 개정본이 있습니다. '
+                 f'<a href="{metadata["upcoming"]}">개정본 미리 보기</a>')
+    return line
 
 
 def status_note(metadata: dict) -> str:
@@ -282,16 +303,23 @@ def status_note(metadata: dict) -> str:
     status = metadata.get("status")
     if status is None:
         return ""
-    if status not in STATUS_NOTES:
+    escaped = {k: escape(str(v)) for k, v in metadata.items()}
+    if status == "current":
+        filled = current_note(escaped)
+    elif status in STATUS_NOTES:
+        filled = STATUS_NOTES[status].format(**escaped)
+    else:
         raise SystemExit(f"Unknown status: {status}")
-    filled = STATUS_NOTES[status].format(**{k: escape(str(v)) for k, v in metadata.items()})
     return f'      <p class="source-note">{filled}</p>\n'
 
 
-def page(kind: str, source: str, metadata: dict, app: dict, *, archive: dict | None = None) -> str:
+def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict) -> str:
     assert_public_source(source)
     brand = app["brand"]
-    title = f"{brand} {metadata['title']}"
+    # 판마다 제목이 다를 수 있다. 짤랑 2026-09-04 판은 「개인정보 처리방침」(띄어씀)이고
+    # 2026-09-29 판은 「개인정보처리방침」이다. **박제된 판의 제목을 고치지 않는다** —
+    # 그것이 그날 게시된 이름이다.
+    title = f"{brand} {edition.get('title', metadata['title'])}"
     if source.startswith("# "):
         source_title, source = source.split("\n", 1)
         assert source_title[2:] == title
@@ -307,7 +335,10 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, archive: dict | N
 
     body = re.sub(r"<h2>(.*?)</h2>", mark_heading, body)
     toc = "\n".join(f'<li><a href="#{heading_id}">{text}</a></li>' for heading_id, text in headings)
-    site_prefix = "../../" if archive else "../"
+    # 자리가 깊어지면 위로 올라가는 걸음도 길어진다. 자리에서 깊이를 세면 `archive` 같은
+    # 깃발이 필요 없다 — 자리가 이미 그것을 말한다.
+    depth = edition["path"].count("/") + 1
+    site_prefix = "../" * depth
     nav = "\n".join(
         f'      <a href="{href}"' + (' aria-current="page"' if name == kind else '') + f'>{label}</a>'
         for name, href, label in [('intro', site_prefix, '앱 소개'), ('privacy', site_prefix + 'privacy/', '개인정보처리방침'), ('terms', site_prefix + 'terms/', '이용약관')]
@@ -315,17 +346,24 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, archive: dict | N
     public_url = metadata['public_url']
     archive_note = ""
     document_title = title
-    if archive:
-        version = archive['version']
-        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", version):
-            raise ValueError("Invalid archive version")
+    version = edition["path"].partition("/")[2]
+    if version:
         public_url = f"{public_url.rstrip('/')}/{version}/"
+    # `notice` 가 있으면 그 판은 지난 판이다. **자리가 깊다는 것만으로는 지난 판이 아니다** —
+    # 공고 기간에는 아직 시행 전인 판도 날짜 주소에 선다(짤랑 2026-09-29).
+    if edition.get("notice"):
         document_title += " — 정비 전 문서"
         archive_note = (
-            f'      <p class="archive-note">{escape(archive["notice"])} '
+            f'      <p class="archive-note">{escape(edition["notice"])} '
             f'<a href="{site_prefix}{kind}/">현재 방침 보기</a></p>\n'
         )
-    status_line = status_note(metadata)
+    # **상태는 자리에 붙는다. 문서 칸에서 물려받지 않는다.**
+    #
+    # 물려받게 두었을 때 우르르 `privacy/2026-09-05/` 가 「이 판은 2026-09-23부터 시행됩니다.
+    # 지금 시행 중인 문서는 여기」라고 말했다. 그 페이지가 2026-09-05 판 자체였고, 링크는
+    # `privacy/2026-09-05/2026-09-05/` 로 깨져 있었다. 문서 칸의 상태는 **정본 자리의**
+    # 상태이므로, 날짜 주소가 그것을 물려받으면 자기를 남이라고 가리킨다.
+    status_line = status_note(edition)
 
     """
     ## 정본이 이 사이트인가, 아직 노션인가 — **앱마다 다르고, 그것은 제품의 상태다**
@@ -349,7 +387,7 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, archive: dict | N
         description = f"{title} 공식 문서입니다."
         canonical_line = f'\n  <link rel="canonical" href="{escape(public_url, quote=True)}">'
     canonical_url = escape(public_url, quote=True)
-    root_prefix = "../../../" if archive else "../../"
+    root_prefix = "../" * (depth + 1)
     table_help = '<p class="table-help" id="table-help">표가 화면보다 넓으면 표 안에서 좌우로 스크롤할 수 있습니다. 키보드로는 표에 초점을 맞춘 뒤 방향키를 사용하세요.</p>'
     return f'''<!doctype html>
 <html lang="ko">
@@ -393,6 +431,35 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, archive: dict | N
 '''
 
 
+def editions_of(kind: str, metadata: dict) -> list[dict]:
+    """`sources.json` 의 판 목록. **출력 한 장 = 항목 하나**다.
+
+    항목이 드는 것은 셋이다 — 어느 원본을 읽어(`source`), 어느 자리에 서고(`path`), 어떤
+    상태인가(`status` 및 그 날짜들). 상태 칸이 비면 문서 칸(`kind`)의 것을 물려받는다.
+
+    이 모양이 필요한 까닭은 **한 원본이 두 자리에 설 수 있고**(정본 자리와 날짜 주소가 같은
+    문서일 때), **미래 판이 날짜 주소에 먼저 설 수도** 있기 때문이다(공고 기간). 「기본
+    원본 + 지난 판 목록」으로는 그 둘이 적히지 않는다.
+    """
+    editions = metadata.get("editions")
+    if not editions:
+        raise SystemExit(f"{kind}: editions 가 없다")
+    seen: set[str] = set()
+    for edition in editions:
+        path = edition["path"]
+        if path in seen:
+            raise SystemExit(f"{kind}: 같은 자리에 두 판이 선다 — {path}")
+        seen.add(path)
+        head, _, rest = path.partition("/")
+        if head != kind:
+            raise SystemExit(f"{kind}: path 는 {kind} 아래여야 한다 — {path}")
+        if rest and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", rest):
+            raise ValueError(f"Invalid edition path: {path}")
+    if editions[0]["path"] != kind:
+        raise SystemExit(f"{kind}: 첫 항목이 정본 자리({kind})여야 한다")
+    return editions
+
+
 def render_app(name: str, check: bool) -> None:
     here = SITE / name / "policies"
     sources = json.loads((here / "sources.json").read_text(encoding="utf-8"))
@@ -400,18 +467,13 @@ def render_app(name: str, check: bool) -> None:
     if app["dir"] != name:
         raise SystemExit(f"{name}/policies/sources.json names a different directory")
     for kind in ("privacy", "terms"):
-        editions = [(here / f"{kind}.md", SITE / name / kind / "index.html", None)]
-        for archive in sources[kind].get("archives", []):
-            version = archive["version"]
-            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", version):
-                raise ValueError("Invalid archive version")
-            editions.append((here / f"{kind}-{version}.md", SITE / name / kind / version / "index.html", archive))
-        for source_path, target, archive in editions:
+        for edition in editions_of(kind, sources[kind]):
+            source_path = here / f"{edition['source']}.md"
+            target = SITE / name / edition["path"] / "index.html"
             source_bytes = source_path.read_bytes()
             source = source_bytes.decode("utf-8")
-            if archive is None:
-                assert_source_digest(kind, source_bytes, sources[kind])
-            content = page(kind, source, sources[kind], app, archive=archive)
+            assert_source_digest(kind, source_bytes, edition)
+            content = page(kind, source, sources[kind], app, edition=edition)
             relative_target = target.relative_to(SITE)
             if check:
                 if not target.exists() or target.read_text(encoding="utf-8") != content:

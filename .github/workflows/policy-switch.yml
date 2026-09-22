@@ -25,15 +25,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
 
-      # 공용 모형(`archives` + `status`)을 쓰는 앱들. 짤랑은 문서가 날짜 폴더에 서고
-      # 시행일에 정본 자리로 **옮겨 오는** 모양이라 아직 자기 스크립트를 쓴다.
-      - name: 공용 모형 앱
+      - name: 시행일이 온 판을 정본 자리로
         run: uv run --no-project tools/switch-effective.py --all
-
-      - name: 짤랑
-        run: |
-          pip install --quiet markdown==3.10.3
-          python jjallang/policies/switch_effective.py
 
       - name: 바뀐 것이 있으면 커밋
         run: |

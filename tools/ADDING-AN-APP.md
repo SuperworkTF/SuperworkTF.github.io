@@ -43,28 +43,52 @@
       },
       "privacy": {
         "title": "개인정보처리방침",
-        "public_url": "https://superwork.ai.kr/<app>/privacy/"
+        "public_url": "https://superwork.ai.kr/<app>/privacy/",
+        "editions": [
+          { "path": "privacy", "source": "privacy" }
+        ]
       },
       "terms": {
         "title": "서비스 이용약관",
-        "public_url": "https://superwork.ai.kr/<app>/terms/"
+        "public_url": "https://superwork.ai.kr/<app>/terms/",
+        "editions": [
+          { "path": "terms", "source": "terms" }
+        ]
       }
     }
 
 ### 쓸 수 있는 값들 (전부 선택)
 
-| 키 | 뜻 |
-|---|---|
-| `sha256` | 승인된 원본의 지문. 있으면 md 가 그 지문과 다를 때 멈춘다. **법정 문장을 바꾸려면 이 값을 일부러 고쳐야 한다** |
-| `notion_source` | `true` 면 「원문 보기(Notion)」를 머리말에 적고 `canonical` 을 안 낸다 |
-| `status` | `upcoming` · `current` · `dated`. 공고 기간에 **어느 쪽이 오늘 시행 중인지**를 문서가 스스로 말한다 |
-| `effective` · `announced` | `status` 와 함께 쓰는 날짜 |
-| `current` · `previous` · `previous_label` | `status` 가 가리키는 다른 판의 주소 |
-| `archives` | 지난 시행본 목록. `[{"version": "2026-09-05", "notice": "…"}]` |
+### 판 목록 — **출력 한 장 = 항목 하나**
 
-`archives` 를 적으면 `<kind>-<version>.md` 를 함께 둔다. 예: `privacy-2026-09-05.md`.
-**지난 판에도 md 가 있어야 한다** — 없으면 그 HTML 은 다시 만들 수도 검사할 수도 없는 고아가
-된다(짤랑이 지금 그 상태다).
+`editions` 가 낼 페이지를 하나씩 적는다. 항목이 드는 것은 셋이다 — **어느 원본을 읽어
+(`source`), 어느 자리에 서고(`path`), 어떤 상태인가(`status`)**.
+
+첫 항목은 반드시 정본 자리(`path` = `privacy` 또는 `terms`)다. 나머지는 그 아래 날짜다.
+
+| 항목의 키 | 뜻 |
+|---|---|
+| `path` | 낼 자리. `privacy` 또는 `privacy/2026-09-05` |
+| `source` | 읽을 md 이름(확장자 없이). `privacy-2026-09-05` |
+| `title` | 그 판의 제목. **박제된 판이 당시에 든 이름과 다르면 안 된다** |
+| `status` | `upcoming` · `current` · `dated`. **상태는 자리에 붙는다** — 문서 칸에서 물려받지 않는다 |
+| `effective` · `announced` | 그 판의 시행일·공고일 |
+| `current` | `upcoming` 일 때 지금 시행 중인 문서의 주소 |
+| `previous` · `previous_label` | `current` 일 때 이전 시행본의 주소·이름 |
+| `upcoming` · `upcoming_effective` · `upcoming_announced` | `current` 인데 개정이 공고돼 있을 때 |
+| `notice` | 지난 판 안내 한 문장. 있으면 제목에 「— 정비 전 문서」가 붙는다 |
+| `sha256` | 승인된 원본의 지문. 있으면 md 가 그 지문과 다를 때 멈춘다. **법정 문장을 바꾸려면 이 값을 일부러 고쳐야 한다** |
+
+문서 칸(`privacy`/`terms`)에 두는 것은 판마다 안 바뀌는 것뿐이다: `title`(기본값) ·
+`public_url` · `notion_source` · `source_of_truth`.
+
+| 문서 칸의 키 | 뜻 |
+|---|---|
+| `notion_source` | `true` 면 「원문 보기(Notion)」를 머리말에 적고 `canonical` 을 안 낸다 |
+| `source_of_truth` | 원본을 쥔 곳이 다른 저장소일 때 적는다(짤랑) |
+
+**판마다 md 가 하나씩 있어야 한다.** 없으면 그 HTML 은 다시 만들 수도 검사할 수도 없는
+고아가 된다. 한 원본이 두 자리에 설 수는 있다 — 그때는 두 항목이 같은 `source` 를 든다.
 
 ## 3. 원본 마크다운 규칙
 
@@ -95,9 +119,16 @@
 사람이 어느 쪽이 오늘 시행 중인지 알아야 한다.
 
     공고하는 날
-      · 개정본을 `privacy.md` 로 올린다 (정본 자리에 선다)
-      · 직전 판을 `privacy-<이전시행일>.md` 로 박제하고 `archives` 에 적는다
-      · `status: "upcoming"` · `effective` · `announced` · `current: "./<이전시행일>/"`
+      **(가) 개정본을 정본 자리에 먼저 세우는 길** — 우르르
+        · 개정본을 `privacy-<새시행일>.md` 로 올리고 정본 자리 항목이 그것을 읽는다
+        · 그 항목에 `status: "upcoming"` · `effective` · `announced` · `current: "./<이전시행일>/"`
+        · 직전 판은 자기 날짜 주소 항목에 남는다
+
+      **(나) 정본 자리는 현행이 지키고 개정본을 날짜 주소에 세우는 길** — 짤랑
+        · 개정본 항목을 `privacy/<새시행일>` 자리에 `status: "upcoming"` 으로 더한다
+        · 정본 자리 항목은 `status: "current"` 에 `upcoming`·`upcoming_effective`·
+          `upcoming_announced` 를 더해 **개정 공고를 함께 말한다**
+        · 현행이 **자기 날짜 주소 항목을 가지고 있어야 한다** — 없으면 전환 때 멈춘다
 
     시행일 00:00 KST
       · `.github/workflows/policy-switch.yml` 이 날마다 돌며 그날을 잡는다
@@ -145,6 +176,4 @@
   · **짤랑(`jjallang`)은 옛 렌더러를 쓴다.** 충실성 검사가 없고, 지난 판 HTML 넷이 원본
     없는 고아다. 옮기려면 그 판들의 md 를 먼저 세워야 하고, 그것은 「이 HTML 이 그날의
     승인본이 맞다」를 사람이 확인해야 하는 일이다
-  · 짤랑의 시행일 전환은 아직 자기 스크립트다(`jjallang/policies/switch_effective.py`).
-    그쪽은 문서가 **날짜 폴더에 서고 시행일에 정본 자리로 옮겨 오는** 모양이라 공용
-    `tools/switch-effective.py` 와 하는 일이 다르다. 렌더러를 옮길 때 함께 본다
+  · 네 앱이 모두 공용 렌더러를 쓴다(2026-09-22). 앱별 `policies/render.py` 는 없다

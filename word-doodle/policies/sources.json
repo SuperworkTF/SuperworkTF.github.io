@@ -7,15 +7,26 @@
   "privacy": {
     "public_url": "https://superwork.ai.kr/word-doodle/privacy/",
     "title": "개인정보처리방침",
-    "archives": [
+    "editions": [
       {
-        "version": "2026-09-09",
+        "path": "privacy",
+        "source": "privacy"
+      },
+      {
+        "path": "privacy/2026-09-09",
+        "source": "privacy-2026-09-09",
         "notice": "2026.09.22 문서 정비 전 방침입니다. 시행일은 2026.09.09로 동일합니다."
       }
     ]
   },
   "terms": {
     "public_url": "https://superwork.ai.kr/word-doodle/terms/",
-    "title": "서비스 이용약관"
+    "title": "서비스 이용약관",
+    "editions": [
+      {
+        "path": "terms",
+        "source": "terms"
+      }
+    ]
   }
 }

@@ -7,13 +7,25 @@
   "privacy": {
     "public_url": "https://cautious-oxygen-897.notion.site/3d5f49ce71ed8180a5d0e9f17e30a677",
     "title": "개인정보처리방침",
-    "sha256": "e8d76db6f2e60f63ee07d5940d489aac9bfedf0862be5f102bd5e3f1a1a8ef17",
-    "notion_source": true
+    "notion_source": true,
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy",
+        "sha256": "e8d76db6f2e60f63ee07d5940d489aac9bfedf0862be5f102bd5e3f1a1a8ef17"
+      }
+    ]
   },
   "terms": {
     "public_url": "https://cautious-oxygen-897.notion.site/3d5f49ce71ed81348d93eba10254bed2",
     "title": "서비스 이용약관",
-    "sha256": "196b8ed175ac66ea81d2ab6f61c1ee5222b168d12913aae7b855290bbb356cbe",
-    "notion_source": true
+    "notion_source": true,
+    "editions": [
+      {
+        "path": "terms",
+        "source": "terms",
+        "sha256": "196b8ed175ac66ea81d2ab6f61c1ee5222b168d12913aae7b855290bbb356cbe"
+      }
+    ]
   }
 }

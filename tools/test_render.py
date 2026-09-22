@@ -24,12 +24,15 @@ _spec.loader.exec_module(render)
 
 class PolicyPublisherTests(unittest.TestCase):
     app = {"dir": "word-doodle", "brand": "그려보카", "theme_color": "#f7f4eb"}
-    metadata = {"title": "개인정보처리방침", "public_url": "https://superworktf.github.io/word-doodle/privacy/"}
+    metadata = {"title": "개인정보처리방침", "public_url": "https://superwork.ai.kr/word-doodle/privacy/"}
     source = "# 그려보카 개인정보처리방침\n시행일: 2026.09.09\n## 1. 처리 항목\n문의 처리 완료 후 즉시 삭제\n"
-    archive = {"version": "2026-09-09", "notice": "문서 정비 전 방침입니다."}
+    # 판 하나 = 출력 한 장. 정본 자리는 `path` 가 문서 이름과 같고, 지난 판은 그 아래 날짜다.
+    base = {"path": "privacy", "source": "privacy"}
+    archive = {"path": "privacy/2026-09-09", "source": "privacy-2026-09-09",
+               "notice": "문서 정비 전 방침입니다."}
 
     def test_current_navigation_and_canonical(self):
-        html = render.page("privacy", self.source, self.metadata, self.app)
+        html = render.page("privacy", self.source, self.metadata, self.app, edition=self.base)
         self.assertIn('<link rel="canonical" href="'+self.metadata["public_url"]+'">', html)
         self.assertIn('href="../styles.css"', html)
         self.assertIn('href="../privacy/" aria-current="page"', html)
@@ -37,7 +40,7 @@ class PolicyPublisherTests(unittest.TestCase):
         self.assertNotIn('class="archive-note"', html)
 
     def test_archive_navigation_and_canonical(self):
-        html = render.page("privacy", self.source, self.metadata, self.app, archive=self.archive)
+        html = render.page("privacy", self.source, self.metadata, self.app, edition=self.archive)
         self.assertIn('href="'+self.metadata["public_url"]+'2026-09-09/"', html)
         self.assertIn('href="../../styles.css"', html)
         self.assertIn('href="../../privacy/" aria-current="page"', html)
@@ -46,24 +49,47 @@ class PolicyPublisherTests(unittest.TestCase):
         self.assertIn('— 정비 전 문서</title>', html)
 
     def test_archive_does_not_change_policy_body(self):
-        current = render.page("privacy", self.source, self.metadata, self.app)
-        archive = render.page("privacy", self.source, self.metadata, self.app, archive=self.archive)
+        current = render.page("privacy", self.source, self.metadata, self.app, edition=self.base)
+        archive = render.page("privacy", self.source, self.metadata, self.app, edition=self.archive)
         body = re.compile(r'<article.*?>(.*?)</article>', re.S)
         self.assertEqual(body.search(current).group(1), body.search(archive).group(1))
 
     def test_archive_notice_is_escaped(self):
-        html = render.page("privacy", self.source, self.metadata, self.app, archive={**self.archive, "notice": "<script>alert(1)</script>"})
+        html = render.page("privacy", self.source, self.metadata, self.app, edition={**self.archive, "notice": "<script>alert(1)</script>"})
         self.assertNotIn('<script>', html)
         self.assertIn('&lt;script&gt;', html)
 
-    def test_invalid_archive_path_rejected(self):
-        with self.assertRaisesRegex(ValueError, "Invalid archive version"):
-            render.page("privacy", self.source, self.metadata, self.app, archive={**self.archive, "version": "../../outside"})
+    def test_edition_path_outside_the_document_is_rejected(self):
+        """자리 이름이 곧 디렉터리다. 거슬러 올라가는 자리를 허락하면 렌더러가 저장소 밖에 쓴다."""
+        for path in ("privacy/../../outside", "privacy/무단", "../outside"):
+            with self.subTest(path=path), self.assertRaises((ValueError, SystemExit)):
+                render.editions_of("privacy", {"editions": [self.base, {**self.archive, "path": path}]})
+
+    def test_edition_keeps_its_own_title(self):
+        """**박제된 판의 제목을 고치지 않는다.** 짤랑 2026-09-04 판은 「개인정보 처리방침」
+        (띄어씀)이고 2026-09-29 판은 「개인정보처리방침」이다 — 그날 게시된 이름이 그것이다.
+        판 제목을 문서 칸의 것으로 덮으면 머리글 대조(`assert`)가 터지거나, 더 나쁘게는
+        박제가 지금 이름으로 슬그머니 바뀐다."""
+        spaced = {**self.archive, "title": "개인정보 처리방침"}
+        html = render.page(
+            "privacy", "# 그려보카 개인정보 처리방침\n## 1. 처리 항목\n즉시 삭제\n",
+            self.metadata, self.app, edition=spaced)
+        self.assertIn("<h1>그려보카 개인정보 처리방침</h1>", html)
+        self.assertIn("<title>그려보카 개인정보 처리방침 — 정비 전 문서</title>", html)
+
+    def test_two_editions_cannot_share_one_place(self):
+        """같은 자리에 둘이 서면 나중 것이 앞 것을 덮는다 — 조용히 한 판이 사라진다."""
+        with self.assertRaisesRegex(SystemExit, "같은 자리"):
+            render.editions_of("privacy", {"editions": [self.base, dict(self.base)]})
+
+    def test_first_edition_must_be_the_canonical_place(self):
+        with self.assertRaisesRegex(SystemExit, "정본 자리"):
+            render.editions_of("privacy", {"editions": [self.archive]})
 
     def test_private_drafting_material_rejected(self):
         for marker in ("[내부 확인 B1]", "{{EFFECTIVE_DATE}}", r"\{\{APP_NAME\}\}", "<ancestor-path>"):
             with self.subTest(marker=marker), self.assertRaisesRegex(ValueError, "private drafting"):
-                render.page("privacy", self.source+marker, self.metadata, self.app)
+                render.page("privacy", self.source+marker, self.metadata, self.app, edition=self.base)
 
     def test_public_source_is_accepted(self):
         render.assert_public_source(self.source)

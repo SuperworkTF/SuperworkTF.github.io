@@ -1,26 +1,73 @@
 {
+  "app": {
+    "dir": "jjallang",
+    "brand": "짤랑",
+    "theme_color": "#f3f1ea"
+  },
   "privacy": {
     "title": "개인정보처리방침",
-    "output": "privacy/2026-09-29",
-    "status": "upcoming",
-    "effective": "2026-09-29",
-    "announced": "2026-09-22",
-    "current": "../",
+    "public_url": "https://superwork.ai.kr/jjallang/privacy/",
     "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_개인정보처리방침.md",
-    "previous": "./2026-09-04/",
-    "previous_label": "2026-09-04 시행",
-    "source": "privacy"
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy-2026-09-04",
+        "title": "개인정보 처리방침",
+        "status": "current",
+        "effective": "2026-09-04",
+        "upcoming": "./2026-09-29/",
+        "upcoming_effective": "2026-09-29",
+        "upcoming_announced": "2026-09-22"
+      },
+      {
+        "path": "privacy/2026-09-04",
+        "source": "privacy-2026-09-04",
+        "title": "개인정보 처리방침",
+        "status": "dated",
+        "effective": "2026-09-04",
+        "announced": "2026-08-26"
+      },
+      {
+        "path": "privacy/2026-09-29",
+        "source": "privacy-2026-09-29",
+        "status": "upcoming",
+        "effective": "2026-09-29",
+        "announced": "2026-09-22",
+        "current": "../"
+      }
+    ]
   },
   "terms": {
     "title": "서비스 이용약관",
-    "output": "terms/2026-09-29",
-    "status": "upcoming",
-    "effective": "2026-09-29",
-    "announced": "2026-09-22",
-    "current": "../",
+    "public_url": "https://superwork.ai.kr/jjallang/terms/",
     "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_서비스이용약관.md",
-    "previous": "./2026-09-04/",
-    "previous_label": "2026-09-04 시행",
-    "source": "terms"
+    "editions": [
+      {
+        "path": "terms",
+        "source": "terms-2026-09-04",
+        "title": "서비스 이용약관",
+        "status": "current",
+        "effective": "2026-09-04",
+        "upcoming": "./2026-09-29/",
+        "upcoming_effective": "2026-09-29",
+        "upcoming_announced": "2026-09-22"
+      },
+      {
+        "path": "terms/2026-09-04",
+        "source": "terms-2026-09-04",
+        "title": "서비스 이용약관",
+        "status": "dated",
+        "effective": "2026-09-04",
+        "announced": "2026-08-26"
+      },
+      {
+        "path": "terms/2026-09-29",
+        "source": "terms-2026-09-29",
+        "status": "upcoming",
+        "effective": "2026-09-29",
+        "announced": "2026-09-22",
+        "current": "../"
+      }
+    ]
   }
 }
