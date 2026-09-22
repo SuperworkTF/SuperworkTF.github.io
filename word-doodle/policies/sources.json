@@ -1,4 +1,9 @@
 {
+  "app": {
+    "dir": "word-doodle",
+    "brand": "그려보카",
+    "theme_color": "#f7f4eb"
+  },
   "privacy": {
     "public_url": "https://superworktf.github.io/word-doodle/privacy/",
     "title": "개인정보처리방침",

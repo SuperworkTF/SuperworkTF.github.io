@@ -1,12 +1,19 @@
 {
+  "app": {
+    "dir": "piclect",
+    "brand": "셀렉터",
+    "theme_color": "#0B0B0C"
+  },
   "privacy": {
     "public_url": "https://cautious-oxygen-897.notion.site/3d5f49ce71ed8180a5d0e9f17e30a677",
     "title": "개인정보처리방침",
-    "sha256": "e8d76db6f2e60f63ee07d5940d489aac9bfedf0862be5f102bd5e3f1a1a8ef17"
+    "sha256": "e8d76db6f2e60f63ee07d5940d489aac9bfedf0862be5f102bd5e3f1a1a8ef17",
+    "notion_source": true
   },
   "terms": {
     "public_url": "https://cautious-oxygen-897.notion.site/3d5f49ce71ed81348d93eba10254bed2",
     "title": "서비스 이용약관",
-    "sha256": "ad1d3a577f1561d5ae73b000a31e5e70209b47c8c2c7e028f16635446ae012d5"
+    "sha256": "ad1d3a577f1561d5ae73b000a31e5e70209b47c8c2c7e028f16635446ae012d5",
+    "notion_source": true
   }
 }
