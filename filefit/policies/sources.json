@@ -1,0 +1,29 @@
+{
+  "app": {
+    "dir": "filefit",
+    "brand": "파일핏",
+    "theme_color": "#f7f8fa"
+  },
+  "privacy": {
+    "public_url": "https://superwork.ai.kr/filefit/privacy/",
+    "title": "개인정보처리방침",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy",
+        "sha256": "a9371801f41f7cc628209c553be6c53d0b4dcdce9bc2c064d8f2c234650e9128"
+      }
+    ]
+  },
+  "terms": {
+    "public_url": "https://superwork.ai.kr/filefit/terms/",
+    "title": "서비스 이용약관",
+    "editions": [
+      {
+        "path": "terms",
+        "source": "terms",
+        "sha256": "40e2d915c2ad9081db3f7c0d4e6efdf29f01ac8406d254f8feac438b42fd5196"
+      }
+    ]
+  }
+}
