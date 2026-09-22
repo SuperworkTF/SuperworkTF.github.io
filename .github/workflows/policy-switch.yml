@@ -1,31 +1,48 @@
-# 짤랑 정책 문서 — 시행일 자동 전환
+# 정책 문서 — 시행일 자동 전환
 #
-# 2026-09-29 00:05 KST(= 09-28 15:05 UTC)에 개정본을 정본 자리로 올린다.
-# 스크립트가 멱등이라(전환 뒤에는 status=current → no-op) 크론이 이듬해에 또 돌아도 안전하다.
-# GitHub 크론은 지연·결손이 있을 수 있다 → workflow_dispatch 로 손으로도 돌릴 수 있다.
+# 공고된 개정본은 이미 정본 자리에 서 있고, 머리말만 「아직 시행 전」이라고 말하는 중이다.
+# 시행일이 지나면 그 말이 거짓이 되므로 `status` 를 `current` 로 돌리고 다시 렌더한다.
+#
+# **날마다 돈다.** 특정 날짜에 한 번만 걸면 그날 크론이 결손되었을 때 아무도 모른다 —
+# GitHub 크론은 지연·결손이 있다. 스크립트가 멱등이라(`current` 뒤에는 no-op) 날마다 돌아도
+# 바뀌는 것이 없고, 바뀔 날이 오면 그날 잡는다.
+#
+# 00:10 KST = 15:10 UTC(전날). 문서가 「그날부터 시행」이라고 적은 것은 한국 시각이다.
 name: policy-effective-switch
+
 on:
   schedule:
-    - cron: "5 15 28 9 *"
+    - cron: "10 15 * * *"
   workflow_dispatch: {}
+
 permissions:
   contents: write
+
 jobs:
   switch:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - run: pip install markdown==3.10.3
-      - run: |
+      - uses: astral-sh/setup-uv@v5
+
+      # 공용 모형(`archives` + `status`)을 쓰는 앱들. 짤랑은 문서가 날짜 폴더에 서고
+      # 시행일에 정본 자리로 **옮겨 오는** 모양이라 아직 자기 스크립트를 쓴다.
+      - name: 공용 모형 앱
+        run: uv run --no-project tools/switch-effective.py --all
+
+      - name: 짤랑
+        run: |
+          pip install --quiet markdown==3.10.3
           python jjallang/policies/switch_effective.py
+
       - name: 바뀐 것이 있으면 커밋
         run: |
-          if ! git diff --quiet; then
-            git config user.name "policy-switch"
-            git config user.email "superwork.master+help@gmail.com"
-            git add -A
-            git commit -m "정책 시행일 도래 — 개정본을 정본 자리로 올린다 (자동 전환)"
-            git push
-          else
+          if git diff --quiet; then
             echo "전환할 것 없음"
+            exit 0
           fi
+          git config user.name "policy-switch"
+          git config user.email "superwork.master+help@gmail.com"
+          git add -A
+          git commit -m "정책 시행일 도래 — 개정본이 정본 자리로 올라간다 (자동 전환)"
+          git push
