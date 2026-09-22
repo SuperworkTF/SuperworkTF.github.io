@@ -270,7 +270,9 @@ def assert_public_source(source: str):
 STATUS_NOTES = {
     "upcoming": ('<strong>이 판은 {effective}부터 시행됩니다.</strong> 공고일 {announced}.'
                  ' 지금 시행 중인 문서는 <a href="{current}">여기</a>에서 봅니다.'),
-    "dated": ('<strong>{effective} 시행본</strong>의 고정 주소입니다. 공고일 {announced}.'
+    # 공고일은 조각이다 — 공고 없이 출시와 함께 선 판(짤랑 2026-09-04)에는 공고일이 없다.
+    # 필수로 박아 두면 없는 날짜를 지어내게 된다(실제로 2026-08-26 이 잘못 들어간 적이 있다).
+    "dated": ('<strong>{effective} 시행본</strong>의 고정 주소입니다.{announced_part}'
               ' 정본 자리는 <a href="../">여기</a>입니다.'),
 }
 
@@ -304,6 +306,7 @@ def status_note(metadata: dict) -> str:
     if status is None:
         return ""
     escaped = {k: escape(str(v)) for k, v in metadata.items()}
+    escaped["announced_part"] = f' 공고일 {escaped["announced"]}.' if metadata.get("announced") else ""
     if status == "current":
         filled = current_note(escaped)
     elif status in STATUS_NOTES:
