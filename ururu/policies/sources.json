@@ -1,0 +1,22 @@
+{
+  "privacy": {
+    "public_url": "https://superworktf.github.io/ururu/privacy/",
+    "title": "개인정보처리방침"
+  },
+  "terms": {
+    "public_url": "https://superworktf.github.io/ururu/terms/",
+    "title": "서비스 이용약관"
+  },
+  "privacy-2026-09-05": {
+    "path": "privacy/2026-09-05",
+    "nav": "privacy",
+    "public_url": "https://superworktf.github.io/ururu/privacy/2026-09-05/",
+    "title": "개인정보처리방침 (2026년 9월 5일 시행본)"
+  },
+  "terms-2026-09-05": {
+    "path": "terms/2026-09-05",
+    "nav": "terms",
+    "public_url": "https://superworktf.github.io/ururu/terms/2026-09-05/",
+    "title": "서비스 이용약관 (2026년 9월 5일 시행본)"
+  }
+}
