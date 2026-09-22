@@ -1,0 +1,168 @@
+/* Shared by the introduction and policy pages. No remote assets, no web fonts. */
+/* Palette: .agent/DECISIONS.md D-020 (near-black), D-025 (Signal Lime), D-029 (roles). */
+:root {
+  color-scheme: dark;
+  --surface: #0B0B0C;
+  --raised: #17171A;
+  --wash: #1D1D21;
+  --line: #2A2A2E;
+  --line-soft: #202024;
+  --accent: #D4F24A;
+  --accent-pressed: #C2E238;
+  --ink: #F2F4F6;
+  --muted: #B0B8C1;
+  --on-accent: #101609;
+  --font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 2rem; background: var(--surface); }
+body { margin: 0; background: var(--surface); color: var(--ink); font-family: var(--font); line-height: 1.8; overflow-wrap: anywhere; }
+a { color: var(--ink); text-underline-offset: .22em; text-decoration-thickness: 1px; }
+a:hover { color: var(--accent); }
+a:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+.skip-link { position: absolute; z-index: 2; top: .5rem; left: 1rem; padding: .65rem 1rem; background: var(--accent); color: var(--on-accent); font-weight: 700; text-decoration: none; transform: translateY(-180%); }
+.skip-link:focus { transform: translateY(0); color: var(--on-accent); }
+.shell { width: min(100% - 3rem, 1120px); margin-inline: auto; }
+
+/* Header ------------------------------------------------------------------ */
+.site-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem 2rem; padding-block: 1.6rem; border-bottom: 1px solid var(--line-soft); }
+.brand { display: inline-flex; align-items: center; gap: .65rem; font-size: 1.3rem; font-weight: 800; letter-spacing: -.05em; text-decoration: none; }
+.brand-mark { position: relative; display: inline-block; width: 1.5rem; height: 1.5rem; border: 2px solid var(--muted); border-radius: .25rem; }
+.brand-mark::after { content: ""; position: absolute; inset: -.42rem -.42rem auto auto; width: .95rem; height: .95rem; background: var(--accent); border: 2px solid var(--surface); border-radius: .2rem; }
+.site-nav { display: flex; flex-wrap: wrap; gap: .25rem 1.4rem; font-size: .9rem; }
+.site-nav a { padding-block: .45rem; color: var(--muted); }
+.site-nav a:hover { color: var(--accent); }
+.site-nav a[aria-current="page"] { color: var(--ink); font-weight: 750; text-decoration-thickness: 2px; text-decoration-color: var(--accent); }
+
+/* Type -------------------------------------------------------------------- */
+.eyebrow { margin: 0 0 1rem; font-size: .78rem; font-weight: 700; letter-spacing: .14em; color: var(--accent); }
+h1, h2, h3 { line-height: 1.4; letter-spacing: -.035em; word-break: keep-all; }
+p { margin: 0 0 1rem; }
+
+/* Hero -------------------------------------------------------------------- */
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3.5rem; align-items: center; padding-block: 5.5rem; }
+.hero h1 { font-size: clamp(2.3rem, 4.8vw, 3.9rem); font-weight: 800; margin: 0 0 1.5rem; line-height: 1.24; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-copy { max-width: 31rem; font-size: 1.08rem; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin-top: 2rem; }
+.button { display: inline-block; padding: .8rem 1.35rem; border: 1px solid var(--accent); border-radius: .4rem; background: var(--accent); color: var(--on-accent); text-decoration: none; font-weight: 750; }
+.button:hover { background: var(--accent-pressed); border-color: var(--accent-pressed); color: var(--on-accent); }
+.actions a:not(.button) { color: var(--muted); }
+.actions a:not(.button):hover { color: var(--accent); }
+.age-note { margin: 1.3rem 0 0; font-size: .85rem; color: var(--muted); }
+
+/* Hero illustration ------------------------------------------------------- */
+.frame-figure { margin: 0; padding: 1.5rem 1.5rem 1.2rem; background: var(--raised); border: 1px solid var(--line); border-radius: .75rem; }
+.frame-legend { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--line-soft); font-size: .82rem; letter-spacing: .04em; color: var(--muted); }
+.frame-legend strong { color: var(--accent); font-family: var(--mono); font-size: .9rem; font-weight: 700; letter-spacing: 0; }
+.frame-figure svg { display: block; width: 100%; max-height: 250px; margin-block: 1rem .6rem; }
+.frame-figure figcaption { border-top: 1px solid var(--line-soft); padding-top: .9rem; text-align: center; font-size: .85rem; color: var(--muted); }
+
+/* Sections ---------------------------------------------------------------- */
+.section { padding-block: 3.5rem; border-top: 1px solid var(--line-soft); }
+.section h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0 0 1rem; }
+.section-intro { color: var(--muted); max-width: 42rem; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; list-style: none; padding: 0; margin: 2.2rem 0 0; counter-reset: none; }
+.step { position: relative; padding: 1.6rem 1.5rem; background: var(--raised); border: 1px solid var(--line); border-radius: .6rem; }
+.step-number { display: inline-block; font-family: var(--mono); font-size: .95rem; font-weight: 700; letter-spacing: .06em; color: var(--accent); }
+.step h3 { font-size: 1.15rem; margin: .8rem 0 .7rem; }
+.step p { margin: 0; color: var(--muted); font-size: .95rem; }
+.step p + p { margin-top: .7rem; }
+
+/* Honest-claims list ------------------------------------------------------ */
+.claims { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: .75rem; }
+.claims li { display: grid; grid-template-columns: 5.3rem 1fr; gap: 0 .9rem; padding: 1.1rem 1.3rem; background: var(--raised); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: .5rem; color: var(--muted); font-size: .97rem; }
+.claims .tag { font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: var(--accent); align-self: center; white-space: nowrap; }
+.claims p { margin: 0; grid-column: 2; }
+.claims p + p { margin-top: .5rem; }
+.claims strong { color: var(--ink); font-weight: 700; }
+
+/* On-device promise ------------------------------------------------------- */
+.local-note { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; background: var(--wash); border: 1px solid var(--line); border-radius: .7rem; padding: 2.2rem; margin-bottom: 3.5rem; }
+.local-note h2 { font-size: 1.6rem; margin: 0; }
+.local-note p { color: var(--muted); }
+.local-note p:last-child { margin: 0; }
+.local-note strong { color: var(--ink); font-weight: 700; }
+
+/* Contact ----------------------------------------------------------------- */
+.contact { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; }
+.contact p { color: var(--muted); }
+.contact-address { font-weight: 650; color: var(--ink); }
+.document-links { display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; font-size: .95rem; margin-top: 1.25rem; }
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; padding-block: 1.8rem 2.5rem; border-top: 1px solid var(--line-soft); font-size: .85rem; color: var(--muted); }
+.site-footer p { margin: 0; }
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--accent); }
+
+/* Policy pages ------------------------------------------------------------ */
+.legal-shell { padding-top: 3.5rem; padding-bottom: 4rem; }
+.document-heading h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); margin: 0 0 1.25rem; }
+.source-note { max-width: 54rem; color: var(--muted); font-size: .95rem; }
+.source-note a { display: inline-block; margin-top: .3rem; }
+.toc { padding: 1rem 1.3rem; margin: 2rem 0; background: var(--raised); border: 1px solid var(--line); border-radius: .5rem; }
+.toc summary { cursor: pointer; font-weight: 700; }
+.toc ol { padding-left: 1.5rem; margin: 1rem 0 .25rem; color: var(--muted); }
+.toc li { margin-bottom: .5rem; }
+.table-help { color: var(--muted); font-size: .85rem; margin: 0 0 2rem; }
+.policy-body { font-size: 1rem; line-height: 1.95; color: var(--muted); }
+.policy-body > p, .policy-body > ul, .policy-body > ol { max-width: 54rem; }
+.policy-body h2 { color: var(--ink); font-size: 1.45rem; margin: 3.5rem 0 1.4rem; padding-top: 1.8rem; border-top: 1px solid var(--line-soft); }
+.policy-body h3 { color: var(--ink); font-size: 1.12rem; margin: 2rem 0 1rem; }
+.policy-body p { margin-bottom: 1.2rem; }
+.policy-body ul, .policy-body ol { padding-left: 1.5rem; }
+.policy-body li { margin-bottom: .8rem; padding-left: .15rem; }
+.policy-body li::marker { color: var(--muted); }
+.policy-body li > ul, .policy-body li > ol { margin-top: .7rem; }
+.policy-body strong { color: var(--ink); font-weight: 700; }
+.policy-body a { color: var(--accent); }
+.policy-body code { font-family: var(--mono); font-size: .88em; color: var(--ink); background: var(--wash); border: 1px solid var(--line-soft); border-radius: .2rem; padding: .1rem .35rem; overflow-wrap: anywhere; }
+.policy-body hr { margin-block: 2.5rem; border: 0; border-top: 1px solid var(--line-soft); }
+.table-scroll { overflow-x: auto; overscroll-behavior-x: contain; margin: 1.5rem 0; border: 1px solid var(--line); border-radius: .45rem; background: var(--raised); }
+table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .94rem; line-height: 1.8; }
+table[data-columns="2"] { min-width: 520px; }
+table[data-columns="5"], table[data-columns="6"] { min-width: 900px; }
+table[data-columns="7"] { min-width: 1120px; }
+th, td { text-align: left; vertical-align: top; padding: 1rem; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-width: 8rem; }
+th { color: var(--ink); font-weight: 700; background: var(--wash); }
+th:last-child, td:last-child { border-right: 0; }
+tbody tr:nth-child(even) td { background: var(--wash); }
+tr:last-child td { border-bottom: 0; }
+td a { overflow-wrap: anywhere; }
+
+@media (max-width: 760px) {
+  .shell { width: min(100% - 2.25rem, 1120px); }
+  .site-header { padding-block: 1.1rem; gap: .7rem; }
+  .site-nav { gap: .2rem 1rem; width: 100%; }
+  .hero { grid-template-columns: 1fr; padding-block: 3rem; gap: 2.5rem; }
+  .frame-figure { max-width: 420px; width: 100%; justify-self: center; }
+  .steps, .local-note, .contact { grid-template-columns: 1fr; }
+  .steps { gap: .8rem; }
+  .section { padding-block: 2.6rem; }
+  .local-note { padding: 1.5rem; gap: 1rem; margin-bottom: 2.6rem; }
+  .contact { gap: .8rem; }
+  .claims li { grid-template-columns: 1fr; gap: .35rem; }
+  .claims p { grid-column: 1; }
+  .legal-shell { padding-top: 2.5rem; }
+  .policy-body { line-height: 1.9; }
+  .policy-body h2 { font-size: 1.28rem; margin-top: 2.5rem; }
+  .table-scroll { margin-block: 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+@media print {
+  :root { color-scheme: light; }
+  body { background: white; color: black; }
+  .shell { width: 100%; max-width: none; }
+  .site-header, .site-footer, .skip-link, .toc, .table-help { display: none; }
+  .legal-shell { padding: 0; }
+  .policy-body, .policy-body h2, .policy-body h3, .policy-body strong, th { color: black; }
+  .policy-body a { color: black; }
+  .table-scroll { overflow: visible; background: white; border-color: #999; }
+  table, table[data-columns] { min-width: 0; font-size: 8pt; }
+  th, td { min-width: 0; padding: .4rem; border-color: #999; }
+  th { background: #eee; }
+  .policy-body { font-size: 10pt; }
+  .policy-body h2, .policy-body h3 { break-after: avoid; }
+}
