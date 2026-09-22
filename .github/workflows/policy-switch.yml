@@ -1,0 +1,31 @@
+# 짤랑 정책 문서 — 시행일 자동 전환
+#
+# 2026-09-29 00:05 KST(= 09-28 15:05 UTC)에 개정본을 정본 자리로 올린다.
+# 스크립트가 멱등이라(전환 뒤에는 status=current → no-op) 크론이 이듬해에 또 돌아도 안전하다.
+# GitHub 크론은 지연·결손이 있을 수 있다 → workflow_dispatch 로 손으로도 돌릴 수 있다.
+name: policy-effective-switch
+on:
+  schedule:
+    - cron: "5 15 28 9 *"
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  switch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install markdown==3.10.3
+      - run: |
+          python jjallang/policies/switch_effective.py
+      - name: 바뀐 것이 있으면 커밋
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "policy-switch"
+            git config user.email "superwork.master+help@gmail.com"
+            git add -A
+            git commit -m "정책 시행일 도래 — 개정본을 정본 자리로 올린다 (자동 전환)"
+            git push
+          else
+            echo "전환할 것 없음"
+          fi

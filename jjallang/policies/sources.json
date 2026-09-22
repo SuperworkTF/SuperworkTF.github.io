@@ -6,7 +6,10 @@
     "effective": "2026-09-29",
     "announced": "2026-09-22",
     "current": "../",
-    "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_개인정보처리방침.md"
+    "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_개인정보처리방침.md",
+    "previous": "./2026-09-04/",
+    "previous_label": "2026-09-04 시행",
+    "source": "privacy"
   },
   "terms": {
     "title": "서비스 이용약관",
@@ -15,6 +18,9 @@
     "effective": "2026-09-29",
     "announced": "2026-09-22",
     "current": "../",
-    "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_서비스이용약관.md"
+    "source_of_truth": "SuperworkTF/jjallang · ops/legal/짤랑_서비스이용약관.md",
+    "previous": "./2026-09-04/",
+    "previous_label": "2026-09-04 시행",
+    "source": "terms"
   }
 }

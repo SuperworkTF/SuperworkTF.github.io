@@ -75,6 +75,9 @@ NOTES = {
                  '        지금 시행 중인 문서는 <a href="{current}">여기</a>에서 봅니다.'),
     "current":  ('시행일 {effective} · 공고일 {announced} · <strong>이 페이지가 정본입니다.</strong><br>\n'
                  '        <a href="{previous}">이전 시행본({previous_label}) 보기</a>'),
+    # 시행이 시작된 뒤의 날짜 폴더 — 공고문이 이 주소를 물고 있으므로 죽이지 않는다.
+    "dated":    ('<strong>{effective} 시행본</strong>의 고정 주소입니다. 공고일 {announced}.<br>\n'
+                 '        정본 자리는 <a href="../">여기</a>입니다.'),
 }
 
 
@@ -85,7 +88,7 @@ def note_for(meta: dict) -> str:
 
 def build(key: str) -> tuple[Path, str]:
     meta = SOURCES[key]
-    md_text = (HERE / f"{key}.md").read_text(encoding="utf-8")
+    md_text = (HERE / f"{meta.get('source', key)}.md").read_text(encoding="utf-8")
     lines = md_text.splitlines()
     title = lines[0].lstrip("# ").strip() if lines and lines[0].startswith("# ") else meta["title"]
     body_md = "\n".join(lines[1:])
@@ -112,8 +115,8 @@ def build(key: str) -> tuple[Path, str]:
     parts = [HEAD.format(
         title=escape(title), desc=escape(f"{title} — 짤랑 앱의 정책 문서"),
         note=note_for(meta), up=up,
-        privacy_current=' aria-current="page"' if key == "privacy" else "",
-        terms_current=' aria-current="page"' if key == "terms" else "",
+        privacy_current=' aria-current="page"' if meta.get("source", key) == "privacy" else "",
+        terms_current=' aria-current="page"' if meta.get("source", key) == "terms" else "",
     )]
     if toc:
         parts.append("    <details class=\"toc\">\n      <summary>목차 보기</summary>\n      <ol>\n")
