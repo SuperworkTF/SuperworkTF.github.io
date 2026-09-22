@@ -309,7 +309,7 @@
 
 ① 회사는 이용자의 개인정보를 보호하기 위하여 관계 법령을 지키며, 개인정보의 처리에 관한 사항은 별도의 「짤랑 개인정보처리방침」에 따릅니다. 이 방침은 이 약관과 함께 적용됩니다.
 
-② 「짤랑 개인정보처리방침」은 https://superworktf.github.io/jjallang/privacy/ 에서, 이 약관은 https://superworktf.github.io/jjallang/terms/ 에서 볼 수 있으며, 앱 안에서도 볼 수 있습니다.
+② 「짤랑 개인정보처리방침」은 https://superwork.ai.kr/jjallang/privacy/ 에서, 이 약관은 https://superwork.ai.kr/jjallang/terms/ 에서 볼 수 있으며, 앱 안에서도 볼 수 있습니다.
 
 ---
 
@@ -403,8 +403,8 @@
 | 대표 전화 | 02-2188-8620 |
 | 전자우편 | superwork.master+help@gmail.com |
 | 앱 패키지 | `com.jjallang.app` (iOS·Android 공통) |
-| 개인정보처리방침 | https://superworktf.github.io/jjallang/privacy/ |
-| 서비스 이용약관 | https://superworktf.github.io/jjallang/terms/ |
+| 개인정보처리방침 | https://superwork.ai.kr/jjallang/privacy/ |
+| 서비스 이용약관 | https://superwork.ai.kr/jjallang/terms/ |
 | 개인정보 보호책임자 | 김현석(본부장) / superwork.master+help@gmail.com / 02-2188-8620 |
 
 ---
@@ -413,5 +413,5 @@
 
 | 버전 | 시행일 | 주요 변경 |
 |---|---|---|
-| 1.0 | 2026-09-04 | 최초 제정. 전문 보존: https://superworktf.github.io/jjallang/terms/2026-09-04/ (같은 날 시행한 개인정보처리방침: https://superworktf.github.io/jjallang/privacy/2026-09-04/ ) |
+| 1.0 | 2026-09-04 | 최초 제정. 전문 보존: https://superwork.ai.kr/jjallang/terms/2026-09-04/ (같은 날 시행한 개인정보처리방침: https://superwork.ai.kr/jjallang/privacy/2026-09-04/ ) |
 | 2.0 | 2026-09-29 | 표준 템플릿에 맞추어 전면 개정. 조 구성을 제1조~제21조로 재편하고, 사업자 정보·분쟁 조정 기관·제재 절차·손해배상 조항을 추가. Android 광고(Google AdMob)와 인앱결제의 실연동, 팁 상품 3종, 공제·세후 추정 표시, 기록 내보내기·가져오기, 목표 기능을 반영 |

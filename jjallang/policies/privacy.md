@@ -297,4 +297,4 @@ iOS 판에서는 앱 추적 투명성(ATT) 프레임워크에 따라 추적 허�
 
 - 공고일자: 2026-09-22
 - 시행일자: 2026-09-29
-- 이전 개인정보처리방침: [2026-09-04 시행본 전문](https://superworktf.github.io/jjallang/privacy/2026-09-04/)
+- 이전 개인정보처리방침: [2026-09-04 시행본 전문](https://superwork.ai.kr/jjallang/privacy/2026-09-04/)

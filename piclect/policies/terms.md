@@ -160,7 +160,7 @@
 ---
 ## 제17조 (개인정보의 보호)
 ① 회사는 이용자의 개인정보를 보호하기 위하여 관계 법령을 지키며, 개인정보의 처리에 관한 사항은 별도의 「셀렉터 개인정보처리방침」에 따릅니다. 이 방침은 이 약관과 함께 적용됩니다.
-② 「셀렉터 개인정보처리방침」은 `https://superworktf.github.io/piclect/privacy/` 에서, 이 약관은 `https://superworktf.github.io/piclect/terms/` 에서 볼 수 있으며, 앱 안에서도 볼 수 있습니다.
+② 「셀렉터 개인정보처리방침」은 `https://superwork.ai.kr/piclect/privacy/` 에서, 이 약관은 `https://superwork.ai.kr/piclect/terms/` 에서 볼 수 있으며, 앱 안에서도 볼 수 있습니다.
 ③ 회사는 사진 라이브러리 접근 권한을 사진 정리 목적으로만 사용하며, 사진·썸네일·유사도 지문·파일 이름·앨범 이름·촬영 정보(EXIF)·위치 정보를 서버로 전송하지 않습니다.
 ---
 ## 제18조 (회사의 면책)
@@ -284,11 +284,11 @@
 </tr>
 <tr>
 <td>개인정보처리방침</td>
-<td>`https://superworktf.github.io/piclect/privacy/`</td>
+<td>`https://superwork.ai.kr/piclect/privacy/`</td>
 </tr>
 <tr>
 <td>서비스 이용약관</td>
-<td>`https://superworktf.github.io/piclect/terms/`</td>
+<td>`https://superwork.ai.kr/piclect/terms/`</td>
 </tr>
 <tr>
 <td>개인정보 보호책임자</td>

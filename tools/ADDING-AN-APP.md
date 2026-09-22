@@ -1,6 +1,6 @@
 # 새 앱을 이 사이트에 올리는 법
 
-이 저장소는 `superworktf.github.io` 다. 앱마다 **소개 페이지 한 장과 정책 문서**를 낸다.
+이 저장소는 `superwork.ai.kr` 다 (저장소 이름은 `SuperworkTF.github.io`, 주소는 커스텀 도메인). 앱마다 **소개 페이지 한 장과 정책 문서**를 낸다.
 스토어 심사 양식과 감사 제출에 나가는 주소가 여기이므로, 틀린 채로 나가면 새 심사로만 고친다.
 
 이 문서는 **다른 저장소에서 앱을 만든 사람(또는 에이전트)** 이 읽는다.
@@ -31,7 +31,7 @@
         privacy.md        개인정보처리방침 원본
         terms.md          서비스 이용약관 원본
 
-디렉터리 이름이 곧 주소다: `superworktf.github.io/<app>/privacy/`.
+디렉터리 이름이 곧 주소다: `superwork.ai.kr/<app>/privacy/`.
 
 ## 2. `policies/sources.json`
 
@@ -43,11 +43,11 @@
       },
       "privacy": {
         "title": "개인정보처리방침",
-        "public_url": "https://superworktf.github.io/<app>/privacy/"
+        "public_url": "https://superwork.ai.kr/<app>/privacy/"
       },
       "terms": {
         "title": "서비스 이용약관",
-        "public_url": "https://superworktf.github.io/<app>/terms/"
+        "public_url": "https://superwork.ai.kr/<app>/terms/"
       }
     }
 

@@ -25,15 +25,15 @@ AdMob 크롤러는 스토어 등록정보의 개발자 웹사이트 주소를 �
 
 1. `/<앱>/index.html` 을 만든다(짤랑 페이지를 복사해 고치면 된다).
 2. `/index.html` 의 목록에 카드 한 장을 더한다.
-3. **스토어 등록정보의 `웹사이트` 칸**에 `https://superworktf.github.io/<앱>/` 을 넣는다.
+3. **스토어 등록정보의 `웹사이트` 칸**에 `https://superwork.ai.kr/<앱>/` 을 넣는다.
    이 칸이 비면 AdMob 은 app-ads.txt 를 영원히 못 찾는다. (짤랑이 그래서 막혀 있었다)
 4. 새 앱이 **다른 AdMob 계정**이면 그 게시자 줄을 `app-ads.txt` 에 한 줄 더한다.
 
 ## 확인
 
 ```bash
-curl -sI https://superworktf.github.io/app-ads.txt   # 200 + text/plain 이어야 한다
-curl -s  https://superworktf.github.io/app-ads.txt
+curl -sI https://superwork.ai.kr/app-ads.txt   # 200 + text/plain 이어야 한다
+curl -s  https://superwork.ai.kr/app-ads.txt
 ```
 AdMob → 앱 → 앱 설정 → app-ads.txt 에서 상태를 본다. 크롤링은 보통 하루 안에 돈다.
 
@@ -65,9 +65,9 @@ muted `#B0B8C1`)를 그대로 쓴다. 사진을 판단하기에 가장 좋은 �
 
 ### 배포 주소 — 바꾸지 말 것
 
-- 소개·문의: <https://superworktf.github.io/piclect/>
-- 개인정보처리방침: <https://superworktf.github.io/piclect/privacy/>
-- 서비스 이용약관: <https://superworktf.github.io/piclect/terms/>
+- 소개·문의: <https://superwork.ai.kr/piclect/>
+- 개인정보처리방침: <https://superwork.ai.kr/piclect/privacy/>
+- 서비스 이용약관: <https://superwork.ai.kr/piclect/terms/>
 
 뒤의 두 주소는 **공개된 「서비스 이용약관」 제17조 제2항이 직접 인용**하고 있고
 Play Console 등록정보에도 들어간다. 경로를 옮기면 법적 문서가 죽은 주소를 가리킨다.
@@ -110,9 +110,9 @@ Play Console 등록정보에도 들어간다. 경로를 옮기면 법적 문서�
    키보드 초점, 좁은 화면의 표 가로 스크롤을 점검한다.
 
 ```bash
-curl -sI https://superworktf.github.io/piclect/
-curl -sI https://superworktf.github.io/piclect/privacy/
-curl -sI https://superworktf.github.io/piclect/terms/
+curl -sI https://superwork.ai.kr/piclect/
+curl -sI https://superwork.ai.kr/piclect/privacy/
+curl -sI https://superwork.ai.kr/piclect/terms/
 ```
 
 ## 그려보카 공개 사이트
@@ -141,9 +141,9 @@ curl -sI https://superworktf.github.io/piclect/terms/
 
 ### 배포 주소
 
-- 소개·문의: <https://superworktf.github.io/word-doodle/>
-- 개인정보처리방침: <https://superworktf.github.io/word-doodle/privacy/>
-- 서비스 이용약관: <https://superworktf.github.io/word-doodle/terms/>
+- 소개·문의: <https://superwork.ai.kr/word-doodle/>
+- 개인정보처리방침: <https://superwork.ai.kr/word-doodle/privacy/>
+- 서비스 이용약관: <https://superwork.ai.kr/word-doodle/terms/>
 
 모두 빌드가 필요 없는 정적 HTML/CSS 파일이다. 기존 GitHub Pages 설정을 사용한다.
 별도의 앱 저장소 공개나 Pages 설정 변경은 필요하지 않다. 배포 주소는 게시 후
@@ -184,7 +184,7 @@ HTTP 응답과 본문을 확인한다. 스토어 링크는 실제 공개 등록�
    `git diff` 를 검토하고 정적 HTML/CSS와 공개 정책 본문만 게시한다.
 
 ```bash
-curl -sI https://superworktf.github.io/word-doodle/
-curl -sI https://superworktf.github.io/word-doodle/privacy/
-curl -sI https://superworktf.github.io/word-doodle/terms/
+curl -sI https://superwork.ai.kr/word-doodle/
+curl -sI https://superwork.ai.kr/word-doodle/privacy/
+curl -sI https://superwork.ai.kr/word-doodle/terms/
 ```

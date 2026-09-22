@@ -33,7 +33,7 @@
 3. 서비스는 개인정보를 수집하지 않으므로 별도의 연령 확인 절차를 두지 않습니다. 미성년자의 유료 결제에는 제7조 제4항이 적용됩니다.
 ## 제6조 (이용자 식별 및 개인정보)
 1. 회사는 이용자를 식별하지 않으며, 이름·전화번호·이메일 등 본인확인 정보를 수집·보유하지 않습니다.
-2. 서비스가 처리하는 정보의 항목·목적·보유기간은 별도의 「개인정보처리방침」에 따릅니다. ([https://superworktf.github.io/word-doodle/privacy/](https://superworktf.github.io/word-doodle/privacy/))
+2. 서비스가 처리하는 정보의 항목·목적·보유기간은 별도의 「개인정보처리방침」에 따릅니다. ([https://superwork.ai.kr/word-doodle/privacy/](https://superwork.ai.kr/word-doodle/privacy/))
 ## 제7조 (유료 서비스 및 결제)
 1. 서비스의 학습 기능은 **무료**로 제공됩니다. 유료 상품은 **광고 제거 상품 1종**뿐이며, 1회 구매로 영구 적용되는 비소모성 상품입니다. 판매 가격은 각 앱마켓의 상품 화면에 표시된 금액에 따릅니다(출시 기준 4,400원).
 2. 결제는 **Google Play 또는 App Store의 인앱결제(IAP)** 로만 가능하며, 외부 결제수단은 사용할 수 없습니다.
@@ -144,11 +144,11 @@
 </tr>
 <tr>
 <td>개인정보처리방침</td>
-<td>[https://superworktf.github.io/word-doodle/privacy/](https://superworktf.github.io/word-doodle/privacy/)</td>
+<td>[https://superwork.ai.kr/word-doodle/privacy/](https://superwork.ai.kr/word-doodle/privacy/)</td>
 </tr>
 <tr>
 <td>서비스 이용약관</td>
-<td>[https://superworktf.github.io/word-doodle/terms/](https://superworktf.github.io/word-doodle/terms/)</td>
+<td>[https://superwork.ai.kr/word-doodle/terms/](https://superwork.ai.kr/word-doodle/terms/)</td>
 </tr>
 <tr>
 <td>개인정보 보호책임자</td>

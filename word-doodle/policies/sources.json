@@ -5,7 +5,7 @@
     "theme_color": "#f7f4eb"
   },
   "privacy": {
-    "public_url": "https://superworktf.github.io/word-doodle/privacy/",
+    "public_url": "https://superwork.ai.kr/word-doodle/privacy/",
     "title": "개인정보처리방침",
     "archives": [
       {
@@ -15,7 +15,7 @@
     ]
   },
   "terms": {
-    "public_url": "https://superworktf.github.io/word-doodle/terms/",
+    "public_url": "https://superwork.ai.kr/word-doodle/terms/",
     "title": "서비스 이용약관"
   }
 }

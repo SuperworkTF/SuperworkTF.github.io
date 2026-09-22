@@ -398,4 +398,4 @@ Google의 보유·삭제 안내는 제5절 (나)에 연결되어 있습니다. �
 - 최초 공고일자: 2026.09.09
 - 시행일자: 2026.09.09
 - 문서 정비일: 2026.09.22
-- [정비 전 방침 전문 (같은 시행일)](https://superworktf.github.io/word-doodle/privacy/2026-09-09/)
+- [정비 전 방침 전문 (같은 시행일)](https://superwork.ai.kr/word-doodle/privacy/2026-09-09/)
