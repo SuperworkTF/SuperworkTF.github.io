@@ -1,0 +1,259 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["markdown-it-py==3.0.0"]
+# ///
+"""Optional policy publisher. Deployment serves the checked-in HTML as-is.
+
+Run from the repository root:
+    uv run --no-project word-doodle/policies/render.py
+Check without writing:
+    uv run --no-project word-doodle/policies/render.py --check
+
+The sanitized Notion export uses one prose block per line. Consecutive list
+items form a list, including tab-indented nested items. Table cells contain
+inline Markdown. Keep these conventions when updating the approved sources.
+Only public policy content belongs in this directory.
+"""
+
+from __future__ import annotations
+
+import argparse
+from html import escape
+from html.parser import HTMLParser
+import json
+from pathlib import Path
+import re
+
+from markdown_it import MarkdownIt
+
+HERE = Path(__file__).resolve().parent
+SITE = HERE.parent
+MARKDOWN = MarkdownIt("commonmark", {"html": True, "typographer": False})
+TABLE = re.compile(r'<table header-row="true">.*?</table>', re.DOTALL)
+LIST_ITEM = re.compile(r"^[ \t]*(?:[-+*]|[0-9]+[.)])\s+")
+
+
+class ExportTable(HTMLParser):
+    """Read only the small, known Notion table export format."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.rows: list[list[str]] = []
+        self.cell: list[str] | None = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "tr":
+            self.rows.append([])
+        elif tag == "td":
+            self.cell = []
+        elif tag == "br" and self.cell is not None:
+            self.cell.append("<br>")
+        elif tag != "table":
+            raise ValueError(f"Unexpected source table tag: {tag}")
+
+    def handle_endtag(self, tag):
+        if tag == "td":
+            assert self.cell is not None
+            self.rows[-1].append("".join(self.cell))
+            self.cell = None
+        elif tag not in {"table", "tr", "br"}:
+            raise ValueError(f"Unexpected source table closing tag: {tag}")
+
+    def handle_data(self, data):
+        if self.cell is not None:
+            self.cell.append(data)
+        elif data.strip():
+            raise ValueError("Unexpected text outside a source table cell")
+
+
+def render_table(raw: str, number: int, heading: str) -> str:
+    parsed = ExportTable()
+    parsed.feed(raw)
+    rows = parsed.rows
+    assert len(rows) > 1
+    columns = len(rows[0])
+    assert all(len(row) == columns for row in rows)
+    label = escape(f"{heading} — 표 {number}", quote=True)
+    result = [f'<div class="table-scroll" role="region" tabindex="0" aria-label="{label}" aria-describedby="table-help">',
+              f'<table data-columns="{columns}">', '<thead><tr>']
+    for cell in rows[0]:
+        result.append(f'<th scope="col">{MARKDOWN.renderInline(cell)}</th>')
+    result.append('</tr></thead><tbody>')
+    for row in rows[1:]:
+        result.append('<tr>')
+        for cell in row:
+            result.append(f'<td>{MARKDOWN.renderInline(cell)}</td>')
+        result.append('</tr>')
+    result.append('</tbody></table></div>')
+    return "\n".join(result) + "\n"
+
+
+def render_blocks(source: str) -> str:
+    blocks: list[str] = []
+    list_lines: list[str] = []
+
+    def flush_list():
+        if list_lines:
+            blocks.append("\n".join(list_lines))
+            list_lines.clear()
+
+    for line in source.splitlines():
+        if LIST_ITEM.match(line):
+            list_lines.append(line)
+        else:
+            flush_list()
+            if line.strip():
+                blocks.append(line)
+    flush_list()
+    return MARKDOWN.render("\n\n".join(blocks))
+
+
+def render_body(source: str) -> str:
+    parts: list[str] = []
+    end = 0
+    for number, match in enumerate(TABLE.finditer(source), 1):
+        prefix = source[end:match.start()]
+        parts.append(render_blocks(prefix))
+        headings = re.findall(r"^#{2,3} (.+)$", source[:match.start()], re.MULTILINE)
+        parts.append(render_table(match.group(), number, headings[-1] if headings else "사업자 정보"))
+        end = match.end()
+    parts.append(render_blocks(source[end:]))
+    return "".join(parts)
+
+
+class VisibleText(HTMLParser):
+    """Collect text tokens without folding inline boundaries into new words."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.text: list[str] = []
+        self.links: list[str] = []
+
+    def handle_data(self, data):
+        self.text.append(data)
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == "a":
+            self.links.append(attrs["href"])
+        if tag == "br":
+            self.text.append(" ")
+
+
+def text_and_links(fragment: str):
+    parser = VisibleText()
+    parser.feed(fragment)
+    return re.sub(r"\s+", " ", "".join(parser.text)).strip(), parser.links
+
+
+def assert_fidelity(source: str, body: str):
+    # Independent per-line/per-cell reading of the sanitized source. Check the
+    # ordered text and all actual Markdown links, including links in tables.
+    lines = re.sub(r"</?(?:table|tr|td)\b[^>]*>", "\n", source).splitlines()
+    expected: list[str] = []
+    for line in lines:
+        text = line.strip()
+        if not text or text == "---":
+            continue
+        if text.startswith("#"):
+            text = re.sub(r"^#{1,6} ", "", text)
+        else:
+            text = re.sub(r"^(?:[-+*]|[0-9]+[.)])\s+", "", text)
+        expected.append(MARKDOWN.renderInline(text))
+    expected_text, expected_links = text_and_links("\n".join(expected))
+    actual_text, actual_links = text_and_links(body)
+    if expected_text != actual_text:
+        index = next((i for i, (a, b) in enumerate(zip(expected_text, actual_text)) if a != b), min(len(expected_text), len(actual_text)))
+        raise ValueError(f"Policy text mismatch at {index}: expected {expected_text[max(0, index - 30):index + 50]!r}; got {actual_text[max(0, index - 30):index + 50]!r}")
+    if expected_links != actual_links:
+        raise ValueError("Policy link mismatch")
+
+
+def page(kind: str, source: str, metadata: dict) -> str:
+    title = f"그려보카 {metadata['title']}"
+    if source.startswith("# "):
+        source_title, source = source.split("\n", 1)
+        assert source_title[2:] == title
+    body = render_body(source)
+    assert_fidelity(source, body)
+    headings: list[tuple[str, str]] = []
+
+    def mark_heading(match):
+        heading_id = f"section-{len(headings) + 1}"
+        headings.append((heading_id, match.group(1)))
+        return f'<h2 id="{heading_id}">{match.group(1)}</h2>'
+
+    body = re.sub(r"<h2>(.*?)</h2>", mark_heading, body)
+    toc = "\n".join(f'<li><a href="#{heading_id}">{text}</a></li>' for heading_id, text in headings)
+    nav = "\n".join(
+        f'      <a href="{href}"' + (' aria-current="page"' if name == kind else '') + f'>{label}</a>'
+        for name, href, label in [('intro', '../', '앱 소개'), ('privacy', '../privacy/', '개인정보처리방침'), ('terms', '../terms/', '이용약관')]
+    )
+    source_url = escape(metadata['public_url'], quote=True)
+    table_help = '<p class="table-help" id="table-help">표가 화면보다 넓으면 표 안에서 좌우로 스크롤할 수 있습니다. 키보드로는 표에 초점을 맞춘 뒤 방향키를 사용하세요.</p>'
+    return f'''<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{escape(title, quote=True)} — 기존 공개 정책의 내용과 원문 링크를 확인하세요.">
+  <meta name="theme-color" content="#f7f4eb">
+  <title>{escape(title)}</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="site-header shell">
+    <a class="brand" href="../" aria-label="그려보카 소개"><span class="brand-mark" aria-hidden="true"></span>그려보카</a>
+    <nav class="site-nav" aria-label="주요 메뉴">
+{nav}
+    </nav>
+  </header>
+  <main id="main" class="shell legal-shell" tabindex="-1">
+    <header class="document-heading">
+      <p class="eyebrow">그려보카 · 정책 문서</p>
+      <h1>{escape(title)}</h1>
+      <p class="source-note">기존 공개 Notion 문서의 내용을 옮긴 페이지입니다.<br>
+        <a href="{source_url}">{escape(metadata['title'])} 원문 보기 (Notion)</a>
+      </p>
+    </header>
+    <details class="toc">
+      <summary>목차 보기</summary>
+      <ol>
+{toc}
+      </ol>
+    </details>
+    {table_help}
+    <article class="policy-body" id="policy-body" aria-label="{escape(metadata['title'], quote=True)} 본문">
+{body}    </article>
+  </main>
+  <footer class="site-footer shell">
+    <p><a href="../">그려보카 소개</a> · <a href="../../">전체 앱 안내</a></p>
+    <a href="mailto:superwork.master+help@gmail.com">superwork.master+help@gmail.com</a>
+  </footer>
+</body>
+</html>
+'''
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true", help="verify committed HTML without changing it")
+    args = parser.parse_args()
+    sources = json.loads((HERE / "sources.json").read_text(encoding="utf-8"))
+    for kind in ("privacy", "terms"):
+        source = (HERE / f"{kind}.md").read_text(encoding="utf-8")
+        content = page(kind, source, sources[kind])
+        target = SITE / kind / "index.html"
+        if args.check:
+            if not target.exists() or target.read_text(encoding="utf-8") != content:
+                raise SystemExit(f"Outdated HTML: {kind}/index.html")
+            print(f"OK {kind}: exact source text/links and reproducible HTML")
+        else:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(content, encoding="utf-8")
+            print(f"Wrote {kind}/index.html (source text and links verified)")
+
+
+if __name__ == "__main__":
+    main()
