@@ -69,7 +69,7 @@ p { margin: 0 0 1rem; }
 .lines { margin: 0; }
 .line { display: flex; align-items: baseline; gap: .5rem; font-size: .92rem; margin-bottom: .45rem; }
 .line dt { margin: 0; color: var(--muted); white-space: nowrap; }
-.line .dots { flex: 1; border-bottom: 1px dotted var(--line); transform: translateY(-.25rem); }
+.line .dots { flex: 1; border-bottom: 1px dotted #b9b2a2; transform: translateY(-.25rem); }
 .line dd { margin: 0; font-family: var(--mono); }
 .line.night dt { color: var(--night); }
 .line.over dt { color: var(--over); }
@@ -95,7 +95,8 @@ p { margin: 0 0 1rem; }
 .rate.h { border-left-color: var(--holi); } .rate.w { border-left-color: var(--money); }
 .rate b { display: block; font-size: 1rem; }
 .rate .pct { font-family: var(--mono); font-size: 1.3rem; font-weight: 700; }
-.rate small { display: block; color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.rate small { display: block; color: var(--muted); font-size: .82rem; margin-top: .35rem;
+  overflow-wrap: normal; word-break: keep-all; }  /* 「제56조 제3항」이 줄 끝에서 쪼개지지 않게 */
 
 /* 두 칸 단락 */
 .split { display: grid; grid-template-columns: .85fr 1.15fr; gap: 2.5rem; align-items: start; }
