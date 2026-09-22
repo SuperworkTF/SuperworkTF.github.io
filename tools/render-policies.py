@@ -212,7 +212,7 @@ ACTIVE_HTML = re.compile(
 )
 
 
-def assert_source_digest(kind: str, source_bytes: bytes, metadata: dict) -> None:
+def assert_source_digest(kind: str, source_bytes: bytes, edition: dict) -> None:
     """**승인된 낱말**을 못 박는다. 마크다운↔HTML 일치만으로는 모자라다.
 
     이것이 없으면 정책 문장을 고치고 다시 돌리는 것만으로 `--check` 가 다시 통과한다:
@@ -222,16 +222,19 @@ def assert_source_digest(kind: str, source_bytes: bytes, metadata: dict) -> None
 
     `sha256` 이 없는 앱은 건너뛴다. 없는 것을 있다고 우기지 않는다.
     """
-    approved = metadata.get("sha256")
+    approved = edition.get("sha256")
     if approved is None:
         return
     digest = hashlib.sha256(source_bytes).hexdigest()
     if approved != digest:
+        # **어느 판인지 이름을 댄다.** 지문은 판마다 붙고, 한 문서에 판이 셋일 수 있다
+        # (짤랑). 「privacy 의 지문이 틀렸다」로는 어느 파일을 볼지 알 수 없다.
         raise SystemExit(
-            f"{kind}.md 가 승인된 원문과 다르다.\n"
+            f"{edition['source']}.md 가 승인된 원문과 다르다.\n"
             f"  승인 sha256: {approved}\n"
             f"  디스크    : {digest}\n"
-            f"새 낱말이 승인된 것이라면 sources.json[{kind!r}]['sha256'] 을 일부러 고친다."
+            f"새 낱말이 승인된 것이라면 sources.json[{kind!r}] 의 {edition['path']!r} 판에서\n"
+            f"'sha256' 을 일부러 고친다. **고친 낱말이 승인된 것인지 먼저 확인한다.**"
         )
 
 
