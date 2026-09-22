@@ -1,4 +1,8 @@
 # 짤랑 (com.jjallang.app) — Android / iOS
-# 게시자 ID: AdMob 앱 ID ca-app-pub-7274269921877899~7776628174 (Android),
-#            ca-app-pub-7274269921877899~7723464340 (iOS)
+#   ca-app-pub-7274269921877899~7776628174 (Android)
+#   ca-app-pub-7274269921877899~7723464340 (iOS)
+# 셀렉터 (com.piclect.app) — Android / iOS
+#   ca-app-pub-7274269921877899~3975791024 (Android)
+#   ca-app-pub-7274269921877899~2364160609 (iOS)
+# 두 앱 모두 같은 AdMob 게시자 계정이므로 아래 한 줄로 충분합니다.
 google.com, pub-7274269921877899, DIRECT, f08c47fec0942fa0
