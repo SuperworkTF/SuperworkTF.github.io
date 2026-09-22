@@ -1,7 +1,13 @@
 {
   "privacy": {
     "public_url": "https://superworktf.github.io/word-doodle/privacy/",
-    "title": "개인정보처리방침"
+    "title": "개인정보처리방침",
+    "archives": [
+      {
+        "version": "2026-09-09",
+        "notice": "2026.09.22 문서 정비 전 방침입니다. 시행일은 2026.09.09로 동일합니다."
+      }
+    ]
   },
   "terms": {
     "public_url": "https://superworktf.github.io/word-doodle/terms/",

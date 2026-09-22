@@ -53,9 +53,12 @@ AdMob → 앱 → 앱 설정 → app-ads.txt 에서 상태를 본다. 크롤링�
 /word-doodle/privacy/index.html   ← 개인정보처리방침
 /word-doodle/terms/index.html     ← 서비스 이용약관
 /word-doodle/policies/privacy.md  ← 공개 정책 본문 원본
+/word-doodle/policies/privacy-2026-09-09.md ← 정비 전 방침 전문(수정 금지)
+/word-doodle/privacy/2026-09-09/index.html ← 정비 전 방침 공개 보관
 /word-doodle/policies/terms.md    ← 공개 약관 본문 원본
 /word-doodle/policies/sources.json ← 공식 공개 주소·문서 제목
 /word-doodle/policies/render.py   ← 정책 HTML 갱신 도구(배포 시 실행 불필요)
+/word-doodle/policies/test_render.py ← 생성기·보관본·비공개 표식 차단 회귀 검사
 ```
 
 ### 배포 주소
@@ -84,12 +87,18 @@ HTTP 응답과 본문을 확인한다. 스토어 링크는 실제 공개 등록�
    ```bash
    uv run --no-project word-doodle/policies/render.py
    uv run --no-project word-doodle/policies/render.py --check
+   uv run --no-project word-doodle/policies/test_render.py
    ```
 
    생성기는 정책의 문구 순서와 링크를 대조하며, `--check` 는 파일을 변경하지 않고
    Markdown과 HTML의 일치를 확인한다. 단순한 게시 위치·표현 수정으로 정책 시행일을 바꾸지 않는다.
    실질적인 개정은 기존 고지 약속을 지키고 승인된 공고일·시행일을 사용한다.
    이전 방침 전문과 적용기간은 날짜별 공개 경로에 보존하고 새 방침에서 연결한다.
+   문서 정비만 하는 경우에는 기존 시행일과 실제 문서 정비일을 구분하여 표시한다.
+   같은 시행일의 이전 문서에 임의의 적용 종료일을 만들지 않는다.
+   `sources.json`의 `archives`에는 보관본의 날짜형 `version`과 공개 안내문 `notice`를 둔다.
+   생성기는 해당 `privacy-YYYY-MM-DD.md`를 읽어 보관 경로까지 함께 생성·검증한다.
+   이전 전문은 수정하지 않으며, 내부 검토 표식·템플릿 빈칸이 있으면 생성을 중단한다.
 4. 로컬에서 `python3 -m http.server 8000` 으로 확인한다.
    `http://localhost:8000/word-doodle/` 부터 세 페이지의 메뉴, 공식 정책 링크, 문의 링크,
    키보드 초점, 좁은 화면의 표 가로 스크롤을 점검한다.

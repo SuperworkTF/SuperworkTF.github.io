@@ -169,7 +169,18 @@ def assert_fidelity(source: str, body: str):
         raise ValueError("Policy link mismatch")
 
 
-def page(kind: str, source: str, metadata: dict) -> str:
+def assert_public_source(source: str):
+    private_markers = (
+        "내부 검토용", "[내부 확인", "작성 안내 — 공개본에서는 삭제",
+        "작성 시 확인할 사항", "## 복사용 본문", "approved-template-internal",
+        "<ancestor-path>", "<mention-page", "{{", r"\{\{",
+    )
+    if any(marker in source for marker in private_markers):
+        raise ValueError("Policy source contains private drafting material or placeholders")
+
+
+def page(kind: str, source: str, metadata: dict, *, archive: dict | None = None) -> str:
+    assert_public_source(source)
     title = f"그려보카 {metadata['title']}"
     if source.startswith("# "):
         source_title, source = source.split("\n", 1)
@@ -185,11 +196,26 @@ def page(kind: str, source: str, metadata: dict) -> str:
 
     body = re.sub(r"<h2>(.*?)</h2>", mark_heading, body)
     toc = "\n".join(f'<li><a href="#{heading_id}">{text}</a></li>' for heading_id, text in headings)
+    site_prefix = "../../" if archive else "../"
     nav = "\n".join(
         f'      <a href="{href}"' + (' aria-current="page"' if name == kind else '') + f'>{label}</a>'
-        for name, href, label in [('intro', '../', '앱 소개'), ('privacy', '../privacy/', '개인정보처리방침'), ('terms', '../terms/', '이용약관')]
+        for name, href, label in [('intro', site_prefix, '앱 소개'), ('privacy', site_prefix + 'privacy/', '개인정보처리방침'), ('terms', site_prefix + 'terms/', '이용약관')]
     )
-    canonical_url = escape(metadata['public_url'], quote=True)
+    public_url = metadata['public_url']
+    archive_note = ""
+    document_title = title
+    if archive:
+        version = archive['version']
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", version):
+            raise ValueError("Invalid archive version")
+        public_url = f"{public_url.rstrip('/')}/{version}/"
+        document_title += " — 정비 전 문서"
+        archive_note = (
+            f'      <p class="archive-note">{escape(archive["notice"])} '
+            f'<a href="{site_prefix}{kind}/">현재 방침 보기</a></p>\n'
+        )
+    canonical_url = escape(public_url, quote=True)
+    root_prefix = "../../../" if archive else "../../"
     table_help = '<p class="table-help" id="table-help">표가 화면보다 넓으면 표 안에서 좌우로 스크롤할 수 있습니다. 키보드로는 표에 초점을 맞춘 뒤 방향키를 사용하세요.</p>'
     return f'''<!doctype html>
 <html lang="ko">
@@ -199,13 +225,13 @@ def page(kind: str, source: str, metadata: dict) -> str:
   <meta name="description" content="{escape(title, quote=True)} 공식 문서입니다.">
   <link rel="canonical" href="{canonical_url}">
   <meta name="theme-color" content="#f7f4eb">
-  <title>{escape(title)}</title>
-  <link rel="stylesheet" href="../styles.css">
+  <title>{escape(document_title)}</title>
+  <link rel="stylesheet" href="{site_prefix}styles.css">
 </head>
 <body>
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
-    <a class="brand" href="../" aria-label="그려보카 소개"><span class="brand-mark" aria-hidden="true"></span>그려보카</a>
+    <a class="brand" href="{site_prefix}" aria-label="그려보카 소개"><span class="brand-mark" aria-hidden="true"></span>그려보카</a>
     <nav class="site-nav" aria-label="주요 메뉴">
 {nav}
     </nav>
@@ -214,7 +240,7 @@ def page(kind: str, source: str, metadata: dict) -> str:
     <header class="document-heading">
       <p class="eyebrow">그려보카 · 정책 문서</p>
       <h1>{escape(title)}</h1>
-    </header>
+{archive_note}    </header>
     <details class="toc">
       <summary>목차 보기</summary>
       <ol>
@@ -226,7 +252,7 @@ def page(kind: str, source: str, metadata: dict) -> str:
 {body}    </article>
   </main>
   <footer class="site-footer shell">
-    <p><a href="../">그려보카 소개</a> · <a href="../../">전체 앱 안내</a></p>
+    <p><a href="{site_prefix}">그려보카 소개</a> · <a href="{root_prefix}">전체 앱 안내</a></p>
     <a href="mailto:superwork.master+help@gmail.com">superwork.master+help@gmail.com</a>
   </footer>
 </body>
@@ -240,17 +266,24 @@ def main():
     args = parser.parse_args()
     sources = json.loads((HERE / "sources.json").read_text(encoding="utf-8"))
     for kind in ("privacy", "terms"):
-        source = (HERE / f"{kind}.md").read_text(encoding="utf-8")
-        content = page(kind, source, sources[kind])
-        target = SITE / kind / "index.html"
-        if args.check:
-            if not target.exists() or target.read_text(encoding="utf-8") != content:
-                raise SystemExit(f"Outdated HTML: {kind}/index.html")
-            print(f"OK {kind}: exact source text/links and reproducible HTML")
-        else:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(content, encoding="utf-8")
-            print(f"Wrote {kind}/index.html (source text and links verified)")
+        editions = [(HERE / f"{kind}.md", SITE / kind / "index.html", None)]
+        for archive in sources[kind].get("archives", []):
+            version = archive["version"]
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", version):
+                raise ValueError("Invalid archive version")
+            editions.append((HERE / f"{kind}-{version}.md", SITE / kind / version / "index.html", archive))
+        for source_path, target, archive in editions:
+            source = source_path.read_text(encoding="utf-8")
+            content = page(kind, source, sources[kind], archive=archive)
+            relative_target = target.relative_to(SITE)
+            if args.check:
+                if not target.exists() or target.read_text(encoding="utf-8") != content:
+                    raise SystemExit(f"Outdated HTML: {relative_target}")
+                print(f"OK {relative_target}: exact source text/links and reproducible HTML")
+            else:
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text(content, encoding="utf-8")
+                print(f"Wrote {relative_target} (source text and links verified)")
 
 
 if __name__ == "__main__":
