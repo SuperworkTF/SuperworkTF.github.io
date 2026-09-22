@@ -9,7 +9,7 @@ Run from the repository root:
 Check without writing:
     uv run --no-project word-doodle/policies/render.py --check
 
-The sanitized Notion export uses one prose block per line. Consecutive list
+The canonical policy source uses one prose block per line. Consecutive list
 items form a list, including tab-indented nested items. Table cells contain
 inline Markdown. Keep these conventions when updating the approved sources.
 Only public policy content belongs in this directory.
@@ -34,7 +34,7 @@ LIST_ITEM = re.compile(r"^[ \t]*(?:[-+*]|[0-9]+[.)])\s+")
 
 
 class ExportTable(HTMLParser):
-    """Read only the small, known Notion table export format."""
+    """Read only the supported policy table format."""
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -189,14 +189,15 @@ def page(kind: str, source: str, metadata: dict) -> str:
         f'      <a href="{href}"' + (' aria-current="page"' if name == kind else '') + f'>{label}</a>'
         for name, href, label in [('intro', '../', '앱 소개'), ('privacy', '../privacy/', '개인정보처리방침'), ('terms', '../terms/', '이용약관')]
     )
-    source_url = escape(metadata['public_url'], quote=True)
+    canonical_url = escape(metadata['public_url'], quote=True)
     table_help = '<p class="table-help" id="table-help">표가 화면보다 넓으면 표 안에서 좌우로 스크롤할 수 있습니다. 키보드로는 표에 초점을 맞춘 뒤 방향키를 사용하세요.</p>'
     return f'''<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{escape(title, quote=True)} — 기존 공개 정책의 내용과 원문 링크를 확인하세요.">
+  <meta name="description" content="{escape(title, quote=True)} 공식 문서입니다.">
+  <link rel="canonical" href="{canonical_url}">
   <meta name="theme-color" content="#f7f4eb">
   <title>{escape(title)}</title>
   <link rel="stylesheet" href="../styles.css">
@@ -213,9 +214,6 @@ def page(kind: str, source: str, metadata: dict) -> str:
     <header class="document-heading">
       <p class="eyebrow">그려보카 · 정책 문서</p>
       <h1>{escape(title)}</h1>
-      <p class="source-note">기존 공개 Notion 문서의 내용을 옮긴 페이지입니다.<br>
-        <a href="{source_url}">{escape(metadata['title'])} 원문 보기 (Notion)</a>
-      </p>
     </header>
     <details class="toc">
       <summary>목차 보기</summary>
