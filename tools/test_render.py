@@ -111,5 +111,19 @@ class PolicyPublisherTests(unittest.TestCase):
             render.assert_fidelity("[안내](https://example.com/)", '<p><a href="https://example.org/">안내</a></p>')
 
 
+    def test_nav_lists_only_documents_the_app_publishes(self):
+        html = render.page("privacy", self.source, self.metadata, self.app, edition=self.base,
+                           kinds=("privacy", "account-deletion"))
+        self.assertNotIn("terms/", html)
+        self.assertIn('href="../account-deletion/">계정 삭제</a>', html)
+
+    def test_kinds_follow_menu_order_and_reject_unknown(self):
+        sources = {"account-deletion": {}, "privacy": {}}
+        self.assertEqual(render.kinds_of("x", sources), ("privacy", "account-deletion"))
+        with self.assertRaises(SystemExit):
+            render.kinds_of("x", {"privacy": {}, "faq": {}})
+        with self.assertRaises(SystemExit):
+            render.kinds_of("x", {"terms": {}})
+
 if __name__ == "__main__":
     unittest.main()
