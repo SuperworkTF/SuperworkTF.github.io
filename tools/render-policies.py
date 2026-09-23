@@ -2,7 +2,7 @@
 # requires-python = ">=3.10"
 # dependencies = ["markdown-it-py==3.0.0"]
 # ///
-"""정책 문서 배포기 — 원문(Markdown) 한 벌에서 페이지를 만든다. **네 앱이 함께 쓴다.**
+"""정책 문서 배포기 — 원문(Markdown) 한 벌에서 페이지를 만든다. **모든 앱이 함께 쓴다.**
 
     uv run --no-project tools/render-policies.py ururu
     uv run --no-project tools/render-policies.py ururu --check
@@ -319,7 +319,8 @@ def status_note(metadata: dict) -> str:
     return f'      <p class="source-note">{filled}</p>\n'
 
 
-def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict) -> str:
+def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict,
+         kinds: tuple[str, ...] = ("privacy", "terms")) -> str:
     assert_public_source(source)
     brand = app["brand"]
     # 판마다 제목이 다를 수 있다. 짤랑 2026-09-04 판은 「개인정보 처리방침」(띄어씀)이고
@@ -345,9 +346,12 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict) ->
     # 깃발이 필요 없다 — 자리가 이미 그것을 말한다.
     depth = edition["path"].count("/") + 1
     site_prefix = "../" * depth
+    links = [('intro', site_prefix, '앱 소개')] + [
+        (name, f'{site_prefix}{name}/', label) for name, label in DOCUMENTS if name in kinds
+    ]
     nav = "\n".join(
         f'      <a href="{href}"' + (' aria-current="page"' if name == kind else '') + f'>{label}</a>'
-        for name, href, label in [('intro', site_prefix, '앱 소개'), ('privacy', site_prefix + 'privacy/', '개인정보처리방침'), ('terms', site_prefix + 'terms/', '이용약관')]
+        for name, href, label in links
     )
     public_url = metadata['public_url']
     archive_note = ""
@@ -437,6 +441,28 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict) ->
 '''
 
 
+# 앱이 낼 수 있는 문서와 메뉴 이름. **차례가 곧 메뉴 차례다.**
+#
+# 앱마다 내는 문서가 다르다 — 약관이 필요 없는 앱이 있고(구독자: 대금 청구가 없다), 스토어가
+# 웹 삭제 요청 주소를 따로 요구해 계정 삭제 안내를 내는 앱이 있다. `sources.json` 에 칸이
+# 있는 문서만 만들고 메뉴에 건다. 없는 문서를 메뉴에 걸면 죽은 링크가 된다.
+DOCUMENTS = (
+    ("privacy", "개인정보처리방침"),
+    ("terms", "이용약관"),
+    ("account-deletion", "계정 삭제"),
+)
+
+
+def kinds_of(name: str, sources: dict) -> tuple[str, ...]:
+    known = {kind for kind, _ in DOCUMENTS}
+    unknown = sorted(set(sources) - known)
+    if unknown:
+        raise SystemExit(f"{name}: 모르는 문서 칸 — {unknown}. DOCUMENTS 에 먼저 더한다")
+    if "privacy" not in sources:
+        raise SystemExit(f"{name}: 개인정보처리방침(privacy) 칸이 없다")
+    return tuple(kind for kind, _ in DOCUMENTS if kind in sources)
+
+
 def editions_of(kind: str, metadata: dict) -> list[dict]:
     """`sources.json` 의 판 목록. **출력 한 장 = 항목 하나**다.
 
@@ -472,14 +498,15 @@ def render_app(name: str, check: bool) -> None:
     app = sources.pop("app")
     if app["dir"] != name:
         raise SystemExit(f"{name}/policies/sources.json names a different directory")
-    for kind in ("privacy", "terms"):
+    kinds = kinds_of(name, sources)
+    for kind in kinds:
         for edition in editions_of(kind, sources[kind]):
             source_path = here / f"{edition['source']}.md"
             target = SITE / name / edition["path"] / "index.html"
             source_bytes = source_path.read_bytes()
             source = source_bytes.decode("utf-8")
             assert_source_digest(kind, source_bytes, edition)
-            content = page(kind, source, sources[kind], app, edition=edition)
+            content = page(kind, source, sources[kind], app, edition=edition, kinds=kinds)
             relative_target = target.relative_to(SITE)
             if check:
                 if not target.exists() or target.read_text(encoding="utf-8") != content:

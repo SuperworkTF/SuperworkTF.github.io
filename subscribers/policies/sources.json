@@ -1,0 +1,29 @@
+{
+  "app": {
+    "dir": "subscribers",
+    "brand": "구독자",
+    "theme_color": "#FBFAF6"
+  },
+  "privacy": {
+    "public_url": "https://superwork.ai.kr/subscribers/privacy/",
+    "title": "개인정보처리방침",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy",
+        "sha256": "06fe0c8d6b6f356ca36c61814a7527701a7185f61d77a0e0f58b7ab2f2708e3f"
+      }
+    ]
+  },
+  "account-deletion": {
+    "public_url": "https://superwork.ai.kr/subscribers/account-deletion/",
+    "title": "계정 삭제 안내",
+    "editions": [
+      {
+        "path": "account-deletion",
+        "source": "account-deletion",
+        "sha256": "b9465179bfc67a662d7d28d588b1acb9b4c652f62fe3b914b4123b807e937fb1"
+      }
+    ]
+  }
+}

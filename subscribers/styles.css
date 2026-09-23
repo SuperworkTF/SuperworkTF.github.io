@@ -1,0 +1,147 @@
+/* Shared by the introduction and policy pages. No remote assets. */
+/* Palette follows the 구독자 app's "영수증 명세서" theme (subscribers/theme/index.ts):
+   thermal paper, thermal-transfer ink, 인주 red for the stamp only, carbon-copy blue for links,
+   highlighter yellow for the one line that needs attention. */
+:root {
+  color-scheme: light;
+  --paper: #FBFAF6;
+  --sheet: #FFFFFF;
+  --ink: #1C1B17;
+  --ink-soft: #3A362E;
+  --muted: #6E695F;
+  --line: #E2DED3;
+  --stamp: #C8402E;
+  --carbon: #3D5A80;
+  --marker: rgba(255, 213, 0, .35);
+  --wash: #F3F1EA;
+  --font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 2rem; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font); line-height: 1.75; overflow-wrap: anywhere; word-break: keep-all; }
+a { color: var(--carbon); text-underline-offset: .22em; text-decoration-thickness: 1px; }
+a:hover { color: var(--ink); }
+a:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--carbon); outline-offset: 4px; border-radius: 2px; }
+.skip-link { position: absolute; z-index: 2; top: .5rem; left: 1rem; padding: .65rem 1rem; background: var(--ink); color: var(--paper); transform: translateY(-180%); }
+.skip-link:focus { transform: translateY(0); color: var(--paper); }
+.shell { width: min(100% - 3rem, 1080px); margin-inline: auto; }
+
+/* Header — the brand mark is a tiny receipt slip. */
+.site-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem 2rem; padding-block: 1.4rem; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: .55rem; font-size: 1.2rem; font-weight: 800; letter-spacing: -.03em; color: var(--ink); text-decoration: none; }
+.brand-mark { width: 1.05rem; height: 1.4rem; background: var(--ink); clip-path: polygon(0 0, 100% 0, 100% 88%, 83% 100%, 67% 88%, 50% 100%, 33% 88%, 17% 100%, 0 88%); }
+.site-nav { display: flex; flex-wrap: wrap; gap: .25rem 1.4rem; font-size: .92rem; }
+.site-nav a { padding-block: .45rem; color: var(--ink-soft); text-decoration: none; }
+.site-nav a:hover { text-decoration: underline; }
+.site-nav a[aria-current="page"] { color: var(--ink); font-weight: 750; text-decoration: underline; text-decoration-thickness: 2px; }
+.eyebrow { margin: 0 0 .9rem; font-size: .88rem; font-weight: 700; color: var(--muted); }
+h1, h2, h3 { line-height: 1.35; letter-spacing: -.03em; }
+p { margin: 0 0 1rem; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 3.5rem; align-items: center; padding-block: 5rem 4.5rem; }
+.hero h1 { font-size: clamp(2.2rem, 4.6vw, 3.5rem); font-weight: 850; margin: 0 0 1.4rem; line-height: 1.25; }
+.hero-copy { max-width: 30rem; font-size: 1.08rem; color: var(--ink-soft); }
+.hero-facts { list-style: none; padding: 0; margin: 1.8rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .9rem; color: var(--ink-soft); }
+.hero-facts li { padding: .3rem .75rem; border: 1px solid var(--line); border-radius: 999px; background: var(--sheet); }
+
+/* The receipt — the one loud thing on the page. */
+.receipt-wrap { margin: 0; justify-self: center; width: min(100%, 360px); }
+.receipt { position: relative; padding: 1.8rem 1.6rem 2.6rem; background: var(--sheet); color: var(--ink); font-variant-numeric: tabular-nums; transform: rotate(-1.5deg); filter: drop-shadow(0 1px 0 var(--line)) drop-shadow(0 14px 18px rgba(28, 27, 23, .08));
+  --tooth: 10px;
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--tooth)) 100%;
+          mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--tooth)) 100%; }
+.receipt-head { text-align: center; padding-bottom: 1rem; border-bottom: 1px dashed var(--muted); }
+.receipt-head strong { display: block; font-size: 1.15rem; letter-spacing: .02em; }
+.receipt-head span { font-size: .82rem; color: var(--muted); }
+.receipt-lines { list-style: none; margin: 0; padding: .6rem 0; border-bottom: 1px dashed var(--muted); }
+.receipt-lines li { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 0 1rem; padding: .6rem 0; font-size: .95rem; }
+.receipt-lines .when { grid-column: 1 / -1; font-size: .78rem; color: var(--muted); }
+.receipt-lines .amount { text-align: right; }
+.receipt-lines .soon { background: linear-gradient(transparent 12%, var(--marker) 12% 88%, transparent 88%); margin-inline: -.35rem; padding-inline: .35rem; }
+.receipt-lines .soon .when { color: var(--ink-soft); font-weight: 700; }
+.receipt-lines .cancelled .name, .receipt-lines .cancelled .amount { text-decoration: line-through; text-decoration-color: var(--muted); color: var(--muted); }
+.stamp { position: absolute; right: 6rem; top: .35rem; padding: .05rem .5rem; border: 2.5px solid var(--stamp); border-radius: 4px; color: var(--stamp); font-weight: 850; font-size: 1rem; letter-spacing: .15em; transform: rotate(-11deg); opacity: .9; mix-blend-mode: multiply; animation: stamp-in .45s cubic-bezier(.2, 1.4, .4, 1) .7s both; }
+@keyframes stamp-in { from { transform: rotate(-11deg) scale(1.8); opacity: 0; } to { transform: rotate(-11deg) scale(1); opacity: .9; } }
+.receipt-total { display: grid; grid-template-columns: 1fr auto; gap: .3rem 1rem; padding-top: .9rem; font-size: .95rem; }
+.receipt-total .big { font-size: 1.25rem; font-weight: 850; }
+.receipt-total .saved { color: var(--stamp); font-weight: 750; }
+.receipt-wrap figcaption { margin-top: 1.3rem; text-align: center; font-size: .82rem; color: var(--muted); }
+
+/* What it does — a statement, one row per feature, separated by tear lines. */
+.section { padding-block: 3.8rem; border-top: 1px solid var(--line); }
+.section h2 { font-size: clamp(1.55rem, 3vw, 2rem); margin: 0 0 .8rem; }
+.section-intro { color: var(--ink-soft); max-width: 38rem; }
+.statement { margin: 2.2rem 0 0; max-width: 52rem; }
+.statement div { display: grid; grid-template-columns: 14rem 1fr; gap: .3rem 2rem; padding-block: 1.15rem; border-top: 1px dashed var(--line); }
+.statement div:last-child { border-bottom: 1px dashed var(--line); }
+.statement dt { font-weight: 750; }
+.statement dd { margin: 0; color: var(--ink-soft); }
+
+.local-note { display: grid; grid-template-columns: 1fr 1.4fr; gap: 2rem 3rem; }
+.local-note h2 { margin: 0; }
+.local-note p:last-child { margin-bottom: 0; }
+
+.contact { display: grid; grid-template-columns: 1fr 1.4fr; gap: 2rem 3rem; }
+.contact h2 { margin: 0; }
+.contact-address { font-weight: 700; }
+.document-links { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; font-size: .95rem; margin-top: 1.2rem; }
+
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; padding-block: 1.8rem 2.5rem; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+.site-footer p { margin: 0; }
+.site-footer a { color: var(--ink-soft); }
+
+/* Policy pages (generated by tools/render-policies.py) */
+.legal-shell { padding-top: 3.2rem; padding-bottom: 4rem; }
+.document-heading h1 { font-size: clamp(1.85rem, 4vw, 2.6rem); margin: 0 0 1.1rem; }
+.source-note, .archive-note { color: var(--ink-soft); font-size: .92rem; }
+.toc { padding: 1rem 1.3rem; margin: 2rem 0; background: var(--sheet); border: 1px solid var(--line); border-radius: .4rem; }
+.toc summary { cursor: pointer; font-weight: 700; }
+.toc ol { padding-left: 1.5rem; margin: 1rem 0 .25rem; }
+.toc li { margin-bottom: .5rem; }
+.table-help { color: var(--muted); font-size: .85rem; margin: 0 0 2rem; }
+.policy-body { font-size: 1rem; line-height: 1.9; }
+.policy-body > p, .policy-body > ul, .policy-body > ol { max-width: 52rem; }
+.policy-body h2 { font-size: 1.45rem; margin: 3.2rem 0 1.3rem; padding-top: 1.7rem; border-top: 1px dashed var(--line); }
+.policy-body h3 { font-size: 1.12rem; margin: 2rem 0 1rem; }
+.policy-body p { margin-bottom: 1.15rem; }
+.policy-body ul, .policy-body ol { padding-left: 1.5rem; }
+.policy-body li { margin-bottom: .75rem; padding-left: .15rem; }
+.policy-body li > ul, .policy-body li > ol { margin-top: .7rem; }
+.policy-body strong { font-weight: 750; }
+.policy-body code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .88em; background: var(--wash); border-radius: .2rem; padding: .1rem .3rem; }
+.policy-body hr { margin-block: 2.5rem; border: 0; border-top: 1px dashed var(--line); }
+.table-scroll { overflow-x: auto; overscroll-behavior-x: contain; margin: 1.5rem 0; border: 1px solid var(--line); border-radius: .35rem; background: var(--sheet); }
+table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .94rem; line-height: 1.75; }
+table[data-columns="2"] { min-width: 520px; }
+table[data-columns="5"], table[data-columns="6"] { min-width: 900px; }
+table[data-columns="7"] { min-width: 1120px; }
+th, td { text-align: left; vertical-align: top; padding: .95rem 1rem; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-width: 8rem; }
+th { font-weight: 750; background: var(--wash); }
+th:last-child, td:last-child { border-right: 0; }
+tr:last-child td { border-bottom: 0; }
+
+@media (max-width: 760px) {
+  .shell { width: min(100% - 2rem, 1080px); }
+  .site-header { padding-block: 1.1rem; gap: .6rem; }
+  .site-nav { gap: .2rem 1rem; width: 100%; }
+  .hero { grid-template-columns: 1fr; padding-block: 2.8rem 3rem; gap: 2.8rem; }
+  .statement div { grid-template-columns: 1fr; }
+  .local-note, .contact { grid-template-columns: 1fr; gap: 1rem; }
+  .section { padding-block: 2.8rem; }
+  .legal-shell { padding-top: 2.4rem; }
+  .policy-body h2 { font-size: 1.28rem; margin-top: 2.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stamp { animation: none; }
+}
+@media print {
+  body { background: white; color: black; }
+  .shell { width: 100%; max-width: none; }
+  .site-header, .site-footer, .skip-link, .toc, .table-help { display: none; }
+  .legal-shell { padding: 0; }
+  .table-scroll { overflow: visible; }
+  table, table[data-columns] { min-width: 0; font-size: 8pt; }
+  th, td { min-width: 0; padding: .4rem; }
+  .policy-body { font-size: 10pt; }
+}

@@ -1,190 +1,96 @@
-# superworktf.github.io
+# superwork.ai.kr
 
-앱들의 **개발자 웹사이트**다. 이 도메인의 루트가 목적이고, 그 루트에 `app-ads.txt` 가 선다.
+주식회사 케이티나스미디어가 만드는 앱들의 **개발자 웹사이트**다. 저장소 이름은
+`SuperworkTF.github.io`, 주소는 커스텀 도메인 `superwork.ai.kr` 이다.
+
+앱마다 **소개 페이지 한 장과 정책 문서**를 내고, 루트에 전 앱 공용 `app-ads.txt` 를 둔다.
+이 README 는 **앱 이름을 늘어놓지 않는다.** 앱이 늘어도 이 파일은 그대로여야 한다 —
+앱 하나에만 해당하는 사정은 그 앱 디렉터리의 `README.md` 에 적는다.
 
 ## 이 저장소가 존재하는 이유
 
-`app-ads.txt` 는 **앱별 파일이 아니라 도메인별 파일**이다.
-AdMob 크롤러는 스토어 등록정보의 개발자 웹사이트 주소를 읽고 그 **루트 도메인**의
-`/app-ads.txt` 만 본다. GitHub Pages 의 프로젝트 사이트는 `…github.io/<저장소>/` 하위 경로라
-그 자리가 될 수 없다. 그래서 **조직 사이트 저장소 하나**가 모든 앱의 파일을 대신 맡는다.
+`app-ads.txt` 는 **앱별 파일이 아니라 도메인별 파일**이다. AdMob 크롤러는 스토어
+등록정보의 개발자 웹사이트 주소를 읽고 그 **루트 도메인**의 `/app-ads.txt` 만 본다.
+프로젝트 사이트(`…github.io/<저장소>/`)는 그 자리가 될 수 없으므로, 조직 사이트 저장소
+하나가 모든 앱의 파일을 맡는다.
 
-게시자 ID 가 하나이므로 줄도 하나다. 앱이 몇 개든 이 파일 하나로 끝난다.
-나중에 미디에이션(AppLovin·Unity·Meta 등)을 붙이면 **여기에만** 줄을 추가한다 —
-앱마다 복사본을 두면 반드시 갈린다.
+게시자 ID 가 같으면 줄도 하나다. 미디에이션을 붙이거나 다른 AdMob 계정의 앱이 오면
+**여기에만** 줄을 더한다 — 앱마다 복사본을 두면 반드시 갈린다.
 
 ## 구조
 
-```
-/app-ads.txt          ← 전 앱 공용. 손대는 사람은 위 문단을 먼저 읽을 것
-/index.html           ← 앱 목록
-/<앱>/index.html      ← 앱별 안내 페이지
-```
-
-## 새 앱을 추가할 때
-
-1. `/<앱>/index.html` 을 만든다(짤랑 페이지를 복사해 고치면 된다).
-2. `/index.html` 의 목록에 카드 한 장을 더한다.
-3. **스토어 등록정보의 `웹사이트` 칸**에 `https://superwork.ai.kr/<앱>/` 을 넣는다.
-   이 칸이 비면 AdMob 은 app-ads.txt 를 영원히 못 찾는다. (짤랑이 그래서 막혀 있었다)
-4. 새 앱이 **다른 AdMob 계정**이면 그 게시자 줄을 `app-ads.txt` 에 한 줄 더한다.
-
-## 확인
-
-```bash
-curl -sI https://superwork.ai.kr/app-ads.txt   # 200 + text/plain 이어야 한다
-curl -s  https://superwork.ai.kr/app-ads.txt
-```
-AdMob → 앱 → 앱 설정 → app-ads.txt 에서 상태를 본다. 크롤링은 보통 하루 안에 돈다.
-
-## 셀렉터(Piclect) 공개 사이트
-
-셀렉터의 소개·문의·정책 문서는 이 공개 저장소의 `piclect/` 에 둔다.
-앱 소스는 별도의 비공개 저장소에 유지한다. 앱 코드, 환경 파일, 비공개 문서나
-Notion 상위 경로·내부 메타데이터를 이 저장소에 복사하지 않는다.
-
-`word-doodle/` 과 같은 구조·같은 검증 파이프라인을 쓰되, **화면은 공유하지 않는다.**
-셀렉터는 앱 저장소 `.agent/DECISIONS.md` D-020·D-025·D-029 의 팔레트
-(surface `#0B0B0C`, raised `#17171A`, accent Signal Lime `#D4F24A`, ink `#F2F4F6`,
-muted `#B0B8C1`)를 그대로 쓴다. 사진을 판단하기에 가장 좋은 바탕이 근-검정이고,
-경쟁 아이콘 150개 측정에서 ΔE00 15 안에 경쟁자가 없던 유일한 색이 라임이었다는
-근거가 그 결정에 달려 있다. 이 사이트의 색을 바꾸려면 그 결정부터 읽는다.
-
-### 파일 구조
-
 ```text
-/piclect/index.html            ← 셀렉터 소개·문의
-/piclect/styles.css            ← 셀렉터 페이지 공용 로컬 스타일(근-검정 + Signal Lime)
-/piclect/privacy/index.html    ← 개인정보처리방침(생성물)
-/piclect/terms/index.html      ← 서비스 이용약관(생성물)
-/piclect/policies/privacy.md   ← 공개 정책 본문 원본
-/piclect/policies/terms.md     ← 공개 약관 본문 원본
-/piclect/policies/sources.json ← 공개 Notion 원문 링크·제목
-/piclect/policies/render.py    ← 정책 HTML 갱신 도구(배포 시 실행 불필요)
+/app-ads.txt                 전 앱 공용. 손대기 전에 위 문단을 읽는다
+/index.html                  서비스 목록 (가나다순)
+/<app>/index.html            앱 소개·문의
+/<app>/styles.css            그 앱의 화면. 앱끼리 공유하지 않는다
+/<app>/<문서>/index.html     정책 문서 (생성물 — 손으로 고치지 않는다)
+/<app>/<문서>/<날짜>/        지난 판·공고 중인 개정본의 고정 주소
+/<app>/policies/             정책 원본(Markdown)과 sources.json
+/<app>/README.md             그 앱에만 해당하는 사정 (있을 때만)
+/tools/                      공용 렌더러·시행일 자동 전환·검사
 ```
 
-### 배포 주소 — 바꾸지 말 것
+`<app>` 디렉터리 이름이 곧 주소다: `https://superwork.ai.kr/<app>/`.
+`<문서>` 는 `privacy`(필수) · `terms` · `account-deletion` 중 **그 앱이 실제로 내는 것만** 둔다.
+메뉴도 있는 문서만 건다. 어떤 문서를 낼지는 `<app>/policies/sources.json` 이 정한다.
 
-- 소개·문의: <https://superwork.ai.kr/piclect/>
-- 개인정보처리방침: <https://superwork.ai.kr/piclect/privacy/>
-- 서비스 이용약관: <https://superwork.ai.kr/piclect/terms/>
+## 원칙
 
-뒤의 두 주소는 **공개된 「서비스 이용약관」 제17조 제2항이 직접 인용**하고 있고
-Play Console 등록정보에도 들어간다. 경로를 옮기면 법적 문서가 죽은 주소를 가리킨다.
-`render.py` 는 약관 원문에서 이 두 주소가 사라지면 생성을 실패시킨다.
+1. **정본은 이 사이트다.** 정책 원본은 `<app>/policies/*.md` 한 벌이고, HTML 은 그 그림자다.
+   아직 다른 곳(노션)이 정본인 앱은 `sources.json` 에 그렇게 적는다. 정본을 옮기는 것은
+   사람이 정하는 일이다.
+2. **HTML 을 손으로 고치지 않는다.** 정책 페이지는 전부 `tools/render-policies.py` 가 만든다.
+3. **게시한 주소는 옮기지 않는다.** 스토어 심사 양식·약관 본문·앱이 이 주소를 물고 있다.
+4. **박제를 고치지 않는다.** 지난 시행본은 그날의 글자다. 법적 내용·날짜·연락처·수치는
+   승인 없이 바꾸지 않는다.
+5. **정적 파일만 둔다.** 외부 스크립트·폰트·분석·추적 도구를 넣지 않는다. 빌드도 없다.
+6. **공개할 것만 둔다.** 앱 소스·환경 파일·내부 검토 메모·템플릿 빈칸·노션 내부 경로를
+   복사하지 않는다(렌더러가 일부 표식을 막지만, 전부를 막지는 못한다).
 
-### 문구 규칙 — 이 페이지에서 가장 중요한 부분
+## 소개 페이지 — 앱의 성격이 드러나야 한다
 
-앱 저장소는 하루 동안 앱·스토어 등록정보·공개 약관에서 **거짓 문장 일곱 개**를 걷어냈다
-(`.agent/FINDINGS.md` F-26..F-34). 그 결과가 이 페이지의 문장이다. 고치기 전에 근거를 읽는다.
+소개 페이지는 템플릿을 채운 안내문이 아니라 **그 앱이 어떤 앱인지 한눈에 보이는 첫 화면**이다.
 
-- 검토 화면에 없는 것은 **배너**다. 「광고를 넣지 않았다」가 아니다. 삭제를 마치고
-  다음 사진으로 넘어갈 때 **전면 광고가 나올 수 있다**(F-30). 한도는 `AdPolicy` 상수
-  그대로 — 첫 세션 차단, 90초 간격, 세션당 3회, 하루 6회.
-- 복구 가능 여부는 플랫폼마다 다르다. iOS·Android 11 이상은 휴지통으로 가고,
-  **Android 10 이하는 즉시 삭제되어 되돌릴 수 없다**(F-27).
-- 확보 용량은 **운영체제가 실제로 지웠다고 알려온 것만** 센다.
-- 리워드 광고의 보상은 **흐릿함 기준이 넓어지는 것**이지 검사 기간이 아니다(F-28).
-- 구독·인앱 결제·계정은 셋 다 없다.
+- **색과 글자는 앱에서 가져온다.** 앱 저장소의 디자인 토큰(테마 파일·디자인 결정 문서)을
+  그대로 쓰고, `styles.css` 첫머리 주석에 출처를 적는다. 이 사이트에서 새 색을 짓지 않는다.
+- **히어로는 그 앱이 실제로 하는 일을 보여 준다.** 앱의 핵심 장면을 HTML/CSS/SVG 로 그린다
+  (예: 명세서 앱이면 명세서 한 장, 사진 정리 앱이면 남길 사진을 고르는 장면).
+  이미지 파일보다 코드로 그린 그림을 우선한다. 예시 데이터를 쓰면 **예시라고 밝힌다.**
+- **문장은 사실만 쓴다.** 기능·수치·「광고 없음」 같은 말은 앱 코드와 개인정보처리방침에
+  비춰 참이어야 한다. 소개 문장이 방침과 어긋나면 방침이 맞다.
+- **눈에 띄는 것은 하나만.** 움직임은 한 곳에서 한 번, `prefers-reduced-motion` 을 지킨다.
+- **뼈대는 공통이다.** 건너뛰기 링크 · 브랜드와 메뉴(`aria-current`) · 문의 자리 ·
+  정책 문서 링크 · 바닥의 「전체 앱 안내」. 정책 페이지가 쓰는 클래스(`legal-shell`,
+  `policy-body`, `table-scroll` …)도 같은 `styles.css` 가 맡는다.
+- 좁은 화면(360px)에서 가로 스크롤이 없고, 키보드 초점이 보여야 한다.
 
-### 정책을 갱신할 때
+## 새 앱을 올릴 때
 
-1. 소개·레이아웃은 `piclect/index.html` 과 `piclect/styles.css` 에서 수정한다.
-   외부 스크립트·폰트·분석·추적 도구를 넣지 않는다.
-2. 정책은 승인된 공개 Notion 원문에서만 옮긴다. `piclect/policies/` 의 Markdown에는
-   **공개 정책 본문만** 보관한다. 법적 내용·날짜·연락처·수치는 임의로 고치지 않는다.
-   각 일반 문단은 한 줄로, 목록 항목은 연속된 줄로 저장한다. 중첩 목록은 탭으로 들여쓴다.
-   표는 `<table header-row="true">` 형식을 쓰며 셀 안의 Markdown도 렌더링한다.
-   셀 안의 줄바꿈은 `<br>` 로 적는다.
-3. 원문 링크·제목은 `sources.json` 에서 관리하고, 정책 HTML은 아래 도구로 생성한다.
+절차 전체는 **[`tools/ADDING-AN-APP.md`](tools/ADDING-AN-APP.md)** 에 있다. 요약:
 
-   ```bash
-   uv run --no-project piclect/policies/render.py
-   uv run --no-project piclect/policies/render.py --check
-   ```
+1. `<app>/policies/` 에 원본과 `sources.json` 을 만들고 렌더러로 페이지를 만든다.
+2. `<app>/index.html`·`styles.css` 로 소개 페이지를 만든다(위 절).
+3. 루트 `index.html` 서비스 목록에 가나다순으로 카드 한 장을 더한다.
+4. 스토어 등록정보의 **웹사이트** 칸에 `https://superwork.ai.kr/<app>/` 을 넣는다.
+   이 칸이 비면 AdMob 은 `app-ads.txt` 를 찾지 못한다.
 
-   생성기는 Markdown 원문을 줄·셀 단위로 다시 읽어 **문구 순서와 모든 링크**를 대조하고,
-   `--check` 는 파일을 바꾸지 않은 채 체크인된 HTML이 원문에서 밀렸는지 확인한다.
-4. 로컬에서 `python3 -m http.server 8000` 으로 확인한다.
-   `http://localhost:8000/piclect/` 부터 세 페이지의 메뉴, 원문 링크, 문의 링크,
-   키보드 초점, 좁은 화면의 표 가로 스크롤을 점검한다.
+## 검사
 
 ```bash
-curl -sI https://superwork.ai.kr/piclect/
-curl -sI https://superwork.ai.kr/piclect/privacy/
-curl -sI https://superwork.ai.kr/piclect/terms/
+uv run --no-project tools/render-policies.py <app>           # 만든다
+uv run --no-project tools/render-policies.py --all --check   # 커밋된 HTML 이 원본과 같은가
+uv run --no-project tools/test_render.py                     # 렌더러 단위 검사
+python3 -m http.server 8000                                  # 로컬에서 눈으로 본다
 ```
 
-## 그려보카 공개 사이트
+CI(`.github/workflows/policies.yml`)가 `--all --check` 를 돌린다 — 앱을 더해도 CI 를 고칠
+필요가 없다. 시행일 자동 전환은 `.github/workflows/policy-switch.yml` 이 날마다 돈다.
 
-그려보카의 소개·문의·정책 문서 정본은 이 저장소에서 배포하는 **GitHub Pages**다.
-정책 본문은 `word-doodle/policies/` 의 Markdown에서 관리하고, 공개 문서는
-`word-doodle/` 에 둔다. 이후 개정과 이전 방침도 이 사이트에서 관리한다.
-앱 소스는 별도의 비공개 저장소에 유지한다. 앱 코드, 환경 파일, 비공개 문서나
-내부 템플릿·작성 안내·메타데이터를 이 저장소에 복사하지 않는다.
-
-### 파일 구조
-
-```text
-/word-doodle/index.html           ← 그려보카 소개·문의
-/word-doodle/styles.css           ← 그려보카 페이지 공용 로컬 스타일
-/word-doodle/privacy/index.html   ← 개인정보처리방침
-/word-doodle/terms/index.html     ← 서비스 이용약관
-/word-doodle/policies/privacy.md  ← 공개 정책 본문 원본
-/word-doodle/policies/privacy-2026-09-09.md ← 정비 전 방침 전문(수정 금지)
-/word-doodle/privacy/2026-09-09/index.html ← 정비 전 방침 공개 보관
-/word-doodle/policies/terms.md    ← 공개 약관 본문 원본
-/word-doodle/policies/sources.json ← 공식 공개 주소·문서 제목
-/word-doodle/policies/render.py   ← 정책 HTML 갱신 도구(배포 시 실행 불필요)
-/word-doodle/policies/test_render.py ← 생성기·보관본·비공개 표식 차단 회귀 검사
-```
-
-### 배포 주소
-
-- 소개·문의: <https://superwork.ai.kr/word-doodle/>
-- 개인정보처리방침: <https://superwork.ai.kr/word-doodle/privacy/>
-- 서비스 이용약관: <https://superwork.ai.kr/word-doodle/terms/>
-
-모두 빌드가 필요 없는 정적 HTML/CSS 파일이다. 기존 GitHub Pages 설정을 사용한다.
-별도의 앱 저장소 공개나 Pages 설정 변경은 필요하지 않다. 배포 주소는 게시 후
-HTTP 응답과 본문을 확인한다. 스토어 링크는 실제 공개 등록정보가 확인되기 전까지 추가하지 않는다.
-
-### 소개·정책을 갱신할 때
-
-1. 소개·레이아웃은 `word-doodle/index.html` 과 `word-doodle/styles.css` 에서 수정한다.
-   외부 스크립트·폰트·분석·추적 도구를 넣지 않는다.
-2. 정책을 갱신할 때는 이 저장소의 현재 정본과 승인된 변경 내용을 확인한다.
-   `word-doodle/policies/` 의 Markdown에는 **공개 정책 본문만** 보관한다.
-   법적 내용·날짜·연락처·수치는 임의로 고치지 않는다. 방침과 앱의 차이는 별도로 검토한다.
-   각 일반 문단은 한 줄로, 목록 항목은 연속된 줄로 저장한다. 중첩 목록은 탭으로 들여쓴다.
-   표는 기존 `<table header-row="true">` 형식을 사용하며 셀 안의 Markdown도 렌더링한다.
-3. 공식 공개 주소·제목은 `sources.json` 에서 관리한다. 정책 HTML은 아래 도구로 생성한다.
-   [uv](https://docs.astral.sh/uv/) 가 있으면 고정 버전 Markdown 도구를 별도 환경에서 실행한다.
-   이 도구는 개발용이며 정적 사이트 배포에는 Python·uv·의존성이 필요하지 않다.
-
-   ```bash
-   uv run --no-project word-doodle/policies/render.py
-   uv run --no-project word-doodle/policies/render.py --check
-   uv run --no-project word-doodle/policies/test_render.py
-   ```
-
-   생성기는 정책의 문구 순서와 링크를 대조하며, `--check` 는 파일을 변경하지 않고
-   Markdown과 HTML의 일치를 확인한다. 단순한 게시 위치·표현 수정으로 정책 시행일을 바꾸지 않는다.
-   실질적인 개정은 기존 고지 약속을 지키고 승인된 공고일·시행일을 사용한다.
-   이전 방침 전문과 적용기간은 날짜별 공개 경로에 보존하고 새 방침에서 연결한다.
-   문서 정비만 하는 경우에는 기존 시행일과 실제 문서 정비일을 구분하여 표시한다.
-   같은 시행일의 이전 문서에 임의의 적용 종료일을 만들지 않는다.
-   `sources.json`의 `archives`에는 보관본의 날짜형 `version`과 공개 안내문 `notice`를 둔다.
-   생성기는 해당 `privacy-YYYY-MM-DD.md`를 읽어 보관 경로까지 함께 생성·검증한다.
-   이전 전문은 수정하지 않으며, 내부 검토 표식·템플릿 빈칸이 있으면 생성을 중단한다.
-4. 로컬에서 `python3 -m http.server 8000` 으로 확인한다.
-   `http://localhost:8000/word-doodle/` 부터 세 페이지의 메뉴, 공식 정책 링크, 문의 링크,
-   키보드 초점, 좁은 화면의 표 가로 스크롤을 점검한다.
-5. 다른 앱의 페이지와 `robots.txt`, `.nojekyll`, `app-ads.txt` 는 유지한다.
-   `git diff` 를 검토하고 정적 HTML/CSS와 공개 정책 본문만 게시한다.
+게시 후:
 
 ```bash
-curl -sI https://superwork.ai.kr/word-doodle/
-curl -sI https://superwork.ai.kr/word-doodle/privacy/
-curl -sI https://superwork.ai.kr/word-doodle/terms/
+curl -sI https://superwork.ai.kr/app-ads.txt       # 200 + text/plain
+curl -sI https://superwork.ai.kr/<app>/            # 200
+curl -sI https://superwork.ai.kr/<app>/privacy/    # 200
 ```

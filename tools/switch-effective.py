@@ -87,7 +87,7 @@ def switch_app(name: str, now: datetime) -> bool:
     sources = json.loads(path.read_text(encoding="utf-8"))
     changed = False
 
-    for kind in ("privacy", "terms"):
+    for kind in [k for k in sources if k != "app"]:
         editions = sources[kind]["editions"]
         for edition in list(editions):
             if edition.get("status") != "upcoming":
