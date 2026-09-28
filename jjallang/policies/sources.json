@@ -11,14 +11,13 @@
     "editions": [
       {
         "path": "privacy",
-        "source": "privacy-2026-09-04",
-        "title": "개인정보 처리방침",
+        "source": "privacy-2026-09-29",
         "status": "current",
-        "effective": "2026-09-04",
-        "upcoming": "./2026-09-29/",
-        "upcoming_effective": "2026-09-29",
-        "upcoming_announced": "2026-09-22",
-        "sha256": "60db7f6af14332d59ad11fa18c3e8be116a45c4f4b5ff8ff488d339d40ac7a82"
+        "effective": "2026-09-29",
+        "sha256": "c53efc95973743f2e76e5389ea113a1edebd0ee21431808b54497064d0d21ca5",
+        "announced": "2026-09-22",
+        "previous": "./2026-09-04/",
+        "previous_label": "2026-09-04 시행"
       },
       {
         "path": "privacy/2026-09-04",
@@ -31,10 +30,9 @@
       {
         "path": "privacy/2026-09-29",
         "source": "privacy-2026-09-29",
-        "status": "upcoming",
+        "status": "dated",
         "effective": "2026-09-29",
         "announced": "2026-09-22",
-        "current": "../",
         "sha256": "c53efc95973743f2e76e5389ea113a1edebd0ee21431808b54497064d0d21ca5"
       }
     ]
@@ -46,14 +44,13 @@
     "editions": [
       {
         "path": "terms",
-        "source": "terms-2026-09-04",
-        "title": "서비스 이용약관",
+        "source": "terms-2026-09-29",
         "status": "current",
-        "effective": "2026-09-04",
-        "upcoming": "./2026-09-29/",
-        "upcoming_effective": "2026-09-29",
-        "upcoming_announced": "2026-09-22",
-        "sha256": "9f2ea234e9dbd821a16e60af25cd73d5f6802c32ef242629f24ddacc602af3b4"
+        "effective": "2026-09-29",
+        "sha256": "27d42e89ea50d3e5f1819fc37c943d80b021a24d291d44acd6ae383557f41453",
+        "announced": "2026-09-22",
+        "previous": "./2026-09-04/",
+        "previous_label": "2026-09-04 시행"
       },
       {
         "path": "terms/2026-09-04",
@@ -66,10 +63,9 @@
       {
         "path": "terms/2026-09-29",
         "source": "terms-2026-09-29",
-        "status": "upcoming",
+        "status": "dated",
         "effective": "2026-09-29",
         "announced": "2026-09-22",
-        "current": "../",
         "sha256": "27d42e89ea50d3e5f1819fc37c943d80b021a24d291d44acd6ae383557f41453"
       }
     ]
