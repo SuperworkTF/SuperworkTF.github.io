@@ -21,6 +21,9 @@
 
 ```text
 /app-ads.txt                 전 앱 공용. 손대기 전에 위 문단을 읽는다
+/robots.txt                  검색로봇 수집 규칙. 사이트맵 주소를 적는다
+/sitemap.xml                 검색엔진에 내는 주소 목록 (생성물 — tools/render-sitemap.py)
+/google*.html · /naver*.html 검색 등록 소유 확인 파일 (지우지 않는다 — 아래 「검색엔진」)
 /index.html                  서비스 목록 (가나다순)
 /<app>/index.html            앱 소개·문의
 /<app>/styles.css            그 앱의 화면. 앱끼리 공유하지 않는다
@@ -72,6 +75,7 @@
 1. `<app>/policies/` 에 원본과 `sources.json` 을 만들고 렌더러로 페이지를 만든다.
 2. `<app>/index.html`·`styles.css` 로 소개 페이지를 만든다(위 절).
 3. 루트 `index.html` 서비스 목록에 가나다순으로 카드 한 장을 더한다.
+   `tools/render-sitemap.py` 를 돌려 사이트맵에 새 주소를 싣는다.
 4. 스토어 등록정보의 **웹사이트** 칸에 `https://superwork.ai.kr/<app>/` 을 넣는다.
    이 칸이 비면 AdMob 은 `app-ads.txt` 를 찾지 못한다.
 
@@ -81,11 +85,12 @@
 uv run --no-project tools/render-policies.py <app>           # 만든다
 uv run --no-project tools/render-policies.py --all --check   # 커밋된 HTML 이 원본과 같은가
 uv run --no-project tools/test_render.py                     # 렌더러 단위 검사
+uv run --no-project tools/render-sitemap.py                  # 사이트맵을 다시 쓴다
 python3 -m http.server 8000                                  # 로컬에서 눈으로 본다
 ```
 
-CI(`.github/workflows/policies.yml`)가 `--all --check` 를 돌린다 — 앱을 더해도 CI 를 고칠
-필요가 없다. 시행일 자동 전환은 `.github/workflows/policy-switch.yml` 이 날마다 돈다.
+CI(`.github/workflows/policies.yml`)가 `--all --check` 와 `render-sitemap.py --check` 를 돌린다 —
+앱을 더해도 CI 를 고칠 필요가 없다. 시행일 자동 전환은 `.github/workflows/policy-switch.yml` 이 날마다 돈다.
 
 게시 후:
 
@@ -93,4 +98,21 @@ CI(`.github/workflows/policies.yml`)가 `--all --check` 를 돌린다 — 앱을
 curl -sI https://superwork.ai.kr/app-ads.txt       # 200 + text/plain
 curl -sI https://superwork.ai.kr/<app>/            # 200
 curl -sI https://superwork.ai.kr/<app>/privacy/    # 200
+curl -s  https://superwork.ai.kr/sitemap.xml | grep -c '<url>'   # 사이트맵 주소 수
 ```
+
+## 검색엔진 (구글 서치콘솔 · 네이버 서치어드바이저)
+
+**검색에 서는 것은 루트 · 앱 소개 · 정책의 정본 자리뿐이다.** 정책의 날짜 주소(지난 판 · 공고
+중인 개정본 · 정본과 같은 사본)는 렌더러가 `noindex` 를 달고, 사이트맵에서도 뺀다. 열리는 것은
+그대로다(지우지 않는다). 정책 원본(`*/policies/`)·`tools/`·README 는
+`robots.txt` 가 수집에서 뺀다.
+
+**소유 확인 토큰은 지우지 않는다.** 구글은 토큰을 주기적으로 다시 확인하고, 사라지면 유예
+기간 뒤 소유 권한이 풀린다. 확인된 소유자가 모두 풀리면 그 속성의 **모든 사용자**가 접근을
+잃는다. 네이버 토큰도 같은 이유로 지우지 않는다.
+
+  · 구글 서치콘솔 — 도메인 속성 `superwork.ai.kr` 은 가비아 DNS 의 TXT 레코드로 확인한다
+    (이 저장소에는 아무것도 없다). URL 접두사 속성을 쓰면 루트의 `google<토큰>.html` 이 토큰이다
+  · 네이버 서치어드바이저 — 루트의 `naver<토큰>.html` 이 토큰이다
+  · 확인용 계정은 **회사 계정**이다. 개인 계정의 토큰만 남으면 그 사람이 떠날 때 기록과 권한이 같이 간다
