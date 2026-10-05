@@ -319,6 +319,13 @@ def status_note(metadata: dict) -> str:
     return f'      <p class="source-note">{filled}</p>\n'
 
 
+def is_indexed(edition: dict) -> bool:
+    """검색에 서는 판인가. 정본 자리(`privacy`)면 그렇고, 날짜 주소(`privacy/2026-09-05`)면 아니다.
+    렌더러의 `noindex` 와 사이트맵이 **이 한 함수**로 정한다 — 둘이 갈리면 사이트맵이 색인하지
+    말라는 주소를 내미는 모순이 된다."""
+    return "/" not in edition["path"]
+
+
 def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict,
          kinds: tuple[str, ...] = ("privacy", "terms")) -> str:
     assert_public_source(source)
@@ -396,6 +403,14 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict,
     else:
         description = f"{title} 공식 문서입니다."
         canonical_line = f'\n  <link rel="canonical" href="{escape(public_url, quote=True)}">'
+    # **검색에 서는 것은 정본 자리 하나다.** 날짜 주소는 지난 판·공고 중인 개정본·정본과 같은
+    # 원본을 든 사본이 서는 고정 주소이고, 사람은 정본 자리의 머리말 링크로 찾아온다.
+    # 날짜 주소가 색인되면 「우르르 개인정보처리방침」을 찾은 사람이 「정비 전 문서」에 먼저
+    # 닿을 수 있다. 그래서 날짜 주소는 `noindex` 다 — 열리는 것은 그대로다(지우지 않는다).
+    #
+    # 상태가 아니라 **자리**로 정한다. 시행일 자동 전환이 상태를 바꿔도 색인 여부는 그대로여야
+    # 하고, 사이트맵(`render-sitemap.py`)도 같은 규칙으로 정본 자리만 센다.
+    robots_line = "" if is_indexed(edition) else '\n  <meta name="robots" content="noindex">'
     canonical_url = escape(public_url, quote=True)
     root_prefix = "../" * (depth + 1)
     table_help = '<p class="table-help" id="table-help">표가 화면보다 넓으면 표 안에서 좌우로 스크롤할 수 있습니다. 키보드로는 표에 초점을 맞춘 뒤 방향키를 사용하세요.</p>'
@@ -404,7 +419,7 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict,
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{escape(description, quote=True)}">{canonical_line}
+  <meta name="description" content="{escape(description, quote=True)}">{canonical_line}{robots_line}
   <meta name="theme-color" content="{escape(app["theme_color"], quote=True)}">
   <title>{escape(document_title)}</title>
   <link rel="stylesheet" href="{site_prefix}styles.css">

@@ -125,5 +125,22 @@ class PolicyPublisherTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             render.kinds_of("x", {"terms": {}})
 
+    def test_only_the_canonical_place_is_indexed(self):
+        """검색에 서는 것은 정본 자리 하나다. 날짜 주소는 열리되 `noindex` 다."""
+        noindex = '<meta name="robots" content="noindex">'
+        current = render.page("privacy", self.source, self.metadata, self.app, edition=self.base)
+        archive = render.page("privacy", self.source, self.metadata, self.app, edition=self.archive)
+        self.assertNotIn(noindex, current)
+        self.assertIn(noindex, archive)
+
+    def test_noindex_follows_the_place_not_the_notice(self):
+        """「정비 전」 안내가 없는 날짜 주소도 `noindex` 다 — 공고 중인 개정본이나 정본과 같은
+        원본을 든 사본(짤랑 2026-09-29)이 그 자리에 선다. 안내 문구로 정하면 그 둘이 색인된다."""
+        copy = {"path": "privacy/2026-09-29", "source": "privacy"}
+        html = render.page("privacy", self.source, self.metadata, self.app, edition=copy)
+        self.assertNotIn('class="archive-note"', html)
+        self.assertIn('<meta name="robots" content="noindex">', html)
+
+
 if __name__ == "__main__":
     unittest.main()
