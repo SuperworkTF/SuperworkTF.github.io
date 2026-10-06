@@ -86,6 +86,13 @@ p { margin: 0 0 1rem; }
 .local-note h2 { margin: 0; }
 .local-note p:last-child { margin-bottom: 0; }
 
+/* 자주 묻는 질문 — 기능 명세(.statement)와 같은 절취선 행. 질문은 h3, 답은 p. 팔레트 변수만 쓴다. */
+.faq-list { margin: 2.2rem 0 0; max-width: 52rem; }
+.faq-item { display: grid; grid-template-columns: 14rem 1fr; gap: .3rem 2rem; padding-block: 1.15rem; border-top: 1px dashed var(--line); }
+.faq-item:last-child { border-bottom: 1px dashed var(--line); }
+.faq-item h3 { margin: 0; font-size: 1rem; font-weight: 750; line-height: 1.6; }
+.faq-item p { margin: 0; color: var(--ink-soft); }
+
 .contact { display: grid; grid-template-columns: 1fr 1.4fr; gap: 2rem 3rem; }
 .contact h2 { margin: 0; }
 .contact-address { font-weight: 700; }
@@ -130,7 +137,7 @@ tr:last-child td { border-bottom: 0; }
   .site-header { padding-block: 1.1rem; gap: .6rem; }
   .site-nav { gap: .2rem 1rem; width: 100%; }
   .hero { grid-template-columns: 1fr; padding-block: 2.8rem 3rem; gap: 2.8rem; }
-  .statement div { grid-template-columns: 1fr; }
+  .statement div, .faq-item { grid-template-columns: 1fr; }
   .local-note, .contact { grid-template-columns: 1fr; gap: 1rem; }
   .section { padding-block: 2.8rem; }
   .legal-shell { padding-top: 2.4rem; }

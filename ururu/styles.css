@@ -137,3 +137,13 @@ td a { overflow-wrap: anywhere; }
 blockquote { margin: 0 0 1.2rem; padding: .9rem 1.1rem; background: var(--wash);
              border-left: 4px solid var(--accent); }
 blockquote p:last-child { margin-bottom: 0; }
+
+/* ── 자주 묻는 질문 ── 질문 하나가 카드 한 장이다. 면은 .step 과 같은 종이와 선이고,
+   색은 위 팔레트 변수만 쓴다. 펼치고 접는 장치 없이 글자로 다 보인다. */
+.faq-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin-top: 2rem; }
+.faq-item { padding: 1.5rem; border: 1px solid var(--line); border-radius: .7rem; background: var(--sheet); }
+.faq-item h3 { font-size: 1.1rem; margin: 0 0 .7rem; }
+.faq-item p { margin: 0; color: var(--muted); font-size: .95rem; }
+@media (max-width: 700px) {
+  .faq-list { grid-template-columns: 1fr; gap: .85rem; }
+}
