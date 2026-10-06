@@ -14,9 +14,9 @@ name: policies
 
 on:
   push:
-    paths: ['*/policies/**', 'tools/**', '*/index.html', 'sitemap.xml', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
+    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', 'sitemap.xml', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
   pull_request:
-    paths: ['*/policies/**', 'tools/**', '*/index.html', 'sitemap.xml', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
+    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', 'sitemap.xml', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
   workflow_dispatch:
 
 jobs:
