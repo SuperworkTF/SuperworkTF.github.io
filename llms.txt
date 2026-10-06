@@ -23,6 +23,7 @@ SuperWork는 주식회사 케이티나스미디어의 사내 조직입니다. �
 - [셀렉터 서비스 이용약관](https://superwork.ai.kr/piclect/terms/)
 - [우르르 개인정보처리방침](https://superwork.ai.kr/ururu/privacy/)
 - [우르르 서비스 이용약관](https://superwork.ai.kr/ururu/terms/)
+- [우르르 계정 삭제 안내](https://superwork.ai.kr/ururu/account-deletion/)
 - [짤랑 개인정보처리방침](https://superwork.ai.kr/jjallang/privacy/)
 - [짤랑 서비스 이용약관](https://superwork.ai.kr/jjallang/terms/)
 - [파일핏 개인정보처리방침](https://superwork.ai.kr/filefit/privacy/)
