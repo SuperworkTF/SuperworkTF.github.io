@@ -116,6 +116,13 @@ p { margin: 0 0 1rem; }
 .promises li::before { content: "·"; color: var(--money); font-weight: 800; }
 .promises b { color: var(--ink); }
 
+/* 자주 묻는 질문 — 「세 걸음」 카드와 같은 종이 한 장. 팔레트 변수만 쓴다 */
+.faq { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-top: 2rem; }
+.faq-item { background: var(--sheet); border: 1px solid var(--line); border-radius: .6rem; padding: 1.4rem 1.3rem; }
+.faq-item h3 { font-size: 1.05rem; margin: 0 0 .5rem; }
+.faq-item p { margin: 0; color: var(--muted); font-size: .95rem; word-break: keep-all; }
+@media (max-width: 900px) { .faq { grid-template-columns: 1fr; } }
+
 /* 문의 */
 .contact { display: grid; grid-template-columns: .85fr 1.15fr; gap: 2.5rem; }
 .contact-address { font-family: var(--mono); }

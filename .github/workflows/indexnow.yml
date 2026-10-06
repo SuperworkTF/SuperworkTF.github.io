@@ -1,0 +1,37 @@
+# 바뀐 주소를 IndexNow 로 알린다 — 네이버 · Bing 외 참여 엔진에 함께 전해진다.
+#
+# **페이지가 실제로 서고 나서** 보낸다. push 직후에 보내면 검색로봇이 아직 옛 페이지를 읽는다.
+# 그래서 Pages 빌드가 끝난 뒤(page_build)에 돈다. 바뀐 파일은 마지막 커밋과 그 첫 부모의
+# 차이로 본다 — PR 머지 커밋이면 PR 전체다.
+#
+# 구글은 IndexNow 에 참여하지 않는다. 구글은 sitemap.xml 과 서치콘솔이 맡는다.
+name: indexnow
+
+on:
+  page_build:
+  workflow_dispatch:
+    inputs:
+      all:
+        description: "사이트맵의 주소 전부를 보낸다"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    if: github.event_name == 'workflow_dispatch' || github.event.build.status == 'built'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: astral-sh/setup-uv@v5
+      - name: 보낸다
+        run: |
+          if [ "${{ inputs.all }}" = "true" ]; then
+            uv run --no-project tools/indexnow.py --all
+          else
+            uv run --no-project tools/indexnow.py --since HEAD^1
+          fi

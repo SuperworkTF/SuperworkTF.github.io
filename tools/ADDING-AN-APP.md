@@ -171,6 +171,20 @@ CI 가 `Outdated sitemap.xml` 로 멈춘다.
 뼈대가 들고 있는 것(지우지 않는다): 건너뛰기 링크 · 브랜드와 메뉴 · `aria-current` ·
 문의 자리 · 바닥의 「전체 앱 안내」. 메뉴에는 그 앱이 **실제로 내는 문서만** 건다.
 
+**머리말(검색·미리보기).** 다른 앱 소개의 `<head>` 를 복사해 그 앱 값으로 바꾼다:
+canonical · `rel="icon"`·`apple-touch-icon`(절대 주소, 한 개씩) · og:*(og:title·og:description 은
+`<title>`·description 과 같게, og:site_name 은 `SuperWork`) · 구조화 데이터
+(`SoftwareApplication` — name 은 `sources.json` 의 brand, `sameAs` 는 본문 스토어 단추와 같은 목록 ·
+`BreadcrumbList`). 아이콘은 스토어에 올린 512px 를 `<app>/icon-512.png` 로, 192px 를
+`<app>/icon-192.png` 로 둔다. 스토어에 없는 앱은 루트 마크(`/favicon.png` · `/superwork-512.png`)를 쓰고
+`offers`·`operatingSystem`·`sameAs` 를 뺀다.
+
+    uv run --no-project tools/check-pages.py     # 어긋나면 무엇이 어긋났는지 찍고 멈춘다
+
+**자주 묻는 질문.** 문의 섹션 바로 앞에 FAQ 섹션(질문 `<h3>`, 답 `<p>`)을 둔다. 질문 4~6개 —
+무료인가 · 광고/결제 · 플랫폼 · 로그인 · 데이터가 어디로 가나 · 그 앱 고유의 질문. 답마다 앱 코드나
+방침의 근거가 있어야 한다. 페이지를 고쳤으면 `tools/render-llms.py` 를 돌린다.
+
 ---
 
 ## 자주 틀리는 자리
@@ -183,6 +197,8 @@ CI 가 `Outdated sitemap.xml` 로 멈춘다.
 | `Outdated HTML` | md 를 고치고 렌더러를 안 돌렸거나, HTML 을 손으로 고쳤다 |
 | `Active or remote content` | 원본에 `<script>` 류가 들어갔다 |
 | `Outdated sitemap.xml` | 앱·판을 더하고 `tools/render-sitemap.py` 를 안 돌렸다 |
+| `og:title 가 … 와 같아야 한다` | 제목을 고치고 og:title 을 안 고쳤다 (설명도 같다) |
+| `sameAs … 와 본문 스토어 단추 … 가 다르다` | 스토어 단추를 더하거나 빼고 구조화 데이터를 안 고쳤다 |
 
 ## 아직 안 끝난 일
 

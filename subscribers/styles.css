@@ -44,6 +44,10 @@ p { margin: 0 0 1rem; }
 .hero-copy { max-width: 30rem; font-size: 1.08rem; color: var(--ink-soft); }
 .hero-facts { list-style: none; padding: 0; margin: 1.8rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem; font-size: .9rem; color: var(--ink-soft); }
 .hero-facts li { padding: .3rem .75rem; border: 1px solid var(--line); border-radius: 999px; background: var(--sheet); }
+/* 스토어로 가는 단추. 문장 속 링크(먹지 파랑)와 달리 잉크 바탕이다 — 한 화면에 하나뿐이다. */
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin-top: 1.6rem; }
+.button { display: inline-block; padding: .8rem 1.3rem; border: 1px solid var(--ink); border-radius: .55rem; background: var(--ink); color: var(--sheet); text-decoration: none; font-weight: 700; }
+.button:hover { background: var(--ink-soft); color: var(--sheet); }
 
 /* The receipt — the one loud thing on the page. */
 .receipt-wrap { margin: 0; justify-self: center; width: min(100%, 360px); }
@@ -81,6 +85,13 @@ p { margin: 0 0 1rem; }
 .local-note { display: grid; grid-template-columns: 1fr 1.4fr; gap: 2rem 3rem; }
 .local-note h2 { margin: 0; }
 .local-note p:last-child { margin-bottom: 0; }
+
+/* 자주 묻는 질문 — 기능 명세(.statement)와 같은 절취선 행. 질문은 h3, 답은 p. 팔레트 변수만 쓴다. */
+.faq-list { margin: 2.2rem 0 0; max-width: 52rem; }
+.faq-item { display: grid; grid-template-columns: 14rem 1fr; gap: .3rem 2rem; padding-block: 1.15rem; border-top: 1px dashed var(--line); }
+.faq-item:last-child { border-bottom: 1px dashed var(--line); }
+.faq-item h3 { margin: 0; font-size: 1rem; font-weight: 750; line-height: 1.6; }
+.faq-item p { margin: 0; color: var(--ink-soft); }
 
 .contact { display: grid; grid-template-columns: 1fr 1.4fr; gap: 2rem 3rem; }
 .contact h2 { margin: 0; }
@@ -126,7 +137,7 @@ tr:last-child td { border-bottom: 0; }
   .site-header { padding-block: 1.1rem; gap: .6rem; }
   .site-nav { gap: .2rem 1rem; width: 100%; }
   .hero { grid-template-columns: 1fr; padding-block: 2.8rem 3rem; gap: 2.8rem; }
-  .statement div { grid-template-columns: 1fr; }
+  .statement div, .faq-item { grid-template-columns: 1fr; }
   .local-note, .contact { grid-template-columns: 1fr; gap: 1rem; }
   .section { padding-block: 2.8rem; }
   .legal-shell { padding-top: 2.4rem; }

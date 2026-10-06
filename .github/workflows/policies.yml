@@ -9,14 +9,15 @@
 # 달라지면 그것도 첫째에서 잡힌다 — 그것이 앱 넷이 한 렌더러를 쓰면서도 안심하는 이유다.
 #
 # 사이트맵도 여기서 문다. 앱이나 판을 더하고 `render-sitemap.py` 를 안 돌리면, 검색엔진에
-# 낸 목록이 사이트와 갈라진다.
+# 낸 목록이 사이트와 갈라진다. 손으로 쓰는 루트·소개 페이지의 머리말(og·구조화 데이터)은
+# `check-pages.py` 가 문다.
 name: policies
 
 on:
   push:
-    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', 'sitemap.xml', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
+    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', '*.png', '*/*.png', 'sitemap.xml', 'llms.txt', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
   pull_request:
-    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', 'sitemap.xml', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
+    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', '*.png', '*/*.png', 'sitemap.xml', 'llms.txt', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
   workflow_dispatch:
 
 jobs:
@@ -31,3 +32,7 @@ jobs:
         run: uv run --no-project tools/render-policies.py --all --check
       - name: 사이트맵이 지금 사이트와 같은가
         run: uv run --no-project tools/render-sitemap.py --check
+      - name: 손으로 쓴 페이지의 머리말·구조화 데이터가 보이는 글과 맞는가
+        run: uv run --no-project tools/check-pages.py
+      - name: llms.txt 가 지금 페이지와 같은가
+        run: uv run --no-project tools/render-llms.py --check
