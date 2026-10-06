@@ -7,6 +7,11 @@
 # 정책의 지난 판(날짜 주소)은 여기서 막지 않는다. 그 페이지가 직접 `noindex` 를 말하는데,
 # 여기서 막으면 검색로봇이 그 말을 읽지 못한다.
 # /app-ads.txt 는 AdMob 이 읽는다. 막지 않는다.
+#
+# AI 로봇은 전부 받는다 — 사람이 정했다(2026-10-06).
+#   검색·답변용  OAI-SearchBot · Claude-SearchBot · Claude-User · PerplexityBot (+ Googlebot · Bingbot · Yeti)
+#   학습용       GPTBot · ClaudeBot · Google-Extended
+# 따로 적지 않는다. 로봇 이름으로 그룹을 따로 두면 그 로봇은 아래 「*」 그룹의 Disallow 를 더는 안 읽는다.
 
 User-agent: *
 Allow: /

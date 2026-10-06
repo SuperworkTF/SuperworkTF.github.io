@@ -29,7 +29,9 @@
 /apple-touch-icon.png        같은 마크 180px
 /superwork-512.png           루트 og:image · Organization logo
 /<app>/icon-192.png · icon-512.png  그 앱의 아이콘(스토어에 올린 것) — 소개 페이지 아이콘·og:image
-/index.html                  서비스 목록 (가나다순)
+/index.html                  서비스 목록 (가나다순) · 조직 소개 링크
+/Superwork_KTNasmedia/       회사 소개 — **다른 저장소**(SuperworkTF/Superwork_KTNasmedia)가 같은 도메인에 세운다.
+                             사이트맵에 싣는다(tools/other-pages.json). /Superwork-Ideathon/ 도 다른 저장소다(noindex, 싣지 않음)
 /<app>/index.html            앱 소개·문의
 /<app>/styles.css            그 앱의 화면. 앱끼리 공유하지 않는다
 /<app>/<문서>/index.html     정책 문서 (생성물 — 손으로 고치지 않는다)
@@ -141,5 +143,7 @@ curl -s  https://superwork.ai.kr/sitemap.xml | grep -c '<url>'   # 사이트맵 
 스니펫 대상이면 된다. 그래서 할 일은 같다: 중요한 내용을 **글자로** 쓰고, 구조화 데이터가 보이는
 글과 맞고, 사이트와 스토어의 사실이 같아야 한다. `robots.txt` 는 모든 로봇을 받는다
 (`OAI-SearchBot` · `Claude-SearchBot` · `PerplexityBot` · `Yeti` · `Bingbot` 포함). 학습용 로봇
-(`GPTBot` · `ClaudeBot` · `Google-Extended`)을 막을지는 검색 노출과 따로 사람이 정한다.
+(`GPTBot` · `ClaudeBot` · `Google-Extended`)도 받는다 — 사람이 정했다(2026-10-06). 막아도 검색·AI 검색
+노출은 그대로다(각 사업자 문서: 설정이 서로 독립이다). 받는 까닭은 모델이 학습한 지식 안에도 앱이
+바르게 남게 하려는 것이다.
 `<meta name="robots" content="nosourceinfo">`(네이버 AI 출처설명 끄기)는 쓰지 않는다.

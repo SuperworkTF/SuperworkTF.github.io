@@ -189,6 +189,10 @@ def check(name: str | None, errors: list[str]) -> None:
         for app in apps():
             if f"./{app}/" not in page.anchors:
                 errors.append(f"{where}: 서비스 목록에 ./{app}/ 이 없다")
+        # 사이트맵에 싣는 다른 저장소 페이지는 루트에서도 이어야 한다 — 고아 주소를 내밀지 않는다.
+        for path in other_repo_pages():
+            if f".{path}" not in page.anchors:
+                errors.append(f"{where}: 사이트맵에 싣는 {path} 를 루트가 잇지 않는다")
         return
 
     brand = json.loads((SITE / name / "policies" / "sources.json").read_text(encoding="utf-8"))["app"]["brand"]
@@ -214,6 +218,11 @@ def check(name: str | None, errors: list[str]) -> None:
         errors.append(f"{where}: sameAs {sorted(node.get('sameAs', []))} 와 본문 스토어 단추 {sorted(stores)} 가 다르다")
     if stores and node.get("offers", {}).get("price") != "0":
         errors.append(f"{where}: 스토어에 있는 앱인데 offers.price 가 \"0\" 이 아니다")
+
+
+def other_repo_pages() -> list[str]:
+    """사이트맵에 싣는 다른 저장소 페이지 (`tools/other-pages.json`, `render-sitemap.py` 와 같은 목록)."""
+    return list(json.loads((SITE / "tools" / "other-pages.json").read_text(encoding="utf-8")))
 
 
 def apps() -> list[str]:

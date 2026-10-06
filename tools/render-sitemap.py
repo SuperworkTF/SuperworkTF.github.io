@@ -14,6 +14,7 @@
   · 루트 `/` (서비스 목록)
   · 맨 윗단의 `<디렉터리>/index.html` 전부 (앱 소개 페이지)
   · 각 앱 `policies/sources.json` 의 판 가운데 **정본 자리**(`privacy` · `terms` · …)
+  · 같은 도메인의 다른 저장소 페이지 가운데 사람이 고른 것(`tools/other-pages.json` — 회사 소개)
 
 날짜 주소(`privacy/2026-09-05/`)는 싣지 않는다. 렌더러가 그 자리에 `noindex` 를 다는 것과
 **같은 함수**(`render-policies.py` 의 `is_indexed`)로 정한다 — 둘이 갈리면 사이트맵이 「색인하지
@@ -51,6 +52,13 @@ SITE = render.SITE
 TARGET = SITE / "sitemap.xml"
 NOINDEX = '<meta name="robots" content="noindex">'
 
+# 같은 도메인 아래 서지만 **다른 저장소**가 만드는 페이지(`tools/other-pages.json`: 주소 → 저장소).
+# GitHub Pages 는 조직 사이트에 커스텀 도메인이 붙으면 조직의 다른 저장소 페이지를 `/<저장소>/` 로
+# 세운다. 이 저장소에 파일이 없으므로 존재 검사를 하지 않는다 — 대신 루트가 그리로 잇는지를
+# `check-pages.py` 가 본다. 넣는 것은 사람이 정한다: 회사 소개는 싣는다(2026-10-06). 아이디어톤
+# (/Superwork-Ideathon/)은 사내 행사이고 그 페이지가 스스로 noindex 라 싣지 않는다.
+OTHER_REPOS: dict[str, str] = json.loads((SITE / "tools" / "other-pages.json").read_text(encoding="utf-8"))
+
 
 def origin() -> str:
     host = (SITE / "CNAME").read_text(encoding="utf-8").strip()
@@ -79,7 +87,7 @@ def pages() -> list[str]:
             raise SystemExit(f"없는 페이지를 싣는다: {path}")
         if NOINDEX in html.read_text(encoding="utf-8"):
             raise SystemExit(f"noindex 인 페이지를 싣는다: {path}")
-    return found
+    return found + [path for path in OTHER_REPOS if path not in found]
 
 
 def assert_robots() -> None:
