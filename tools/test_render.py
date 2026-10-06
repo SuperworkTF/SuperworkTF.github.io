@@ -125,5 +125,43 @@ class PolicyPublisherTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             render.kinds_of("x", {"terms": {}})
 
+    def test_only_the_canonical_place_is_indexed(self):
+        """검색에 서는 것은 정본 자리 하나다. 날짜 주소는 열리되 `noindex` 다."""
+        noindex = '<meta name="robots" content="noindex">'
+        current = render.page("privacy", self.source, self.metadata, self.app, edition=self.base)
+        archive = render.page("privacy", self.source, self.metadata, self.app, edition=self.archive)
+        self.assertNotIn(noindex, current)
+        self.assertIn(noindex, archive)
+
+    def test_noindex_follows_the_place_not_the_notice(self):
+        """「정비 전」 안내가 없는 날짜 주소도 `noindex` 다 — 공고 중인 개정본이나 정본과 같은
+        원본을 든 사본(짤랑 2026-09-29)이 그 자리에 선다. 안내 문구로 정하면 그 둘이 색인된다."""
+        copy = {"path": "privacy/2026-09-29", "source": "privacy"}
+        html = render.page("privacy", self.source, self.metadata, self.app, edition=copy)
+        self.assertNotIn('class="archive-note"', html)
+        self.assertIn('<meta name="robots" content="noindex">', html)
+
+
+_sitemap_spec = importlib.util.spec_from_file_location(
+    "render_sitemap", pathlib.Path(__file__).with_name("render-sitemap.py")
+)
+sitemap = importlib.util.module_from_spec(_sitemap_spec)
+assert _sitemap_spec.loader is not None
+_sitemap_spec.loader.exec_module(sitemap)
+
+
+class SitemapTests(unittest.TestCase):
+    def test_sitemap_lists_only_indexed_places(self):
+        """사이트맵은 렌더러와 같은 규칙으로 센다. 날짜 주소가 섞이면 「색인하지 말라」는 주소를
+        검색엔진에 내미는 모순이 된다."""
+        paths = sitemap.pages()
+        self.assertEqual(paths[0], "/")
+        self.assertEqual([p for p in paths if re.search(r"/\d{4}-\d{2}-\d{2}/", p)], [])
+
+    def test_sitemap_uses_the_cname_origin(self):
+        self.assertIn(f"<loc>{sitemap.origin()}/</loc>", sitemap.sitemap())
+        self.assertTrue(sitemap.origin().startswith("https://"))
+
+
 if __name__ == "__main__":
     unittest.main()

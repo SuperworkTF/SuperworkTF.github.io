@@ -1,2 +1,18 @@
+# superwork.ai.kr — 검색엔진 수집 규칙
+#
+# 열어 두되, 사람이 읽으라고 둔 것이 아닌 파일은 수집에서 뺀다.
+#   /tools/            렌더러·검사 스크립트
+#   /*/policies/       정책 원본(Markdown)과 sources.json — 사람은 렌더된 HTML 을 읽는다
+#   README.md          저장소 안내
+# 정책의 지난 판(날짜 주소)은 여기서 막지 않는다. 그 페이지가 직접 `noindex` 를 말하는데,
+# 여기서 막으면 검색로봇이 그 말을 읽지 못한다.
+# /app-ads.txt 는 AdMob 이 읽는다. 막지 않는다.
+
 User-agent: *
 Allow: /
+Disallow: /tools/
+Disallow: /*/policies/
+Disallow: /README.md
+Disallow: /*/README.md
+
+Sitemap: https://superwork.ai.kr/sitemap.xml

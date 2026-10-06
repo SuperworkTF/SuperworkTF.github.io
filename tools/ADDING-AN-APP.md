@@ -110,6 +110,7 @@
     uv run --no-project tools/render-policies.py <app> --check   # 쓰지 않고 견준다
     uv run --no-project tools/render-policies.py --all --check   # 전부
     uv run --no-project tools/test_render.py                     # 렌더러 단위 검사
+    uv run --no-project tools/render-sitemap.py                  # 사이트맵을 다시 쓴다 (앱·판을 더한 뒤)
 
 렌더러가 자동으로 무는 것 넷:
 
@@ -117,6 +118,11 @@
   · **정적** — `<script>`·`<iframe>`·`onclick=`·`javascript:` 같은 것이 섞이면 던진다
   · **초안 금지** — 공개용이 아닌 표시가 남아 있으면 던진다
   · **지문** — `sha256` 이 있으면 승인된 원본과 같은지 본다
+
+**검색에 서는 것은 정본 자리뿐이다.** 날짜 주소(`privacy/2026-09-05/`)에는 렌더러가
+`<meta name="robots" content="noindex">` 를 단다 — 열리는 것은 그대로다. 사이트맵도 같은 규칙으로
+정본 자리와 소개 페이지만 싣는다. 앱이나 판을 더했으면 `render-sitemap.py` 를 돌린다. 안 돌리면
+CI 가 `Outdated sitemap.xml` 로 멈춘다.
 
 ## 4-1. 공고와 시행 사이 — **시행일은 저절로 온다**
 
@@ -176,6 +182,7 @@
 | `does not match the approved source` | md 를 고쳤는데 `sha256` 을 안 고쳤다. **고친 낱말이 승인된 것인지 먼저 확인한다** |
 | `Outdated HTML` | md 를 고치고 렌더러를 안 돌렸거나, HTML 을 손으로 고쳤다 |
 | `Active or remote content` | 원본에 `<script>` 류가 들어갔다 |
+| `Outdated sitemap.xml` | 앱·판을 더하고 `tools/render-sitemap.py` 를 안 돌렸다 |
 
 ## 아직 안 끝난 일
 
