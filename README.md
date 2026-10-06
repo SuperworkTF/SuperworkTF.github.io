@@ -23,6 +23,7 @@
 /app-ads.txt                 전 앱 공용. 손대기 전에 위 문단을 읽는다
 /robots.txt                  검색로봇 수집 규칙. 사이트맵 주소를 적는다
 /sitemap.xml                 검색엔진에 내는 주소 목록 (생성물 — tools/render-sitemap.py)
+/llms.txt                    AI 에이전트용 사이트 요약 (생성물 — tools/render-llms.py. 페이지에서만 글을 가져온다)
 /google*.html · /naver*.html 검색 등록 소유 확인 파일 (지우지 않는다 — 아래 「검색엔진」)
 /<32자 16진수>.txt           IndexNow 키 (파일 이름 = 내용. 지우지 않는다)
 /favicon.png · /favicon.ico  사이트 아이콘 (SuperWork 마크). 구글은 이 루트의 것 하나만 쓴다
@@ -103,11 +104,12 @@ uv run --no-project tools/render-policies.py --all --check   # 커밋된 HTML �
 uv run --no-project tools/test_render.py                     # 렌더러 단위 검사
 uv run --no-project tools/render-sitemap.py                  # 사이트맵을 다시 쓴다
 uv run --no-project tools/check-pages.py                     # 손으로 쓴 페이지의 머리말·구조화 데이터
+uv run --no-project tools/render-llms.py                     # llms.txt 를 다시 쓴다 (소개 페이지를 고친 뒤)
 uv run --no-project tools/indexnow.py --since HEAD^1 --dry-run  # IndexNow 로 보낼 주소
 python3 -m http.server 8000                                  # 로컬에서 눈으로 본다
 ```
 
-CI(`.github/workflows/policies.yml`)가 `--all --check` · `render-sitemap.py --check` · `check-pages.py` 를 돌린다 —
+CI(`.github/workflows/policies.yml`)가 `--all --check` · `render-sitemap.py --check` · `check-pages.py` · `render-llms.py --check` 를 돌린다 —
 앱을 더해도 CI 를 고칠 필요가 없다. 시행일 자동 전환은 `.github/workflows/policy-switch.yml` 이 날마다 돈다.
 
 게시 후:
@@ -147,3 +149,11 @@ curl -s  https://superwork.ai.kr/sitemap.xml | grep -c '<url>'   # 사이트맵 
 노출은 그대로다(각 사업자 문서: 설정이 서로 독립이다). 받는 까닭은 모델이 학습한 지식 안에도 앱이
 바르게 남게 하려는 것이다.
 `<meta name="robots" content="nosourceinfo">`(네이버 AI 출처설명 끄기)는 쓰지 않는다.
+
+**llms.txt.** 공식 표준이 아닌 제안(llmstxt.org)이다. 구글은 검색에 필요 없고 영향도 없다고 적었다
+(검색 센터 변경 로그 2026-06-15). 다른 AI 서비스를 위해 둔다 — 사람이 정했다(2026-10-06). 글은 전부
+페이지(제목 · 설명 · 구조화 데이터 · 루트 목록)에서 가져오므로, 소개 페이지를 고치면 다시 돌린다.
+
+**자주 묻는 질문.** 소개 페이지마다 FAQ 섹션을 둔다. 답은 앱 코드와 현행 방침으로 확인한 사실만
+쓴다(구체적 숫자·조건·플랫폼). FAQ 구조화 데이터(FAQPage)는 넣지 않는다 — 구글이 2026년 5월에
+FAQ 리치 결과를 없앴다.

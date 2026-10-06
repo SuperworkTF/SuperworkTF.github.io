@@ -15,9 +15,9 @@ name: policies
 
 on:
   push:
-    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', '*.png', '*/*.png', 'sitemap.xml', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
+    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', '*.png', '*/*.png', 'sitemap.xml', 'llms.txt', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
   pull_request:
-    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', '*.png', '*/*.png', 'sitemap.xml', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
+    paths: ['*/policies/**', 'tools/**', 'index.html', '*/index.html', '*.png', '*/*.png', 'sitemap.xml', 'llms.txt', 'robots.txt', 'CNAME', '.github/workflows/policies.yml']
   workflow_dispatch:
 
 jobs:
@@ -34,3 +34,5 @@ jobs:
         run: uv run --no-project tools/render-sitemap.py --check
       - name: 손으로 쓴 페이지의 머리말·구조화 데이터가 보이는 글과 맞는가
         run: uv run --no-project tools/check-pages.py
+      - name: llms.txt 가 지금 페이지와 같은가
+        run: uv run --no-project tools/render-llms.py --check
