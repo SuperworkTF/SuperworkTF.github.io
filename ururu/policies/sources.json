@@ -50,5 +50,15 @@
         "notice": "이 문서는 2026년 9월 5일 시행본입니다."
       }
     ]
+  },
+  "account-deletion": {
+    "public_url": "https://superwork.ai.kr/ururu/account-deletion/",
+    "title": "계정 삭제 안내",
+    "editions": [
+      {
+        "path": "account-deletion",
+        "source": "account-deletion"
+      }
+    ]
   }
 }
