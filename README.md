@@ -21,14 +21,32 @@
 
 ```text
 /app-ads.txt                 전 앱 공용. 손대기 전에 위 문단을 읽는다
-/index.html                  서비스 목록 (가나다순)
+/robots.txt                  검색로봇 수집 규칙. 사이트맵 주소를 적는다
+/sitemap.xml                 검색엔진에 내는 주소 목록 (생성물 — tools/render-sitemap.py)
+/llms.txt                    AI 에이전트용 사이트 요약 (생성물 — tools/render-llms.py. 페이지에서만 글을 가져온다)
+/google*.html · /naver*.html 검색 등록 소유 확인 파일 (지우지 않는다 — 아래 「검색엔진」)
+/<32자 16진수>.txt           IndexNow 키 (파일 이름 = 내용. 지우지 않는다)
+/favicon.png · /favicon.ico  사이트 아이콘 (SuperWork 마크). 구글은 이 루트의 것 하나만 쓴다
+/apple-touch-icon.png        같은 마크 180px
+/superwork-512.png           루트 og:image · Organization logo
+/<app>/icon-192.png · icon-512.png  그 앱의 아이콘(스토어에 올린 것) — 소개 페이지 아이콘·og:image
+/index.html                  홈. 서비스 목록 (가나다순) · 조직 소개 링크를 품는다.
+                             <!-- 생성: … --> 구역은 tools/build-site.py 가 채운다(손으로 고치지 않는다)
+/assets/apps.json · site.json 홈과 앱 쇼케이스가 쓰는 글 — 앱 소개 문장은 각 <app>/index.html 에서 옮긴다
+/assets/                     공용 스타일(site.css) · 앱 썸네일 · 배너와 소개 영상 · 워커 사진
+/apps/<분류>/<app>/          앱 쇼케이스(소개 영상 · 서비스 설명 · 정책 문서 링크) (생성물 — tools/build-site.py).
+                             정책 본문은 복사하지 않는다. 그 아래 <문서>/ 는 정본(<app>/<문서>/)으로 보내는 이동 페이지
+/policies/                   정책 모음 (생성물 — tools/build-site.py)
+/Superwork_KTNasmedia/       회사 소개 — **다른 저장소**(SuperworkTF/Superwork_KTNasmedia)가 같은 도메인에 세운다.
+                             사이트맵에 싣는다(tools/other-pages.json). /Superwork-Ideathon/ 도 다른 저장소다(noindex, 싣지 않음)
 /<app>/index.html            앱 소개·문의
 /<app>/styles.css            그 앱의 화면. 앱끼리 공유하지 않는다
 /<app>/<문서>/index.html     정책 문서 (생성물 — 손으로 고치지 않는다)
 /<app>/<문서>/<날짜>/        지난 판·공고 중인 개정본의 고정 주소
 /<app>/policies/             정책 원본(Markdown)과 sources.json
 /<app>/README.md             그 앱에만 해당하는 사정 (있을 때만)
-/tools/                      공용 렌더러·시행일 자동 전환·검사
+/tools/                      공용 렌더러·시행일 자동 전환·검사 · 홈 생성(build-site.py)
+/tools/app-video/            배너·앱 소개 영상의 장면(HTML)과 녹화기(render.py — 로컬에서 돌리고 결과 mp4 만 올린다)
 ```
 
 `<app>` 디렉터리 이름이 곧 주소다: `https://superwork.ai.kr/<app>/`.
@@ -45,6 +63,8 @@
 4. **박제를 고치지 않는다.** 지난 시행본은 그날의 글자다. 법적 내용·날짜·연락처·수치는
    승인 없이 바꾸지 않는다.
 5. **정적 파일만 둔다.** 외부 스크립트·폰트·분석·추적 도구를 넣지 않는다. 빌드도 없다.
+   예외는 하나 — 구조화 데이터(`<script type="application/ld+json">`)는 실행되지 않는 **데이터**라 둔다.
+   `src` 를 단 것, 다른 `type` 은 안 된다(`tools/check-pages.py` 가 문다).
 6. **공개할 것만 둔다.** 앱 소스·환경 파일·내부 검토 메모·템플릿 빈칸·노션 내부 경로를
    복사하지 않는다(렌더러가 일부 표식을 막지만, 전부를 막지는 못한다).
 
@@ -63,6 +83,13 @@
 - **뼈대는 공통이다.** 건너뛰기 링크 · 브랜드와 메뉴(`aria-current`) · 문의 자리 ·
   정책 문서 링크 · 바닥의 「전체 앱 안내」. 정책 페이지가 쓰는 클래스(`legal-shell`,
   `policy-body`, `table-scroll` …)도 같은 `styles.css` 가 맡는다.
+- **스토어에 있으면 스토어 단추를 건다.** 히어로의 `.actions` 에 `Google Play 에서 받기` ·
+  `App Store 에서 받기`. 주소 모양은 `https://play.google.com/store/apps/details?id=<패키지>` ·
+  `https://apps.apple.com/kr/app/id<숫자>` 하나로 쓴다. 아직 스토어에 없으면 걸지 않는다.
+- **머리말은 검색엔진과 링크 미리보기가 읽는다.** canonical · og:* · 아이콘 · 구조화 데이터
+  (`SoftwareApplication` + `BreadcrumbList`). 모양은 이미 있는 앱 소개를 따른다.
+  제목·설명을 고치면 og:title·og:description·구조화 데이터의 description 도 같이 고친다.
+  `tools/check-pages.py` 가 어긋남을 잡는다.
 - 좁은 화면(360px)에서 가로 스크롤이 없고, 키보드 초점이 보여야 한다.
 
 ## 새 앱을 올릴 때
@@ -72,6 +99,7 @@
 1. `<app>/policies/` 에 원본과 `sources.json` 을 만들고 렌더러로 페이지를 만든다.
 2. `<app>/index.html`·`styles.css` 로 소개 페이지를 만든다(위 절).
 3. 루트 `index.html` 서비스 목록에 가나다순으로 카드 한 장을 더한다.
+   `tools/render-sitemap.py` 를 돌려 사이트맵에 새 주소를 싣는다.
 4. 스토어 등록정보의 **웹사이트** 칸에 `https://superwork.ai.kr/<app>/` 을 넣는다.
    이 칸이 비면 AdMob 은 `app-ads.txt` 를 찾지 못한다.
 
@@ -81,11 +109,15 @@
 uv run --no-project tools/render-policies.py <app>           # 만든다
 uv run --no-project tools/render-policies.py --all --check   # 커밋된 HTML 이 원본과 같은가
 uv run --no-project tools/test_render.py                     # 렌더러 단위 검사
+uv run --no-project tools/render-sitemap.py                  # 사이트맵을 다시 쓴다
+uv run --no-project tools/check-pages.py                     # 손으로 쓴 페이지의 머리말·구조화 데이터
+uv run --no-project tools/render-llms.py                     # llms.txt 를 다시 쓴다 (소개 페이지를 고친 뒤)
+uv run --no-project tools/indexnow.py --since HEAD^1 --dry-run  # IndexNow 로 보낼 주소
 python3 -m http.server 8000                                  # 로컬에서 눈으로 본다
 ```
 
-CI(`.github/workflows/policies.yml`)가 `--all --check` 를 돌린다 — 앱을 더해도 CI 를 고칠
-필요가 없다. 시행일 자동 전환은 `.github/workflows/policy-switch.yml` 이 날마다 돈다.
+CI(`.github/workflows/policies.yml`)가 `--all --check` · `render-sitemap.py --check` · `check-pages.py` · `render-llms.py --check` 를 돌린다 —
+앱을 더해도 CI 를 고칠 필요가 없다. 시행일 자동 전환은 `.github/workflows/policy-switch.yml` 이 날마다 돈다.
 
 게시 후:
 
@@ -93,4 +125,42 @@ CI(`.github/workflows/policies.yml`)가 `--all --check` 를 돌린다 — 앱을
 curl -sI https://superwork.ai.kr/app-ads.txt       # 200 + text/plain
 curl -sI https://superwork.ai.kr/<app>/            # 200
 curl -sI https://superwork.ai.kr/<app>/privacy/    # 200
+curl -s  https://superwork.ai.kr/sitemap.xml | grep -c '<url>'   # 사이트맵 주소 수
 ```
+
+## 검색엔진 (구글 서치콘솔 · 네이버 서치어드바이저)
+
+**검색에 서는 것은 루트 · 앱 소개 · 정책의 정본 자리뿐이다.** 정책의 날짜 주소(지난 판 · 공고
+중인 개정본 · 정본과 같은 사본)는 렌더러가 `noindex` 를 달고, 사이트맵에서도 뺀다. 열리는 것은
+그대로다(지우지 않는다). 정책 원본(`*/policies/`)·`tools/`·README 는
+`robots.txt` 가 수집에서 뺀다.
+
+**소유 확인 토큰은 지우지 않는다.** 구글은 토큰을 주기적으로 다시 확인하고, 사라지면 유예
+기간 뒤 소유 권한이 풀린다. 확인된 소유자가 모두 풀리면 그 속성의 **모든 사용자**가 접근을
+잃는다. 네이버 토큰도 같은 이유로 지우지 않는다.
+
+  · 구글 서치콘솔 — 도메인 속성 `superwork.ai.kr` 은 가비아 DNS 의 TXT 레코드로 확인한다
+    (이 저장소에는 아무것도 없다). URL 접두사 속성을 쓰면 루트의 `google<토큰>.html` 이 토큰이다
+  · 네이버 서치어드바이저 — 루트의 `naver<토큰>.html` 이 토큰이다
+  · 확인용 계정은 **회사 계정**이다. 개인 계정의 토큰만 남으면 그 사람이 떠날 때 기록과 권한이 같이 간다
+
+**IndexNow.** Pages 빌드가 끝나면 `.github/workflows/indexnow.yml` 이 바뀐 주소(사이트맵에 있는
+것만)를 `api.indexnow.org` 로 보낸다. 네이버 · Bing 외 참여 엔진에 함께 전해진다. 구글은 참여하지
+않는다 — 구글은 사이트맵과 서치콘솔이 맡는다.
+
+**AI 검색.** 구글은 AI Overviews·AI Mode 에 「따로 필요한 기술 요건이 없다」고 한다 — 색인되고
+스니펫 대상이면 된다. 그래서 할 일은 같다: 중요한 내용을 **글자로** 쓰고, 구조화 데이터가 보이는
+글과 맞고, 사이트와 스토어의 사실이 같아야 한다. `robots.txt` 는 모든 로봇을 받는다
+(`OAI-SearchBot` · `Claude-SearchBot` · `PerplexityBot` · `Yeti` · `Bingbot` 포함). 학습용 로봇
+(`GPTBot` · `ClaudeBot` · `Google-Extended`)도 받는다 — 사람이 정했다(2026-10-06). 막아도 검색·AI 검색
+노출은 그대로다(각 사업자 문서: 설정이 서로 독립이다). 받는 까닭은 모델이 학습한 지식 안에도 앱이
+바르게 남게 하려는 것이다.
+`<meta name="robots" content="nosourceinfo">`(네이버 AI 출처설명 끄기)는 쓰지 않는다.
+
+**llms.txt.** 공식 표준이 아닌 제안(llmstxt.org)이다. 구글은 검색에 필요 없고 영향도 없다고 적었다
+(검색 센터 변경 로그 2026-06-15). 다른 AI 서비스를 위해 둔다 — 사람이 정했다(2026-10-06). 글은 전부
+페이지(제목 · 설명 · 구조화 데이터 · 루트 목록)에서 가져오므로, 소개 페이지를 고치면 다시 돌린다.
+
+**자주 묻는 질문.** 소개 페이지마다 FAQ 섹션을 둔다. 답은 앱 코드와 현행 방침으로 확인한 사실만
+쓴다(구체적 숫자·조건·플랫폼). FAQ 구조화 데이터(FAQPage)는 넣지 않는다 — 구글이 2026년 5월에
+FAQ 리치 결과를 없앴다.

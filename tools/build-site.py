@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
-"""assets/apps.json 에서 앱 소개 페이지와 정책 모음 페이지를 만든다.
+"""assets/apps.json · assets/site.json 에서 홈의 생성 구역과 앱 페이지를 만든다.
 
+    python3 tools/build-site.py
+
+    index.html 의 <!-- 생성: … --> 구역     흘러가는 썸네일 · 일곱 단계 · 도구 · 앱 카드 · 워커 · 채널 · 앱 소개 링크
     apps/<분류>/<앱>/index.html            소개 영상 · 서비스 설명 · 정책 문서
     apps/<분류>/<앱>/<문서>/index.html     정본 정책 문서(<앱>/<문서>/)로 보내는 이동 페이지
     policies/index.html                    정책 모음
 
-앱 정보를 고칠 때는 apps.json 만 고치고 이 스크립트를 다시 돌린다.
+글을 고칠 때는 두 JSON 만 고치고 이 스크립트를 다시 돌린다. 생성 구역 밖의 index.html 은 손으로 쓴다.
+README 원칙 5 에 따라 결과물에 실행되는 <script> 를 넣지 않는다 — 움직임은 CSS 로만 한다.
 정책 문서의 정본은 <앱>/<문서>/ 이고 render-policies.py 가 만든다. 여기서는 본문을 복사하지 않는다.
 """
 import json
+import re
 import shutil
 from html import escape as e
 from pathlib import Path
@@ -16,6 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SITE_URL = 'https://superwork.ai.kr/'
 DATA = json.loads((ROOT / 'assets/apps.json').read_text(encoding='utf-8'))
+SITE = json.loads((ROOT / 'assets/site.json').read_text(encoding='utf-8'))
 CATS = {c['id']: c for c in DATA['categories']}
 OS = {'앱인토스': 'Web (Toss)', 'Google Play': 'Android', '원스토어': 'Android', 'App Store': 'iOS'}
 
@@ -73,8 +79,6 @@ def page(title, desc, base, current, body, style='', head_extra=''):
 {body}
 </main>
 {footer(base)}
-<script src="{base}assets/site.js"></script>
-<script>observeReveal();</script>
 </body>
 </html>
 '''
@@ -289,6 +293,139 @@ def policies():
     return page('정책 및 약관 — Superwork', 'Superwork 앱의 개인정보처리방침과 서비스 이용약관', base, 'policies', body, POLICY_STYLE)
 
 
+ICONS = {
+    'search': '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+    'branch': '<circle cx="12" cy="19.5" r="1.8"/><path d="M12 17.7V12M12 12L6 6.5M12 12l6-5.5M12 12V5"/><circle cx="6" cy="5.2" r="1.6"/><circle cx="18" cy="5.2" r="1.6"/><circle cx="12" cy="3.6" r="1.6"/>',
+    'doc': '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/>',
+    'rocket': '<path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 15l-3-3a12 12 0 0 1 12-9 12 12 0 0 1-9 12z"/><circle cx="14.5" cy="9.5" r="1.6"/>',
+    'eye': '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+    'chart': '<path d="M3 21h18M6 21v-7M11 21V9M16 21v-4M21 21V5"/>',
+    'orbit': '<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"/><circle cx="19.6" cy="7.4" r="1.4" fill="currentColor"/>',
+    'factory': '<path d="M3 21V10l6 4V10l6 4V6l6 3v12z"/><path d="M7 17h2M12 17h2M17 17h2"/>',
+    'plug': '<path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/>',
+}
+CHANNEL_ICONS = {
+    'youtube': '<svg viewBox="0 0 24 24" fill="#ff0033" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>',
+    'tiktok': '<svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.4a2.9 2.9 0 1 1-2-2.7V9.2a6.3 6.3 0 1 0 5.4 6.2V8.6a8.2 8.2 0 0 0 4.8 1.5V6.7h-1z"/></svg>',
+    'instagram': '<svg viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.6" cy="6.4" r="1" fill="#e1306c"/></svg>',
+}
+
+
+def svg(key):
+    return f'<svg viewBox="0 0 24 24" aria-hidden="true">{ICONS[key]}</svg>'
+
+
+def home_marquee():
+    apps = DATA['apps']
+    half = (len(apps) + 1) // 2
+    def row(items, rev):
+        cells = ''.join(f'<a href="./{e(a["path"])}" tabindex="-1"><img src="./{e(a["thumbSm"])}" alt="" loading="lazy"></a>'
+                        for a in items + items)
+        return f'<div class="marquee-row{" rev" if rev else ""}">{cells}</div>'
+    return row(apps[:half], False) + '\n' + row(apps[half:], True)
+
+
+def home_flow():
+    steps = SITE['steps']
+    nodes = []
+    for i, st in enumerate(steps):
+        pins = ''.join(f'<span>{e(h)}</span>' for h in st.get('human', []))
+        pins = f'<div class="pins">{pins}</div>' if pins else ''
+        start = 30 + i * 5
+        nodes.append(
+            f'<li class="node{" orbit" if st.get("orbit") else ""}" style="animation-range:entry {start}% cover {start + 14}%">'
+            f'<div class="node-ring">{svg(st["icon"])}<span class="node-no">{i + 1}</span></div>'
+            f'<div class="node-text"><code>{e(st["cmd"])}</code><h3>{e(st["title"])}</h3><p>{e(st["desc"])}</p>{pins}</div></li>')
+    return ('<div class="flow-bands"><div class="band">hatchery <span>아이디어 → 수요 판정</span></div>'
+            '<div class="band orbit">orbit <span>배포</span></div></div>\n'
+            '<div class="flow-track"><div class="flow-line" aria-hidden="true"></div>\n<ol class="flow-steps">\n'
+            + '\n'.join(nodes) + '\n</ol></div>\n'
+            '<div class="flow-legend"><span><i style="background:var(--accent)"></i>에이전트가 하는 일</span>'
+            '<span><i style="background:#ffd166"></i>사람이 정하는 지점</span>'
+            '<span><i style="background:#7aa8ff"></i>orbit 배포 구간</span></div>')
+
+
+def home_tools():
+    out = []
+    for t in SITE['tools']:
+        top = (f'<div class="tool-top"><div class="tool-icon">{svg(t["icon"])}</div>'
+               f'<div><span class="tool-kind">{e(t["kind"])}</span><h3>{e(t["name"])}</h3></div></div>')
+        if t.get('wide'):
+            out.append(f'<article class="panel tool wide reveal">{top}<span class="btn btn-ghost" aria-disabled="true">소개 준비 중</span></article>')
+            continue
+        flow = '<i>→</i>'.join(f'<code>{e(f)}</code>' for f in t['flow'])
+        chips = ''.join(f'<span>{e(c)}</span>' for c in t['chips'])
+        out.append(
+            f'<article class="panel tool reveal {e(t.get("cls", ""))}">{top}'
+            f'<p class="tool-tag">{e(t["tag"])}</p><div class="tool-flow">{flow}</div><div class="tool-chips">{chips}</div>'
+            f'<div class="tool-foot"><div class="tool-stat"><b class="grad">{e(t["stat"][0])}</b><span>{e(t["stat"][1])}</span></div>'
+            f'<span class="btn btn-ghost" aria-disabled="true">{e(t["soon"])}</span></div></article>')
+    return '\n'.join(out)
+
+
+def home_card(a):
+    icon = f'<img src="./{e(a["icon"])}" alt="" loading="lazy">' if a.get('icon') else ''
+    video = (f'<video src="./{e(a["video"])}" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>'
+             if a.get('video') else '')
+    return (f'<a class="acard" href="./{e(a["path"])}">'
+            f'<div class="acard-media"><img src="./{e(a["thumbSm"])}" alt="{e(a["name"])}" loading="lazy" style="object-position:{e(a["thumbPos"])}">'
+            f'{video}<span class="acard-more">자세히 보기 →</span></div>'
+            f'<div class="acard-body">{icon}<div><div class="acard-genre">{e(a["genre"])}</div><b>{e(a["name"])}</b></div></div>'
+            f'<p class="acard-desc">{e(a["desc"])}</p></a>')
+
+
+def home_apps():
+    out = []
+    for c in DATA['categories']:
+        items = [a for a in DATA['apps'] if a['category'] == c['id']]
+        out.append(
+            f'<div class="group" id="apps-{e(c["id"])}"><div class="group-head reveal">'
+            f'<div><h3>{e(c["label"])}<i>{len(items)}</i></h3><p>{e(c["desc"])}</p></div></div>'
+            f'<div class="track">{"".join(home_card(a) for a in items)}</div></div>')
+    return '\n'.join(out)
+
+
+def home_workers():
+    return '\n'.join(
+        f'<figure class="worker-card reveal"><img src="./assets/workers/{e(w["id"])}.jpg" alt="{e(w["name"])}" loading="lazy">'
+        f'<span class="worker-id">{e(w["id"])}</span><b>{e(w["name"])}</b>'
+        f'<span class="worker-role">{e(w["role"])}</span><p>“{e(w["quote"])}”</p></figure>'
+        for w in SITE['workers'])
+
+
+def home_channels():
+    return '\n'.join(
+        f'<article class="panel channel reveal" style="--glow:{e(c["color"])}">{CHANNEL_ICONS[c["icon"]]}'
+        f'<h3>{e(c["name"])}</h3><p>{e(c["desc"])}</p>'
+        f'<a class="btn btn-ghost" href="{e(c["url"])}" target="_blank" rel="noopener">채널 보기 ↗</a></article>'
+        for c in SITE['channels'])
+
+
+def home_intro_links():
+    """서비스 목록 — 루트가 모든 앱 소개(<앱>/)를 잇는다(check-pages.py). 가나다순.
+    제목은 그 소개 페이지의 <title>, 설명은 그 페이지의 meta description 에서 온 apps.json 의 desc.
+    모양(a.card > .t · .d)은 tools/render-llms.py 가 읽는 그대로다."""
+    out = []
+    for a in sorted((a for a in DATA['apps'] if a.get('intro')), key=lambda a: a['name']):
+        page = (ROOT / a['intro'] / 'index.html').read_text(encoding='utf-8')
+        title = re.search(r'<title>(.*?)</title>', page, re.S).group(1).strip()
+        out.append(f'<a class="card reveal" href="./{e(a["intro"])}"><div class="t">{title}</div><div class="d">{e(a["desc"])}</div></a>')
+    return '\n'.join(out)
+
+
+def build_home():
+    path = ROOT / 'index.html'
+    html = path.read_text(encoding='utf-8')
+    blocks = {'marquee': home_marquee(), 'flow': home_flow(), 'tools': home_tools(), 'apps': home_apps(),
+              'workers': home_workers(), 'channels': home_channels(), 'intro-links': home_intro_links()}
+    for key, body in blocks.items():
+        pattern = re.compile(rf'(<!-- 생성: {re.escape(key)} [^>]*-->\n).*?(<!-- /생성: {re.escape(key)} -->)', re.S)
+        html, n = pattern.subn(lambda m: m.group(1) + body + '\n' + m.group(2), html)
+        if n != 1:
+            raise SystemExit(f'index.html 에 생성 구역 「{key}」 이 {n}개 있다 — 하나여야 한다')
+    path.write_text(html, encoding='utf-8')
+
+
 def main():
     apps = DATA['apps']
     out_root = ROOT / 'apps'
@@ -306,7 +443,8 @@ def main():
             sub.write_text(redirect(p['path'], p['title']), encoding='utf-8')
     (ROOT / 'policies').mkdir(exist_ok=True)
     (ROOT / 'policies/index.html').write_text(policies(), encoding='utf-8')
-    print(f'apps/ {len(apps)}개 앱, policies/index.html')
+    build_home()
+    print(f'index.html 생성 구역 7곳, apps/ {len(apps)}개 앱, policies/index.html')
 
 
 if __name__ == '__main__':

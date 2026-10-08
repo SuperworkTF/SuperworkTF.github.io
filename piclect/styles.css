@@ -95,6 +95,14 @@ p { margin: 0 0 1rem; }
 .site-footer a { color: var(--muted); }
 .site-footer a:hover { color: var(--accent); }
 
+/* FAQ --------------------------------------------------------------------- */
+/* 자주 묻는 질문 — 질문 h3 · 답 p. 문의 섹션 바로 앞. 위 팔레트 변수만 쓴다(새 색 없음). */
+.faq-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2.2rem; }
+.faq-item { padding: 1.4rem 1.5rem; background: var(--raised); border: 1px solid var(--line); border-radius: .6rem; }
+.faq-item h3 { font-size: 1.08rem; margin: 0 0 .6rem; }
+.faq-item p { margin: 0; color: var(--muted); font-size: .95rem; }
+@media (max-width: 760px) { .faq-list { grid-template-columns: 1fr; gap: .8rem; } }
+
 /* Policy pages ------------------------------------------------------------ */
 .legal-shell { padding-top: 3.5rem; padding-bottom: 4rem; }
 .document-heading h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); margin: 0 0 1.25rem; }

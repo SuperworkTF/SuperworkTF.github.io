@@ -110,6 +110,7 @@
     uv run --no-project tools/render-policies.py <app> --check   # 쓰지 않고 견준다
     uv run --no-project tools/render-policies.py --all --check   # 전부
     uv run --no-project tools/test_render.py                     # 렌더러 단위 검사
+    uv run --no-project tools/render-sitemap.py                  # 사이트맵을 다시 쓴다 (앱·판을 더한 뒤)
 
 렌더러가 자동으로 무는 것 넷:
 
@@ -117,6 +118,11 @@
   · **정적** — `<script>`·`<iframe>`·`onclick=`·`javascript:` 같은 것이 섞이면 던진다
   · **초안 금지** — 공개용이 아닌 표시가 남아 있으면 던진다
   · **지문** — `sha256` 이 있으면 승인된 원본과 같은지 본다
+
+**검색에 서는 것은 정본 자리뿐이다.** 날짜 주소(`privacy/2026-09-05/`)에는 렌더러가
+`<meta name="robots" content="noindex">` 를 단다 — 열리는 것은 그대로다. 사이트맵도 같은 규칙으로
+정본 자리와 소개 페이지만 싣는다. 앱이나 판을 더했으면 `render-sitemap.py` 를 돌린다. 안 돌리면
+CI 가 `Outdated sitemap.xml` 로 멈춘다.
 
 ## 4-1. 공고와 시행 사이 — **시행일은 저절로 온다**
 
@@ -165,6 +171,20 @@
 뼈대가 들고 있는 것(지우지 않는다): 건너뛰기 링크 · 브랜드와 메뉴 · `aria-current` ·
 문의 자리 · 바닥의 「전체 앱 안내」. 메뉴에는 그 앱이 **실제로 내는 문서만** 건다.
 
+**머리말(검색·미리보기).** 다른 앱 소개의 `<head>` 를 복사해 그 앱 값으로 바꾼다:
+canonical · `rel="icon"`·`apple-touch-icon`(절대 주소, 한 개씩) · og:*(og:title·og:description 은
+`<title>`·description 과 같게, og:site_name 은 `SuperWork`) · 구조화 데이터
+(`SoftwareApplication` — name 은 `sources.json` 의 brand, `sameAs` 는 본문 스토어 단추와 같은 목록 ·
+`BreadcrumbList`). 아이콘은 스토어에 올린 512px 를 `<app>/icon-512.png` 로, 192px 를
+`<app>/icon-192.png` 로 둔다. 스토어에 없는 앱은 루트 마크(`/favicon.png` · `/superwork-512.png`)를 쓰고
+`offers`·`operatingSystem`·`sameAs` 를 뺀다.
+
+    uv run --no-project tools/check-pages.py     # 어긋나면 무엇이 어긋났는지 찍고 멈춘다
+
+**자주 묻는 질문.** 문의 섹션 바로 앞에 FAQ 섹션(질문 `<h3>`, 답 `<p>`)을 둔다. 질문 4~6개 —
+무료인가 · 광고/결제 · 플랫폼 · 로그인 · 데이터가 어디로 가나 · 그 앱 고유의 질문. 답마다 앱 코드나
+방침의 근거가 있어야 한다. 페이지를 고쳤으면 `tools/render-llms.py` 를 돌린다.
+
 ---
 
 ## 자주 틀리는 자리
@@ -176,6 +196,9 @@
 | `does not match the approved source` | md 를 고쳤는데 `sha256` 을 안 고쳤다. **고친 낱말이 승인된 것인지 먼저 확인한다** |
 | `Outdated HTML` | md 를 고치고 렌더러를 안 돌렸거나, HTML 을 손으로 고쳤다 |
 | `Active or remote content` | 원본에 `<script>` 류가 들어갔다 |
+| `Outdated sitemap.xml` | 앱·판을 더하고 `tools/render-sitemap.py` 를 안 돌렸다 |
+| `og:title 가 … 와 같아야 한다` | 제목을 고치고 og:title 을 안 고쳤다 (설명도 같다) |
+| `sameAs … 와 본문 스토어 단추 … 가 다르다` | 스토어 단추를 더하거나 빼고 구조화 데이터를 안 고쳤다 |
 
 ## 아직 안 끝난 일
 

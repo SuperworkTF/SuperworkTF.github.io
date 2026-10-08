@@ -3,13 +3,60 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>Superwork</title>
-<meta name="description" content="Superwork는 AI로 게임과 서비스를 만드는 개발 조직입니다. hatchery·orbit으로 만든 앱과 도구를 소개합니다."/>
-<meta name="theme-color" content="#0a0c10"/>
-<meta property="og:title" content="Superwork"/>
-<meta property="og:description" content="사람은 방향과 판정을 정하고, 짓기·검증·배포 준비는 에이전트가 합니다."/>
-<meta property="og:image" content="./assets/brand/banner.jpg"/>
+<title>SuperWork 앱 안내</title>
+<meta name="description" content="주식회사 케이티나스미디어 SuperWork가 만드는 앱들의 소개·문의·정책 문서를 모아 둡니다."/>
+<link rel="canonical" href="https://superwork.ai.kr/"/>
+<link rel="icon" type="image/png" sizes="192x192" href="https://superwork.ai.kr/favicon.png"/>
+<link rel="apple-touch-icon" href="https://superwork.ai.kr/apple-touch-icon.png"/>
 <meta property="og:type" content="website"/>
+<meta property="og:site_name" content="SuperWork"/>
+<meta property="og:locale" content="ko_KR"/>
+<meta property="og:url" content="https://superwork.ai.kr/"/>
+<meta property="og:title" content="SuperWork 앱 안내"/>
+<meta property="og:description" content="주식회사 케이티나스미디어 SuperWork가 만드는 앱들의 소개·문의·정책 문서를 모아 둡니다."/>
+<meta property="og:image" content="https://superwork.ai.kr/superwork-512.png"/>
+<meta property="og:image:width" content="512"/>
+<meta property="og:image:height" content="512"/>
+<meta property="og:image:alt" content="SuperWork 로고"/>
+<meta name="twitter:card" content="summary"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://superwork.ai.kr/#website",
+      "name": "SuperWork",
+      "alternateName": [
+        "SuperWork 앱 안내",
+        "superwork.ai.kr"
+      ],
+      "url": "https://superwork.ai.kr/",
+      "inLanguage": "ko",
+      "publisher": {
+        "@id": "https://superwork.ai.kr/#organization"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://superwork.ai.kr/#organization",
+      "name": "SuperWork",
+      "url": "https://superwork.ai.kr/",
+      "logo": "https://superwork.ai.kr/superwork-512.png",
+      "email": "superwork.master@gmail.com",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "주식회사 케이티나스미디어",
+        "alternateName": [
+          "kt nasmedia",
+          "Nasmedia Co.,Ltd"
+        ]
+      }
+    }
+  ]
+}
+</script>
+<meta name="theme-color" content="#0a0c10"/>
 <link rel="stylesheet" href="./assets/site.css"/>
 <style>
 .hero{position:relative;overflow:hidden;padding:96px 0 0;text-align:center}
@@ -33,7 +80,7 @@
 .marquee:hover .marquee-row{animation-play-state:paused}
 @keyframes slide{to{transform:translateX(calc(-50% - 8px))}}
 
-.flow{position:relative;margin-top:8px}
+.flow{position:relative;margin-top:8px;view-timeline-name:--flow}
 .flow-bands{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:26px}
 .band{grid-column:1/7;display:flex;align-items:center;gap:12px;font:800 14px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;color:var(--accent);
   padding:0 14px 12px;border-bottom:2px solid rgba(0,217,163,.5)}
@@ -42,15 +89,21 @@
 .flow-track{position:relative}
 .flow-steps{list-style:none;display:grid;grid-template-columns:repeat(7,1fr);position:relative}
 .flow-line{position:absolute;left:calc(100% / 14);right:calc(100% / 14);top:43px;height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
-.flow-line::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--accent),#5cf3ff 75%,#7aa8ff);transform-origin:left;transform:scaleX(0);transition:transform 1.8s var(--ease) .2s}
-.flow.in .flow-line::before{transform:scaleX(1)}
+.flow-line::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--accent),#5cf3ff 75%,#7aa8ff);transform-origin:left}
 .flow-line::after{content:'';position:absolute;top:-5px;left:-120px;width:120px;height:13px;border-radius:50%;
-  background:radial-gradient(ellipse,#fff,rgba(92,243,255,.7) 35%,transparent 70%);opacity:0;animation:runner 3s linear 2s infinite}
-.flow.in .flow-line::after{opacity:1}
+  background:radial-gradient(ellipse,#fff,rgba(92,243,255,.7) 35%,transparent 70%);animation:runner 3s linear infinite}
 @keyframes runner{to{left:100%}}
-.node{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 8px;opacity:0;transform:translateY(26px) scale(.92);
-  transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.flow.in .node{opacity:1;transform:none}
+.node{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 8px}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .flow-line::before{animation:line-grow linear both;animation-timeline:--flow;animation-range:entry 40% cover 50%}
+    .node{animation:node-in linear both;animation-timeline:--flow}
+  }
+}
+@keyframes line-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes line-grow-y{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes node-in{from{opacity:0;translate:0 26px;scale:.92}to{opacity:1;translate:0 0;scale:1}}
+@media (prefers-reduced-motion: reduce){.flow-line::after{display:none}.showreel-frame video{display:none}}
 .node-ring{position:relative;flex-shrink:0;width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:var(--card);color:var(--accent);
   border:2px solid rgba(0,217,163,.55);box-shadow:0 0 0 8px var(--bg),0 0 34px rgba(0,217,163,.28);transition:transform .35s var(--ease),box-shadow .35s}
 .node:hover .node-ring{transform:scale(1.12);box-shadow:0 0 0 8px var(--bg),0 0 56px rgba(0,217,163,.6)}
@@ -71,8 +124,7 @@
   .flow-bands{display:none}
   .flow-steps{grid-template-columns:1fr;gap:28px}
   .flow-line{left:43px;right:auto;top:44px;bottom:44px;width:3px;height:auto}
-  .flow-line::before{transform-origin:top;transform:scaleY(0)}
-  .flow.in .flow-line::before{transform:scaleY(1)}
+  .flow-line::before{transform-origin:top;animation-name:line-grow-y}
   .flow-line::after{display:none}
   .node{flex-direction:row;align-items:flex-start;text-align:left;gap:20px;padding:0}
   .node code{margin-top:6px}
@@ -123,6 +175,12 @@
 .channel p{color:var(--dim);flex:1}
 .channel .btn{align-self:flex-start;padding:11px 22px;font-size:14px}
 
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;transition:transform .3s var(--ease),border-color .3s}
+.card:hover,.card:focus-visible{border-color:rgba(0,217,163,.5);transform:translateY(-3px)}
+.card .t{font-weight:800;font-size:17px;margin-bottom:6px}
+.card .d{color:var(--dim);font-size:14px;line-height:1.6}
+.dir-sub{font-size:20px;font-weight:800;margin:40px 0 16px}
 .contact{text-align:center;border:1px solid var(--line);border-radius:32px;padding:80px 24px;background:radial-gradient(ellipse at 50% 0%,rgba(0,217,163,.14),transparent 70%)}
 .contact h2{font-size:clamp(30px,4vw,48px);font-weight:900;margin-bottom:14px}
 .contact p{color:var(--dim);margin-bottom:32px}
@@ -156,7 +214,7 @@
 <main>
   <section class="showreel">
     <div class="showreel-frame">
-      <video id="showreel" src="./assets/brand/hero.mp4" poster="./assets/brand/banner.jpg" autoplay muted loop playsinline
+      <video src="./assets/brand/hero.mp4" poster="./assets/brand/banner.jpg" autoplay muted loop playsinline
         aria-label="Superwork — AI Games &amp; Services"></video>
     </div>
   </section>
@@ -171,7 +229,12 @@
         <a class="btn btn-ghost" href="#workflow">개발 체계 알아보기</a>
       </div>
     </div>
-    <div class="marquee" id="marquee" aria-hidden="true"></div>
+    <div class="marquee" aria-hidden="true">
+<!-- 생성: marquee — tools/build-site.py 가 채운다. 손으로 고치지 않는다 -->
+<div class="marquee-row"><a href="./apps/game/moongchi/" tabindex="-1"><img src="./assets/apps/moongchi/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/animalpedia/" tabindex="-1"><img src="./assets/apps/animalpedia/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/dongtoesa/" tabindex="-1"><img src="./assets/apps/dongtoesa/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/bunsik-madness/" tabindex="-1"><img src="./assets/apps/bunsik-madness/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/coin-tower/" tabindex="-1"><img src="./assets/apps/coin-tower/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/gogo-drive/" tabindex="-1"><img src="./assets/apps/gogo-drive/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/maze-escape/" tabindex="-1"><img src="./assets/apps/maze-escape/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/evolve-2048/" tabindex="-1"><img src="./assets/apps/evolve-2048/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/ghost-stack/" tabindex="-1"><img src="./assets/apps/ghost-stack/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/pinch-runner/" tabindex="-1"><img src="./assets/apps/pinch-runner/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/happy-pug/" tabindex="-1"><img src="./assets/apps/happy-pug/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/moongchi/" tabindex="-1"><img src="./assets/apps/moongchi/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/animalpedia/" tabindex="-1"><img src="./assets/apps/animalpedia/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/dongtoesa/" tabindex="-1"><img src="./assets/apps/dongtoesa/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/bunsik-madness/" tabindex="-1"><img src="./assets/apps/bunsik-madness/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/coin-tower/" tabindex="-1"><img src="./assets/apps/coin-tower/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/gogo-drive/" tabindex="-1"><img src="./assets/apps/gogo-drive/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/maze-escape/" tabindex="-1"><img src="./assets/apps/maze-escape/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/evolve-2048/" tabindex="-1"><img src="./assets/apps/evolve-2048/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/ghost-stack/" tabindex="-1"><img src="./assets/apps/ghost-stack/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/game/pinch-runner/" tabindex="-1"><img src="./assets/apps/pinch-runner/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/happy-pug/" tabindex="-1"><img src="./assets/apps/happy-pug/thumb-sm.jpg" alt="" loading="lazy"></a></div>
+<div class="marquee-row rev"><a href="./apps/life/ururu/" tabindex="-1"><img src="./assets/apps/ururu/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/dasseotda/" tabindex="-1"><img src="./assets/apps/dasseotda/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/trotstep/" tabindex="-1"><img src="./assets/apps/trotstep/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/price-time-machine/" tabindex="-1"><img src="./assets/apps/price-time-machine/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/hachanhan-image/" tabindex="-1"><img src="./assets/apps/hachanhan-image/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/dream-gallery/" tabindex="-1"><img src="./assets/apps/dream-gallery/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/subscribers/" tabindex="-1"><img src="./assets/apps/subscribers/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/piclect/" tabindex="-1"><img src="./assets/apps/piclect/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/jjallang/" tabindex="-1"><img src="./assets/apps/jjallang/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/word-doodle/" tabindex="-1"><img src="./assets/apps/word-doodle/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/filefit/" tabindex="-1"><img src="./assets/apps/filefit/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/ururu/" tabindex="-1"><img src="./assets/apps/ururu/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/dasseotda/" tabindex="-1"><img src="./assets/apps/dasseotda/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/trotstep/" tabindex="-1"><img src="./assets/apps/trotstep/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/price-time-machine/" tabindex="-1"><img src="./assets/apps/price-time-machine/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/hachanhan-image/" tabindex="-1"><img src="./assets/apps/hachanhan-image/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/life/dream-gallery/" tabindex="-1"><img src="./assets/apps/dream-gallery/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/subscribers/" tabindex="-1"><img src="./assets/apps/subscribers/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/piclect/" tabindex="-1"><img src="./assets/apps/piclect/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/jjallang/" tabindex="-1"><img src="./assets/apps/jjallang/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/word-doodle/" tabindex="-1"><img src="./assets/apps/word-doodle/thumb-sm.jpg" alt="" loading="lazy"></a><a href="./apps/utility/filefit/" tabindex="-1"><img src="./assets/apps/filefit/thumb-sm.jpg" alt="" loading="lazy"></a></div>
+<!-- /생성: marquee -->
+    </div>
   </section>
 
   <section class="section" id="workflow">
@@ -180,7 +243,23 @@
         <div><span class="eyebrow">AI 기반 개발·출시 체계</span><h2>아이디어에서 출시까지,<br>일곱 단계</h2></div>
         <p>에이전트가 짓고 검증하고, 사람은 노란 지점에서 정합니다.</p>
       </div>
-      <div class="flow reveal" id="flow"></div>
+      <div class="flow" id="flow">
+<!-- 생성: flow — tools/build-site.py 가 채운다. 손으로 고치지 않는다 -->
+<div class="flow-bands"><div class="band">hatchery <span>아이디어 → 수요 판정</span></div><div class="band orbit">orbit <span>배포</span></div></div>
+<div class="flow-track"><div class="flow-line" aria-hidden="true"></div>
+<ol class="flow-steps">
+<li class="node" style="animation-range:entry 30% cover 44%"><div class="node-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="node-no">1</span></div><div class="node-text"><code>intake</code><h3>아이디어 수급</h3><p>커뮤니티 불평에서 아픔 발굴·심사</p><div class="pins"><span>아이디어</span></div></div></li>
+<li class="node" style="animation-range:entry 35% cover 49%"><div class="node-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="19.5" r="1.8"/><path d="M12 17.7V12M12 12L6 6.5M12 12l6-5.5M12 12V5"/><circle cx="6" cy="5.2" r="1.6"/><circle cx="18" cy="5.2" r="1.6"/><circle cx="12" cy="3.6" r="1.6"/></svg><span class="node-no">2</span></div><div class="node-text"><code>/diverge</code><h3>발산</h3><p>한 줄 아이디어 → 5개 관점 검토</p><div class="pins"><span>방향 선택</span></div></div></li>
+<li class="node" style="animation-range:entry 40% cover 54%"><div class="node-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/></svg><span class="node-no">3</span></div><div class="node-text"><code>/newapp</code><h3>브리프·세팅</h3><p>브리프·가드·저장소 자동 생성</p></div></li>
+<li class="node" style="animation-range:entry 45% cover 59%"><div class="node-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 15l-3-3a12 12 0 0 1 12-9 12 12 0 0 1-9 12z"/><circle cx="14.5" cy="9.5" r="1.6"/></svg><span class="node-no">4</span></div><div class="node-text"><code>킥오프</code><h3>무인 개발</h3><p>목표 한 장으로 에이전트가 구현·검증</p><div class="pins"><span>킥오프</span></div></div></li>
+<li class="node" style="animation-range:entry 50% cover 64%"><div class="node-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="node-no">5</span></div><div class="node-text"><code>review</code><h3>맥락 리뷰</h3><p>독립 세션 2개가 변경분 검토</p></div></li>
+<li class="node" style="animation-range:entry 55% cover 69%"><div class="node-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M6 21v-7M11 21V9M16 21v-4M21 21V5"/></svg><span class="node-no">6</span></div><div class="node-text"><code>/versionup</code><h3>수요 판정</h3><p>계속·전환·출시·중단 판정</p><div class="pins"><span>수요 판정</span></div></div></li>
+<li class="node orbit" style="animation-range:entry 60% cover 74%"><div class="node-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"/><circle cx="19.6" cy="7.4" r="1.4" fill="currentColor"/></svg><span class="node-no">7</span></div><div class="node-text"><code>orbit</code><h3>배포</h3><p>빌드·업로드·기록 자동화</p><div class="pins"><span>법적 명의·결제</span><span>심사 제출·정식 출시</span></div></div></li>
+</ol></div>
+<div class="flow-legend"><span><i style="background:var(--accent)"></i>에이전트가 하는 일</span><span><i style="background:#ffd166"></i>사람이 정하는 지점</span><span><i style="background:#7aa8ff"></i>orbit 배포 구간</span></div>
+<!-- /생성: flow -->
+      </div>
+      <p class="quote reveal">“사람은 방향과 판정을 정하고, 짓기·검증·배포 준비는 에이전트가 합니다.”</p>
     </div>
   </section>
 
@@ -190,7 +269,13 @@
         <div><span class="eyebrow">TOOLS</span><h2>Superwork가 쓰는 도구,<br>함께 씁니다</h2></div>
         <p>앱을 짓는 hatchery, 내보내는 orbit.</p>
       </div>
-      <div class="tools" id="tools-list"></div>
+      <div class="tools">
+<!-- 생성: tools — tools/build-site.py 가 채운다. 손으로 고치지 않는다 -->
+<article class="panel tool reveal "><div class="tool-top"><div class="tool-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V10l6 4V10l6 4V6l6 3v12z"/><path d="M7 17h2M12 17h2M17 17h2"/></svg></div><div><span class="tool-kind">APP FACTORY</span><h3>hatchery</h3></div></div><p class="tool-tag">아이디어에서 수요 판정까지, 한 흐름으로</p><div class="tool-flow"><code>/diverge</code><i>→</i><code>/newapp</code><i>→</i><code>킥오프</code><i>→</i><code>review</code><i>→</i><code>/versionup</code></div><div class="tool-chips"><span>무인 개발</span><span>맥락 리뷰</span><span>테스트 약화 차단 훅</span></div><div class="tool-foot"><div class="tool-stat"><b class="grad">6</b><span>개 앱 착수</span></div><span class="btn btn-ghost" aria-disabled="true">GitHub 공개 예정</span></div></article>
+<article class="panel tool reveal orbit"><div class="tool-top"><div class="tool-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"/><circle cx="19.6" cy="7.4" r="1.4" fill="currentColor"/></svg></div><div><span class="tool-kind">CLAUDE PLUGIN · 배포</span><h3>orbit</h3></div></div><p class="tool-tag">스토어 테스트 트랙까지, 배포 자동화</p><div class="tool-flow"><code>빌드</code><i>→</i><code>업로드</code><i>→</i><code>기록</code></div><div class="tool-chips"><span>Expo</span><span>Flutter</span><span>iOS · Android</span><span>앱인토스</span><span>등록정보 파일 관리</span></div><div class="tool-foot"><div class="tool-stat"><b class="grad">5</b><span>건 TestFlight 배포</span></div><span class="btn btn-ghost" aria-disabled="true">GitHub 공개 예정</span></div></article>
+<article class="panel tool wide reveal"><div class="tool-top"><div class="tool-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/></svg></div><div><span class="tool-kind">MCP</span><h3>Superwork MCP</h3></div></div><span class="btn btn-ghost" aria-disabled="true">소개 준비 중</span></article>
+<!-- /생성: tools -->
+      </div>
     </div>
   </section>
 
@@ -198,9 +283,15 @@
     <div class="wrap">
       <div class="section-head reveal">
         <div><span class="eyebrow">APPS</span><h2>어떤 아이디어든,<br>이제 움직입니다</h2></div>
-        <p>Superwork가 만든 앱들입니다. 카드에 마우스를 올리면 커지고, 누르면 자세히 볼 수 있어요.</p>
+        <p>Superwork가 만든 앱들입니다. 옆으로 넘겨 보고, 카드에 마우스를 올리면 커지고, 누르면 자세히 볼 수 있어요.</p>
       </div>
-      <div id="app-groups"></div>
+      <div class="groups">
+<!-- 생성: apps — tools/build-site.py 가 채운다. 손으로 고치지 않는다 -->
+<div class="group" id="apps-game"><div class="group-head reveal"><div><h3>게임<i>10</i></h3><p>짧게 즐기고 오래 남는 게임들</p></div></div><div class="track"><a class="acard" href="./apps/game/moongchi/"><div class="acard-media"><img src="./assets/apps/moongchi/thumb-sm.jpg" alt="뭉치뭉치" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/moongchi/icon.png" alt="" loading="lazy"><div><div class="acard-genre">힐링 캐주얼 게임</div><b>뭉치뭉치</b></div></div><p class="acard-desc">동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임.</p></a><a class="acard" href="./apps/game/animalpedia/"><div class="acard-media"><img src="./assets/apps/animalpedia/thumb-sm.jpg" alt="귀여운동물사전" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/animalpedia/icon.png" alt="" loading="lazy"><div><div class="acard-genre">수집·힐링 게임</div><b>귀여운동물사전</b></div></div><p class="acard-desc">깜찍한 동물들을 하나씩 모아 나만의 도감을 채워가는 힐링 컬렉션.</p></a><a class="acard" href="./apps/game/dongtoesa/"><div class="acard-media"><img src="./assets/apps/dongtoesa/thumb-sm.jpg" alt="동네퇴마사" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/dongtoesa/icon.png" alt="" loading="lazy"><div><div class="acard-genre">캐주얼 액션 RPG</div><b>동네퇴마사</b></div></div><p class="acard-desc">골목골목 출몰하는 악귀를 물리치는 통쾌한 한국형 퇴마 액션 RPG.</p></a><a class="acard" href="./apps/game/bunsik-madness/"><div class="acard-media"><img src="./assets/apps/bunsik-madness/thumb-sm.jpg" alt="분식대란" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/bunsik-madness/icon.png" alt="" loading="lazy"><div><div class="acard-genre">분식 퍼즐 게임</div><b>분식대란</b></div></div><p class="acard-desc">밀려드는 주문을 퍼즐로 척척! 손맛 터지는 분식집 운영 게임.</p></a><a class="acard" href="./apps/game/coin-tower/"><div class="acard-media"><img src="./assets/apps/coin-tower/thumb-sm.jpg" alt="코인 타워" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/coin-tower/icon.png" alt="" loading="lazy"><div><div class="acard-genre">뱀서류 로그라이크</div><b>코인 타워</b></div></div><p class="acard-desc">한 손으로 즐기는 뱀서류 액션! 코인으로 캐릭터를 강화하며 더 높이 올라가세요.</p></a><a class="acard" href="./apps/game/gogo-drive/"><div class="acard-media"><img src="./assets/apps/gogo-drive/thumb-sm.jpg" alt="고고 드라이브" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/gogo-drive/icon.png" alt="" loading="lazy"><div><div class="acard-genre">3D 캐주얼 레이싱</div><b>고고 드라이브</b></div></div><p class="acard-desc">달리고, 피하고, 추월하라! 생동감 넘치는 3D 도시를 질주하는 드라이빙 게임.</p></a><a class="acard" href="./apps/game/maze-escape/"><div class="acard-media"><img src="./assets/apps/maze-escape/thumb-sm.jpg" alt="어둠의 미로" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/maze-escape/icon.png" alt="" loading="lazy"><div><div class="acard-genre">1인칭 생존 호러</div><b>어둠의 미로</b></div></div><p class="acard-desc">칠흑 같은 미로 속, 손전등 하나와 발소리에 의지해 보이지 않는 추격자를 피해 탈출하라.</p></a><a class="acard" href="./apps/game/evolve-2048/"><div class="acard-media"><img src="./assets/apps/evolve-2048/thumb-sm.jpg" alt="진화 2048" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/evolve-2048/icon.png" alt="" loading="lazy"><div><div class="acard-genre">퍼즐 게임</div><b>진화 2048</b></div></div><p class="acard-desc">숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!</p></a><a class="acard" href="./apps/game/ghost-stack/"><div class="acard-media"><img src="./assets/apps/ghost-stack/thumb-sm.jpg" alt="고스트 스택" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/ghost-stack/icon.png" alt="" loading="lazy"><div><div class="acard-genre">캐주얼 게임</div><b>고스트 스택</b></div></div><p class="acard-desc">숨은 고수(고스트)와 겨루는 네온 야경 블록 쌓기! 탭 한 번으로 즐기는 하이퍼 캐주얼.</p></a><a class="acard" href="./apps/game/pinch-runner/"><div class="acard-media"><img src="./assets/apps/pinch-runner/thumb-sm.jpg" alt="핀치 러너" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/pinch-runner/icon.png" alt="" loading="lazy"><div><div class="acard-genre">캐주얼 러너 게임</div><b>핀치 러너</b></div></div><p class="acard-desc">오므리면 작아지고, 벌리면 커진다! 두 손가락 핀치 하나로 즐기는 한 끗 차이 엔드리스 러너.</p></a></div></div>
+<div class="group" id="apps-life"><div class="group-head reveal"><div><h3>라이프·AI<i>7</i></h3><p>일상에 AI를 더한 서비스</p></div></div><div class="track"><a class="acard" href="./apps/life/happy-pug/"><div class="acard-media"><img src="./assets/apps/happy-pug/thumb-sm.jpg" alt="해피퍼그" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/happy-pug/icon.png" alt="" loading="lazy"><div><div class="acard-genre">반려 커뮤니티</div><b>해피퍼그</b></div></div><p class="acard-desc">동네 강아지 친구들과 함께 걷는 산책 모임, 반려인을 위한 커뮤니티.</p></a><a class="acard" href="./apps/life/ururu/"><div class="acard-media"><img src="./assets/apps/ururu/thumb-sm.jpg" alt="우르르" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/ururu/icon.png" alt="" loading="lazy"><div><div class="acard-genre">소속 대항 미니게임</div><b>우르르</b></div></div><p class="acard-desc">내 학교와 학과를 걸고 다른 학교와 겨루는 소속 대항 미니게임. 한 판 20초 안팎, 게임 20종.</p></a><a class="acard" href="./apps/life/dasseotda/"><div class="acard-media"><img src="./assets/apps/dasseotda/thumb-sm.jpg" alt="다썼다" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/dasseotda/icon.png" alt="" loading="lazy"><div><div class="acard-genre">생활·편의 · AI</div><b>다썼다</b></div></div><p class="acard-desc">집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요.</p></a><a class="acard" href="./apps/life/trotstep/"><div class="acard-media"><img src="./assets/apps/trotstep/thumb-sm.jpg" alt="트롯스텝" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/trotstep/icon.png" alt="" loading="lazy"><div><div class="acard-genre">라이프스타일·팬덤</div><b>트롯스텝</b></div></div><p class="acard-desc">매일 걷는 걸음이 최애 가수를 향한 응원이 됩니다. 걸음으로 모은 투표권으로 응원하세요.</p></a><a class="acard" href="./apps/life/price-time-machine/"><div class="acard-media"><img src="./assets/apps/price-time-machine/thumb-sm.jpg" alt="물가타임머신" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/price-time-machine/icon.png" alt="" loading="lazy"><div><div class="acard-genre">생활정보 서비스</div><b>물가타임머신</b></div></div><p class="acard-desc">그때 그 가격, 지금은 얼마? 시점별 물가를 한눈에 비교하는 타임머신.</p></a><a class="acard" href="./apps/life/hachanhan-image/"><div class="acard-media"><img src="./assets/apps/hachanhan-image/thumb-sm.jpg" alt="하찮은이미지" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/hachanhan-image/icon.png" alt="" loading="lazy"><div><div class="acard-genre">AI 이미지·재미</div><b>하찮은이미지</b></div></div><p class="acard-desc">못 그려도 괜찮아! 사진 한 장이면 피식 웃기는 낙서풍 그림으로 뚝딱.</p></a><a class="acard" href="./apps/life/dream-gallery/"><div class="acard-media"><img src="./assets/apps/dream-gallery/thumb-sm.jpg" alt="드림갤러리" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/dream-gallery/icon.png" alt="" loading="lazy"><div><div class="acard-genre">AI 아트·갤러리</div><b>드림갤러리</b></div></div><p class="acard-desc">당신이 꾼 꿈을 AI가 한 장의 일러스트로. 꿈을 그림으로 모으는 갤러리.</p></a></div></div>
+<div class="group" id="apps-utility"><div class="group-head reveal"><div><h3>유틸리티<i>5</i></h3><p>필요할 때 바로 꺼내 쓰는 도구</p></div></div><div class="track"><a class="acard" href="./apps/utility/subscribers/"><div class="acard-media"><img src="./assets/apps/subscribers/thumb-sm.jpg" alt="구독자" loading="lazy" style="object-position:center"><video src="./assets/apps/subscribers/preview.mp4" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/subscribers/icon.png" alt="" loading="lazy"><div><div class="acard-genre">구독료 관리</div><b>구독자</b></div></div><p class="acard-desc">카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다. 결제 알림은 기기 안에서만 읽습니다.</p></a><a class="acard" href="./apps/utility/piclect/"><div class="acard-media"><img src="./assets/apps/piclect/thumb-sm.jpg" alt="셀렉터" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/piclect/icon.png" alt="" loading="lazy"><div><div class="acard-genre">사진 정리</div><b>셀렉터</b></div></div><p class="acard-desc">지울 사진을 고르는 대신 남길 사진을 먼저 정하는 사진 정리 앱.</p></a><a class="acard" href="./apps/utility/jjallang/"><div class="acard-media"><img src="./assets/apps/jjallang/thumb-sm.jpg" alt="짤랑" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/jjallang/icon.png" alt="" loading="lazy"><div><div class="acard-genre">근무표·급여계산</div><b>짤랑</b></div></div><p class="acard-desc">출퇴근 버튼 하나로 야간·연장·휴일·주휴수당까지 계산해 홈 화면 위젯에 보여주는 근무 기록 앱.</p></a><a class="acard" href="./apps/utility/word-doodle/"><div class="acard-media"><img src="./assets/apps/word-doodle/thumb-sm.jpg" alt="그려보카" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="./assets/apps/word-doodle/icon.png" alt="" loading="lazy"><div><div class="acard-genre">영단어 학습</div><b>그려보카</b></div></div><p class="acard-desc">영단어를 낙서로 기억하고, 내가 그린 그림으로 복습하는 학습 앱.</p></a><a class="acard" href="./apps/utility/filefit/"><div class="acard-media"><img src="./assets/apps/filefit/thumb-sm.jpg" alt="파일핏" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><div><div class="acard-genre">사진 변환·PDF</div><b>파일핏</b></div></div><p class="acard-desc">사진 용량을 정한 KB 이하로 줄이고 JPG·PNG·WebP 변환, 크기 조절, 여러 장을 A4 PDF로 묶는 무료 도구. 파일을 서버에 올리지 않고 기기 안에서 처리합니다.</p></a></div></div>
+<!-- /생성: apps -->
+      </div>
     </div>
   </section>
 
@@ -210,11 +301,18 @@
         <div><span class="eyebrow">WORKERS</span><h2>Superwork의 워커들</h2></div>
         <p>문제의 밑바닥까지 파고들어, AI 에이전트 워크플로로 가장 효율적인 해답을 찾습니다.</p>
       </div>
-      <div class="workers" id="workers"></div>
+      <div class="workers">
+<!-- 생성: workers — tools/build-site.py 가 채운다. 손으로 고치지 않는다 -->
+<figure class="worker-card reveal"><img src="./assets/workers/sung.jpg" alt="임성학" loading="lazy"><span class="worker-id">sung</span><b>임성학</b><span class="worker-role">Forward Deployed Engineer · PM</span><p>“당연한 것에 질문을 던지고, 문제를 재정의하며, 실질적인 해결책을 설계합니다.”</p></figure>
+<figure class="worker-card reveal"><img src="./assets/workers/hoosoo.jpg" alt="김호수" loading="lazy"><span class="worker-id">hoosoo</span><b>김호수</b><span class="worker-role">AI Agent Architect</span><p>“문제를 재정의하고, 스스로 개선하는 시스템을 설계합니다.”</p></figure>
+<figure class="worker-card reveal"><img src="./assets/workers/susu.jpg" alt="임수연" loading="lazy"><span class="worker-id">susu</span><b>임수연</b><span class="worker-role">AI Creative Engineer</span><p>“AI가 창작하도록 도구를 쥐여주고, 그 도구로 직접 만듭니다.”</p></figure>
+<figure class="worker-card reveal"><img src="./assets/workers/inotterwords.jpg" alt="박정민" loading="lazy"><span class="worker-id">inotterwords</span><b>박정민</b><span class="worker-role">DevOps Engineer</span><p>“흐름을 잇고, 스스로 지속되게 합니다.”</p></figure>
+<!-- /생성: workers -->
+      </div>
       <div class="team-intro reveal">
         <p>“우리는 문제의 밑바닥까지 깊게 파고들어(Question &amp; Re-define), AI 에이전트 워크플로우를 통해 가장 효율적인 방식으로 비즈니스 해답을 찾아냅니다.”</p>
         <p>기획부터 배포까지, 끊김 없는(Seamless) AI 네이티브 환경을 구축하는 것이 우리의 목표입니다.</p>
-        <a class="btn btn-ghost" href="https://superwork.ai.kr/Superwork_KTNasmedia/team" target="_blank" rel="noopener">팀 소개 자세히 보기 ↗</a>
+        <a class="btn btn-ghost" href="./Superwork_KTNasmedia/team">팀 소개 자세히 보기 →</a>
       </div>
     </div>
   </section>
@@ -225,7 +323,43 @@
         <div><span class="eyebrow">CHANNELS</span><h2>Superwork 채널</h2></div>
         <p>새 앱 소식과 숏폼 영상을 유튜브·틱톡·인스타그램에 올립니다.</p>
       </div>
-      <div class="channels" id="channel-list"></div>
+      <div class="channels">
+<!-- 생성: channels — tools/build-site.py 가 채운다. 손으로 고치지 않는다 -->
+<article class="panel channel reveal" style="--glow:#ff0033"><svg viewBox="0 0 24 24" fill="#ff0033" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg><h3>YouTube</h3><p>앱 소개와 숏폼 영상을 올립니다.</p><a class="btn btn-ghost" href="https://www.youtube.com/channel/UCX9pSdq2TWtjks-UXVzrTAg" target="_blank" rel="noopener">채널 보기 ↗</a></article>
+<article class="panel channel reveal" style="--glow:#25f4ee"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.4a2.9 2.9 0 1 1-2-2.7V9.2a6.3 6.3 0 1 0 5.4 6.2V8.6a8.2 8.2 0 0 0 4.8 1.5V6.7h-1z"/></svg><h3>TikTok</h3><p>짧은 영상으로 새 앱을 소개합니다.</p><a class="btn btn-ghost" href="https://www.tiktok.com/@superwork.master" target="_blank" rel="noopener">채널 보기 ↗</a></article>
+<article class="panel channel reveal" style="--glow:#e1306c"><svg viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.6" cy="6.4" r="1" fill="#e1306c"/></svg><h3>Instagram</h3><p>앱 소식과 영상을 전합니다.</p><a class="btn btn-ghost" href="https://www.instagram.com/superwork.master/" target="_blank" rel="noopener">채널 보기 ↗</a></article>
+<!-- /생성: channels -->
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="directory">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">DIRECTORY</span><h2>서비스 목록</h2></div>
+        <p>앱마다 소개 페이지와 정책 문서를 둡니다. 스토어에 등록된 앱의 공식 안내 주소입니다.</p>
+      </div>
+      <div class="cards">
+<!-- 생성: intro-links — tools/build-site.py 가 채운다. 손으로 고치지 않는다 -->
+<a class="card reveal" href="./subscribers/"><div class="t">구독자 — 새는 구독료를 결제 전에</div><div class="d">카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다. 결제 알림은 기기 안에서만 읽습니다.</div></a>
+<a class="card reveal" href="./word-doodle/"><div class="t">그려보카 — 그림으로 기억하는 영단어</div><div class="d">영단어를 낙서로 기억하고, 내가 그린 그림으로 복습하는 학습 앱.</div></a>
+<a class="card reveal" href="./piclect/"><div class="t">셀렉터 — 남길 사진을 먼저 정하는 사진 정리</div><div class="d">지울 사진을 고르는 대신 남길 사진을 먼저 정하는 사진 정리 앱.</div></a>
+<a class="card reveal" href="./ururu/"><div class="t">우르르 — 소속 대항 미니게임, 한 판 20초</div><div class="d">내 학교와 학과를 걸고 다른 학교와 겨루는 소속 대항 미니게임. 한 판 20초 안팎, 게임 20종.</div></a>
+<a class="card reveal" href="./jjallang/"><div class="t">짤랑 — 근무표 위젯, 알바 급여계산</div><div class="d">출퇴근 버튼 하나로 야간·연장·휴일·주휴수당까지 계산해 홈 화면 위젯에 보여주는 근무 기록 앱.</div></a>
+<a class="card reveal" href="./filefit/"><div class="t">파일핏 — 사진 용량 줄이기·형식 변환·사진 PDF</div><div class="d">사진 용량을 정한 KB 이하로 줄이고 JPG·PNG·WebP 변환, 크기 조절, 여러 장을 A4 PDF로 묶는 무료 도구. 파일을 서버에 올리지 않고 기기 안에서 처리합니다.</div></a>
+<!-- /생성: intro-links -->
+      </div>
+      <!--
+        조직 소개는 회사 소개 사이트(다른 저장소: SuperworkTF/Superwork_KTNasmedia)가 자기
+        meta description 에 적은 문장을 그대로 옮긴다. tools/render-llms.py 가 이 카드를 읽는다.
+      -->
+      <h3 class="dir-sub reveal">조직 소개</h3>
+      <div class="cards">
+        <a class="card reveal" href="./Superwork_KTNasmedia/">
+          <div class="t">SuperWork — AI 네이티브 개발 조직</div>
+          <div class="d">Superwork는 변증법 AI 에이전트 워크플로우로 기획·개발·검증·배포 전 과정을 자동화하는 팀입니다.</div>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -244,138 +378,13 @@
   <div class="wrap">
     <div class="footer-grid">
       <div><a class="brand grad" href="./">Superwork</a></div>
-      <div><h4>사이트</h4><ul><li><a href="#workflow">개발 체계</a></li><li><a href="#tools">도구</a></li><li><a href="#apps">앱</a></li><li><a href="#channels">채널</a></li></ul></div>
-      <div><h4>정책</h4><ul><li><a href="./policies/">정책 및 약관</a></li><li><a href="./app-ads.txt">app-ads.txt</a></li></ul></div>
+      <div><h4>사이트</h4><ul><li><a href="#workflow">개발 체계</a></li><li><a href="#tools">도구</a></li><li><a href="#apps">앱</a></li><li><a href="#worker">워커</a></li><li><a href="#channels">채널</a></li></ul></div>
+      <div><h4>회사</h4><ul><li><a href="./Superwork_KTNasmedia/">회사 소개</a></li><li><a href="./policies/">정책 및 약관</a></li><li><a href="./app-ads.txt">app-ads.txt</a></li></ul></div>
       <div><h4>문의</h4><ul><li><a href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a></li></ul></div>
     </div>
     <p class="copyright">© 2026 Superwork. All rights reserved.</p>
   </div>
 </footer>
 
-<script src="./assets/site.js"></script>
-<script>
-// 사실 확인이 필요한 문구와 주소는 이 블록에만 둔다. null 이면 화면에 '준비 중'으로 나온다.
-const SITE = {
-  steps: [
-    { title: '아이디어 수급', cmd: 'intake', desc: '커뮤니티 불평에서 아픔 발굴·심사', icon: 'search', human: ['아이디어'] },
-    { title: '발산', cmd: '/diverge', desc: '한 줄 아이디어 → 5개 관점 검토', icon: 'branch', human: ['방향 선택'] },
-    { title: '브리프·세팅', cmd: '/newapp', desc: '브리프·가드·저장소 자동 생성', icon: 'doc' },
-    { title: '무인 개발', cmd: '킥오프', desc: '목표 한 장으로 에이전트가 구현·검증', icon: 'rocket', human: ['킥오프'] },
-    { title: '맥락 리뷰', cmd: 'review', desc: '독립 세션 2개가 변경분 검토', icon: 'eye' },
-    { title: '수요 판정', cmd: '/versionup', desc: '계속·전환·출시·중단 판정', icon: 'chart', human: ['수요 판정'] },
-    { title: '배포', cmd: 'orbit', desc: '빌드·업로드·기록 자동화', icon: 'orbit', human: ['법적 명의·결제', '심사 제출·정식 출시'], orbit: true },
-  ],
-  tools: [
-    { kind: 'APP FACTORY', name: 'hatchery', icon: 'factory', tag: '아이디어에서 수요 판정까지, 한 흐름으로',
-      flow: ['/diverge', '/newapp', '킥오프', 'review', '/versionup'],
-      chips: ['무인 개발', '맥락 리뷰', '테스트 약화 차단 훅'],
-      stat: ['6', '개 앱 착수'], soon: 'GitHub 공개 예정' },
-    { kind: 'CLAUDE PLUGIN · 배포', name: 'orbit', icon: 'orbit', cls: 'orbit', tag: '스토어 테스트 트랙까지, 배포 자동화',
-      flow: ['빌드', '업로드', '기록'],
-      chips: ['Expo', 'Flutter', 'iOS · Android', '앱인토스', '등록정보 파일 관리'],
-      stat: ['5', '건 TestFlight 배포'], soon: 'GitHub 공개 예정' },
-    { kind: 'MCP', name: 'Superwork MCP', icon: 'plug', wide: true },
-  ],
-  // 출처: superwork.ai.kr/Superwork_KTNasmedia/team
-  workers: [
-    { id: 'sung', name: '임성학', role: 'Forward Deployed Engineer · PM', quote: '당연한 것에 질문을 던지고, 문제를 재정의하며, 실질적인 해결책을 설계합니다.' },
-    { id: 'hoosoo', name: '김호수', role: 'AI Agent Architect', quote: '문제를 재정의하고, 스스로 개선하는 시스템을 설계합니다.' },
-    { id: 'susu', name: '임수연', role: 'AI Creative Engineer', quote: 'AI가 창작하도록 도구를 쥐여주고, 그 도구로 직접 만듭니다.' },
-    { id: 'inotterwords', name: '박정민', role: 'DevOps Engineer', quote: '흐름을 잇고, 스스로 지속되게 합니다.' },
-  ],
-  channels: [
-    { name: 'YouTube', url: 'https://www.youtube.com/channel/UCX9pSdq2TWtjks-UXVzrTAg', color: '#ff0033', desc: '앱 소개와 숏폼 영상을 올립니다.',
-      icon: '<svg viewBox="0 0 24 24" fill="#ff0033"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>' },
-    { name: 'TikTok', url: 'https://www.tiktok.com/@superwork.master', color: '#25f4ee', desc: '짧은 영상으로 새 앱을 소개합니다.',
-      icon: '<svg viewBox="0 0 24 24" fill="#fff"><path d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.4a2.9 2.9 0 1 1-2-2.7V9.2a6.3 6.3 0 1 0 5.4 6.2V8.6a8.2 8.2 0 0 0 4.8 1.5V6.7h-1z"/></svg>' },
-    { name: 'Instagram', url: 'https://www.instagram.com/superwork.master/', color: '#e1306c', desc: '앱 소식과 영상을 전합니다.',
-      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.6" cy="6.4" r="1" fill="#e1306c"/></svg>' },
-  ],
-};
-
-const PENDING = '<span class="pending">소개 글 준비 중</span>';
-
-const ICONS = {
-  search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
-  branch: '<circle cx="12" cy="19.5" r="1.8"/><path d="M12 17.7V12M12 12L6 6.5M12 12l6-5.5M12 12V5"/><circle cx="6" cy="5.2" r="1.6"/><circle cx="18" cy="5.2" r="1.6"/><circle cx="12" cy="3.6" r="1.6"/>',
-  doc: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/>',
-  rocket: '<path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 15l-3-3a12 12 0 0 1 12-9 12 12 0 0 1-9 12z"/><circle cx="14.5" cy="9.5" r="1.6"/>',
-  eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
-  chart: '<path d="M3 21h18M6 21v-7M11 21V9M16 21v-4M21 21V5"/>',
-  orbit: '<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"/><circle cx="19.6" cy="7.4" r="1.4" fill="currentColor"/>',
-  factory: '<path d="M3 21V10l6 4V10l6 4V6l6 3v12z"/><path d="M7 17h2M12 17h2M17 17h2"/>',
-  plug: '<path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/>',
-};
-const svg = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]}</svg>`;
-
-document.getElementById('flow').innerHTML = `
-  <div class="flow-bands"><div class="band">hatchery <span>아이디어 → 수요 판정</span></div><div class="band orbit">orbit <span>배포</span></div></div>
-  <div class="flow-track"><div class="flow-line" aria-hidden="true"></div>
-  <ol class="flow-steps">
-    ${SITE.steps.map((st, i) => `
-    <li class="node${st.orbit ? ' orbit' : ''}" style="transition-delay:${0.25 + i * 0.16}s">
-      <div class="node-ring">${svg(st.icon)}<span class="node-no">${i + 1}</span></div>
-      <div class="node-text">
-        <code>${esc(st.cmd)}</code><h3>${esc(st.title)}</h3><p>${esc(st.desc)}</p>
-        ${st.human ? `<div class="pins">${st.human.map(h => `<span>${esc(h)}</span>`).join('')}</div>` : ''}
-      </div>
-    </li>`).join('')}
-  </ol></div>
-  <div class="flow-legend">
-    <span><i style="background:var(--accent)"></i>에이전트가 하는 일</span>
-    <span><i style="background:#ffd166"></i>사람이 정하는 지점</span>
-    <span><i style="background:#7aa8ff"></i>orbit 배포 구간</span>
-  </div>`;
-document.getElementById('flow').insertAdjacentHTML('afterend',
-  '<p class="quote reveal">“사람은 방향과 판정을 정하고, 짓기·검증·배포 준비는 에이전트가 합니다.”</p>');
-
-if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const v = document.getElementById('showreel'); v.removeAttribute('autoplay'); v.pause();
-}
-
-document.getElementById('tools-list').innerHTML = SITE.tools.map(t => t.wide ? `
-  <article class="panel tool wide reveal">
-    <div class="tool-top"><div class="tool-icon">${svg(t.icon)}</div><div><span class="tool-kind">${esc(t.kind)}</span><h3>${esc(t.name)}</h3></div></div>
-    <span class="btn btn-ghost" aria-disabled="true">소개 준비 중</span>
-  </article>` : `
-  <article class="panel tool reveal ${esc(t.cls || '')}">
-    <div class="tool-top"><div class="tool-icon">${svg(t.icon)}</div><div><span class="tool-kind">${esc(t.kind)}</span><h3>${esc(t.name)}</h3></div></div>
-    <p class="tool-tag">${esc(t.tag)}</p>
-    <div class="tool-flow">${t.flow.map(f => `<code>${esc(f)}</code>`).join('<i>→</i>')}</div>
-    <div class="tool-chips">${t.chips.map(c => `<span>${esc(c)}</span>`).join('')}</div>
-    <div class="tool-foot">
-      <div class="tool-stat"><b class="grad">${esc(t.stat[0])}</b><span>${esc(t.stat[1])}</span></div>
-      <span class="btn btn-ghost" aria-disabled="true">${esc(t.soon)}</span>
-    </div>
-  </article>`).join('');
-
-document.getElementById('workers').innerHTML = SITE.workers.map(w => `
-  <figure class="worker-card reveal">
-    <img src="./assets/workers/${esc(w.id)}.jpg" alt="${esc(w.name)}" loading="lazy">
-    <span class="worker-id">${esc(w.id)}</span>
-    <b>${esc(w.name)}</b>
-    <span class="worker-role">${esc(w.role)}</span>
-    <p>“${esc(w.quote)}”</p>
-  </figure>`).join('');
-
-document.getElementById('channel-list').innerHTML = SITE.channels.map(c => `
-  <article class="panel channel reveal" style="--glow:${esc(c.color)}">
-    ${c.icon}
-    <h3>${esc(c.name)}</h3>
-    <p>${esc(c.desc)}</p>
-    ${c.url ? `<a class="btn btn-ghost" href="${esc(c.url)}" target="_blank" rel="noopener">채널 보기 ↗</a>`
-            : `<span class="btn btn-ghost" aria-disabled="true">채널 주소 준비 중</span>`}
-  </article>`).join('');
-
-renderAppGroups({ base: './', container: document.getElementById('app-groups') }).then(data => {
-  const half = Math.ceil(data.apps.length / 2);
-  const row = (list, rev) => `<div class="marquee-row${rev ? ' rev' : ''}">${
-    [...list, ...list].map(a => `<a href="./${esc(a.path)}" tabindex="-1"><img src="./${esc(a.thumbSm)}" alt="" loading="lazy"></a>`).join('')}</div>`;
-  document.getElementById('marquee').innerHTML = row(data.apps.slice(0, half)) + row(data.apps.slice(half), true);
-});
-
-
-observeReveal();
-</script>
 </body>
 </html>

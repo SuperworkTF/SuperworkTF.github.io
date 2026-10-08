@@ -6,6 +6,69 @@
   <meta name="description" content="구독자 — 카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다. 결제 알림은 기기 안에서만 읽습니다. 앱 소개, 문의, 개인정보처리방침과 계정 삭제 안내를 확인하세요.">
   <meta name="theme-color" content="#FBFAF6">
   <title>구독자 — 새는 구독료를 결제 전에</title>
+  <link rel="canonical" href="https://superwork.ai.kr/subscribers/">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://superwork.ai.kr/subscribers/icon-192.png">
+  <link rel="apple-touch-icon" href="https://superwork.ai.kr/subscribers/icon-192.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SuperWork">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:url" content="https://superwork.ai.kr/subscribers/">
+  <meta property="og:title" content="구독자 — 새는 구독료를 결제 전에">
+  <meta property="og:description" content="구독자 — 카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다. 결제 알림은 기기 안에서만 읽습니다. 앱 소개, 문의, 개인정보처리방침과 계정 삭제 안내를 확인하세요.">
+  <meta property="og:image" content="https://superwork.ai.kr/subscribers/icon-512.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:image:alt" content="구독자 앱 아이콘">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://superwork.ai.kr/subscribers/#app",
+        "name": "구독자",
+        "description": "카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다. 결제 알림은 기기 안에서만 읽습니다.",
+        "applicationCategory": "LifestyleApplication",
+        "url": "https://superwork.ai.kr/subscribers/",
+        "image": "https://superwork.ai.kr/subscribers/icon-512.png",
+        "inLanguage": "ko",
+        "publisher": {
+          "@type": "Organization",
+          "@id": "https://superwork.ai.kr/#organization",
+          "name": "SuperWork",
+          "url": "https://superwork.ai.kr/"
+        },
+        "operatingSystem": "Android",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "KRW"
+        },
+        "sameAs": [
+          "https://play.google.com/store/apps/details?id=com.superwork.subscribers"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "SuperWork 앱 안내",
+            "item": "https://superwork.ai.kr/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "구독자",
+            "item": "https://superwork.ai.kr/subscribers/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -28,6 +91,9 @@
           <li>광고 없음</li>
           <li>결제 알림은 기기 안에서만</li>
         </ul>
+        <div class="actions">
+          <a class="button" href="https://play.google.com/store/apps/details?id=com.superwork.subscribers">Google Play 에서 받기</a>
+        </div>
       </div>
       <figure class="receipt-wrap" aria-labelledby="receipt-caption">
         <div class="receipt">
@@ -76,7 +142,7 @@
         </div>
         <div>
           <dt>가족과 함께 보기</dt>
-          <dd>서로 초대하고 양쪽이 모두 동의한 가족과만 확정된 구독 목록을 나눠 봅니다. 언제든 연결을 해제할 수 있습니다.</dd>
+          <dd>서로 초대하고 양쪽이 모두 동의한 가족과만 확정된 구독과 해지한 구독을 나눠 봅니다. 언제든 연결을 해제할 수 있습니다.</dd>
         </div>
       </dl>
     </section>
@@ -85,7 +151,37 @@
       <h2 id="local-heading">결제 알림은<br>기기 밖으로 나가지 않아요</h2>
       <div>
         <p>알림 접근을 허용하면 미리 정해 둔 카드사·간편결제·문자 앱의 결제 알림만 읽습니다. 알림 원문은 회사 서버로 보내지 않고, 찾아낸 구독 정보는 기기의 암호화 저장소에 보관합니다.</p>
-        <p>서버로 전송되는 것은 로그인 정보와, 이용자가 가족 공유나 해지 완료 확인을 쓸 때의 필요한 범위뿐입니다. 자세한 내용은 <a href="./privacy/">개인정보처리방침</a>에서 확인해 주세요.</p>
+        <p>서버로 전송되는 것은 로그인 정보, 이용자가 가족 공유나 해지 완료 확인을 쓸 때의 필요한 범위, 그리고 Google Firebase 로 보내는 앱 이용 통계와 오류 기록입니다. 자세한 내용은 <a href="./privacy/">개인정보처리방침</a>에서 확인해 주세요.</p>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">자주 묻는 질문</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>무료인가요? 광고나 결제가 있나요?</h3>
+          <p>무료입니다. 구독자는 이용자에게 대금을 청구하지 않고, 앱 안에 광고를 싣지 않습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>iPhone 이나 웹에서도 쓸 수 있나요?</h3>
+          <p>아니요. 구독자는 Android 7.0 이상에서 쓰는 Android 앱이고 Google Play 에서 받습니다. iPhone(iOS)용과 웹 버전은 없습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>로그인해야 하나요?</h3>
+          <p>네. Google 또는 카카오 계정으로 로그인해서 쓰고, 로그인 전에 만 14세 이상임을 확인합니다(만 14세 미만은 가입할 수 없습니다). 가족에게 받은 6자리 초대 코드로 참여하면 Google·카카오 로그인 없이 익명 계정이 만들어집니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>어떤 앱의 알림을 읽나요?</h3>
+          <p>구독을 찾는 데는 다음 18개 앱의 알림만 씁니다. 카드사 앱 9개(신한 SOL페이·삼성카드·현대카드·KB Pay·롯데카드·우리WON카드·하나페이·NH pay·페이북), 간편결제·플랫폼 앱 7개(토스·카카오톡·카카오페이·페이코·네이버페이·삼성페이·Google Play), 기본 문자 앱 2개(삼성 메시지·Google 메시지)입니다. 이 밖의 앱에서 온 알림과 결제가 아닌 알림은 저장하지 않고 버리며, 문자 읽기 권한(READ_SMS)은 요청하지 않습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>어떤 결제를 구독으로 찾나요?</h3>
+          <p>넷플릭스·유튜브 프리미엄처럼 앱이 아는 구독 서비스이거나 알림에 「정기결제」「월정액」「구독」「멤버십」이 있으면 첫 결제부터 후보로 보여 주고, 그 밖의 결제는 같은 가맹점에서 27~33일 뒤 다시 결제돼야 후보가 됩니다. 후보는 다음 결제가 27~33일 뒤에 오면 구독으로 확정되고, 「맞아요, 매달 내요」나 「맞아요, 1년마다 내요」를 눌러 바로 확정할 수도 있습니다. 결제 3일 전 알림은 확정된 구독에만 보냅니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>앱을 지우거나 휴대폰을 바꾸면 구독 목록은 어떻게 되나요?</h3>
+          <p>구독 목록은 그 기기의 암호화 저장소에만 있어서, 앱을 지우면 함께 지워지고 같은 계정으로 다시 로그인해도 되살아나지 않습니다. 새 휴대폰으로 옮겨 주는 백업·복원 기능도 없습니다. 서버에 남는 계정과 가족 공유·지킨 금액 기록까지 지우려면 앱에서 설정 → 계정 삭제 → 계정 삭제하기를 누릅니다(<a href="./account-deletion/">계정 삭제 안내</a>).</p>
+        </div>
       </div>
     </section>
 

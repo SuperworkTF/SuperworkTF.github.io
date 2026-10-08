@@ -1,0 +1,168 @@
+{
+  "steps": [
+    {
+      "title": "아이디어 수급",
+      "cmd": "intake",
+      "desc": "커뮤니티 불평에서 아픔 발굴·심사",
+      "icon": "search",
+      "human": [
+        "아이디어"
+      ]
+    },
+    {
+      "title": "발산",
+      "cmd": "/diverge",
+      "desc": "한 줄 아이디어 → 5개 관점 검토",
+      "icon": "branch",
+      "human": [
+        "방향 선택"
+      ]
+    },
+    {
+      "title": "브리프·세팅",
+      "cmd": "/newapp",
+      "desc": "브리프·가드·저장소 자동 생성",
+      "icon": "doc"
+    },
+    {
+      "title": "무인 개발",
+      "cmd": "킥오프",
+      "desc": "목표 한 장으로 에이전트가 구현·검증",
+      "icon": "rocket",
+      "human": [
+        "킥오프"
+      ]
+    },
+    {
+      "title": "맥락 리뷰",
+      "cmd": "review",
+      "desc": "독립 세션 2개가 변경분 검토",
+      "icon": "eye"
+    },
+    {
+      "title": "수요 판정",
+      "cmd": "/versionup",
+      "desc": "계속·전환·출시·중단 판정",
+      "icon": "chart",
+      "human": [
+        "수요 판정"
+      ]
+    },
+    {
+      "title": "배포",
+      "cmd": "orbit",
+      "desc": "빌드·업로드·기록 자동화",
+      "icon": "orbit",
+      "human": [
+        "법적 명의·결제",
+        "심사 제출·정식 출시"
+      ],
+      "orbit": true
+    }
+  ],
+  "tools": [
+    {
+      "kind": "APP FACTORY",
+      "name": "hatchery",
+      "icon": "factory",
+      "tag": "아이디어에서 수요 판정까지, 한 흐름으로",
+      "flow": [
+        "/diverge",
+        "/newapp",
+        "킥오프",
+        "review",
+        "/versionup"
+      ],
+      "chips": [
+        "무인 개발",
+        "맥락 리뷰",
+        "테스트 약화 차단 훅"
+      ],
+      "stat": [
+        "6",
+        "개 앱 착수"
+      ],
+      "soon": "GitHub 공개 예정"
+    },
+    {
+      "kind": "CLAUDE PLUGIN · 배포",
+      "name": "orbit",
+      "icon": "orbit",
+      "cls": "orbit",
+      "tag": "스토어 테스트 트랙까지, 배포 자동화",
+      "flow": [
+        "빌드",
+        "업로드",
+        "기록"
+      ],
+      "chips": [
+        "Expo",
+        "Flutter",
+        "iOS · Android",
+        "앱인토스",
+        "등록정보 파일 관리"
+      ],
+      "stat": [
+        "5",
+        "건 TestFlight 배포"
+      ],
+      "soon": "GitHub 공개 예정"
+    },
+    {
+      "kind": "MCP",
+      "name": "Superwork MCP",
+      "icon": "plug",
+      "wide": true
+    }
+  ],
+  "workers_source": "https://superwork.ai.kr/Superwork_KTNasmedia/team",
+  "workers": [
+    {
+      "id": "sung",
+      "name": "임성학",
+      "role": "Forward Deployed Engineer · PM",
+      "quote": "당연한 것에 질문을 던지고, 문제를 재정의하며, 실질적인 해결책을 설계합니다."
+    },
+    {
+      "id": "hoosoo",
+      "name": "김호수",
+      "role": "AI Agent Architect",
+      "quote": "문제를 재정의하고, 스스로 개선하는 시스템을 설계합니다."
+    },
+    {
+      "id": "susu",
+      "name": "임수연",
+      "role": "AI Creative Engineer",
+      "quote": "AI가 창작하도록 도구를 쥐여주고, 그 도구로 직접 만듭니다."
+    },
+    {
+      "id": "inotterwords",
+      "name": "박정민",
+      "role": "DevOps Engineer",
+      "quote": "흐름을 잇고, 스스로 지속되게 합니다."
+    }
+  ],
+  "channels": [
+    {
+      "name": "YouTube",
+      "url": "https://www.youtube.com/channel/UCX9pSdq2TWtjks-UXVzrTAg",
+      "color": "#ff0033",
+      "desc": "앱 소개와 숏폼 영상을 올립니다.",
+      "icon": "youtube"
+    },
+    {
+      "name": "TikTok",
+      "url": "https://www.tiktok.com/@superwork.master",
+      "color": "#25f4ee",
+      "desc": "짧은 영상으로 새 앱을 소개합니다.",
+      "icon": "tiktok"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/superwork.master/",
+      "color": "#e1306c",
+      "desc": "앱 소식과 영상을 전합니다.",
+      "icon": "instagram"
+    }
+  ]
+}
