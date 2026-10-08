@@ -252,6 +252,9 @@ ICONS = {
     'orbit': '<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"/><circle cx="19.6" cy="7.4" r="1.4" fill="currentColor"/>',
     'factory': '<path d="M3 21V10l6 4V10l6 4V6l6 3v12z"/><path d="M7 17h2M12 17h2M17 17h2"/>',
     'plug': '<path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/>',
+    'puzzle': '<path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3z"/>',
+    'megaphone': '<path d="M3 11v2a1 1 0 0 0 1 1h3l6 5V5L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14"/>',
+    'gamepad': '<path d="M6 8h12a4 4 0 0 1 4 4v1a4 4 0 0 1-7 2.6L14 15h-4l-1 .6A4 4 0 0 1 2 13v-1a4 4 0 0 1 4-4z"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r=".9" fill="currentColor"/><circle cx="18" cy="13.5" r=".9" fill="currentColor"/>',
 }
 CHANNEL_ICONS = {
     'youtube': '<svg viewBox="0 0 24 24" fill="#ff0033" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>',
@@ -294,21 +297,45 @@ def home_flow():
             '<span><i style="background:#7aa8ff"></i>orbit 배포 구간</span></div>')
 
 
+TOOL_STATUS = {'public': '공개', 'soon': 'GitHub 공개 예정', 'draft': '소개 준비 중'}
+
+
 def home_tools():
+    """도구는 분류(toolGroups)별로 묶는다. 도구가 없는 분류는 내지 않는다 — 늘어나면 site.json 에 한 줄 더한다."""
+    groups = {g['id']: g for g in SITE['toolGroups']}
+    for tool in SITE['tools']:
+        if tool['group'] not in groups:
+            raise SystemExit(f"도구 {tool['name']!r} 의 group {tool['group']!r} 이 toolGroups 에 없다")
+        if tool['status'] not in TOOL_STATUS or (tool['status'] == 'public') != bool(tool.get('url')):
+            raise SystemExit(f"도구 {tool['name']!r}: status 가 public 이면 url 이 있어야 하고, 아니면 없어야 한다")
     out = []
-    for t in SITE['tools']:
-        top = (f'<div class="tool-top"><div class="tool-icon">{svg(t["icon"])}</div>'
-               f'<div><span class="tool-kind">{e(t["kind"])}</span><h3>{e(t["name"])}</h3></div></div>')
-        if t.get('wide'):
-            out.append(f'<article class="panel tool wide reveal">{top}<span class="btn btn-ghost" aria-disabled="true">소개 준비 중</span></article>')
+    for g in SITE['toolGroups']:
+        items = [x for x in SITE['tools'] if x['group'] == g['id']]
+        if not items:
             continue
-        flow = '<i>→</i>'.join(f'<code>{e(f)}</code>' for f in t['flow'])
-        chips = ''.join(f'<span>{e(c)}</span>' for c in t['chips'])
+        cards = []
+        for x in items:
+            if x['status'] == 'public':
+                foot = f'<a class="tool-link" href="{e(x["url"])}" target="_blank" rel="noopener">GitHub ↗</a>'
+            else:
+                foot = f'<span class="tool-badge {e(x["status"])}">{e(TOOL_STATUS[x["status"]])}</span>'
+            body = ''
+            if x.get('tag'):
+                body += f'<p class="tool-tag">{e(x["tag"])}</p>'
+            if x.get('flow'):
+                body += '<div class="tool-flow">' + '<i>→</i>'.join(f'<code>{e(f)}</code>' for f in x['flow']) + '</div>'
+            if x.get('chips'):
+                body += '<div class="tool-chips">' + ''.join(f'<span>{e(c)}</span>' for c in x['chips']) + '</div>'
+            stat = f'<span class="tool-stat">{e(x["stat"])}</span>' if x.get('stat') else '<span></span>'
+            cards.append(
+                f'<article class="tool reveal{" empty" if not body else ""}">'
+                f'<div class="tool-top"><span class="tool-icon">{svg(x["icon"])}</span><h4>{e(x["name"])}</h4></div>'
+                f'{body}<div class="tool-foot">{stat}{foot}</div></article>')
         out.append(
-            f'<article class="panel tool reveal {e(t.get("cls", ""))}">{top}'
-            f'<p class="tool-tag">{e(t["tag"])}</p><div class="tool-flow">{flow}</div><div class="tool-chips">{chips}</div>'
-            f'<div class="tool-foot"><div class="tool-stat"><b class="grad">{e(t["stat"][0])}</b><span>{e(t["stat"][1])}</span></div>'
-            f'<span class="btn btn-ghost" aria-disabled="true">{e(t["soon"])}</span></div></article>')
+            f'<div class="tool-group reveal" id="tools-{e(g["id"])}">'
+            f'<div class="tool-group-head"><span class="tool-group-icon">{svg(g["icon"])}</span>'
+            f'<div><h3>{e(g["label"])}<i>{len(items)}</i></h3><p>{e(g["desc"])}</p></div></div>'
+            f'<div class="tool-grid">{"".join(cards)}</div></div>')
     return '\n'.join(out)
 
 
@@ -351,15 +378,10 @@ def home_channels():
 
 
 def home_intro_links():
-    """서비스 목록 — 루트가 모든 앱 소개(<앱>/)를 잇는다(check-pages.py). 가나다순.
-    제목은 그 소개 페이지의 <title>, 설명은 그 페이지의 meta description 에서 온 apps.json 의 desc.
-    모양(a.card > .t · .d)은 tools/render-llms.py 가 읽는 그대로다."""
-    out = []
-    for a in sorted((a for a in DATA['apps'] if a.get('intro')), key=lambda a: a['name']):
-        page = (ROOT / a['intro'] / 'index.html').read_text(encoding='utf-8')
-        title = re.search(r'<title>(.*?)</title>', page, re.S).group(1).strip()
-        out.append(f'<a class="card reveal" href="./{e(a["intro"])}"><div class="t">{title}</div><div class="d">{e(a["desc"])}</div></a>')
-    return '\n'.join(out)
+    """푸터의 「앱 소개 · 정책」 — 루트가 모든 앱 소개(<앱>/)를 잇는다(check-pages.py). 가나다순.
+    tools/render-llms.py 는 이 a.card 의 차례와 주소만 읽고, 제목·설명은 각 소개 페이지에서 가져온다."""
+    intros = sorted((a for a in DATA['apps'] if a.get('intro')), key=lambda a: a['name'])
+    return '\n'.join(f'<a class="card" href="./{e(a["intro"])}"><div class="t">{e(a["name"])}</div></a>' for a in intros)
 
 
 def build_home():

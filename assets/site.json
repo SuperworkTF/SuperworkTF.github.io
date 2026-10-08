@@ -62,9 +62,10 @@
   ],
   "tools": [
     {
-      "kind": "APP FACTORY",
+      "group": "factory",
       "name": "hatchery",
       "icon": "factory",
+      "status": "soon",
       "tag": "아이디어에서 수요 판정까지, 한 흐름으로",
       "flow": [
         "/diverge",
@@ -78,17 +79,14 @@
         "맥락 리뷰",
         "테스트 약화 차단 훅"
       ],
-      "stat": [
-        "6",
-        "개 앱 착수"
-      ],
-      "soon": "GitHub 공개 예정"
+      "stat": "6개 앱 착수",
+      "url": null
     },
     {
-      "kind": "CLAUDE PLUGIN · 배포",
+      "group": "plugin",
       "name": "orbit",
       "icon": "orbit",
-      "cls": "orbit",
+      "status": "soon",
       "tag": "스토어 테스트 트랙까지, 배포 자동화",
       "flow": [
         "빌드",
@@ -99,20 +97,21 @@
         "Expo",
         "Flutter",
         "iOS · Android",
-        "앱인토스",
-        "등록정보 파일 관리"
+        "앱인토스"
       ],
-      "stat": [
-        "5",
-        "건 TestFlight 배포"
-      ],
-      "soon": "GitHub 공개 예정"
+      "stat": "TestFlight 배포 5건",
+      "url": null
     },
     {
-      "kind": "MCP",
+      "group": "mcp",
       "name": "Superwork MCP",
       "icon": "plug",
-      "wide": true
+      "status": "draft",
+      "tag": null,
+      "flow": [],
+      "chips": [],
+      "stat": null,
+      "url": null
     }
   ],
   "workers_source": "https://superwork.ai.kr/Superwork_KTNasmedia/team",
@@ -160,5 +159,38 @@
       "desc": "앱 소식과 영상을 전합니다.",
       "icon": "instagram"
     }
-  ]
+  ],
+  "toolGroups": [
+    {
+      "id": "factory",
+      "label": "앱 팩토리",
+      "desc": "아이디어에서 출시 판정까지 앱을 짓는 흐름",
+      "icon": "factory"
+    },
+    {
+      "id": "plugin",
+      "label": "Claude 플러그인",
+      "desc": "Claude Code에 붙여 쓰는 작업 도구",
+      "icon": "puzzle"
+    },
+    {
+      "id": "mcp",
+      "label": "MCP",
+      "desc": "에이전트가 외부 서비스와 함께 일하는 연결",
+      "icon": "plug"
+    },
+    {
+      "id": "marketing",
+      "label": "마케팅",
+      "desc": "앱 소개 영상·숏폼 소재를 만드는 도구",
+      "icon": "megaphone"
+    },
+    {
+      "id": "minigame",
+      "label": "미니게임 개발",
+      "desc": "게임 에셋과 빌드를 돕는 도구",
+      "icon": "gamepad"
+    }
+  ],
+  "_tools_guide": "도구를 더할 때: tools 에 한 항목을 넣고 group 을 toolGroups 의 id 로 적는다. status 는 public(url 필수) · soon(공개 예정) · draft(준비 중). 도구가 없는 분류는 화면에 나오지 않는다."
 }
