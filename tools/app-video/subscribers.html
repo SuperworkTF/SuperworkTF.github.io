@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<!-- 1920x1080, 14초 반복. render.py 가 애니메이션 시간을 프레임마다 직접 맞춰 녹화한다. -->
+<style>
+:root{
+  --paper:#FBFAF6;--sheet:#fff;--ink:#1C1B17;--muted:#6E695F;--line:#E2DED3;
+  --stamp:#C8402E;--carbon:#3D5A80;--marker:rgba(255,213,0,.45);--wash:#F3F1EA;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--paper);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,sans-serif;word-break:keep-all}
+body::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(circle at 15% 20%,rgba(200,64,46,.06),transparent 40%),
+  radial-gradient(circle at 85% 80%,rgba(61,90,128,.07),transparent 45%)}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0}
+.anim{animation-fill-mode:both;animation-timing-function:var(--ease)}
+
+/* 장면 등장·퇴장: --in, --out 은 초 단위 */
+@keyframes sceneIn{from{opacity:0}to{opacity:1}}
+@keyframes sceneOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-40px)}}
+@keyframes rise{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-80px)}to{opacity:1;transform:none}}
+@keyframes stamp{0%{opacity:0;transform:rotate(-14deg) scale(2.4)}60%{opacity:1;transform:rotate(-14deg) scale(.92)}100%{opacity:1;transform:rotate(-14deg) scale(1)}}
+@keyframes strike{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,64,46,0)}50%{box-shadow:0 0 0 14px rgba(200,64,46,.14)}}
+@keyframes drift{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+
+/* 1. 브랜드 0.0–3.2 */
+#s1{animation:sceneIn .01s 0s both,sceneOut .4s 2.85s forwards}
+#s1 .icon{width:260px;height:260px;border-radius:64px;box-shadow:0 30px 60px rgba(28,27,23,.18);animation:pop .8s .15s both}
+#s1 h1{font-size:150px;font-weight:900;letter-spacing:-.04em;margin-top:40px;animation:rise .7s .55s both}
+#s1 p{font-size:54px;font-weight:700;margin-top:10px;animation:rise .7s .85s both}
+#s1 mark{background:linear-gradient(var(--marker),var(--marker)) no-repeat 0 85%/0% 40%;color:inherit;
+  animation:sweep .6s 1.45s both}
+@keyframes sweep{to{background-size:100% 40%}}
+
+/* 2. 명세서 3.2–8.0 */
+#s2{animation:sceneIn .35s 3.2s both,sceneOut .4s 7.65s forwards}
+#s2 h2{font-size:64px;font-weight:900;letter-spacing:-.03em;margin-bottom:40px;animation:rise .6s 3.3s both}
+#s2 h2 em{font-style:normal;color:var(--stamp)}
+.receipt{position:relative;width:1040px;background:var(--sheet);padding:44px 56px 64px;border:1px solid var(--line);
+  box-shadow:0 30px 80px rgba(28,27,23,.12);animation:rise .6s 3.45s both;
+  -webkit-mask:linear-gradient(#000,#000) top/100% calc(100% - 18px) no-repeat,
+    conic-gradient(from 135deg at 50% 0,#000 90deg,#0000 0) bottom/36px 18px repeat-x}
+.receipt-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--ink);padding-bottom:16px;margin-bottom:8px}
+.receipt-head b{font-size:40px}
+.receipt-head span{font-size:24px;color:var(--muted)}
+.row{position:relative;display:flex;justify-content:space-between;align-items:center;padding:20px 8px;border-bottom:2px dashed var(--line);font-size:34px}
+.row small{display:block;font-size:24px;color:var(--muted)}
+.row b{font-size:38px;font-variant-numeric:tabular-nums}
+.row:nth-child(2){animation:slideIn .5s 3.9s both}
+.row:nth-child(3){animation:slideIn .5s 4.2s both,pulse 1s 5.0s 2 both;border-radius:10px}
+.row:nth-child(3) small{color:var(--stamp);font-weight:800}
+.row:nth-child(4){animation:slideIn .5s 4.5s both}
+.row:nth-child(5){animation:slideIn .5s 4.8s both}
+.row:nth-child(5)::after{content:'';position:absolute;left:0;right:150px;top:50%;height:4px;background:var(--stamp);transform-origin:left;
+  animation:strike .4s 5.7s both}
+.cut{position:absolute;right:250px;top:50%;margin-top:-38px;border:6px double var(--stamp);color:var(--stamp);font-size:36px;font-weight:900;
+  padding:6px 20px;border-radius:10px;animation:stamp .45s 5.95s both}
+.totals{display:flex;justify-content:space-between;margin-top:26px;font-size:34px;animation:rise .5s 6.35s both}
+.totals b{font-size:48px;font-variant-numeric:tabular-nums}
+.totals .saved b{color:var(--stamp)}
+.note{position:absolute;bottom:54px;font-size:24px;color:var(--muted);animation:sceneIn .4s 3.6s both}
+
+/* 3. 기능 8.0–11.4 */
+#s3{animation:sceneIn .35s 8.0s both,sceneOut .4s 11.05s forwards}
+#s3 h2{font-size:72px;font-weight:900;letter-spacing:-.03em;margin-bottom:60px;animation:rise .6s 8.1s both}
+.feats{display:flex;gap:36px}
+.feat{width:470px;min-height:340px;background:var(--sheet);border:1px solid var(--line);border-radius:28px;padding:48px 44px;
+  box-shadow:0 24px 60px rgba(28,27,23,.10);display:flex;flex-direction:column;gap:22px}
+.feat:nth-child(1){animation:pop .6s 8.45s both}
+.feat:nth-child(2){animation:pop .6s 8.75s both}
+.feat:nth-child(3){animation:pop .6s 9.05s both}
+.feat i{flex-shrink:0;width:92px;height:92px;border-radius:24px;display:grid;place-items:center;background:var(--wash)}
+.feat i svg{width:52px;height:52px;stroke:var(--stamp);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.feat b{font-size:42px;letter-spacing:-.02em}
+.feat span{font-size:27px;color:var(--muted);line-height:1.5}
+
+/* 4. 개인정보·마무리 11.4–14.0 */
+#s4{animation:sceneIn .35s 11.4s both,sceneOut .45s 13.55s forwards}
+#s4 .lock{width:150px;height:150px;border-radius:40px;background:var(--carbon);display:grid;place-items:center;animation:pop .6s 11.5s both}
+#s4 .lock svg{width:80px;height:80px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#s4 h2{font-size:78px;font-weight:900;letter-spacing:-.03em;margin:44px 0 18px;text-align:center;line-height:1.25;animation:rise .6s 11.75s both}
+#s4 p{font-size:34px;color:var(--muted);animation:rise .6s 12.0s both}
+.badges{display:flex;gap:18px;margin-top:48px;animation:rise .6s 12.3s both}
+.badges span{font-size:30px;font-weight:800;padding:14px 30px;border-radius:999px;border:2px solid var(--ink)}
+.badges span.play{background:var(--ink);color:var(--paper)}
+</style>
+</head>
+<body>
+
+<section class="scene" id="s1">
+  <img class="icon" src="../../assets/apps/subscribers/icon.png" alt="">
+  <h1>구독자</h1>
+  <p><mark>새는 구독료를 결제 전에</mark></p>
+</section>
+
+<section class="scene" id="s2">
+  <h2>매달 빠져나가는 돈, <em>명세서로</em> 받아 보세요</h2>
+  <div class="receipt">
+    <div class="receipt-head"><b>이번 달 구독 명세서</b><span>결제 알림에서 찾은 정기결제</span></div>
+    <div class="row"><div>영상 스트리밍<small>매달 3일 결제</small></div><b>13,900원</b></div>
+    <div class="row"><div>음악 스트리밍<small>사흘 뒤 결제 — 유지할까요?</small></div><b>11,990원</b></div>
+    <div class="row"><div>클라우드 저장공간<small>매달 21일 결제</small></div><b>2,900원</b></div>
+    <div class="row"><div>운동 앱<small>결제 전에 해지함</small></div><b>9,900원</b><span class="cut">해지</span></div>
+    <div class="totals"><div>매달 나가는 돈 <b>28,790원</b></div><div class="saved">지킨 돈 <b>9,900원</b></div></div>
+  </div>
+  <div class="note">예시 화면 · 실제 앱 화면이 아닙니다</div>
+</section>
+
+<section class="scene" id="s3">
+  <h2>놓치기 쉬운 결제를 먼저 짚어요</h2>
+  <div class="feats">
+    <div class="feat">
+      <i><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></i>
+      <b>결제 3일 전 알림</b><span>이번 달도 유지할지 미리 한 번 묻습니다.</span>
+    </div>
+    <div class="feat">
+      <i><svg viewBox="0 0 24 24"><path d="M5 22h14M5 2h14M17 22v-4.2a2 2 0 0 0-.6-1.4L12 12l-4.4 4.4a2 2 0 0 0-.6 1.4V22M7 2v4.2a2 2 0 0 0 .6 1.4L12 12l4.4-4.4a2 2 0 0 0 .6-1.4V2"/></svg></i>
+      <b>무료체험 만료 알림</b><span>만료 3일 전과 1일 전에 알려 드립니다.</span>
+    </div>
+    <div class="feat">
+      <i><svg viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></i>
+      <b>요금 인상 감지</b><span>지난달보다 금액이 오르면 알려 드립니다.</span>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="s4">
+  <div class="lock"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+  <h2>결제 알림은<br>기기 밖으로 나가지 않아요</h2>
+  <p>알림 원문은 서버로 보내지 않고, 기기 안에서만 처리합니다.</p>
+  <div class="badges"><span>Android 앱</span><span>광고 없음</span><span class="play">Google Play</span></div>
+</section>
+
+</body>
+</html>

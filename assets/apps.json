@@ -1,0 +1,1267 @@
+{
+  "categories": [
+    {
+      "id": "game",
+      "label": "게임",
+      "desc": "짧게 즐기고 오래 남는 게임들"
+    },
+    {
+      "id": "life",
+      "label": "라이프·AI",
+      "desc": "일상에 AI를 더한 서비스"
+    },
+    {
+      "id": "utility",
+      "label": "유틸리티",
+      "desc": "필요할 때 바로 꺼내 쓰는 도구"
+    }
+  ],
+  "apps": [
+    {
+      "id": "moongchi",
+      "name": "뭉치뭉치",
+      "genre": "힐링 캐주얼 게임",
+      "category": "game",
+      "desc": "동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임.",
+      "feats": [
+        "🐥 동글 친구들",
+        "🤍 뭉치는 손맛",
+        "☁️ 부담 없는 힐링"
+      ],
+      "link": "https://minion.toss.im/vJzyykin",
+      "store": "토스로 플레이",
+      "video": null,
+      "thumb": "assets/apps/moongchi/thumb.jpg",
+      "icon": "assets/apps/moongchi/icon.png",
+      "qr": "assets/apps/moongchi/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/moongchi/thumb-sm.jpg",
+      "path": "apps/game/moongchi/",
+      "details": {
+        "headline": null,
+        "lead": "동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "🐥 동글 친구들",
+                "desc": null
+              },
+              {
+                "title": "🤍 뭉치는 손맛",
+                "desc": null
+              },
+              {
+                "title": "☁️ 부담 없는 힐링",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "animalpedia",
+      "name": "귀여운동물사전",
+      "genre": "수집·힐링 게임",
+      "category": "game",
+      "desc": "깜찍한 동물들을 하나씩 모아 나만의 도감을 채워가는 힐링 컬렉션.",
+      "feats": [
+        "🐾 동물 수집",
+        "📖 도감 채우기",
+        "🌙 힐링 무드"
+      ],
+      "link": "https://minion.toss.im/5yKqzNuD",
+      "store": "토스로 플레이",
+      "video": null,
+      "thumb": "assets/apps/animalpedia/thumb.jpg",
+      "icon": "assets/apps/animalpedia/icon.png",
+      "qr": "assets/apps/animalpedia/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/animalpedia/thumb-sm.jpg",
+      "path": "apps/game/animalpedia/",
+      "details": {
+        "headline": null,
+        "lead": "깜찍한 동물들을 하나씩 모아 나만의 도감을 채워가는 힐링 컬렉션.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "🐾 동물 수집",
+                "desc": null
+              },
+              {
+                "title": "📖 도감 채우기",
+                "desc": null
+              },
+              {
+                "title": "🌙 힐링 무드",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "dongtoesa",
+      "name": "동네퇴마사",
+      "genre": "캐주얼 액션 RPG",
+      "category": "game",
+      "desc": "골목골목 출몰하는 악귀를 물리치는 통쾌한 한국형 퇴마 액션 RPG.",
+      "feats": [
+        "👻 귀신 보스",
+        "📜 부적·도구 성장",
+        "⚔️ 한 손 전투"
+      ],
+      "link": "https://minion.toss.im/9pr1fMaw",
+      "store": "토스로 플레이",
+      "video": null,
+      "thumb": "assets/apps/dongtoesa/thumb.jpg",
+      "icon": "assets/apps/dongtoesa/icon.png",
+      "qr": "assets/apps/dongtoesa/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/dongtoesa/thumb-sm.jpg",
+      "path": "apps/game/dongtoesa/",
+      "details": {
+        "headline": null,
+        "lead": "골목골목 출몰하는 악귀를 물리치는 통쾌한 한국형 퇴마 액션 RPG.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "👻 귀신 보스",
+                "desc": null
+              },
+              {
+                "title": "📜 부적·도구 성장",
+                "desc": null
+              },
+              {
+                "title": "⚔️ 한 손 전투",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "bunsik-madness",
+      "name": "분식대란",
+      "genre": "분식 퍼즐 게임",
+      "category": "game",
+      "desc": "밀려드는 주문을 퍼즐로 척척! 손맛 터지는 분식집 운영 게임.",
+      "feats": [
+        "🍢 분식 메뉴",
+        "🧩 퍼즐 매치",
+        "🔥 빨라지는 주문"
+      ],
+      "link": "https://minion.toss.im/rjut6Vsr",
+      "store": "토스로 플레이",
+      "video": null,
+      "thumb": "assets/apps/bunsik-madness/thumb.jpg",
+      "icon": "assets/apps/bunsik-madness/icon.png",
+      "qr": "assets/apps/bunsik-madness/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/bunsik-madness/thumb-sm.jpg",
+      "path": "apps/game/bunsik-madness/",
+      "details": {
+        "headline": null,
+        "lead": "밀려드는 주문을 퍼즐로 척척! 손맛 터지는 분식집 운영 게임.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "🍢 분식 메뉴",
+                "desc": null
+              },
+              {
+                "title": "🧩 퍼즐 매치",
+                "desc": null
+              },
+              {
+                "title": "🔥 빨라지는 주문",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "coin-tower",
+      "name": "코인 타워",
+      "genre": "뱀서류 로그라이크",
+      "category": "game",
+      "desc": "한 손으로 즐기는 뱀서류 액션! 코인으로 캐릭터를 강화하며 더 높이 올라가세요.",
+      "feats": [
+        "⚔️ 뱀서류 액션",
+        "🪙 캐릭터 강화",
+        "🚀 더 높이"
+      ],
+      "link": "https://minion.toss.im/tBZC0Zuf",
+      "store": "토스 미니앱",
+      "video": null,
+      "thumb": "assets/apps/coin-tower/thumb.jpg",
+      "icon": "assets/apps/coin-tower/icon.png",
+      "qr": "assets/apps/coin-tower/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/coin-tower/thumb-sm.jpg",
+      "path": "apps/game/coin-tower/",
+      "details": {
+        "headline": null,
+        "lead": "한 손으로 즐기는 뱀서류 액션! 코인으로 캐릭터를 강화하며 더 높이 올라가세요.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "⚔️ 뱀서류 액션",
+                "desc": null
+              },
+              {
+                "title": "🪙 캐릭터 강화",
+                "desc": null
+              },
+              {
+                "title": "🚀 더 높이",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "gogo-drive",
+      "name": "고고 드라이브",
+      "genre": "3D 캐주얼 레이싱",
+      "category": "game",
+      "desc": "달리고, 피하고, 추월하라! 생동감 넘치는 3D 도시를 질주하는 드라이빙 게임.",
+      "feats": [
+        "🏎️ 3D 도시 질주",
+        "🚦 피하고 추월",
+        "🏆 기록 도전"
+      ],
+      "link": "https://minion.toss.im/nvcfeukj",
+      "store": "토스로 플레이",
+      "video": null,
+      "thumb": "assets/apps/gogo-drive/thumb.jpg",
+      "icon": "assets/apps/gogo-drive/icon.png",
+      "qr": "assets/apps/gogo-drive/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/gogo-drive/thumb-sm.jpg",
+      "path": "apps/game/gogo-drive/",
+      "details": {
+        "headline": null,
+        "lead": "달리고, 피하고, 추월하라! 생동감 넘치는 3D 도시를 질주하는 드라이빙 게임.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "🏎️ 3D 도시 질주",
+                "desc": null
+              },
+              {
+                "title": "🚦 피하고 추월",
+                "desc": null
+              },
+              {
+                "title": "🏆 기록 도전",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "maze-escape",
+      "name": "어둠의 미로",
+      "genre": "1인칭 생존 호러",
+      "category": "game",
+      "desc": "칠흑 같은 미로 속, 손전등 하나와 발소리에 의지해 보이지 않는 추격자를 피해 탈출하라.",
+      "feats": [
+        "🔦 손전등 생존",
+        "👂 발소리 추적",
+        "💎 보물 획득"
+      ],
+      "link": "https://minion.toss.im/zhHOCcSB",
+      "store": "토스로 플레이",
+      "video": null,
+      "thumb": "assets/apps/maze-escape/thumb.jpg",
+      "icon": "assets/apps/maze-escape/icon.png",
+      "qr": "assets/apps/maze-escape/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/maze-escape/thumb-sm.jpg",
+      "path": "apps/game/maze-escape/",
+      "details": {
+        "headline": null,
+        "lead": "칠흑 같은 미로 속, 손전등 하나와 발소리에 의지해 보이지 않는 추격자를 피해 탈출하라.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "🔦 손전등 생존",
+                "desc": null
+              },
+              {
+                "title": "👂 발소리 추적",
+                "desc": null
+              },
+              {
+                "title": "💎 보물 획득",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "evolve-2048",
+      "name": "진화 2048",
+      "genre": "퍼즐 게임",
+      "category": "game",
+      "desc": "숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!",
+      "feats": [
+        "🥚 합칠수록 진화",
+        "🧩 클래식 2048",
+        "📴 오프라인 플레이"
+      ],
+      "link": null,
+      "store": null,
+      "video": null,
+      "thumb": "assets/apps/evolve-2048/thumb.jpg",
+      "icon": "assets/apps/evolve-2048/icon.png",
+      "qr": null,
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/evolve-2048/thumb-sm.jpg",
+      "path": "apps/game/evolve-2048/",
+      "details": {
+        "headline": null,
+        "lead": "숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "🥚 합칠수록 진화",
+                "desc": null
+              },
+              {
+                "title": "🧩 클래식 2048",
+                "desc": null
+              },
+              {
+                "title": "📴 오프라인 플레이",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "ghost-stack",
+      "name": "고스트 스택",
+      "genre": "캐주얼 게임",
+      "category": "game",
+      "desc": "숨은 고수(고스트)와 겨루는 네온 야경 블록 쌓기! 탭 한 번으로 즐기는 하이퍼 캐주얼.",
+      "feats": [
+        "👆 원터치 쌓기",
+        "👻 고스트 대결",
+        "🌃 네온 야경"
+      ],
+      "link": null,
+      "store": null,
+      "video": null,
+      "thumb": "assets/apps/ghost-stack/thumb.jpg",
+      "icon": "assets/apps/ghost-stack/icon.png",
+      "qr": null,
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/ghost-stack/thumb-sm.jpg",
+      "path": "apps/game/ghost-stack/",
+      "details": {
+        "headline": null,
+        "lead": "숨은 고수(고스트)와 겨루는 네온 야경 블록 쌓기! 탭 한 번으로 즐기는 하이퍼 캐주얼.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "👆 원터치 쌓기",
+                "desc": null
+              },
+              {
+                "title": "👻 고스트 대결",
+                "desc": null
+              },
+              {
+                "title": "🌃 네온 야경",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "pinch-runner",
+      "name": "핀치 러너",
+      "genre": "캐주얼 러너 게임",
+      "category": "game",
+      "desc": "오므리면 작아지고, 벌리면 커진다! 두 손가락 핀치 하나로 즐기는 한 끗 차이 엔드리스 러너.",
+      "feats": [
+        "🤏 오므려 통과",
+        "💥 벌려서 분쇄",
+        "🏁 거리 기록 도전"
+      ],
+      "link": null,
+      "store": null,
+      "video": null,
+      "thumb": "assets/apps/pinch-runner/thumb.jpg",
+      "icon": "assets/apps/pinch-runner/icon.png",
+      "qr": null,
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/pinch-runner/thumb-sm.jpg",
+      "path": "apps/game/pinch-runner/",
+      "details": {
+        "headline": null,
+        "lead": "오므리면 작아지고, 벌리면 커진다! 두 손가락 핀치 하나로 즐기는 한 끗 차이 엔드리스 러너.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "🤏 오므려 통과",
+                "desc": null
+              },
+              {
+                "title": "💥 벌려서 분쇄",
+                "desc": null
+              },
+              {
+                "title": "🏁 거리 기록 도전",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스",
+        "Google Play"
+      ]
+    },
+    {
+      "id": "happy-pug",
+      "name": "해피퍼그",
+      "genre": "반려 커뮤니티",
+      "category": "life",
+      "desc": "동네 강아지 친구들과 함께 걷는 산책 모임, 반려인을 위한 커뮤니티.",
+      "feats": [
+        "🐶 산책 모임",
+        "📍 친구 매칭",
+        "🏅 산책 인증"
+      ],
+      "link": "https://onesto.re/0001005937",
+      "store": "원스토어로 받기",
+      "video": null,
+      "thumb": "assets/apps/happy-pug/thumb.jpg",
+      "icon": "assets/apps/happy-pug/icon.png",
+      "qr": "assets/apps/happy-pug/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/happy-pug/thumb-sm.jpg",
+      "path": "apps/life/happy-pug/",
+      "details": {
+        "headline": null,
+        "lead": "동네 강아지 친구들과 함께 걷는 산책 모임, 반려인을 위한 커뮤니티.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "🐶 산책 모임",
+                "desc": null
+              },
+              {
+                "title": "📍 친구 매칭",
+                "desc": null
+              },
+              {
+                "title": "🏅 산책 인증",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "Google Play",
+        "App Store",
+        "원스토어"
+      ]
+    },
+    {
+      "id": "ururu",
+      "name": "우르르",
+      "genre": "학교 대항 미니게임",
+      "category": "life",
+      "desc": "내 학교와 학과를 걸고 다른 학교와 겨루는 60초 미니게임입니다.",
+      "feats": [],
+      "link": "https://play.google.com/store/apps/details?id=com.ururu.app",
+      "store": "Google Play",
+      "video": null,
+      "thumb": "assets/apps/ururu/thumb.jpg",
+      "icon": "assets/apps/ururu/icon.png",
+      "qr": null,
+      "thumbPos": "center",
+      "intro": "ururu/",
+      "policies": [
+        {
+          "title": "개인정보처리방침",
+          "path": "ururu/privacy/"
+        },
+        {
+          "title": "서비스 이용약관",
+          "path": "ururu/terms/"
+        }
+      ],
+      "heroSoft": true,
+      "thumbSm": "assets/apps/ururu/thumb-sm.jpg",
+      "path": "apps/life/ururu/",
+      "details": {
+        "headline": "내 학교를 걸고, 60초.",
+        "lead": "우르르는 내가 고른 소속(학교·학과)을 걸고 다른 학교와 겨루는 미니게임입니다. 한 판은 60초, 이긴 판은 우리 학교 점수가 됩니다.",
+        "facts": [
+          "만 15세 이상",
+          "인앱 결제와 광고가 없습니다"
+        ],
+        "sections": [
+          {
+            "title": "고르고, 겨루고, 보태요.",
+            "intro": null,
+            "items": [
+              {
+                "title": "소속을 고르고",
+                "desc": "교육부가 공개한 명부에서 내 학교와 학과를 고릅니다. 학적을 확인하지 않는 자기 신고입니다."
+              },
+              {
+                "title": "60초 겨루고",
+                "desc": "이번 시즌 상대 학교의 누군가와 미니게임 한 판. 순위표에서 상대를 직접 고를 수도 있습니다."
+              },
+              {
+                "title": "우리 학교에 보태요",
+                "desc": "이긴 판이 소속 점수가 됩니다. 시즌은 2주마다 서고 상대가 바뀝니다."
+              }
+            ]
+          },
+          {
+            "title": "불쾌한 것에는 관용이 없습니다.",
+            "intro": null,
+            "items": [
+              {
+                "title": "한 번이면 물러납니다",
+                "desc": "외설·혐오·위협·괴롭힘을 그리거나 적으면 신고를 받는 즉시 그 판에서 물러납니다. 반복하면 계정을 지웁니다."
+              },
+              {
+                "title": "다시 만나지 않습니다",
+                "desc": "신고한 상대와는 같은 방에 다시 앉지 않습니다. 차단은 앱 안에서 한 번에 풀 수 있습니다."
+              },
+              {
+                "title": "계정은 앱에서 지웁니다",
+                "desc": "서버의 계정과 기록, 보관 중인 인증 사진, 이 기기의 기록을 함께 지웁니다. 되돌릴 수 없습니다."
+              }
+            ]
+          }
+        ],
+        "privacy": {
+          "title": "로그인 없이 먼저 해 보세요",
+          "body": "우르르는 로그인 없이도 이용할 수 있습니다. 로그인하지 않은 상태에서 회사가 처리하는 개인정보는 없습니다."
+        }
+      },
+      "channels": [
+        "Google Play",
+        "App Store"
+      ]
+    },
+    {
+      "id": "dasseotda",
+      "name": "다썼다",
+      "genre": "생활·편의 · AI",
+      "category": "life",
+      "desc": "집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요.",
+      "feats": [
+        "📷 사진으로 등록",
+        "⏰ 사용기한 알림",
+        "🔍 재고 검색"
+      ],
+      "link": "https://fresh-keep.apps.tossmini.com",
+      "store": "앱인토스",
+      "video": null,
+      "thumb": "assets/apps/dasseotda/thumb.jpg",
+      "icon": "assets/apps/dasseotda/icon.png",
+      "qr": "assets/apps/dasseotda/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/dasseotda/thumb-sm.jpg",
+      "path": "apps/life/dasseotda/",
+      "details": {
+        "headline": null,
+        "lead": "집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "📷 사진으로 등록",
+                "desc": null
+              },
+              {
+                "title": "⏰ 사용기한 알림",
+                "desc": null
+              },
+              {
+                "title": "🔍 재고 검색",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스"
+      ]
+    },
+    {
+      "id": "trotstep",
+      "name": "트롯스텝",
+      "genre": "라이프스타일·팬덤",
+      "category": "life",
+      "desc": "매일 걷는 걸음이 최애 가수를 향한 응원이 됩니다. 걸음으로 모은 투표권으로 응원하세요.",
+      "feats": [
+        "👟 걸음→투표권",
+        "🎤 최애 응원",
+        "🏆 응원 랭킹"
+      ],
+      "link": "https://m.onestore.co.kr/v2/ko-kr/app/0001006574",
+      "store": "원스토어로 받기",
+      "video": null,
+      "thumb": "assets/apps/trotstep/thumb.jpg",
+      "icon": "assets/apps/trotstep/icon.png",
+      "qr": "assets/apps/trotstep/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/trotstep/thumb-sm.jpg",
+      "path": "apps/life/trotstep/",
+      "details": {
+        "headline": null,
+        "lead": "매일 걷는 걸음이 최애 가수를 향한 응원이 됩니다. 걸음으로 모은 투표권으로 응원하세요.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "👟 걸음→투표권",
+                "desc": null
+              },
+              {
+                "title": "🎤 최애 응원",
+                "desc": null
+              },
+              {
+                "title": "🏆 응원 랭킹",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "원스토어"
+      ]
+    },
+    {
+      "id": "price-time-machine",
+      "name": "물가타임머신",
+      "genre": "생활정보 서비스",
+      "category": "life",
+      "desc": "그때 그 가격, 지금은 얼마? 시점별 물가를 한눈에 비교하는 타임머신.",
+      "feats": [
+        "💰 시점별 비교",
+        "📈 변화 그래프",
+        "⏱️ 체감 물가"
+      ],
+      "link": "https://minion.toss.im/zJkHpMOC",
+      "store": "토스로 플레이",
+      "video": null,
+      "thumb": "assets/apps/price-time-machine/thumb.jpg",
+      "icon": "assets/apps/price-time-machine/icon.png",
+      "qr": "assets/apps/price-time-machine/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/price-time-machine/thumb-sm.jpg",
+      "path": "apps/life/price-time-machine/",
+      "details": {
+        "headline": null,
+        "lead": "그때 그 가격, 지금은 얼마? 시점별 물가를 한눈에 비교하는 타임머신.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "💰 시점별 비교",
+                "desc": null
+              },
+              {
+                "title": "📈 변화 그래프",
+                "desc": null
+              },
+              {
+                "title": "⏱️ 체감 물가",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스"
+      ]
+    },
+    {
+      "id": "hachanhan-image",
+      "name": "하찮은이미지",
+      "genre": "AI 이미지·재미",
+      "category": "life",
+      "desc": "못 그려도 괜찮아! 사진 한 장이면 피식 웃기는 낙서풍 그림으로 뚝딱.",
+      "feats": [
+        "✏️ 낙서 변환",
+        "😆 B급 감성",
+        "📤 바로 공유"
+      ],
+      "link": "https://minion.toss.im/1PKZKt7u",
+      "store": "토스로 플레이",
+      "video": null,
+      "thumb": "assets/apps/hachanhan-image/thumb.jpg",
+      "icon": "assets/apps/hachanhan-image/icon.png",
+      "qr": "assets/apps/hachanhan-image/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/hachanhan-image/thumb-sm.jpg",
+      "path": "apps/life/hachanhan-image/",
+      "details": {
+        "headline": null,
+        "lead": "못 그려도 괜찮아! 사진 한 장이면 피식 웃기는 낙서풍 그림으로 뚝딱.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "✏️ 낙서 변환",
+                "desc": null
+              },
+              {
+                "title": "😆 B급 감성",
+                "desc": null
+              },
+              {
+                "title": "📤 바로 공유",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스"
+      ]
+    },
+    {
+      "id": "dream-gallery",
+      "name": "드림갤러리",
+      "genre": "AI 아트·갤러리",
+      "category": "life",
+      "desc": "당신이 꾼 꿈을 AI가 한 장의 일러스트로. 꿈을 그림으로 모으는 갤러리.",
+      "feats": [
+        "🌌 꿈→일러스트",
+        "🖼️ 드림 갤러리",
+        "✨ 감각적 결과물"
+      ],
+      "link": "https://minion.toss.im/hM4w0a2a",
+      "store": "토스로 플레이",
+      "video": null,
+      "thumb": "assets/apps/dream-gallery/thumb.jpg",
+      "icon": "assets/apps/dream-gallery/icon.png",
+      "qr": "assets/apps/dream-gallery/qr.png",
+      "thumbPos": "center",
+      "thumbSm": "assets/apps/dream-gallery/thumb-sm.jpg",
+      "path": "apps/life/dream-gallery/",
+      "details": {
+        "headline": null,
+        "lead": "당신이 꾼 꿈을 AI가 한 장의 일러스트로. 꿈을 그림으로 모으는 갤러리.",
+        "facts": [],
+        "sections": [
+          {
+            "title": "주요 특징",
+            "intro": null,
+            "items": [
+              {
+                "title": "🌌 꿈→일러스트",
+                "desc": null
+              },
+              {
+                "title": "🖼️ 드림 갤러리",
+                "desc": null
+              },
+              {
+                "title": "✨ 감각적 결과물",
+                "desc": null
+              }
+            ]
+          }
+        ],
+        "privacy": null
+      },
+      "channels": [
+        "앱인토스"
+      ]
+    },
+    {
+      "id": "subscribers",
+      "name": "구독자",
+      "genre": "구독료 관리",
+      "category": "utility",
+      "desc": "카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다.",
+      "feats": [],
+      "link": "https://play.google.com/store/apps/details?id=com.superwork.subscribers",
+      "store": "Google Play",
+      "video": "assets/apps/subscribers/preview.mp4",
+      "thumb": "assets/apps/subscribers/thumb.jpg",
+      "icon": "assets/apps/subscribers/icon.png",
+      "qr": null,
+      "thumbPos": "center",
+      "intro": "subscribers/",
+      "policies": [
+        {
+          "title": "개인정보처리방침",
+          "path": "subscribers/privacy/"
+        },
+        {
+          "title": "계정 삭제 안내",
+          "path": "subscribers/account-deletion/"
+        }
+      ],
+      "heroSoft": true,
+      "thumbSm": "assets/apps/subscribers/thumb-sm.jpg",
+      "videoPoster": "assets/apps/subscribers/preview.jpg",
+      "path": "apps/utility/subscribers/",
+      "details": {
+        "headline": "매달 빠져나가는 돈, 명세서로 받아 보세요.",
+        "lead": "구독자는 카드사·간편결제 앱의 결제 알림에서 정기결제를 찾아 한 장의 명세서로 정리하고, 다음 결제가 오기 전에 미리 알려 드립니다. 쓰지 않는 구독은 결제 전에 끊으세요.",
+        "facts": [
+          "Android 앱",
+          "광고 없음",
+          "결제 알림은 기기 안에서만"
+        ],
+        "sections": [
+          {
+            "title": "놓치기 쉬운 결제를 먼저 짚어요",
+            "intro": "가입해 두고 잊은 구독, 조용히 오른 요금, 유료로 넘어가는 무료체험. 결제가 끝난 뒤에 아는 대신 결제 전에 알 수 있게 합니다.",
+            "items": [
+              {
+                "title": "결제 알림에서 찾기",
+                "desc": "카드 승인 알림과 문자에서 가맹점과 금액을 읽어, 같은 곳에서 한 달 간격으로 반복되는 결제를 구독으로 분류합니다. 은행 계좌 자동이체처럼 알림으로 찾지 못한 구독은 직접 등록할 수 있습니다."
+              },
+              {
+                "title": "결제 3일 전 알림",
+                "desc": "다음 결제일이 다가오면 미리 알려 드립니다. 이번 달도 유지할지 한 번 묻는 것만으로 잊고 지나가는 결제를 막습니다."
+              },
+              {
+                "title": "무료체험 만료 알림",
+                "desc": "체험 기간을 등록해 두면 만료 3일 전과 1일 전에 알려 드립니다."
+              },
+              {
+                "title": "요금 인상 감지",
+                "desc": "같은 서비스의 결제 금액이 지난달보다 오르면 알려 드립니다."
+              },
+              {
+                "title": "해지 경로 안내",
+                "desc": "끊기로 한 구독은 해지할 수 있는 곳으로 안내하고, 해지로 아낀 금액을 기록합니다."
+              },
+              {
+                "title": "가족과 함께 보기",
+                "desc": "서로 초대하고 양쪽이 모두 동의한 가족과만 확정된 구독 목록을 나눠 봅니다. 언제든 연결을 해제할 수 있습니다."
+              }
+            ]
+          }
+        ],
+        "privacy": {
+          "title": "결제 알림은 기기 밖으로 나가지 않아요",
+          "body": "알림 접근을 허용하면 미리 정해 둔 카드사·간편결제·문자 앱의 결제 알림만 읽습니다. 알림 원문은 회사 서버로 보내지 않고, 찾아낸 구독 정보는 기기의 암호화 저장소에 보관합니다."
+        }
+      },
+      "channels": [
+        "Google Play"
+      ]
+    },
+    {
+      "id": "piclect",
+      "name": "셀렉터",
+      "genre": "사진 정리",
+      "category": "utility",
+      "desc": "지울 사진을 고르는 대신 남길 사진을 먼저 정합니다. 사진 분석은 기기 안에서만 합니다.",
+      "feats": [],
+      "link": "https://play.google.com/store/apps/details?id=com.piclect.app",
+      "store": "Google Play",
+      "video": null,
+      "thumb": "assets/apps/piclect/thumb.jpg",
+      "icon": "assets/apps/piclect/icon.png",
+      "qr": null,
+      "thumbPos": "center",
+      "intro": "piclect/",
+      "policies": [
+        {
+          "title": "개인정보처리방침",
+          "path": "piclect/privacy/"
+        },
+        {
+          "title": "서비스 이용약관",
+          "path": "piclect/terms/"
+        }
+      ],
+      "heroSoft": true,
+      "thumbSm": "assets/apps/piclect/thumb-sm.jpg",
+      "path": "apps/utility/piclect/",
+      "details": {
+        "headline": "남길 사진을 먼저 정합니다.",
+        "lead": "지울 사진을 고르는 일은 어렵습니다. 셀렉터는 비슷한 사진 묶음마다 남길 한 장을 먼저 빼 두고, 나머지를 삭제 후보로 보여줍니다.",
+        "facts": [
+          "Android 7.0 이상",
+          "한국어와 영어"
+        ],
+        "sections": [
+          {
+            "title": "쌓인 것부터 세고, 남길 것부터 정합니다.",
+            "intro": null,
+            "items": [
+              {
+                "title": "마지막 정리 이후부터",
+                "desc": "검사를 시작하기 전에, 지난 정리 이후 새로 쌓인 항목이 몇 개인지부터 보여줍니다. 보관함 전체 정리도 언제든 고를 수 있습니다."
+              },
+              {
+                "title": "묶음마다 남길 한 장",
+                "desc": "중복이나 비슷한 사진 묶음에서는 남길 한 장을 먼저 정하고, 나머지만 삭제 후보로 올립니다. 왜 그 한 장인지 이유를 함께 보여줍니다 — 해상도, 선명도, 파일 용량, 먼저 저장된 사진."
+              },
+              {
+                "title": "나머지를 한 장씩",
+                "desc": "미리 선택되어 있는 사진은 없습니다. 기본값은 언제나 「보관」이고, 삭제 버튼을 누르기 전에는 한 장도 지워지지 않습니다."
+              }
+            ]
+          }
+        ],
+        "privacy": {
+          "title": "사진은 이 기기를 떠나지 않습니다",
+          "body": "셀렉터는 회원가입이나 로그인 없이 이용합니다. 중복 판정과 흐릿함 판정은 모두 이 기기 안에서 처리하며, 사진·썸네일·파일 이름을 서버로 보내지 않습니다."
+        }
+      },
+      "channels": [
+        "Google Play"
+      ]
+    },
+    {
+      "id": "jjallang",
+      "name": "짤랑",
+      "genre": "근무표·급여계산",
+      "category": "utility",
+      "desc": "출퇴근 버튼만 누르세요. 야간·연장·주휴수당까지 계산해 홈 화면 위젯에 보여드립니다.",
+      "feats": [],
+      "link": "https://play.google.com/store/apps/details?id=com.jjallang.app",
+      "store": "Google Play",
+      "video": null,
+      "thumb": "assets/apps/jjallang/thumb.jpg",
+      "icon": "assets/apps/jjallang/icon.png",
+      "qr": null,
+      "thumbPos": "center",
+      "intro": "jjallang/",
+      "policies": [
+        {
+          "title": "개인정보처리방침",
+          "path": "jjallang/privacy/"
+        },
+        {
+          "title": "서비스 이용약관",
+          "path": "jjallang/terms/"
+        }
+      ],
+      "heroSoft": true,
+      "thumbSm": "assets/apps/jjallang/thumb-sm.jpg",
+      "path": "apps/utility/jjallang/",
+      "details": {
+        "headline": "버튼 하나 누르면, 오늘 번 돈이 계산됩니다.",
+        "lead": "짤랑은 시급제 알바와 교대근무자를 위한 근무 기록 앱입니다. 야간·연장·휴일·주휴수당을 근로기준법 기준으로 대신 계산하고, 퇴근하면 근로명세서 한 장으로 보여줍니다.",
+        "facts": [
+          "회원가입이 없습니다",
+          "기록은 기기에만 저장됩니다",
+          "표시 금액은 세전 기준입니다"
+        ],
+        "sections": [
+          {
+            "title": "누르고, 잊고, 받아 보세요.",
+            "intro": null,
+            "items": [
+              {
+                "title": "출근을 누르고",
+                "desc": "일터를 한 번 만들어 두면 그다음부터는 버튼 하나입니다. 컨트롤 센터와 잠금화면에서도 누를 수 있습니다."
+              },
+              {
+                "title": "위젯이 세는 동안",
+                "desc": "홈 화면 위젯에 오늘 번 돈이 실시간으로 쌓입니다. 앱을 열지 않아도 됩니다."
+              },
+              {
+                "title": "퇴근하면 명세서",
+                "desc": "기본·야간·연장·휴일이 항목별로 갈린 근로명세서가 나옵니다. 그대로 이미지로 보낼 수 있습니다."
+              }
+            ]
+          },
+          {
+            "title": "감으로 세지 않습니다. 조문으로 셉니다.",
+            "intro": null,
+            "items": [
+              {
+                "title": "야간근로 +50%",
+                "desc": "22시~06시 · 제56조 제3항"
+              },
+              {
+                "title": "연장근로 +50%",
+                "desc": "1일 8시간 초과 · 제56조 제1항"
+              },
+              {
+                "title": "휴일근로 +50%",
+                "desc": "8시간 이내 · 제56조 제2항"
+              },
+              {
+                "title": "주휴수당 +1일",
+                "desc": "주 15시간 이상 · 제55조"
+              }
+            ]
+          }
+        ],
+        "privacy": {
+          "title": "가입이 없고, 기록은 기기에 남습니다.",
+          "body": "짤랑은 회원가입과 로그인이 없습니다. 일터 정보와 출퇴근 기록, 시급은 기기 안에만 저장되며 회사 서버로 보내지 않습니다. 회사는 서버를 운영하지 않으므로 그 내용을 열람할 수 없습니다."
+        }
+      },
+      "channels": [
+        "Google Play"
+      ]
+    },
+    {
+      "id": "word-doodle",
+      "name": "그려보카",
+      "genre": "영단어 학습",
+      "category": "utility",
+      "desc": "영단어를 낙서로 기억하고, 내가 그린 그림으로 복습하는 학습 앱입니다.",
+      "feats": [],
+      "link": "https://play.google.com/store/apps/details?id=com.worddoodle.app",
+      "store": "Google Play",
+      "video": null,
+      "thumb": "assets/apps/word-doodle/thumb.jpg",
+      "icon": "assets/apps/word-doodle/icon.png",
+      "qr": null,
+      "thumbPos": "center",
+      "intro": "word-doodle/",
+      "policies": [
+        {
+          "title": "개인정보처리방침",
+          "path": "word-doodle/privacy/"
+        },
+        {
+          "title": "서비스 이용약관",
+          "path": "word-doodle/terms/"
+        }
+      ],
+      "heroSoft": true,
+      "thumbSm": "assets/apps/word-doodle/thumb-sm.jpg",
+      "path": "apps/utility/word-doodle/",
+      "details": {
+        "headline": "단어 하나, 나만의 그림 하나.",
+        "lead": "그려보카는 영단어를 낙서로 기억하는 학습 앱입니다. 잘 그릴 필요는 없어요. 단어를 보고 떠오른 그림이 나만의 기억 단서가 됩니다.",
+        "facts": [
+          "만 14세 이상을 위한 영단어 학습"
+        ],
+        "sections": [
+          {
+            "title": "읽고, 그리고, 다시 떠올려요.",
+            "intro": null,
+            "items": [
+              {
+                "title": "단어를 읽고",
+                "desc": "영단어와 뜻을 확인하며 머릿속에 떠오르는 장면을 생각해요."
+              },
+              {
+                "title": "낙서로 남기고",
+                "desc": "직접 그린 그림으로 단어를 표현해요. 나에게 의미 있는 낙서면 충분해요."
+              },
+              {
+                "title": "내 그림으로 복습",
+                "desc": "기기에 저장한 그림과 학습기록을 바탕으로 단어를 다시 떠올려요."
+              }
+            ]
+          }
+        ],
+        "privacy": {
+          "title": "가입 없이 시작하는 나만의 단어 노트",
+          "body": "그려보카는 회원가입이나 로그인 없이 이용합니다. 낙서와 학습기록은 기기에 저장되며, 회사 서버로 전송하거나 동기화하지 않습니다. 복습 일정도 기기 안에서 계산합니다."
+        }
+      },
+      "channels": []
+    },
+    {
+      "id": "filefit",
+      "name": "파일핏",
+      "genre": "사진 변환·PDF",
+      "category": "utility",
+      "desc": "사진 용량을 정한 KB 이하로 줄이고 JPG·PNG·WebP 변환, 크기 조절, 여러 장을 A4 PDF로 묶습니다. 파일을 서버에 올리지 않고 기기 안에서 처리합니다.",
+      "feats": [],
+      "link": null,
+      "store": null,
+      "video": null,
+      "thumb": "assets/apps/filefit/thumb.jpg",
+      "icon": null,
+      "qr": null,
+      "thumbPos": "center",
+      "intro": "filefit/",
+      "policies": [
+        {
+          "title": "개인정보처리방침",
+          "path": "filefit/privacy/"
+        },
+        {
+          "title": "서비스 이용약관",
+          "path": "filefit/terms/"
+        }
+      ],
+      "heroSoft": true,
+      "thumbSm": "assets/apps/filefit/thumb-sm.jpg",
+      "path": "apps/utility/filefit/",
+      "details": {
+        "headline": "파일 준비, 가볍게 끝내요.",
+        "lead": "파일핏은 제출할 사진의 용량·형식·크기를 한 번에 맞추는 도구입니다. 정한 KB 이하로 줄이고, 형식을 바꾸고, 여러 장을 PDF 한 개로 묶습니다.",
+        "facts": [
+          "가입 없이, 파일 업로드 없이"
+        ],
+        "sections": [
+          {
+            "title": "조건을 정하고, 한 번에 맞춰요.",
+            "intro": null,
+            "items": [
+              {
+                "title": "사진을 고르고",
+                "desc": "JPG·PNG·WebP 사진을 한 번에 최대 10개까지 선택해요."
+              },
+              {
+                "title": "조건을 정하고",
+                "desc": "용량 상한, 바꿀 형식, 최대 가로·세로 크기를 정해요. 자주 쓰는 조건은 저장해 두고 다시 써요."
+              },
+              {
+                "title": "확인하고 저장",
+                "desc": "원본과 결과를 비교하고 실제 용량을 확인한 뒤 저장해요. 여러 장은 PDF 한 개로 묶을 수도 있어요."
+              }
+            ]
+          }
+        ],
+        "privacy": {
+          "title": "파일을 서버에 올리지 않아요",
+          "body": "파일핏은 회원가입이나 로그인 없이 이용합니다. 사진은 기기 안에서 처리하며 회사 서버로 전송하지 않습니다. 작업 기록에는 종류·개수·용량·시각만 남고 파일 이름과 파일 내용은 저장하지 않습니다."
+        }
+      },
+      "channels": []
+    }
+  ]
+}

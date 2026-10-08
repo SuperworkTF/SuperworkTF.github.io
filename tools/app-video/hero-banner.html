@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<!-- 1536x646, 10초 반복. 원본 배너(assets/brand/banner.jpg) 위에 빛 효과만 얹는다.
+     영역 좌표는 잘라낸 배너 기준: 제목 y150–291, 부제 y300–365, 아이콘 y400–545, 하단 문구 y566–624 -->
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1536px;height:646px;overflow:hidden;background:#000}
+.stage{position:absolute;inset:0;transform-origin:50% 45%;animation:kenburns 10s ease-in-out infinite}
+@keyframes kenburns{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+.layer{position:absolute;inset:0;background:url(../../assets/brand/banner.jpg) 0 0/1536px 646px no-repeat}
+.title{clip-path:inset(150px 315px 355px 295px round 12px)}
+
+/* 제목 색 바꾸기: 원본 → 마젠타 → (깜빡임) → 주황 → 무지개 → 원본 */
+.recolor{opacity:0;animation:recolor 10s linear infinite}
+@keyframes recolor{
+  0%,10%{opacity:0;filter:hue-rotate(0deg) saturate(1.6) brightness(1.3)}
+  14%{opacity:1;filter:hue-rotate(140deg) saturate(2.4) brightness(1.4)}
+  28%{opacity:1;filter:hue-rotate(140deg) saturate(2.4) brightness(1.4)}
+  33%{opacity:0;filter:hue-rotate(140deg) saturate(2.4) brightness(1.4)}
+  50%{opacity:0;filter:hue-rotate(205deg) saturate(2.6) brightness(1.5)}
+  54%{opacity:1;filter:hue-rotate(205deg) saturate(2.6) brightness(1.5)}
+  64%{opacity:1;filter:hue-rotate(205deg) saturate(2.6) brightness(1.5)}
+  70%{opacity:1;filter:hue-rotate(280deg) saturate(2.4) brightness(1.45)}
+  78%{opacity:1;filter:hue-rotate(360deg) saturate(2) brightness(1.4)}
+  84%,100%{opacity:0;filter:hue-rotate(360deg) saturate(1.6) brightness(1.3)}}
+
+/* 네온이 꺼졌다 켜짐 */
+.off{background:#02040c;opacity:0;animation:off 10s steps(1,end) infinite}
+@keyframes off{0%,38%{opacity:0}38.5%{opacity:.85}39.2%{opacity:0}39.8%{opacity:.9}41%{opacity:.6}41.6%{opacity:0}100%{opacity:0}}
+.flare{filter:brightness(2.2) saturate(1.5) blur(7px);mix-blend-mode:screen;opacity:0;animation:flare 10s linear infinite}
+@keyframes flare{0%,41.5%{opacity:0}42.5%{opacity:1}47%{opacity:.15}88%{opacity:0}91%{opacity:.8}96%,100%{opacity:0}}
+.sweep{overflow:hidden}
+.sweep::before{content:'';position:absolute;top:0;bottom:0;width:240px;left:-300px;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.75) 50%,transparent);mix-blend-mode:overlay;filter:blur(5px);
+  animation:sweep 10s ease-in-out infinite}
+@keyframes sweep{0%,4%{transform:translateX(0)}17%,64%{transform:translateX(1560px)}64.01%{transform:translateX(0)}66%{transform:translateX(0)}79%,100%{transform:translateX(1560px)}}
+
+/* 부제 맥동 */
+.sub{clip-path:inset(300px 411px 281px 415px);filter:brightness(2) saturate(1.6) blur(4px);mix-blend-mode:screen;opacity:0;animation:sub 10s ease-in-out infinite}
+@keyframes sub{0%,20%{opacity:0}26%{opacity:.85}32%{opacity:.1}36%{opacity:.7}44%,72%{opacity:0}78%{opacity:.8}86%,100%{opacity:0}}
+
+/* 아이콘 차례로 점등 */
+.ico{filter:brightness(2.4) saturate(1.8) drop-shadow(0 0 10px #fff);mix-blend-mode:screen;opacity:0;animation:ico 10s linear infinite}
+@keyframes ico{0%{opacity:0}2%{opacity:1}7%{opacity:.25}12%,100%{opacity:0}}
+
+/* 하단 문구 섬광 */
+.tag{clip-path:inset(566px 446px 22px 400px round 10px);filter:brightness(2.2) saturate(1.6) blur(3px);mix-blend-mode:screen;opacity:0;animation:tag 10s linear infinite}
+@keyframes tag{0%,58%{opacity:0}60%{opacity:1}61%{opacity:.2}62%{opacity:.9}70%,100%{opacity:0}}
+
+/* 홀로그램 받침 */
+.pad{position:absolute;width:300px;height:110px;margin:-55px 0 0 -150px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(80,200,255,.8),rgba(40,120,255,.28) 45%,transparent 70%);
+  mix-blend-mode:screen;animation:pad 2.5s ease-in-out infinite}
+.pad.b{background:radial-gradient(ellipse,rgba(80,220,255,.75),rgba(255,140,40,.25) 45%,transparent 70%);animation-delay:-1.25s}
+@keyframes pad{0%,100%{opacity:.35;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
+.beam{position:absolute;width:120px;height:200px;margin-left:-60px;
+  background:linear-gradient(to top,rgba(90,200,255,.5),transparent);filter:blur(10px);mix-blend-mode:screen;animation:beam 2.5s ease-in-out infinite}
+@keyframes beam{0%,100%{opacity:.2}50%{opacity:.8}}
+
+/* 캐릭터 눈 */
+.eyes{position:absolute;left:1335px;top:216px;width:150px;height:70px;margin:-35px 0 0 -75px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(120,240,255,.95),rgba(60,180,255,.35) 45%,transparent 70%);mix-blend-mode:screen;opacity:.25;
+  animation:eyes 10s linear infinite}
+@keyframes eyes{0%,52%{opacity:.25}53%{opacity:1}54%{opacity:.05}55%{opacity:1}62%{opacity:.35}100%{opacity:.25}}
+
+.p{position:absolute;border-radius:50%;mix-blend-mode:screen;animation:float 10s linear infinite}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(-760px)}}
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.03) 0 1px,transparent 1px 4px);pointer-events:none}
+.vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(0,0,0,.45))}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="layer"></div>
+  <div class="layer title recolor"></div>
+  <div class="title off" style="position:absolute;inset:0"></div>
+  <div class="layer title flare"></div>
+  <div class="title sweep" style="position:absolute;inset:0"></div>
+  <div class="layer sub"></div>
+  <div id="icons"></div>
+  <div class="layer tag"></div>
+  <div class="beam" style="left:115px;top:360px"></div>
+  <div class="pad" style="left:115px;top:541px"></div>
+  <div class="beam" style="left:1320px;top:390px;animation-delay:-1.25s"></div>
+  <div class="pad b" style="left:1320px;top:576px"></div>
+  <div class="eyes"></div>
+  <div id="particles"></div>
+</div>
+<div class="scan"></div>
+<div class="vignette"></div>
+<script>
+// 아이콘 5개: 중심 x, 두 바퀴 차례로 점등 (0.0–2.0초, 6.5–8.5초)
+const icons = document.getElementById('icons');
+[408, 590, 770, 946, 1118].forEach((cx, i) => {
+  [0, 6.5].forEach(start => {
+    const d = document.createElement('div');
+    d.className = 'layer ico';
+    d.style.clipPath = `inset(400px ${1536 - cx - 70}px 101px ${cx - 70}px round 14px)`;
+    d.style.animationDelay = `${start + i * 0.38}s`;
+    icons.appendChild(d);
+  });
+});
+
+// 같은 결과가 매번 나오도록 고정된 씨앗으로 입자를 뿌린다.
+let seed = 7;
+const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const colors = ['#5cf3ff', '#7aa8ff', '#ff9a3c', '#d36bff', '#ffffff'];
+const box = document.getElementById('particles');
+for (let i = 0; i < 56; i++) {
+  const d = document.createElement('i');
+  const s = 2 + rnd() * 4;
+  d.className = 'p';
+  Object.assign(d.style, {
+    left: `${rnd() * 1536}px`, top: `${646 + rnd() * 40}px`, width: `${s}px`, height: `${s}px`,
+    background: colors[Math.floor(rnd() * colors.length)],
+    boxShadow: `0 0 ${s * 3}px ${colors[i % colors.length]}`,
+    opacity: (0.35 + rnd() * 0.6).toFixed(2),
+    animationDelay: `${(-rnd() * 10).toFixed(2)}s`,
+  });
+  box.appendChild(d);
+}
+</script>
+</body>
+</html>

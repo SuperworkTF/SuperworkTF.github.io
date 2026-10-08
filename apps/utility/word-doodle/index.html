@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>그려보카 — Superwork</title>
+<meta name="description" content="영단어를 낙서로 기억하고, 내가 그린 그림으로 복습하는 학습 앱입니다."/>
+<meta name="theme-color" content="#0a0c10"/>
+<meta property="og:title" content="그려보카 — Superwork"/>
+<meta property="og:description" content="영단어를 낙서로 기억하고, 내가 그린 그림으로 복습하는 학습 앱입니다."/>
+<meta property="og:type" content="website"/>
+<link rel="canonical" href="https://superwork.ai.kr/apps/utility/word-doodle/"/>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "SoftwareApplication",
+ "name": "그려보카",
+ "description": "그려보카는 영단어를 낙서로 기억하는 학습 앱입니다. 잘 그릴 필요는 없어요. 단어를 보고 떠오른 그림이 나만의 기억 단서가 됩니다.",
+ "applicationCategory": "UtilitiesApplication",
+ "genre": "영단어 학습",
+ "url": "https://superwork.ai.kr/apps/utility/word-doodle/",
+ "image": "https://superwork.ai.kr/assets/apps/word-doodle/thumb.jpg",
+ "publisher": {
+  "@type": "Organization",
+  "name": "Superwork",
+  "url": "https://superwork.ai.kr/"
+ },
+ "installUrl": "https://play.google.com/store/apps/details?id=com.worddoodle.app"
+}
+</script>
+<link rel="stylesheet" href="../../../assets/site.css"/>
+<style>
+.app-hero{position:relative;min-height:540px;display:flex;align-items:flex-end;overflow:hidden}
+.app-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 18s ease-in-out infinite alternate}
+.app-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,12,16,.15) 0%,rgba(10,12,16,.55) 55%,var(--bg) 100%)}
+.app-hero.soft>img{filter:blur(28px) brightness(.7) saturate(1.2);transform:scale(1.2);animation:none}
+@keyframes kb{to{transform:scale(1.12) translate(-2%,-2%)}}
+.app-hero .wrap{position:relative;z-index:1;padding-bottom:52px}
+.crumbs{display:flex;gap:8px;flex-wrap:wrap;color:rgba(255,255,255,.7);font-weight:700;font-size:14px;margin-bottom:26px}
+.crumbs a:hover{color:#fff}
+.app-id{display:flex;align-items:center;gap:22px;margin-bottom:20px}
+.app-id img{width:96px;height:96px;border-radius:24px;box-shadow:0 14px 34px rgba(0,0,0,.5)}
+.app-id .genre{color:var(--accent);font-weight:800}
+.app-id h1{font-size:clamp(38px,6vw,72px);line-height:1.05;font-weight:900;letter-spacing:-.03em}
+.app-lead{font-size:clamp(17px,2vw,21px);max-width:720px;color:rgba(255,255,255,.9);margin-bottom:30px}
+.app-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+.block{padding:72px 0 0}
+.block>h2{font-size:clamp(26px,3.4vw,38px);font-weight:900;letter-spacing:-.02em;margin-bottom:24px}
+.block>h2 small{display:block;color:var(--accent);font-size:13px;letter-spacing:.12em;margin-bottom:10px}
+.media-grid{display:grid;grid-template-columns:2fr 1fr;gap:24px}
+.art{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
+.art img{width:100%;aspect-ratio:2.34;object-fit:cover}
+.art video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.side{display:grid;gap:16px;align-content:start}
+.side h3{font-size:15px;color:var(--dim);margin-bottom:12px}
+.facts-table{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:15px}
+.facts-table dt{color:var(--dim)}
+.qr{display:flex;gap:18px;align-items:center}
+.qr img{width:112px;height:112px;border-radius:12px;background:#fff;padding:6px}
+.qr p{color:var(--dim);font-size:14px}
+
+.svc-head{font-size:clamp(24px,3vw,34px);font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
+.svc-lead{color:#c9ced6;font-size:18px;max-width:820px;margin-bottom:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.chips span{font-size:14px;font-weight:700;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line)}
+.svc-section{margin-top:40px}
+.svc-section h3{font-size:22px;font-weight:800;margin-bottom:8px}
+.svc-section>p{color:var(--dim);margin-bottom:18px;max-width:820px}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.item b{display:block;font-size:18px;margin-bottom:6px}
+.item p{color:var(--dim);font-size:15px}
+.item .no{color:var(--accent);font-weight:900;font-size:14px;margin-bottom:8px;display:block}
+.privacy{margin-top:40px;background:linear-gradient(135deg,rgba(61,90,128,.25),rgba(0,217,163,.06));border-color:rgba(120,160,220,.35)}
+.privacy h3{font-size:20px;margin-bottom:8px}
+.privacy p{color:#c9ced6}
+
+.docs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.doc{display:flex;flex-direction:column;gap:6px}
+.doc b{font-size:18px}
+.doc span{color:var(--dim);font-size:13px;overflow-wrap:anywhere}
+.note{color:var(--dim);font-size:14px;margin-top:14px}
+@media(max-width:860px){.media-grid{grid-template-columns:1fr}.app-hero{min-height:460px}.app-id img{width:72px;height:72px}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand grad" href="../../../">Superwork</a>
+    <nav class="site-nav">
+      <a href="../../../#workflow" class="hide-sm">개발 체계</a>
+      <a href="../../../#tools">도구</a>
+      <a href="../../../#apps" aria-current="page">앱</a>
+      <a href="../../../#channels">채널</a>
+      <a href="../../../policies/">정책</a>
+    </nav>
+  </div>
+</header>
+<main>
+
+<section class="app-hero soft">
+  <img src="../../../assets/apps/word-doodle/thumb.jpg" alt="" style="object-position:center">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="위치"><a href="../../../#apps">앱</a><span>/</span><a href="../../../#apps-utility">유틸리티</a><span>/</span><span>그려보카</span></nav>
+    <div class="app-id"><img src="../../../assets/apps/word-doodle/icon.png" alt=""><div><div class="genre">영단어 학습</div><h1>그려보카</h1></div></div>
+    <p class="app-lead">영단어를 낙서로 기억하고, 내가 그린 그림으로 복습하는 학습 앱입니다.</p>
+    <div class="app-cta"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.worddoodle.app" target="_blank" rel="noopener">Google Play ↗</a></div>
+  </div>
+</section>
+<div class="wrap">
+  <section class="block"><h2><small>OVERVIEW</small>한눈에 보기</h2>
+    <div class="media-grid"><figure class="art reveal"><img src="../../../assets/apps/word-doodle/thumb.jpg" alt="그려보카 대표 이미지"></figure><aside class="side"><div class="panel reveal"><h3>이용 정보</h3><dl class="facts-table"><dt>분류</dt><dd>유틸리티 · 영단어 학습</dd><dt>문의</dt><dd>superwork.master@gmail.com</dd></dl></div></aside></div></section>
+  <section class="block"><h2><small>SERVICE</small>서비스 설명</h2><p class="svc-head reveal">단어 하나, 나만의 그림 하나.</p><p class="svc-lead reveal">그려보카는 영단어를 낙서로 기억하는 학습 앱입니다. 잘 그릴 필요는 없어요. 단어를 보고 떠오른 그림이 나만의 기억 단서가 됩니다.</p><div class="chips reveal"><span>만 14세 이상을 위한 영단어 학습</span></div><div class="svc-section"><h3 class="reveal">읽고, 그리고, 다시 떠올려요.</h3><div class="items"><div class="panel item reveal"><span class="no">01</span><b>단어를 읽고</b><p>영단어와 뜻을 확인하며 머릿속에 떠오르는 장면을 생각해요.</p></div><div class="panel item reveal"><span class="no">02</span><b>낙서로 남기고</b><p>직접 그린 그림으로 단어를 표현해요. 나에게 의미 있는 낙서면 충분해요.</p></div><div class="panel item reveal"><span class="no">03</span><b>내 그림으로 복습</b><p>기기에 저장한 그림과 학습기록을 바탕으로 단어를 다시 떠올려요.</p></div></div></div><div class="panel privacy reveal"><h3>가입 없이 시작하는 나만의 단어 노트</h3><p>그려보카는 회원가입이나 로그인 없이 이용합니다. 낙서와 학습기록은 기기에 저장되며, 회사 서버로 전송하거나 동기화하지 않습니다. 복습 일정도 기기 안에서 계산합니다.</p></div></section>
+  <section class="block"><h2><small>POLICY</small>정책 문서</h2><div class="docs"><a class="panel doc reveal" href="../../../apps/utility/word-doodle/privacy/"><b>개인정보처리방침 →</b><span>superwork.ai.kr/word-doodle/privacy/</span></a><a class="panel doc reveal" href="../../../apps/utility/word-doodle/terms/"><b>서비스 이용약관 →</b><span>superwork.ai.kr/word-doodle/terms/</span></a><a class="panel doc reveal" href="../../../word-doodle/"><b>앱 소개 원문 →</b><span>superwork.ai.kr/word-doodle/</span></a></div>
+  <p class="note">정책 문서의 원문은 각 앱 주소(superwork.ai.kr/word-doodle/)에 게시된 문서입니다.</p></section>
+  <section class="block"><h2><small>MORE</small>다른 앱도 둘러보세요</h2>
+    <div class="track"><a class="acard reveal" href="../../../apps/utility/subscribers/"><div class="acard-media"><img src="../../../assets/apps/subscribers/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../../assets/apps/subscribers/icon.png" alt=""><div><div class="acard-genre">구독료 관리</div><b>구독자</b></div></div><p class="acard-desc">카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다.</p></a><a class="acard reveal" href="../../../apps/utility/piclect/"><div class="acard-media"><img src="../../../assets/apps/piclect/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../../assets/apps/piclect/icon.png" alt=""><div><div class="acard-genre">사진 정리</div><b>셀렉터</b></div></div><p class="acard-desc">지울 사진을 고르는 대신 남길 사진을 먼저 정합니다. 사진 분석은 기기 안에서만 합니다.</p></a><a class="acard reveal" href="../../../apps/utility/jjallang/"><div class="acard-media"><img src="../../../assets/apps/jjallang/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../../assets/apps/jjallang/icon.png" alt=""><div><div class="acard-genre">근무표·급여계산</div><b>짤랑</b></div></div><p class="acard-desc">출퇴근 버튼만 누르세요. 야간·연장·주휴수당까지 계산해 홈 화면 위젯에 보여드립니다.</p></a><a class="acard reveal" href="../../../apps/utility/filefit/"><div class="acard-media"><img src="../../../assets/apps/filefit/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><div><div class="acard-genre">사진 변환·PDF</div><b>파일핏</b></div></div><p class="acard-desc">사진 용량을 정한 KB 이하로 줄이고 JPG·PNG·WebP 변환, 크기 조절, 여러 장을 A4 PDF로 묶습니다. 파일을 서버에 올리지 않고 기기 안에서 처리합니다.</p></a><a class="acard reveal" href="../../../apps/game/moongchi/"><div class="acard-media"><img src="../../../assets/apps/moongchi/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../../assets/apps/moongchi/icon.png" alt=""><div><div class="acard-genre">힐링 캐주얼 게임</div><b>뭉치뭉치</b></div></div><p class="acard-desc">동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임.</p></a><a class="acard reveal" href="../../../apps/game/animalpedia/"><div class="acard-media"><img src="../../../assets/apps/animalpedia/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../../assets/apps/animalpedia/icon.png" alt=""><div><div class="acard-genre">수집·힐링 게임</div><b>귀여운동물사전</b></div></div><p class="acard-desc">깜찍한 동물들을 하나씩 모아 나만의 도감을 채워가는 힐링 컬렉션.</p></a><a class="acard reveal" href="../../../apps/game/dongtoesa/"><div class="acard-media"><img src="../../../assets/apps/dongtoesa/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../../assets/apps/dongtoesa/icon.png" alt=""><div><div class="acard-genre">캐주얼 액션 RPG</div><b>동네퇴마사</b></div></div><p class="acard-desc">골목골목 출몰하는 악귀를 물리치는 통쾌한 한국형 퇴마 액션 RPG.</p></a><a class="acard reveal" href="../../../apps/game/bunsik-madness/"><div class="acard-media"><img src="../../../assets/apps/bunsik-madness/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../../assets/apps/bunsik-madness/icon.png" alt=""><div><div class="acard-genre">분식 퍼즐 게임</div><b>분식대란</b></div></div><p class="acard-desc">밀려드는 주문을 퍼즐로 척척! 손맛 터지는 분식집 운영 게임.</p></a></div></section>
+</div>
+<div style="height:80px"></div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a class="brand grad" href="../../../">Superwork</a></div>
+      <div><h4>사이트</h4><ul><li><a href="../../../#workflow">개발 체계</a></li><li><a href="../../../#tools">도구</a></li><li><a href="../../../#apps">앱</a></li><li><a href="../../../#channels">채널</a></li></ul></div>
+      <div><h4>정책</h4><ul><li><a href="../../../policies/">정책 및 약관</a></li><li><a href="../../../app-ads.txt">app-ads.txt</a></li></ul></div>
+      <div><h4>문의</h4><ul><li><a href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a></li></ul></div>
+    </div>
+    <p class="copyright">© 2026 Superwork. All rights reserved.</p>
+  </div>
+</footer>
+<script src="../../../assets/site.js"></script>
+<script>observeReveal();</script>
+</body>
+</html>

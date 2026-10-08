@@ -3,88 +3,379 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>앱 안내</title>
-<meta name="description" content="앱 소개·문의·정책 문서"/>
-<meta property="og:title" content="앱 안내"/>
-<meta property="og:description" content="앱 소개·문의·정책 문서"/>
+<title>Superwork</title>
+<meta name="description" content="Superwork는 AI로 게임과 서비스를 만드는 개발 조직입니다. hatchery·orbit으로 만든 앱과 도구를 소개합니다."/>
+<meta name="theme-color" content="#0a0c10"/>
+<meta property="og:title" content="Superwork"/>
+<meta property="og:description" content="사람은 방향과 판정을 정하고, 짓기·검증·배포 준비는 에이전트가 합니다."/>
+<meta property="og:image" content="./assets/brand/banner.jpg"/>
 <meta property="og:type" content="website"/>
-<style>*{box-sizing:border-box}
-:root{--ink:#14161a;--paper:#f7f8f7;--dim:#8b9098;--money:#1ec078;--line:#262a31;--card:#1b1e23}
-body{margin:0;background:var(--ink);color:var(--paper);line-height:1.7;
- font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",system-ui,"Malgun Gothic",sans-serif;
- display:flex;justify-content:center;padding:0 18px}
-.wrap{width:100%;max-width:680px;padding:56px 0 72px}
-a{color:var(--money);text-decoration:none}
-a:hover{text-decoration:underline}
-h1{font-size:30px;line-height:1.3;margin:0 0 10px;letter-spacing:-.02em}
-h2{font-size:18px;margin:38px 0 12px;letter-spacing:-.01em}
-p{margin:0 0 14px}
-.sub{color:var(--dim);font-size:15px;margin:0 0 30px}
-.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;
- padding:18px 20px;margin-bottom:12px;color:inherit}
-.card:hover{border-color:#3a414c;text-decoration:none}
-.card .t{font-weight:700;font-size:17px;margin-bottom:4px}
-.card .d{color:var(--dim);font-size:14px}
-ul{padding-left:20px;margin:0 0 16px}
-li{margin-bottom:7px}
-.btn{display:inline-block;background:var(--money);color:#052b1c;font-weight:800;
- padding:12px 20px;border-radius:12px;margin:6px 8px 6px 0}
-.btn:hover{text-decoration:none;opacity:.9}
-.btn.ghost{background:#23272e;color:var(--paper)}
-footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);color:var(--dim);font-size:13px}
-code{background:#23272e;padding:2px 6px;border-radius:6px;font-size:13px}
-.note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--money);
- border-radius:10px;padding:14px 16px;color:var(--dim);font-size:14px;margin:0 0 16px}
+<link rel="stylesheet" href="./assets/site.css"/>
+<style>
+.hero{position:relative;overflow:hidden;padding:96px 0 0;text-align:center}
+.hero::before{content:'';position:absolute;inset:-30% -10% auto;height:700px;background:radial-gradient(ellipse at 50% 40%,rgba(0,217,163,.22),transparent 60%);pointer-events:none}
+.hero .wrap{position:relative}
+.hero .eyebrow{margin-bottom:22px}
+.hero h1{font-size:clamp(20px,5.6vw,84px);white-space:nowrap;line-height:1.08;font-weight:900;letter-spacing:-.04em;margin-bottom:28px}
+.hero p{color:var(--dim);font-size:clamp(16px,2vw,20px);max-width:640px;margin:0 auto 40px}
+.hero .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.showreel{padding:16px 16px 0}
+.showreel-frame{position:relative;max-width:1880px;margin:0 auto;aspect-ratio:1536/646;border-radius:28px;overflow:hidden;
+  background:#000 url(./assets/brand/banner.jpg) center/cover;box-shadow:0 30px 80px rgba(0,120,255,.18)}
+.showreel-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+.marquee{margin-top:90px;display:grid;gap:16px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee-row{display:flex;gap:16px;width:max-content;animation:slide 60s linear infinite}
+.marquee-row.rev{animation-direction:reverse;animation-duration:70s}
+.marquee-row a{flex:0 0 auto;width:300px;aspect-ratio:2.34;border-radius:16px;overflow:hidden;transition:transform .4s var(--ease)}
+.marquee-row a:hover{transform:scale(1.05)}
+.marquee-row img{width:100%;height:100%;object-fit:cover}
+.marquee:hover .marquee-row{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(calc(-50% - 8px))}}
+
+.flow{position:relative;margin-top:8px}
+.flow-bands{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:26px}
+.band{grid-column:1/7;display:flex;align-items:center;gap:12px;font:800 14px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;color:var(--accent);
+  padding:0 14px 12px;border-bottom:2px solid rgba(0,217,163,.5)}
+.band.orbit{grid-column:7/8;color:#7aa8ff;border-color:rgba(122,168,255,.65);margin-left:12px}
+.band span{color:var(--dim);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;font-size:13px;font-weight:600;letter-spacing:0}
+.flow-track{position:relative}
+.flow-steps{list-style:none;display:grid;grid-template-columns:repeat(7,1fr);position:relative}
+.flow-line{position:absolute;left:calc(100% / 14);right:calc(100% / 14);top:43px;height:3px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.flow-line::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--accent),#5cf3ff 75%,#7aa8ff);transform-origin:left;transform:scaleX(0);transition:transform 1.8s var(--ease) .2s}
+.flow.in .flow-line::before{transform:scaleX(1)}
+.flow-line::after{content:'';position:absolute;top:-5px;left:-120px;width:120px;height:13px;border-radius:50%;
+  background:radial-gradient(ellipse,#fff,rgba(92,243,255,.7) 35%,transparent 70%);opacity:0;animation:runner 3s linear 2s infinite}
+.flow.in .flow-line::after{opacity:1}
+@keyframes runner{to{left:100%}}
+.node{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 8px;opacity:0;transform:translateY(26px) scale(.92);
+  transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.flow.in .node{opacity:1;transform:none}
+.node-ring{position:relative;flex-shrink:0;width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:var(--card);color:var(--accent);
+  border:2px solid rgba(0,217,163,.55);box-shadow:0 0 0 8px var(--bg),0 0 34px rgba(0,217,163,.28);transition:transform .35s var(--ease),box-shadow .35s}
+.node:hover .node-ring{transform:scale(1.12);box-shadow:0 0 0 8px var(--bg),0 0 56px rgba(0,217,163,.6)}
+.node-ring svg{width:38px;height:38px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.node-no{position:absolute;top:-6px;right:-6px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#04140f;font:900 12px/28px ui-monospace,SFMono-Regular,Menlo,monospace}
+.node.orbit .node-ring{color:#7aa8ff;border-color:rgba(122,168,255,.75);box-shadow:0 0 0 8px var(--bg),0 0 34px rgba(122,168,255,.4)}
+.node.orbit .node-no{background:#7aa8ff}
+.node code{display:inline-block;margin-top:18px;font:700 13px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent);background:rgba(0,217,163,.1);padding:3px 9px;border-radius:7px}
+.node.orbit code{color:#7aa8ff;background:rgba(122,168,255,.12)}
+.node h3{font-size:18px;font-weight:800;margin-top:10px}
+.node p{color:var(--dim);font-size:13.5px;line-height:1.55;margin-top:6px}
+.pins{margin-top:14px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.pins span{font-size:12.5px;font-weight:800;padding:5px 11px;border-radius:999px;background:rgba(255,196,0,.12);color:#ffd166;border:1px solid rgba(255,196,0,.35);white-space:nowrap}
+.flow-legend{display:flex;justify-content:center;gap:24px;margin-top:40px;color:var(--dim);font-size:14px;flex-wrap:wrap}
+.flow-legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+.quote{margin-top:28px;font-size:clamp(20px,2.4vw,28px);font-weight:800;letter-spacing:-.02em;text-align:center}
+@media(max-width:860px){
+  .flow-bands{display:none}
+  .flow-steps{grid-template-columns:1fr;gap:28px}
+  .flow-line{left:43px;right:auto;top:44px;bottom:44px;width:3px;height:auto}
+  .flow-line::before{transform-origin:top;transform:scaleY(0)}
+  .flow.in .flow-line::before{transform:scaleY(1)}
+  .flow-line::after{display:none}
+  .node{flex-direction:row;align-items:flex-start;text-align:left;gap:20px;padding:0}
+  .node code{margin-top:6px}
+  .pins{align-items:flex-start}
+}
+
+.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.tool{display:flex;flex-direction:column;gap:20px}
+.tool-top{display:flex;align-items:center;gap:16px}
+.tool-icon{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:rgba(0,217,163,.12);color:var(--accent);flex-shrink:0}
+.tool-icon svg{width:32px;height:32px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tool.orbit .tool-icon{background:rgba(122,168,255,.14);color:#7aa8ff}
+.tool-kind{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.1em}
+.tool.orbit .tool-kind{color:#7aa8ff}
+.tool h3{font-size:32px;font-weight:900;letter-spacing:-.02em;line-height:1.1}
+.tool-tag{font-size:19px;font-weight:800;letter-spacing:-.01em}
+.tool-flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.tool-flow code{font:700 13px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent);background:rgba(0,217,163,.1);padding:5px 10px;border-radius:8px}
+.tool-flow i{font-style:normal;color:var(--dim)}
+.tool.orbit .tool-flow code{color:#7aa8ff;background:rgba(122,168,255,.12)}
+.tool-chips{display:flex;flex-wrap:wrap;gap:8px}
+.tool-chips span{font-size:14px;font-weight:700;padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.tool-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-top:auto;padding-top:8px}
+.tool-stat b{font-size:52px;font-weight:900;line-height:1}
+.tool-stat span{color:var(--dim);font-weight:700;margin-left:6px}
+.tool .btn{padding:10px 18px;font-size:13px}
+.tool.wide{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;gap:16px;padding-top:24px;padding-bottom:24px}
+.tool.wide h3{font-size:24px}
+
+.workers{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.worker-card{text-align:center;transition:transform .45s var(--ease),opacity .9s var(--ease)}
+.worker-card:hover{transform:scale(1.06)}
+.worker-card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:28px;border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.worker-card b{display:block;font-size:22px;font-weight:900}
+.worker-id{display:block;margin-top:18px;color:var(--accent);font:700 13px ui-monospace,SFMono-Regular,Menlo,monospace}
+.worker-role{display:block;color:var(--dim);font-size:13px;font-weight:700;margin-top:2px}
+.worker-card p{color:#c9ced6;font-size:15px;line-height:1.6;margin-top:12px}
+.team-intro{margin-top:44px;text-align:center}
+.team-intro p{font-size:clamp(18px,2.2vw,24px);font-weight:800;letter-spacing:-.02em;max-width:880px;margin:0 auto 10px}
+.team-intro p+p{color:var(--dim);font-size:17px;font-weight:600}
+.team-intro .btn{margin-top:24px}
+
+.channels{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.channel{display:flex;flex-direction:column;gap:18px;min-height:220px;position:relative;overflow:hidden}
+.channel::before{content:'';position:absolute;right:-80px;bottom:-120px;width:260px;height:260px;border-radius:50%;background:var(--glow);opacity:.18;filter:blur(40px);pointer-events:none}
+.channel svg{width:44px;height:44px}
+.channel h3{font-size:26px;font-weight:900}
+.channel p{color:var(--dim);flex:1}
+.channel .btn{align-self:flex-start;padding:11px 22px;font-size:14px}
+
+.contact{text-align:center;border:1px solid var(--line);border-radius:32px;padding:80px 24px;background:radial-gradient(ellipse at 50% 0%,rgba(0,217,163,.14),transparent 70%)}
+.contact h2{font-size:clamp(30px,4vw,48px);font-weight:900;margin-bottom:14px}
+.contact p{color:var(--dim);margin-bottom:32px}
+
+@media(max-width:960px){.workers{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:360px){.hero h1{white-space:normal}}
+@media(max-width:760px){
+  .hero{padding-top:80px}
+  .marquee{margin-top:64px}
+  .marquee-row a{width:200px}
+  .tools,.channels{grid-template-columns:1fr}
+}
 </style>
 </head>
-<body><div class="wrap">
-<h1>앱 안내</h1>
-<p class="sub">주식회사 케이티나스미디어가 만드는 앱들의 소개·문의·정책 문서를 모아 둡니다.</p>
+<body>
 
-<!--
-  ── 서비스 목록 ──
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand grad" href="./">Superwork</a>
+    <nav class="site-nav">
+      <a href="#workflow" class="hide-sm">개발 체계</a>
+      <a href="#tools">도구</a>
+      <a href="#apps">앱</a>
+      <a href="#worker" class="hide-sm">워커</a>
+      <a href="#channels">채널</a>
+      <a href="./policies/">정책</a>
+    </nav>
+  </div>
+</header>
 
-  「서비스 중인 앱」과 「앱 소개」로 갈라져 있었다. 둘을 가르는 기준이 없었고(넷 다 같은
-  방식으로 서비스 중이고 넷 다 소개 페이지를 든다), 기준 없는 칸은 앱이 늘 때마다 **어느
-  칸에 넣을지 사람이 고민하게** 만든다. 하나로 합친다.
+<main>
+  <section class="showreel">
+    <div class="showreel-frame">
+      <video id="showreel" src="./assets/brand/hero.mp4" poster="./assets/brand/banner.jpg" autoplay muted loop playsinline
+        aria-label="Superwork — AI Games &amp; Services"></video>
+    </div>
+  </section>
 
-  차례는 **가나다순**이다. 만든 순서나 중요도로 두면 앱이 늘 때마다 다시 정해야 하고,
-  그때마다 「왜 이 앱이 위인가」가 생긴다. 가나다순은 다투지 않는다.
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">SUPERWORK · AI GAMES &amp; SERVICES</span>
+      <h1>아이디어 한 줄이 <span class="grad">앱이 됩니다</span></h1>
+      <p>사람은 방향과 판정을 정하고,<br>짓기·검증·배포 준비는 에이전트가 합니다.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#apps">앱 둘러보기</a>
+        <a class="btn btn-ghost" href="#workflow">개발 체계 알아보기</a>
+      </div>
+    </div>
+    <div class="marquee" id="marquee" aria-hidden="true"></div>
+  </section>
 
-  설명은 각 앱의 `index.html` 이 자기 `<meta name="description">` 에 적은 첫 문장을 따른다.
-  여기서 새로 지으면 두 벌이 되고, 갈라지는 쪽은 언제나 아무도 안 고치는 이 목록이다.
--->
-<h2>서비스 목록</h2>
-<a class="card" href="./subscribers/">
-  <div class="t">구독자 — 새는 구독료를 결제 전에</div>
-  <div class="d">카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다.</div>
-</a>
-<a class="card" href="./word-doodle/">
-  <div class="t">그려보카 — 그림으로 기억하는 영단어</div>
-  <div class="d">영단어를 낙서로 기억하고, 내가 그린 그림으로 복습하는 학습 앱입니다.</div>
-</a>
-<a class="card" href="./piclect/">
-  <div class="t">셀렉터 — 사진 정리, 중복사진·스크린샷</div>
-  <div class="d">지울 사진을 고르는 대신 남길 사진을 먼저 정합니다. 사진 분석은 기기 안에서만 합니다.</div>
-</a>
-<a class="card" href="./ururu/">
-  <div class="t">우르르 — 학교 대항 미니게임</div>
-  <div class="d">내 학교와 학과를 걸고 다른 학교와 겨루는 60초 미니게임입니다.</div>
-</a>
-<a class="card" href="./jjallang/">
-  <div class="t">짤랑 — 근무표 위젯, 알바 급여계산</div>
-  <div class="d">출퇴근 버튼만 누르세요. 야간·연장·주휴수당까지 계산해 홈 화면 위젯에 보여드립니다.</div>
-</a>
-<a class="card" href="./filefit/">
-  <div class="t">파일핏 — 사진 용량 줄이기·형식 변환·사진 PDF</div>
-  <div class="d">사진 용량을 정한 KB 이하로 줄이고 JPG·PNG·WebP 변환, 크기 조절, 여러 장을 A4 PDF로 묶습니다. 파일을 서버에 올리지 않고 기기 안에서 처리합니다.</div>
-</a>
+  <section class="section" id="workflow">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">AI 기반 개발·출시 체계</span><h2>아이디어에서 출시까지,<br>일곱 단계</h2></div>
+        <p>에이전트가 짓고 검증하고, 사람은 노란 지점에서 정합니다.</p>
+      </div>
+      <div class="flow reveal" id="flow"></div>
+    </div>
+  </section>
 
-<h2>문의</h2>
-<p><a href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a></p>
+  <section class="section" id="tools">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">TOOLS</span><h2>Superwork가 쓰는 도구,<br>함께 씁니다</h2></div>
+        <p>앱을 짓는 hatchery, 내보내는 orbit.</p>
+      </div>
+      <div class="tools" id="tools-list"></div>
+    </div>
+  </section>
 
-<footer>
-  광고 인증 파일: <a href="./app-ads.txt">app-ads.txt</a>
+  <section class="section" id="apps">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">APPS</span><h2>어떤 아이디어든,<br>이제 움직입니다</h2></div>
+        <p>Superwork가 만든 앱들입니다. 카드에 마우스를 올리면 커지고, 누르면 자세히 볼 수 있어요.</p>
+      </div>
+      <div id="app-groups"></div>
+    </div>
+  </section>
+
+  <section class="section" id="worker">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">WORKERS</span><h2>Superwork의 워커들</h2></div>
+        <p>문제의 밑바닥까지 파고들어, AI 에이전트 워크플로로 가장 효율적인 해답을 찾습니다.</p>
+      </div>
+      <div class="workers" id="workers"></div>
+      <div class="team-intro reveal">
+        <p>“우리는 문제의 밑바닥까지 깊게 파고들어(Question &amp; Re-define), AI 에이전트 워크플로우를 통해 가장 효율적인 방식으로 비즈니스 해답을 찾아냅니다.”</p>
+        <p>기획부터 배포까지, 끊김 없는(Seamless) AI 네이티브 환경을 구축하는 것이 우리의 목표입니다.</p>
+        <a class="btn btn-ghost" href="https://superwork.ai.kr/Superwork_KTNasmedia/team" target="_blank" rel="noopener">팀 소개 자세히 보기 ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="channels">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">CHANNELS</span><h2>Superwork 채널</h2></div>
+        <p>새 앱 소식과 숏폼 영상을 유튜브·틱톡·인스타그램에 올립니다.</p>
+      </div>
+      <div class="channels" id="channel-list"></div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="contact reveal">
+        <h2>함께 이야기해요</h2>
+        <p>앱에 대한 의견, 제휴, 새로 만들면 좋을 앱 제안까지 무엇이든 환영합니다.</p>
+        <a class="btn btn-primary" href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a class="brand grad" href="./">Superwork</a></div>
+      <div><h4>사이트</h4><ul><li><a href="#workflow">개발 체계</a></li><li><a href="#tools">도구</a></li><li><a href="#apps">앱</a></li><li><a href="#channels">채널</a></li></ul></div>
+      <div><h4>정책</h4><ul><li><a href="./policies/">정책 및 약관</a></li><li><a href="./app-ads.txt">app-ads.txt</a></li></ul></div>
+      <div><h4>문의</h4><ul><li><a href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a></li></ul></div>
+    </div>
+    <p class="copyright">© 2026 Superwork. All rights reserved.</p>
+  </div>
 </footer>
-</div></body>
+
+<script src="./assets/site.js"></script>
+<script>
+// 사실 확인이 필요한 문구와 주소는 이 블록에만 둔다. null 이면 화면에 '준비 중'으로 나온다.
+const SITE = {
+  steps: [
+    { title: '아이디어 수급', cmd: 'intake', desc: '커뮤니티 불평에서 아픔 발굴·심사', icon: 'search', human: ['아이디어'] },
+    { title: '발산', cmd: '/diverge', desc: '한 줄 아이디어 → 5개 관점 검토', icon: 'branch', human: ['방향 선택'] },
+    { title: '브리프·세팅', cmd: '/newapp', desc: '브리프·가드·저장소 자동 생성', icon: 'doc' },
+    { title: '무인 개발', cmd: '킥오프', desc: '목표 한 장으로 에이전트가 구현·검증', icon: 'rocket', human: ['킥오프'] },
+    { title: '맥락 리뷰', cmd: 'review', desc: '독립 세션 2개가 변경분 검토', icon: 'eye' },
+    { title: '수요 판정', cmd: '/versionup', desc: '계속·전환·출시·중단 판정', icon: 'chart', human: ['수요 판정'] },
+    { title: '배포', cmd: 'orbit', desc: '빌드·업로드·기록 자동화', icon: 'orbit', human: ['법적 명의·결제', '심사 제출·정식 출시'], orbit: true },
+  ],
+  tools: [
+    { kind: 'APP FACTORY', name: 'hatchery', icon: 'factory', tag: '아이디어에서 수요 판정까지, 한 흐름으로',
+      flow: ['/diverge', '/newapp', '킥오프', 'review', '/versionup'],
+      chips: ['무인 개발', '맥락 리뷰', '테스트 약화 차단 훅'],
+      stat: ['6', '개 앱 착수'], soon: 'GitHub 공개 예정' },
+    { kind: 'CLAUDE PLUGIN · 배포', name: 'orbit', icon: 'orbit', cls: 'orbit', tag: '스토어 테스트 트랙까지, 배포 자동화',
+      flow: ['빌드', '업로드', '기록'],
+      chips: ['Expo', 'Flutter', 'iOS · Android', '앱인토스', '등록정보 파일 관리'],
+      stat: ['5', '건 TestFlight 배포'], soon: 'GitHub 공개 예정' },
+    { kind: 'MCP', name: 'Superwork MCP', icon: 'plug', wide: true },
+  ],
+  // 출처: superwork.ai.kr/Superwork_KTNasmedia/team
+  workers: [
+    { id: 'sung', name: '임성학', role: 'Forward Deployed Engineer · PM', quote: '당연한 것에 질문을 던지고, 문제를 재정의하며, 실질적인 해결책을 설계합니다.' },
+    { id: 'hoosoo', name: '김호수', role: 'AI Agent Architect', quote: '문제를 재정의하고, 스스로 개선하는 시스템을 설계합니다.' },
+    { id: 'susu', name: '임수연', role: 'AI Creative Engineer', quote: 'AI가 창작하도록 도구를 쥐여주고, 그 도구로 직접 만듭니다.' },
+    { id: 'inotterwords', name: '박정민', role: 'DevOps Engineer', quote: '흐름을 잇고, 스스로 지속되게 합니다.' },
+  ],
+  channels: [
+    { name: 'YouTube', url: 'https://www.youtube.com/channel/UCX9pSdq2TWtjks-UXVzrTAg', color: '#ff0033', desc: '앱 소개와 숏폼 영상을 올립니다.',
+      icon: '<svg viewBox="0 0 24 24" fill="#ff0033"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>' },
+    { name: 'TikTok', url: 'https://www.tiktok.com/@superwork.master', color: '#25f4ee', desc: '짧은 영상으로 새 앱을 소개합니다.',
+      icon: '<svg viewBox="0 0 24 24" fill="#fff"><path d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.4a2.9 2.9 0 1 1-2-2.7V9.2a6.3 6.3 0 1 0 5.4 6.2V8.6a8.2 8.2 0 0 0 4.8 1.5V6.7h-1z"/></svg>' },
+    { name: 'Instagram', url: 'https://www.instagram.com/superwork.master/', color: '#e1306c', desc: '앱 소식과 영상을 전합니다.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.6" cy="6.4" r="1" fill="#e1306c"/></svg>' },
+  ],
+};
+
+const PENDING = '<span class="pending">소개 글 준비 중</span>';
+
+const ICONS = {
+  search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+  branch: '<circle cx="12" cy="19.5" r="1.8"/><path d="M12 17.7V12M12 12L6 6.5M12 12l6-5.5M12 12V5"/><circle cx="6" cy="5.2" r="1.6"/><circle cx="18" cy="5.2" r="1.6"/><circle cx="12" cy="3.6" r="1.6"/>',
+  doc: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/>',
+  rocket: '<path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 15l-3-3a12 12 0 0 1 12-9 12 12 0 0 1-9 12z"/><circle cx="14.5" cy="9.5" r="1.6"/>',
+  eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  chart: '<path d="M3 21h18M6 21v-7M11 21V9M16 21v-4M21 21V5"/>',
+  orbit: '<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"/><circle cx="19.6" cy="7.4" r="1.4" fill="currentColor"/>',
+  factory: '<path d="M3 21V10l6 4V10l6 4V6l6 3v12z"/><path d="M7 17h2M12 17h2M17 17h2"/>',
+  plug: '<path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/>',
+};
+const svg = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]}</svg>`;
+
+document.getElementById('flow').innerHTML = `
+  <div class="flow-bands"><div class="band">hatchery <span>아이디어 → 수요 판정</span></div><div class="band orbit">orbit <span>배포</span></div></div>
+  <div class="flow-track"><div class="flow-line" aria-hidden="true"></div>
+  <ol class="flow-steps">
+    ${SITE.steps.map((st, i) => `
+    <li class="node${st.orbit ? ' orbit' : ''}" style="transition-delay:${0.25 + i * 0.16}s">
+      <div class="node-ring">${svg(st.icon)}<span class="node-no">${i + 1}</span></div>
+      <div class="node-text">
+        <code>${esc(st.cmd)}</code><h3>${esc(st.title)}</h3><p>${esc(st.desc)}</p>
+        ${st.human ? `<div class="pins">${st.human.map(h => `<span>${esc(h)}</span>`).join('')}</div>` : ''}
+      </div>
+    </li>`).join('')}
+  </ol></div>
+  <div class="flow-legend">
+    <span><i style="background:var(--accent)"></i>에이전트가 하는 일</span>
+    <span><i style="background:#ffd166"></i>사람이 정하는 지점</span>
+    <span><i style="background:#7aa8ff"></i>orbit 배포 구간</span>
+  </div>`;
+document.getElementById('flow').insertAdjacentHTML('afterend',
+  '<p class="quote reveal">“사람은 방향과 판정을 정하고, 짓기·검증·배포 준비는 에이전트가 합니다.”</p>');
+
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const v = document.getElementById('showreel'); v.removeAttribute('autoplay'); v.pause();
+}
+
+document.getElementById('tools-list').innerHTML = SITE.tools.map(t => t.wide ? `
+  <article class="panel tool wide reveal">
+    <div class="tool-top"><div class="tool-icon">${svg(t.icon)}</div><div><span class="tool-kind">${esc(t.kind)}</span><h3>${esc(t.name)}</h3></div></div>
+    <span class="btn btn-ghost" aria-disabled="true">소개 준비 중</span>
+  </article>` : `
+  <article class="panel tool reveal ${esc(t.cls || '')}">
+    <div class="tool-top"><div class="tool-icon">${svg(t.icon)}</div><div><span class="tool-kind">${esc(t.kind)}</span><h3>${esc(t.name)}</h3></div></div>
+    <p class="tool-tag">${esc(t.tag)}</p>
+    <div class="tool-flow">${t.flow.map(f => `<code>${esc(f)}</code>`).join('<i>→</i>')}</div>
+    <div class="tool-chips">${t.chips.map(c => `<span>${esc(c)}</span>`).join('')}</div>
+    <div class="tool-foot">
+      <div class="tool-stat"><b class="grad">${esc(t.stat[0])}</b><span>${esc(t.stat[1])}</span></div>
+      <span class="btn btn-ghost" aria-disabled="true">${esc(t.soon)}</span>
+    </div>
+  </article>`).join('');
+
+document.getElementById('workers').innerHTML = SITE.workers.map(w => `
+  <figure class="worker-card reveal">
+    <img src="./assets/workers/${esc(w.id)}.jpg" alt="${esc(w.name)}" loading="lazy">
+    <span class="worker-id">${esc(w.id)}</span>
+    <b>${esc(w.name)}</b>
+    <span class="worker-role">${esc(w.role)}</span>
+    <p>“${esc(w.quote)}”</p>
+  </figure>`).join('');
+
+document.getElementById('channel-list').innerHTML = SITE.channels.map(c => `
+  <article class="panel channel reveal" style="--glow:${esc(c.color)}">
+    ${c.icon}
+    <h3>${esc(c.name)}</h3>
+    <p>${esc(c.desc)}</p>
+    ${c.url ? `<a class="btn btn-ghost" href="${esc(c.url)}" target="_blank" rel="noopener">채널 보기 ↗</a>`
+            : `<span class="btn btn-ghost" aria-disabled="true">채널 주소 준비 중</span>`}
+  </article>`).join('');
+
+renderAppGroups({ base: './', container: document.getElementById('app-groups') }).then(data => {
+  const half = Math.ceil(data.apps.length / 2);
+  const row = (list, rev) => `<div class="marquee-row${rev ? ' rev' : ''}">${
+    [...list, ...list].map(a => `<a href="./${esc(a.path)}" tabindex="-1"><img src="./${esc(a.thumbSm)}" alt="" loading="lazy"></a>`).join('')}</div>`;
+  document.getElementById('marquee').innerHTML = row(data.apps.slice(0, half)) + row(data.apps.slice(half), true);
+});
+
+
+observeReveal();
+</script>
+</body>
 </html>
