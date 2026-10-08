@@ -36,7 +36,7 @@
       "qr": "assets/apps/moongchi/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/moongchi/thumb-sm.jpg",
-      "path": "apps/game/moongchi/",
+      "path": "apps/moongchi/",
       "details": {
         "headline": null,
         "lead": "동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임.",
@@ -87,7 +87,7 @@
       "qr": "assets/apps/animalpedia/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/animalpedia/thumb-sm.jpg",
-      "path": "apps/game/animalpedia/",
+      "path": "apps/animalpedia/",
       "details": {
         "headline": null,
         "lead": "깜찍한 동물들을 하나씩 모아 나만의 도감을 채워가는 힐링 컬렉션.",
@@ -138,7 +138,7 @@
       "qr": "assets/apps/dongtoesa/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/dongtoesa/thumb-sm.jpg",
-      "path": "apps/game/dongtoesa/",
+      "path": "apps/dongtoesa/",
       "details": {
         "headline": null,
         "lead": "골목골목 출몰하는 악귀를 물리치는 통쾌한 한국형 퇴마 액션 RPG.",
@@ -189,7 +189,7 @@
       "qr": "assets/apps/bunsik-madness/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/bunsik-madness/thumb-sm.jpg",
-      "path": "apps/game/bunsik-madness/",
+      "path": "apps/bunsik-madness/",
       "details": {
         "headline": null,
         "lead": "밀려드는 주문을 퍼즐로 척척! 손맛 터지는 분식집 운영 게임.",
@@ -240,7 +240,7 @@
       "qr": "assets/apps/coin-tower/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/coin-tower/thumb-sm.jpg",
-      "path": "apps/game/coin-tower/",
+      "path": "apps/coin-tower/",
       "details": {
         "headline": null,
         "lead": "한 손으로 즐기는 뱀서류 액션! 코인으로 캐릭터를 강화하며 더 높이 올라가세요.",
@@ -291,7 +291,7 @@
       "qr": "assets/apps/gogo-drive/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/gogo-drive/thumb-sm.jpg",
-      "path": "apps/game/gogo-drive/",
+      "path": "apps/gogo-drive/",
       "details": {
         "headline": null,
         "lead": "달리고, 피하고, 추월하라! 생동감 넘치는 3D 도시를 질주하는 드라이빙 게임.",
@@ -342,7 +342,7 @@
       "qr": "assets/apps/maze-escape/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/maze-escape/thumb-sm.jpg",
-      "path": "apps/game/maze-escape/",
+      "path": "apps/maze-escape/",
       "details": {
         "headline": null,
         "lead": "칠흑 같은 미로 속, 손전등 하나와 발소리에 의지해 보이지 않는 추격자를 피해 탈출하라.",
@@ -393,7 +393,7 @@
       "qr": null,
       "thumbPos": "center",
       "thumbSm": "assets/apps/evolve-2048/thumb-sm.jpg",
-      "path": "apps/game/evolve-2048/",
+      "path": "apps/evolve-2048/",
       "details": {
         "headline": null,
         "lead": "숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!",
@@ -444,7 +444,7 @@
       "qr": null,
       "thumbPos": "center",
       "thumbSm": "assets/apps/ghost-stack/thumb-sm.jpg",
-      "path": "apps/game/ghost-stack/",
+      "path": "apps/ghost-stack/",
       "details": {
         "headline": null,
         "lead": "숨은 고수(고스트)와 겨루는 네온 야경 블록 쌓기! 탭 한 번으로 즐기는 하이퍼 캐주얼.",
@@ -495,7 +495,7 @@
       "qr": null,
       "thumbPos": "center",
       "thumbSm": "assets/apps/pinch-runner/thumb-sm.jpg",
-      "path": "apps/game/pinch-runner/",
+      "path": "apps/pinch-runner/",
       "details": {
         "headline": null,
         "lead": "오므리면 작아지고, 벌리면 커진다! 두 손가락 핀치 하나로 즐기는 한 끗 차이 엔드리스 러너.",
@@ -546,7 +546,7 @@
       "qr": "assets/apps/happy-pug/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/happy-pug/thumb-sm.jpg",
-      "path": "apps/life/happy-pug/",
+      "path": "apps/happy-pug/",
       "details": {
         "headline": null,
         "lead": "동네 강아지 친구들과 함께 걷는 산책 모임, 반려인을 위한 커뮤니티.",
@@ -594,19 +594,9 @@
       "qr": null,
       "thumbPos": "center",
       "intro": "ururu/",
-      "policies": [
-        {
-          "title": "개인정보처리방침",
-          "path": "ururu/privacy/"
-        },
-        {
-          "title": "서비스 이용약관",
-          "path": "ururu/terms/"
-        }
-      ],
       "heroSoft": true,
       "thumbSm": "assets/apps/ururu/thumb-sm.jpg",
-      "path": "apps/life/ururu/",
+      "path": "ururu/",
       "details": {
         "headline": "내 학교를 걸고, 20초.",
         "lead": "우르르는 내가 고른 소속(학교·학과)을 걸고 다른 학교와 겨루는 미니게임입니다. 한 판은 20초 안팎, 이긴 판은 우리 학교 점수가 됩니다.",
@@ -681,7 +671,7 @@
       "qr": "assets/apps/dasseotda/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/dasseotda/thumb-sm.jpg",
-      "path": "apps/life/dasseotda/",
+      "path": "apps/dasseotda/",
       "details": {
         "headline": null,
         "lead": "집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요.",
@@ -731,7 +721,7 @@
       "qr": "assets/apps/trotstep/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/trotstep/thumb-sm.jpg",
-      "path": "apps/life/trotstep/",
+      "path": "apps/trotstep/",
       "details": {
         "headline": null,
         "lead": "매일 걷는 걸음이 최애 가수를 향한 응원이 됩니다. 걸음으로 모은 투표권으로 응원하세요.",
@@ -781,7 +771,7 @@
       "qr": "assets/apps/price-time-machine/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/price-time-machine/thumb-sm.jpg",
-      "path": "apps/life/price-time-machine/",
+      "path": "apps/price-time-machine/",
       "details": {
         "headline": null,
         "lead": "그때 그 가격, 지금은 얼마? 시점별 물가를 한눈에 비교하는 타임머신.",
@@ -831,7 +821,7 @@
       "qr": "assets/apps/hachanhan-image/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/hachanhan-image/thumb-sm.jpg",
-      "path": "apps/life/hachanhan-image/",
+      "path": "apps/hachanhan-image/",
       "details": {
         "headline": null,
         "lead": "못 그려도 괜찮아! 사진 한 장이면 피식 웃기는 낙서풍 그림으로 뚝딱.",
@@ -881,7 +871,7 @@
       "qr": "assets/apps/dream-gallery/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/dream-gallery/thumb-sm.jpg",
-      "path": "apps/life/dream-gallery/",
+      "path": "apps/dream-gallery/",
       "details": {
         "headline": null,
         "lead": "당신이 꾼 꿈을 AI가 한 장의 일러스트로. 꿈을 그림으로 모으는 갤러리.",
@@ -927,20 +917,10 @@
       "qr": null,
       "thumbPos": "center",
       "intro": "subscribers/",
-      "policies": [
-        {
-          "title": "개인정보처리방침",
-          "path": "subscribers/privacy/"
-        },
-        {
-          "title": "계정 삭제 안내",
-          "path": "subscribers/account-deletion/"
-        }
-      ],
       "heroSoft": true,
       "thumbSm": "assets/apps/subscribers/thumb-sm.jpg",
       "videoPoster": "assets/apps/subscribers/preview.jpg",
-      "path": "apps/utility/subscribers/",
+      "path": "subscribers/",
       "details": {
         "headline": "매달 빠져나가는 돈, 명세서로 받아 보세요.",
         "lead": "구독자는 카드사·간편결제 앱의 결제 알림에서 정기결제를 찾아 한 장의 명세서로 정리하고, 다음 결제가 오기 전에 미리 알려 드립니다. 쓰지 않는 구독은 결제 전에 끊으세요.",
@@ -1005,19 +985,9 @@
       "qr": null,
       "thumbPos": "center",
       "intro": "piclect/",
-      "policies": [
-        {
-          "title": "개인정보처리방침",
-          "path": "piclect/privacy/"
-        },
-        {
-          "title": "서비스 이용약관",
-          "path": "piclect/terms/"
-        }
-      ],
       "heroSoft": true,
       "thumbSm": "assets/apps/piclect/thumb-sm.jpg",
-      "path": "apps/utility/piclect/",
+      "path": "piclect/",
       "details": {
         "headline": "남길 사진을 먼저 정합니다.",
         "lead": "지울 사진을 고르는 일은 어렵습니다. 셀렉터는 비슷한 사진 묶음마다 남길 한 장을 먼저 빼 두고, 나머지를 삭제 후보로 보여줍니다.",
@@ -1069,19 +1039,9 @@
       "qr": null,
       "thumbPos": "center",
       "intro": "jjallang/",
-      "policies": [
-        {
-          "title": "개인정보처리방침",
-          "path": "jjallang/privacy/"
-        },
-        {
-          "title": "서비스 이용약관",
-          "path": "jjallang/terms/"
-        }
-      ],
       "heroSoft": true,
       "thumbSm": "assets/apps/jjallang/thumb-sm.jpg",
-      "path": "apps/utility/jjallang/",
+      "path": "jjallang/",
       "details": {
         "headline": "버튼 하나 누르면, 오늘 번 돈이 계산됩니다.",
         "lead": "짤랑은 시급제 알바와 교대근무자를 위한 근무 기록 앱입니다. 야간·연장·휴일·주휴수당을 근로기준법 기준으로 대신 계산하고, 퇴근하면 근로명세서 한 장으로 보여줍니다.",
@@ -1156,19 +1116,9 @@
       "qr": null,
       "thumbPos": "center",
       "intro": "word-doodle/",
-      "policies": [
-        {
-          "title": "개인정보처리방침",
-          "path": "word-doodle/privacy/"
-        },
-        {
-          "title": "서비스 이용약관",
-          "path": "word-doodle/terms/"
-        }
-      ],
       "heroSoft": true,
       "thumbSm": "assets/apps/word-doodle/thumb-sm.jpg",
-      "path": "apps/utility/word-doodle/",
+      "path": "word-doodle/",
       "details": {
         "headline": "단어 하나, 나만의 그림 하나.",
         "lead": "그려보카는 영단어를 낙서로 기억하는 학습 앱입니다. 잘 그릴 필요는 없어요. 단어를 보고 떠오른 그림이 나만의 기억 단서가 됩니다.",
@@ -1220,19 +1170,9 @@
       "qr": null,
       "thumbPos": "center",
       "intro": "filefit/",
-      "policies": [
-        {
-          "title": "개인정보처리방침",
-          "path": "filefit/privacy/"
-        },
-        {
-          "title": "서비스 이용약관",
-          "path": "filefit/terms/"
-        }
-      ],
       "heroSoft": true,
       "thumbSm": "assets/apps/filefit/thumb-sm.jpg",
-      "path": "apps/utility/filefit/",
+      "path": "filefit/",
       "details": {
         "headline": "파일 준비, 가볍게 끝내요.",
         "lead": "파일핏은 제출할 사진의 용량·형식·크기를 한 번에 맞추는 도구입니다. 정한 KB 이하로 줄이고, 형식을 바꾸고, 여러 장을 PDF 한 개로 묶습니다.",

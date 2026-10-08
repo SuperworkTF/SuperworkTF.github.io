@@ -34,9 +34,9 @@
                              <!-- 생성: … --> 구역은 tools/build-site.py 가 채운다(손으로 고치지 않는다)
 /assets/apps.json · site.json 홈과 앱 쇼케이스가 쓰는 글 — 앱 소개 문장은 각 <app>/index.html 에서 옮긴다
 /assets/                     공용 스타일(site.css) · 앱 썸네일 · 배너와 소개 영상 · 워커 사진
-/apps/<분류>/<app>/          앱 쇼케이스(소개 영상 · 서비스 설명 · 정책 문서 링크) (생성물 — tools/build-site.py).
-                             정책 본문은 복사하지 않는다. 그 아래 <문서>/ 는 정본(<app>/<문서>/)으로 보내는 이동 페이지
-/policies/                   정책 모음 (생성물 — tools/build-site.py)
+/apps/<앱>/                  이 저장소에 소개 페이지가 없는 앱(토스·원스토어)의 쇼케이스 (생성물 — tools/build-site.py).
+                             소개 페이지가 있는 앱은 /<app>/ 하나만 쓴다 — 앱마다 주소는 하나다.
+                             주소에 분류를 넣지 않는다(분류는 홈 화면에서만 묶는다)
 /Superwork_KTNasmedia/       회사 소개 — **다른 저장소**(SuperworkTF/Superwork_KTNasmedia)가 같은 도메인에 세운다.
                              사이트맵에 싣는다(tools/other-pages.json). /Superwork-Ideathon/ 도 다른 저장소다(noindex, 싣지 않음)
 /<app>/index.html            앱 소개·문의

@@ -119,25 +119,21 @@
   "workers": [
     {
       "id": "sung",
-      "name": "임성학",
       "role": "Forward Deployed Engineer · PM",
       "quote": "당연한 것에 질문을 던지고, 문제를 재정의하며, 실질적인 해결책을 설계합니다."
     },
     {
       "id": "hoosoo",
-      "name": "김호수",
       "role": "AI Agent Architect",
       "quote": "문제를 재정의하고, 스스로 개선하는 시스템을 설계합니다."
     },
     {
       "id": "susu",
-      "name": "임수연",
       "role": "AI Creative Engineer",
       "quote": "AI가 창작하도록 도구를 쥐여주고, 그 도구로 직접 만듭니다."
     },
     {
       "id": "inotterwords",
-      "name": "박정민",
       "role": "DevOps Engineer",
       "quote": "흐름을 잇고, 스스로 지속되게 합니다."
     }

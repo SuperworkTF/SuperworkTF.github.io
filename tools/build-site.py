@@ -4,9 +4,10 @@
     python3 tools/build-site.py
 
     index.html 의 <!-- 생성: … --> 구역     흘러가는 썸네일 · 일곱 단계 · 도구 · 앱 카드 · 워커 · 채널 · 앱 소개 링크
-    apps/<분류>/<앱>/index.html            소개 영상 · 서비스 설명 · 정책 문서
-    apps/<분류>/<앱>/<문서>/index.html     정본 정책 문서(<앱>/<문서>/)로 보내는 이동 페이지
-    policies/index.html                    정책 모음
+    apps/<앱>/index.html                   이 저장소에 소개 페이지가 없는 앱(토스·원스토어)의 쇼케이스
+
+이 저장소에 소개 페이지(<앱>/)가 있는 앱은 홈 카드가 그 페이지로 바로 간다 — 앱마다 주소는 하나다.
+주소에 분류를 넣지 않는다. 분류는 홈 화면에서 묶어 보이는 데만 쓴다(분류를 옮겨도 주소는 그대로).
 
 글을 고칠 때는 두 JSON 만 고치고 이 스크립트를 다시 돌린다. 생성 구역 밖의 index.html 은 손으로 쓴다.
 README 원칙 5 에 따라 결과물에 실행되는 <script> 를 넣지 않는다 — 움직임은 CSS 로만 한다.
@@ -38,7 +39,7 @@ def header(base, current):
       {nav('#tools', '도구', '')}
       {nav('#apps', '앱', 'apps')}
       {nav('#channels', '채널', '')}
-      {nav('policies/', '정책', 'policies')}
+      {nav('#directory', '정책', '')}
     </nav>
   </div>
 </header>'''
@@ -50,7 +51,7 @@ def footer(base):
     <div class="footer-grid">
       <div><a class="brand grad" href="{base}">Superwork</a></div>
       <div><h4>사이트</h4><ul><li><a href="{base}#workflow">개발 체계</a></li><li><a href="{base}#tools">도구</a></li><li><a href="{base}#apps">앱</a></li><li><a href="{base}#channels">채널</a></li></ul></div>
-      <div><h4>정책</h4><ul><li><a href="{base}policies/">정책 및 약관</a></li><li><a href="{base}app-ads.txt">app-ads.txt</a></li></ul></div>
+      <div><h4>정책</h4><ul><li><a href="{base}#directory">정책 및 약관</a></li><li><a href="{base}app-ads.txt">app-ads.txt</a></li></ul></div>
       <div><h4>문의</h4><ul><li><a href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a></li></ul></div>
     </div>
     <p class="copyright">© 2026 Superwork. All rights reserved.</p>
@@ -200,7 +201,7 @@ def jsonld(app):
 
 
 def detail(app, others):
-    base = '../../../'
+    base = '../../'
     cat = CATS[app['category']]
     icon = f'<img src="{base}{e(app["icon"])}" alt="">' if app.get('icon') else ''
     cta = (f'<a class="btn btn-primary" href="{e(app["link"])}" target="_blank" rel="noopener">{e(app["store"])} ↗</a>'
@@ -215,16 +216,8 @@ def detail(app, others):
     if app.get('qr'):
         side.append(f'<div class="panel qr reveal"><img src="{base}{e(app["qr"])}" alt="{e(app["name"])} QR"><p>휴대폰 카메라로 스캔하면<br>바로 열립니다.</p></div>')
 
-    if app.get('policies'):
-        docs = ''.join(
-            f'<a class="panel doc reveal" href="{base}{e(app["path"])}{e(p["path"].split("/", 1)[1])}"><b>{e(p["title"])} →</b><span>superwork.ai.kr/{e(p["path"])}</span></a>'
-            for p in app['policies'])
-        docs += f'<a class="panel doc reveal" href="{base}{e(app["intro"])}"><b>앱 소개 원문 →</b><span>superwork.ai.kr/{e(app["intro"])}</span></a>'
-        policy_block = f'''<section class="block"><h2><small>POLICY</small>정책 문서</h2><div class="docs">{docs}</div>
-  <p class="note">정책 문서의 원문은 각 앱 주소(superwork.ai.kr/{e(app["id"])}/)에 게시된 문서입니다.</p></section>'''
-    else:
-        policy_block = '''<section class="block"><h2><small>POLICY</small>정책 문서</h2>
-  <p class="note">이 앱의 개인정보처리방침과 이용약관은 앱이 출시된 스토어에서 확인할 수 있습니다.</p></section>'''
+    policy_block = '''<section class="block"><h2><small>POLICY</small>정책 문서</h2>
+  <p class="note">이 앱의 개인정보처리방침과 이용약관은 앱이 출시된 스토어와 앱 안에서 확인할 수 있습니다.</p></section>'''
 
     body = f'''
 <section class="app-hero{' soft' if app.get('heroSoft') else ''}">
@@ -247,50 +240,6 @@ def detail(app, others):
 <div style="height:80px"></div>'''
     return page(f'{app["name"]} — Superwork', app['desc'], base, 'apps', body, DETAIL_STYLE,
                 f'<link rel="canonical" href="{SITE_URL}{e(app["path"])}"/>\n{jsonld(app)}')
-
-
-def redirect(target, title):
-    return f'''<!doctype html>
-<html lang="ko"><head><meta charset="utf-8"/>
-<title>{e(title)}</title>
-<link rel="canonical" href="{SITE_URL}{e(target)}"/>
-<meta http-equiv="refresh" content="0; url=/{e(target)}"/>
-</head><body><p><a href="/{e(target)}">{e(title)}</a>로 이동합니다.</p></body></html>
-'''
-
-
-POLICY_STYLE = '''
-.policy-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;padding-bottom:120px}
-.policy{display:flex;gap:20px;align-items:flex-start}
-.policy>img{width:64px;height:64px;border-radius:16px;flex-shrink:0}
-.policy h3{font-size:20px;margin-bottom:12px}
-.policy ul{list-style:none;display:grid;gap:8px}
-.policy a{color:var(--dim);font-weight:700}
-.policy a:hover{color:var(--accent)}
-'''
-
-
-def policies():
-    base = '../'
-    items = []
-    for a in DATA['apps']:
-        if not a.get('policies'):
-            continue
-        icon = f'<img src="{base}{e(a["icon"])}" alt="">' if a.get('icon') else '<span style="width:64px"></span>'
-        links = ''.join(f'<li><a href="{base}{e(p["path"])}">{e(p["title"])} →</a></li>' for p in a['policies'])
-        links += f'<li><a href="{base}{e(a["path"])}">앱 소개 →</a></li>'
-        items.append(f'<article class="panel policy reveal">{icon}<div><h3>{e(a["name"])}</h3><ul>{links}</ul></div></article>')
-    body = f'''
-<section class="section" style="padding-bottom:56px">
-  <div class="wrap">
-    <div class="section-head">
-      <div><span class="eyebrow">POLICIES</span><h2>정책 및 약관</h2></div>
-      <p>Superwork 앱의 개인정보처리방침, 서비스 이용약관, 계정 삭제 안내입니다.</p>
-    </div>
-  </div>
-</section>
-<div class="wrap"><div class="policy-list">{''.join(items)}</div></div>'''
-    return page('정책 및 약관 — Superwork', 'Superwork 앱의 개인정보처리방침과 서비스 이용약관', base, 'policies', body, POLICY_STYLE)
 
 
 ICONS = {
@@ -387,8 +336,8 @@ def home_apps():
 
 def home_workers():
     return '\n'.join(
-        f'<figure class="worker-card reveal"><img src="./assets/workers/{e(w["id"])}.jpg" alt="{e(w["name"])}" loading="lazy">'
-        f'<span class="worker-id">{e(w["id"])}</span><b>{e(w["name"])}</b>'
+        f'<figure class="worker-card reveal"><img src="./assets/workers/{e(w["id"])}.jpg" alt="{e(w["id"])}" loading="lazy">'
+        f'<b>{e(w["id"])}</b>'
         f'<span class="worker-role">{e(w["role"])}</span><p>“{e(w["quote"])}”</p></figure>'
         for w in SITE['workers'])
 
@@ -431,20 +380,18 @@ def main():
     out_root = ROOT / 'apps'
     if out_root.exists():
         shutil.rmtree(out_root)
-    for app in apps:
+    showcase = [a for a in apps if not a.get('intro')]
+    for app in showcase:
+        # 정본 소개 페이지(<앱>/index.html)를 덮어쓰지 않도록 apps/ 밖에는 쓰지 않는다
+        if not app['path'].startswith('apps/') or app['path'].count('/') != 2:
+            raise SystemExit(f"{app['id']}: 쇼케이스 주소는 apps/<앱>/ 이어야 한다 — {app['path']!r}")
         same = [o for o in apps if o['category'] == app['category'] and o['id'] != app['id']]
         rest = [o for o in apps if o['category'] != app['category']]
         out = ROOT / app['path'] / 'index.html'
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(detail(app, (same + rest)[:8]), encoding='utf-8')
-        for p in app.get('policies', []):
-            sub = ROOT / app['path'] / p['path'].split('/', 1)[1] / 'index.html'
-            sub.parent.mkdir(parents=True, exist_ok=True)
-            sub.write_text(redirect(p['path'], p['title']), encoding='utf-8')
-    (ROOT / 'policies').mkdir(exist_ok=True)
-    (ROOT / 'policies/index.html').write_text(policies(), encoding='utf-8')
     build_home()
-    print(f'index.html 생성 구역 7곳, apps/ {len(apps)}개 앱, policies/index.html')
+    print(f'index.html 생성 구역 7곳, apps/ 쇼케이스 {len(showcase)}개')
 
 
 if __name__ == '__main__':
