@@ -1,5 +1,5 @@
 /* Shared by the introduction and policy pages. No remote assets. */
-/* Palette is the 학교쪽지 app's: src/ui/theme.ts of the app repo (multilingual-school-notice) —
+/* Palette is the 모국어통신문 app's: src/ui/theme.ts of the app repo (multilingual-school-notice) —
    paper.bgDeep #F5F7FB · paper.ink #202B3D · paper.inkSoft #566379 · paper.rule #E8EDF4 ·
    brand.primary #346FEF · brand.soft #EDF3FF · brand.dark #2454BA · kindSkin (supply / reply / money).
    Text pairs were measured at 4.5:1 or more. Do not invent new colors here; change the app's tokens first. */
@@ -46,8 +46,12 @@ p { margin: 0 0 1rem; }
 .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; padding-block: 5.5rem; }
 .hero h1 { font-size: clamp(2.3rem, 4.8vw, 3.9rem); font-weight: 800; margin: 0 0 1.5rem; line-height: 1.28; }
 .hero-copy { max-width: 31rem; font-size: 1.08rem; color: var(--muted); }
+/* Korean prose breaks between words, not inside them. Long Latin strings still wrap (body: overflow-wrap). */
+.hero-copy, .section-intro, .step p, .local-note p, .contact p, .phone-original p { word-break: keep-all; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin-top: 2rem; }
-/* Hero: three slips as the app draws them (kindSkin face/edge, radius 18, due date large). Example data, labelled as such. */
+/* Hero: three slips as the app draws them (kindSkin face/edge, radius 18, due date large), read in Vietnamese.
+   Example data, labelled as such. The Vietnamese words are the app's own: src/i18n/vi.ts (home.title, kind.*, due.by)
+   and the REAL sample in __fixtures__/translations.ts of the app repo. */
 .phone { margin: 0; justify-self: center; width: min(100%, 22rem); }
 .phone-screen { padding: 1.1rem 1rem 1.2rem; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.7rem; box-shadow: 0 .6rem 1.6rem rgba(37, 63, 101, .06); }
 .phone-title { margin: .2rem .35rem .8rem; font-size: 1.15rem; font-weight: 800; letter-spacing: -.03em; }
@@ -63,9 +67,13 @@ p { margin: 0 0 1rem; }
 .slip-money .chip { color: var(--money-ink); }
 .due { font-size: 1.3rem; font-weight: 800; letter-spacing: -.03em; }
 .slip-title { font-size: 1rem; font-weight: 700; }
-.slip-source { font-size: .78rem; color: var(--muted); }
-.phone-line { margin: .85rem .35rem 0; padding-top: .7rem; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
-.phone figcaption { margin-top: .9rem; text-align: center; font-size: .85rem; color: var(--muted); }
+.langs { list-style: none; display: flex; flex-wrap: wrap; gap: .3rem; margin: 0 0 .9rem; padding: 0; font-size: .74rem; }
+.langs li { padding: .15rem .5rem; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); line-height: 1.5; }
+.langs .lang-on { background: var(--wash); border-color: var(--primary); color: var(--accent); font-weight: 800; }
+.phone-original { margin: .85rem .35rem 0; padding-top: .7rem; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); line-height: 1.6; }
+.phone-original p { margin: 0; }
+.phone-original .original-label { margin-bottom: .2rem; font-size: .75rem; font-weight: 800; color: var(--ink); }
+.phone figcaption { margin-top: .9rem; text-align: center; font-size: .85rem; color: var(--muted); word-break: keep-all; }
 .section { padding-block: 3.5rem; border-top: 1px solid var(--line); }
 .section h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0 0 1rem; }
 .section-intro { color: var(--muted); max-width: 40rem; }
