@@ -1,0 +1,143 @@
+/* Shared by the introduction and policy pages. No remote assets. */
+/* Palette is the 학교쪽지 app's: src/ui/theme.ts of the app repo (multilingual-school-notice) —
+   paper.bgDeep #F5F7FB · paper.ink #202B3D · paper.inkSoft #566379 · paper.rule #E8EDF4 ·
+   brand.primary #346FEF · brand.soft #EDF3FF · brand.dark #2454BA · kindSkin (supply / reply / money).
+   Text pairs were measured at 4.5:1 or more. Do not invent new colors here; change the app's tokens first. */
+:root {
+  color-scheme: light;
+  --paper: #f5f7fb;
+  --sheet: #ffffff;
+  --ink: #202b3d;
+  --muted: #566379;
+  --line: #e8edf4;
+  --primary: #346fef;
+  --accent: #2454ba;
+  --wash: #edf3ff;
+  --supply-face: #fff7e5; --supply-edge: #f5e6bd; --supply-ink: #946100;
+  --reply-face: #fff0ee; --reply-edge: #f5dcd6; --reply-ink: #b94339;
+  --money-face: #eaf7f0; --money-edge: #d3ebdd; --money-ink: #287653;
+  --font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 2rem; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font); line-height: 1.8; overflow-wrap: anywhere; }
+a { color: var(--ink); text-underline-offset: .22em; text-decoration-thickness: 1px; }
+a:hover { color: var(--accent); }
+a:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; border-radius: 3px; }
+.skip-link { position: absolute; z-index: 2; top: .5rem; left: 1rem; padding: .65rem 1rem; background: var(--ink); color: white; transform: translateY(-180%); }
+.skip-link:focus { transform: translateY(0); color: white; }
+.shell { width: min(100% - 3rem, 1120px); margin-inline: auto; }
+.site-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem 2rem; padding-block: 1.6rem; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: .6rem; font-size: 1.3rem; font-weight: 800; letter-spacing: -.05em; text-decoration: none; }
+.brand-mark { display: inline-block; width: 1.55rem; height: 1.55rem; border-radius: .42rem; background: var(--primary); position: relative; }
+.brand-mark::before, .brand-mark::after { content: ""; position: absolute; left: .34rem; right: .34rem; height: 2px; border-radius: 1px; background: #fff; }
+.brand-mark::before { top: .5rem; }
+.brand-mark::after { top: .85rem; right: .6rem; }
+.site-nav { display: flex; flex-wrap: wrap; gap: .25rem 1.4rem; font-size: .9rem; }
+.site-nav a { padding-block: .45rem; }
+.site-nav a[aria-current="page"] { font-weight: 750; text-decoration-thickness: 2px; }
+.button { display: inline-block; padding: .8rem 1.3rem; border: 1px solid var(--primary); border-radius: .75rem; background: var(--primary); color: #fff; text-decoration: none; font-weight: 700; }
+.button:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.age-note { margin: 1.3rem 0 0; font-size: .85rem; color: var(--muted); }
+.step-number { font-size: 1.35rem; font-weight: 800; color: var(--accent); }
+.eyebrow { margin: 0 0 1rem; font-size: .78rem; font-weight: 700; letter-spacing: .12em; color: var(--accent); }
+h1, h2, h3 { line-height: 1.4; letter-spacing: -.035em; word-break: keep-all; }
+p { margin: 0 0 1rem; }
+.hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; padding-block: 5.5rem; }
+.hero h1 { font-size: clamp(2.3rem, 4.8vw, 3.9rem); font-weight: 800; margin: 0 0 1.5rem; line-height: 1.28; }
+.hero-copy { max-width: 31rem; font-size: 1.08rem; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin-top: 2rem; }
+/* Hero: three slips as the app draws them (kindSkin face/edge, radius 18, due date large). Example data, labelled as such. */
+.phone { margin: 0; justify-self: center; width: min(100%, 22rem); }
+.phone-screen { padding: 1.1rem 1rem 1.2rem; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.7rem; box-shadow: 0 .6rem 1.6rem rgba(37, 63, 101, .06); }
+.phone-title { margin: .2rem .35rem .8rem; font-size: 1.15rem; font-weight: 800; letter-spacing: -.03em; }
+.phone-title span { color: var(--accent); margin-left: .25rem; }
+.slips { list-style: none; margin: 0; padding: 0; display: grid; gap: .65rem; }
+.slip { display: grid; gap: .1rem; padding: .85rem 1rem .9rem; border: 1px solid; border-radius: 1.1rem; line-height: 1.5; }
+.slip-reply { background: var(--reply-face); border-color: var(--reply-edge); }
+.slip-supply { background: var(--supply-face); border-color: var(--supply-edge); }
+.slip-money { background: var(--money-face); border-color: var(--money-edge); }
+.chip { font-size: .78rem; font-weight: 800; }
+.slip-reply .chip { color: var(--reply-ink); }
+.slip-supply .chip { color: var(--supply-ink); }
+.slip-money .chip { color: var(--money-ink); }
+.due { font-size: 1.3rem; font-weight: 800; letter-spacing: -.03em; }
+.slip-title { font-size: 1rem; font-weight: 700; }
+.slip-source { font-size: .78rem; color: var(--muted); }
+.phone-line { margin: .85rem .35rem 0; padding-top: .7rem; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+.phone figcaption { margin-top: .9rem; text-align: center; font-size: .85rem; color: var(--muted); }
+.section { padding-block: 3.5rem; border-top: 1px solid var(--line); }
+.section h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0 0 1rem; }
+.section-intro { color: var(--muted); max-width: 40rem; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; list-style: none; padding: 0; margin: 2rem 0 0; }
+.step { padding: 1.5rem; border: 1px solid var(--line); border-radius: .7rem; background: var(--sheet); }
+.step h3 { font-size: 1.2rem; margin: .9rem 0 .7rem; }
+.step p { margin: 0; color: var(--muted); font-size: .95rem; }
+.local-note { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; background: var(--wash); border: 1px solid var(--line); border-radius: .8rem; padding: 2.2rem; margin-bottom: 3.5rem; }
+.local-note h2 { font-size: 1.6rem; margin: 0; }
+.local-note p:last-child { margin: 0; }
+.contact { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; }
+.contact-address { font-weight: 650; }
+.document-links { display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; font-size: .95rem; margin-top: 1.25rem; }
+/* FAQ: questions as h3 and answers as p. All answers stay visible (no <details>, no script).
+   The cards use the same palette variables and shape as .step. */
+.faq-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin-top: 2rem; }
+.faq-item { padding: 1.5rem; border: 1px solid var(--line); border-radius: .7rem; background: var(--sheet); }
+.faq-item h3 { font-size: 1.1rem; margin: 0 0 .7rem; }
+.faq-item p { margin: 0; font-size: .95rem; word-break: keep-all; }
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; padding-block: 1.8rem 2.5rem; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+.site-footer p { margin: 0; }
+.legal-shell { padding-top: 3.5rem; padding-bottom: 4rem; }
+.document-heading h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); margin: 0 0 1.25rem; }
+.toc { padding: 1rem 1.3rem; margin: 2rem 0; background: var(--sheet); border: 1px solid var(--line); border-radius: .6rem; }
+.toc summary { cursor: pointer; font-weight: 700; }
+.toc ol { padding-left: 1.5rem; margin: 1rem 0 .25rem; }
+.toc li { margin-bottom: .5rem; }
+.table-help { color: var(--muted); font-size: .85rem; margin: 0 0 2rem; }
+.policy-body { font-size: 1rem; line-height: 1.95; }
+.policy-body > p, .policy-body > ul, .policy-body > ol { max-width: 54rem; }
+.policy-body h2 { font-size: 1.5rem; margin: 3.5rem 0 1.4rem; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+.policy-body h3 { font-size: 1.15rem; margin: 2rem 0 1rem; }
+.policy-body p { margin-bottom: 1.2rem; }
+.policy-body ul, .policy-body ol { padding-left: 1.5rem; }
+.policy-body li { margin-bottom: .8rem; padding-left: .15rem; }
+.policy-body li > ul, .policy-body li > ol { margin-top: .7rem; }
+.policy-body strong { font-weight: 750; }
+.policy-body code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .88em; background: var(--wash); border-radius: .2rem; padding: .1rem .3rem; overflow-wrap: anywhere; }
+.policy-body hr { margin-block: 2.5rem; border: 0; border-top: 1px solid var(--line); }
+.table-scroll { overflow-x: auto; overscroll-behavior-x: contain; margin: 1.5rem 0; border: 1px solid var(--line); border-radius: .5rem; background: var(--sheet); }
+table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .94rem; line-height: 1.8; }
+table[data-columns="2"] { min-width: 520px; }
+table[data-columns="5"], table[data-columns="6"] { min-width: 900px; }
+table[data-columns="7"] { min-width: 1120px; }
+th, td { text-align: left; vertical-align: top; padding: 1rem; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-width: 8rem; }
+th { font-weight: 750; background: var(--wash); }
+th:last-child, td:last-child { border-right: 0; }
+tr:last-child td { border-bottom: 0; }
+td a { overflow-wrap: anywhere; }
+@media (max-width: 700px) {
+  .shell { width: min(100% - 2.25rem, 1120px); }
+  .site-header { padding-block: 1.1rem; gap: .7rem; }
+  .site-nav { gap: .2rem 1rem; width: 100%; }
+  .hero { grid-template-columns: 1fr; padding-block: 3rem; gap: 3rem; }
+  .steps, .local-note, .contact, .faq-list { grid-template-columns: 1fr; }
+  .steps { gap: .85rem; }
+  .section { padding-block: 2.6rem; }
+  .local-note { padding: 1.5rem; gap: 1rem; margin-bottom: 2.6rem; }
+  .contact { gap: .8rem; }
+  .legal-shell { padding-top: 2.5rem; }
+  .policy-body { line-height: 1.9; }
+  .policy-body h2 { font-size: 1.3rem; margin-top: 2.5rem; }
+  .table-scroll { margin-block: 1.2rem; }
+}
+@media print {
+  body { background: white; color: black; }
+  .shell { width: 100%; max-width: none; }
+  .site-header, .site-footer, .skip-link, .toc, .table-help { display: none; }
+  .legal-shell { padding: 0; }
+  .table-scroll { overflow: visible; }
+  table, table[data-columns] { min-width: 0; font-size: 8pt; }
+  th, td { min-width: 0; padding: .4rem; }
+  .policy-body { font-size: 10pt; }
+  .policy-body h2, .policy-body h3 { break-after: avoid; }
+}
