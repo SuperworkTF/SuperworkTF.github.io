@@ -16,6 +16,7 @@ README 원칙 5 에 따라 결과물에 실행되는 <script> 를 넣지 않는�
 import json
 import re
 import shutil
+import sys
 from html import escape as e
 from pathlib import Path
 
@@ -24,7 +25,8 @@ SITE_URL = 'https://superwork.ai.kr/'
 DATA = json.loads((ROOT / 'assets/apps.json').read_text(encoding='utf-8'))
 SITE = json.loads((ROOT / 'assets/site.json').read_text(encoding='utf-8'))
 CATS = {c['id']: c for c in DATA['categories']}
-OS = {'앱인토스': 'Web (Toss)', 'Google Play': 'Android', '원스토어': 'Android', 'App Store': 'iOS'}
+# apps.json 의 stores 키 → (단추·출시 채널 이름, 운영체제). 단추는 이 순서로 놓는다.
+STORES = {'appstore': ('App Store', 'iOS'), 'play': ('Google Play', 'Android'), 'toss': ('앱인토스', 'Web (Toss)')}
 
 
 def header(base, current):
@@ -179,8 +181,17 @@ def service(app):
     return ''.join(out)
 
 
+def stores(app):
+    """스토어 주소를 STORES 순서로 돌려준다. 모르는 키는 오타로 보고 멈춘다."""
+    got = app.get('stores') or {}
+    unknown = set(got) - set(STORES)
+    if unknown:
+        sys.exit(f'{app["id"]}: 모르는 stores 키 {sorted(unknown)} — {sorted(STORES)} 중에서 쓴다')
+    return {k: got[k] for k in STORES if got.get(k)}
+
+
 def jsonld(app):
-    oses = sorted({OS[c] for c in app.get('channels', []) if c in OS})
+    oses = sorted({STORES[k][1] for k in stores(app)})
     data = {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
@@ -194,8 +205,8 @@ def jsonld(app):
     }
     if oses:
         data['operatingSystem'] = ', '.join(oses)
-    if app.get('link'):
-        data['installUrl'] = app['link']
+    if stores(app):
+        data['installUrl'] = list(stores(app).values())
     body = json.dumps(data, ensure_ascii=False, indent=1).replace('</', '<\\/')
     return f'<script type="application/ld+json">\n{body}\n</script>\n'
 
@@ -204,12 +215,13 @@ def detail(app, others):
     base = '../../'
     cat = CATS[app['category']]
     icon = f'<img src="{base}{e(app["icon"])}" alt="">' if app.get('icon') else ''
-    cta = (f'<a class="btn btn-primary" href="{e(app["link"])}" target="_blank" rel="noopener">{e(app["store"])} ↗</a>'
-           if app.get('link') else '<span class="btn btn-ghost" aria-disabled="true">스토어 링크 준비 중</span>')
+    cta = (''.join(f'<a class="btn btn-primary" href="{e(url)}" target="_blank" rel="noopener">{e(STORES[k][0])} ↗</a>'
+                   for k, url in stores(app).items())
+           or '<span class="btn btn-ghost" aria-disabled="true">스토어 링크 준비 중</span>')
 
     facts = [('분류', f'{cat["label"]} · {app["genre"]}')]
-    if app.get('channels'):
-        facts.append(('출시 채널', ' · '.join(app['channels'])))
+    if stores(app):
+        facts.append(('출시 채널', ' · '.join(STORES[k][0] for k in stores(app))))
     facts.append(('문의', 'superwork.master@gmail.com'))
     side = [f'<div class="panel reveal"><h3>이용 정보</h3><dl class="facts-table">'
             + ''.join(f'<dt>{e(k)}</dt><dd>{e(v)}</dd>' for k, v in facts) + '</dl></div>']

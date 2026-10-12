@@ -28,8 +28,6 @@
         "🤍 뭉치는 손맛",
         "☁️ 부담 없는 힐링"
       ],
-      "link": "https://minion.toss.im/vJzyykin",
-      "store": "토스로 플레이",
       "video": null,
       "thumb": "assets/apps/moongchi/thumb.jpg",
       "icon": "assets/apps/moongchi/icon.png",
@@ -63,10 +61,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.superwork.mungchimungchi",
+        "toss": "https://minion.toss.im/vJzyykin"
+      }
     },
     {
       "id": "animalpedia",
@@ -79,8 +77,6 @@
         "📖 도감 채우기",
         "🌙 힐링 무드"
       ],
-      "link": "https://minion.toss.im/5yKqzNuD",
-      "store": "토스로 플레이",
       "video": null,
       "thumb": "assets/apps/animalpedia/thumb.jpg",
       "icon": "assets/apps/animalpedia/icon.png",
@@ -114,10 +110,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.animalpedia.play",
+        "toss": "https://minion.toss.im/5yKqzNuD"
+      }
     },
     {
       "id": "dongtoesa",
@@ -130,8 +126,6 @@
         "📜 부적·도구 성장",
         "⚔️ 한 손 전투"
       ],
-      "link": "https://minion.toss.im/9pr1fMaw",
-      "store": "토스로 플레이",
       "video": null,
       "thumb": "assets/apps/dongtoesa/thumb.jpg",
       "icon": "assets/apps/dongtoesa/icon.png",
@@ -165,10 +159,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.superworks.townexorcist",
+        "toss": "https://minion.toss.im/9pr1fMaw"
+      }
     },
     {
       "id": "bunsik-madness",
@@ -181,8 +175,6 @@
         "🧩 퍼즐 매치",
         "🔥 빨라지는 주문"
       ],
-      "link": "https://minion.toss.im/rjut6Vsr",
-      "store": "토스로 플레이",
       "video": null,
       "thumb": "assets/apps/bunsik-madness/thumb.jpg",
       "icon": "assets/apps/bunsik-madness/icon.png",
@@ -216,10 +208,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.superwork.bunsikmadness",
+        "toss": "https://minion.toss.im/rjut6Vsr"
+      }
     },
     {
       "id": "coin-tower",
@@ -232,8 +224,6 @@
         "🪙 캐릭터 강화",
         "🚀 더 높이"
       ],
-      "link": "https://minion.toss.im/tBZC0Zuf",
-      "store": "토스 미니앱",
       "video": null,
       "thumb": "assets/apps/coin-tower/thumb.jpg",
       "icon": "assets/apps/coin-tower/icon.png",
@@ -267,10 +257,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.superworks.cointower",
+        "toss": "https://minion.toss.im/tBZC0Zuf"
+      }
     },
     {
       "id": "gogo-drive",
@@ -283,8 +273,6 @@
         "🚦 피하고 추월",
         "🏆 기록 도전"
       ],
-      "link": "https://minion.toss.im/nvcfeukj",
-      "store": "토스로 플레이",
       "video": null,
       "thumb": "assets/apps/gogo-drive/thumb.jpg",
       "icon": "assets/apps/gogo-drive/icon.png",
@@ -318,10 +306,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.gogodrive.app",
+        "toss": "https://minion.toss.im/nvcfeukj"
+      }
     },
     {
       "id": "maze-escape",
@@ -334,8 +322,6 @@
         "👂 발소리 추적",
         "💎 보물 획득"
       ],
-      "link": "https://minion.toss.im/zhHOCcSB",
-      "store": "토스로 플레이",
       "video": null,
       "thumb": "assets/apps/maze-escape/thumb.jpg",
       "icon": "assets/apps/maze-escape/icon.png",
@@ -369,10 +355,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.darkmaze.mazeescape",
+        "toss": "https://minion.toss.im/zhHOCcSB"
+      }
     },
     {
       "id": "evolve-2048",
@@ -385,8 +371,6 @@
         "🧩 클래식 2048",
         "📴 오프라인 플레이"
       ],
-      "link": null,
-      "store": null,
       "video": null,
       "thumb": "assets/apps/evolve-2048/thumb.jpg",
       "icon": "assets/apps/evolve-2048/icon.png",
@@ -420,10 +404,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.evolve2048.game",
+        "toss": "https://minion.toss.im/nPdsNHwv"
+      }
     },
     {
       "id": "ghost-stack",
@@ -436,8 +420,6 @@
         "👻 고스트 대결",
         "🌃 네온 야경"
       ],
-      "link": null,
-      "store": null,
       "video": null,
       "thumb": "assets/apps/ghost-stack/thumb.jpg",
       "icon": "assets/apps/ghost-stack/icon.png",
@@ -471,10 +453,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.ghoststack.game",
+        "toss": "https://minion.toss.im/95utLVEo"
+      }
     },
     {
       "id": "pinch-runner",
@@ -487,8 +469,6 @@
         "💥 벌려서 분쇄",
         "🏁 거리 기록 도전"
       ],
-      "link": null,
-      "store": null,
       "video": null,
       "thumb": "assets/apps/pinch-runner/thumb.jpg",
       "icon": "assets/apps/pinch-runner/icon.png",
@@ -522,10 +502,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스",
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.superworks.pinchrunner",
+        "toss": "https://minion.toss.im/bp9PYHQ"
+      }
     },
     {
       "id": "happy-pug",
@@ -538,12 +518,10 @@
         "📍 친구 매칭",
         "🏅 산책 인증"
       ],
-      "link": "https://onesto.re/0001005937",
-      "store": "원스토어로 받기",
       "video": null,
       "thumb": "assets/apps/happy-pug/thumb.jpg",
       "icon": "assets/apps/happy-pug/icon.png",
-      "qr": "assets/apps/happy-pug/qr.png",
+      "qr": null,
       "thumbPos": "center",
       "thumbSm": "assets/apps/happy-pug/thumb-sm.jpg",
       "path": "apps/happy-pug/",
@@ -573,11 +551,10 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "Google Play",
-        "App Store",
-        "원스토어"
-      ]
+      "stores": {
+        "appstore": "https://apps.apple.com/kr/app/id6791448066",
+        "play": "https://play.google.com/store/apps/details?id=com.happypug.happypug"
+      }
     },
     {
       "id": "ururu",
@@ -586,8 +563,6 @@
       "category": "life",
       "desc": "내 학교와 학과를 걸고 다른 학교와 겨루는 소속 대항 미니게임. 한 판 20초 안팎, 게임 20종.",
       "feats": [],
-      "link": "https://play.google.com/store/apps/details?id=com.ururu.app",
-      "store": "Google Play",
       "video": null,
       "thumb": "assets/apps/ururu/thumb.jpg",
       "icon": "assets/apps/ururu/icon.png",
@@ -647,10 +622,10 @@
           "body": "우르르는 로그인 없이도 이용할 수 있습니다. 로그인하지 않은 상태에서 회사가 처리하는 개인정보는 없습니다."
         }
       },
-      "channels": [
-        "Google Play",
-        "App Store"
-      ]
+      "stores": {
+        "appstore": "https://apps.apple.com/kr/app/id6805813391",
+        "play": "https://play.google.com/store/apps/details?id=com.ururu.app"
+      }
     },
     {
       "id": "dasseotda",
@@ -663,8 +638,6 @@
         "⏰ 사용기한 알림",
         "🔍 재고 검색"
       ],
-      "link": "https://fresh-keep.apps.tossmini.com",
-      "store": "앱인토스",
       "video": null,
       "thumb": "assets/apps/dasseotda/thumb.jpg",
       "icon": "assets/apps/dasseotda/icon.png",
@@ -698,9 +671,9 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스"
-      ]
+      "stores": {
+        "toss": "https://minion.toss.im/XrdRugY9"
+      }
     },
     {
       "id": "trotstep",
@@ -713,12 +686,10 @@
         "🎤 최애 응원",
         "🏆 응원 랭킹"
       ],
-      "link": "https://m.onestore.co.kr/v2/ko-kr/app/0001006574",
-      "store": "원스토어로 받기",
       "video": null,
       "thumb": "assets/apps/trotstep/thumb.jpg",
       "icon": "assets/apps/trotstep/icon.png",
-      "qr": "assets/apps/trotstep/qr.png",
+      "qr": null,
       "thumbPos": "center",
       "thumbSm": "assets/apps/trotstep/thumb-sm.jpg",
       "path": "apps/trotstep/",
@@ -748,9 +719,7 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "원스토어"
-      ]
+      "stores": {}
     },
     {
       "id": "price-time-machine",
@@ -763,8 +732,6 @@
         "📈 변화 그래프",
         "⏱️ 체감 물가"
       ],
-      "link": "https://minion.toss.im/zJkHpMOC",
-      "store": "토스로 플레이",
       "video": null,
       "thumb": "assets/apps/price-time-machine/thumb.jpg",
       "icon": "assets/apps/price-time-machine/icon.png",
@@ -798,9 +765,9 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스"
-      ]
+      "stores": {
+        "toss": "https://minion.toss.im/zJkHpMOC"
+      }
     },
     {
       "id": "hachanhan-image",
@@ -813,8 +780,6 @@
         "😆 B급 감성",
         "📤 바로 공유"
       ],
-      "link": "https://minion.toss.im/1PKZKt7u",
-      "store": "토스로 플레이",
       "video": null,
       "thumb": "assets/apps/hachanhan-image/thumb.jpg",
       "icon": "assets/apps/hachanhan-image/icon.png",
@@ -848,9 +813,9 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스"
-      ]
+      "stores": {
+        "toss": "https://minion.toss.im/1PKZKt7u"
+      }
     },
     {
       "id": "dream-gallery",
@@ -863,8 +828,6 @@
         "🖼️ 드림 갤러리",
         "✨ 감각적 결과물"
       ],
-      "link": "https://minion.toss.im/hM4w0a2a",
-      "store": "토스로 플레이",
       "video": null,
       "thumb": "assets/apps/dream-gallery/thumb.jpg",
       "icon": "assets/apps/dream-gallery/icon.png",
@@ -898,9 +861,9 @@
         ],
         "privacy": null
       },
-      "channels": [
-        "앱인토스"
-      ]
+      "stores": {
+        "toss": "https://minion.toss.im/hM4w0a2a"
+      }
     },
     {
       "id": "subscribers",
@@ -909,8 +872,6 @@
       "category": "utility",
       "desc": "카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다. 결제 알림은 기기 안에서만 읽습니다.",
       "feats": [],
-      "link": "https://play.google.com/store/apps/details?id=com.superwork.subscribers",
-      "store": "Google Play",
       "video": "assets/apps/subscribers/preview.mp4",
       "thumb": "assets/apps/subscribers/thumb.jpg",
       "icon": "assets/apps/subscribers/icon.png",
@@ -966,9 +927,9 @@
           "body": "알림 접근을 허용하면 미리 정해 둔 카드사·간편결제·문자 앱의 결제 알림만 읽습니다. 알림 원문은 회사 서버로 보내지 않고, 찾아낸 구독 정보는 기기의 암호화 저장소에 보관합니다."
         }
       },
-      "channels": [
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.superwork.subscribers"
+      }
     },
     {
       "id": "piclect",
@@ -977,8 +938,6 @@
       "category": "utility",
       "desc": "지울 사진을 고르는 대신 남길 사진을 먼저 정하는 사진 정리 앱.",
       "feats": [],
-      "link": "https://play.google.com/store/apps/details?id=com.piclect.app",
-      "store": "Google Play",
       "video": null,
       "thumb": "assets/apps/piclect/thumb.jpg",
       "icon": "assets/apps/piclect/icon.png",
@@ -1020,9 +979,9 @@
           "body": "셀렉터는 회원가입이나 로그인 없이 이용합니다. 중복 판정과 흐릿함 판정은 모두 이 기기 안에서 처리하며, 사진·썸네일·파일 이름을 서버로 보내지 않습니다."
         }
       },
-      "channels": [
-        "Google Play"
-      ]
+      "stores": {
+        "play": "https://play.google.com/store/apps/details?id=com.piclect.app"
+      }
     },
     {
       "id": "jjallang",
@@ -1031,8 +990,6 @@
       "category": "utility",
       "desc": "출퇴근 버튼 하나로 야간·연장·휴일·주휴수당까지 계산해 홈 화면 위젯에 보여주는 근무 기록 앱.",
       "feats": [],
-      "link": "https://play.google.com/store/apps/details?id=com.jjallang.app",
-      "store": "Google Play",
       "video": null,
       "thumb": "assets/apps/jjallang/thumb.jpg",
       "icon": "assets/apps/jjallang/icon.png",
@@ -1097,9 +1054,10 @@
           "body": "짤랑은 회원가입과 로그인이 없습니다. 일터 정보와 출퇴근 기록, 시급은 기기 안에만 저장되며 회사 서버로 보내지 않습니다. 회사는 서버를 운영하지 않으므로 그 내용을 열람할 수 없습니다."
         }
       },
-      "channels": [
-        "Google Play"
-      ]
+      "stores": {
+        "appstore": "https://apps.apple.com/kr/app/id6813267953",
+        "play": "https://play.google.com/store/apps/details?id=com.jjallang.app"
+      }
     },
     {
       "id": "word-doodle",
@@ -1108,8 +1066,6 @@
       "category": "utility",
       "desc": "영단어를 낙서로 기억하고, 내가 그린 그림으로 복습하는 학습 앱.",
       "feats": [],
-      "link": "https://play.google.com/store/apps/details?id=com.worddoodle.app",
-      "store": "Google Play",
       "video": null,
       "thumb": "assets/apps/word-doodle/thumb.jpg",
       "icon": "assets/apps/word-doodle/icon.png",
@@ -1150,10 +1106,10 @@
           "body": "그려보카는 회원가입이나 로그인 없이 이용합니다. 낙서와 학습기록은 기기에 저장되며, 회사 서버로 전송하거나 동기화하지 않습니다. 복습 일정도 기기 안에서 계산합니다."
         }
       },
-      "channels": [
-        "Google Play",
-        "App Store"
-      ]
+      "stores": {
+        "appstore": "https://apps.apple.com/kr/app/id6812946441",
+        "play": "https://play.google.com/store/apps/details?id=com.worddoodle.app"
+      }
     },
     {
       "id": "filefit",
@@ -1162,8 +1118,6 @@
       "category": "utility",
       "desc": "사진 용량을 정한 KB 이하로 줄이고 JPG·PNG·WebP 변환, 크기 조절, 여러 장을 A4 PDF로 묶는 무료 도구. 파일을 서버에 올리지 않고 기기 안에서 처리합니다.",
       "feats": [],
-      "link": null,
-      "store": null,
       "video": null,
       "thumb": "assets/apps/filefit/thumb.jpg",
       "icon": null,
@@ -1204,7 +1158,7 @@
           "body": "파일핏은 회원가입이나 로그인 없이 이용합니다. 사진은 기기 안에서 처리하며 회사 서버로 전송하지 않습니다. 작업 기록에는 종류·개수·용량·시각만 남고 파일 이름과 파일 내용은 저장하지 않습니다."
         }
       },
-      "channels": []
+      "stores": {}
     }
   ]
 }
