@@ -1,0 +1,112 @@
+# 모국어통신문(mogugeo-tongsinmun) — 이 앱만의 사정
+
+공통 규칙은 저장소 루트 `README.md` 와 `tools/ADDING-AN-APP.md` 를 따른다.
+여기에는 **모국어통신문에만 해당하는 것**만 적는다.
+
+모국어통신문의 소개·문의·정책 문서는 이 공개 저장소의 `mogugeo-tongsinmun/` 에 둔다.
+앱 소스는 별도 저장소(`multilingual-school-notice`)에 있다. 앱 코드, 환경 파일, 내부 검토 문서,
+Notion 상위 경로·내부 메타데이터를 이 저장소에 복사하지 않는다.
+
+### 이름과 주소 — 2026-10-12 에 바뀌었다 (사람이 정함)
+
+- 옛 이름은 「학교쪽지」다. 앱의 핵심(학교 가정통신문을 번역해 모국어로 확인한다)이 드러나도록 「모국어통신문」으로 바꿨다.
+- 처음 PR(#9, `hakgyojjokji/`)은 사이트 구조가 바뀌는 중이라 병합하지 않고 닫았다. 새 구조에 이 이름으로 다시 올렸다.
+  옛 주소는 공개된 적이 없으므로 리다이렉트를 두지 않는다.
+- 앱 패키지 `com.hakgyojjokji.app` 은 바뀌지 않았다(정책 문서의 사업자 정보 표에 그대로 있다).
+
+### 정책 문서의 정본은 이 사이트 하나다 (2026-10-12, 사람이 정함)
+
+`policies/privacy.md` · `terms.md` 는 공개돼 있던 Notion 페이지 두 장의 본문에서 시작했다.
+Notion 의 마지막 수정은 개인정보처리방침 2026-09-21 15:29:15 UTC · 이용약관 같은 날 15:29:16 UTC 이다(공개 페이지의
+`last_edited_time` 으로 확인). 본문은 「정정 및 변경 준비 안내」(2026-09-21 게시)와 그 아래 「종전 게시 본문」으로
+이루어져 있다. 둘 다 공개본의 일부라 함께 옮겼다.
+
+Notion 공개본에서 바뀐 것은 이것뿐이다:
+
+1. 첫 줄 제목 `# <브랜드> <문서 제목>` (사이트 규칙).
+2. 그 아래 한 줄: `서비스 이름을 「학교쪽지」에서 「모국어통신문」으로 바꾸고, 이 문서를 게시하는 곳을 이 사이트로 옮겼습니다(2026-10-12).`
+3. 본문의 이름 「학교쪽지」 → 「모국어통신문」. 개인정보처리방침 4곳, 이용약관 9곳(「종전 게시 본문」 안 포함).
+   이용약관 제1조의 로마자 `Hakgyo Jjokji` → `Mogugeo Tongsinmun`, 제2조 ② 표의 조사 「로」 → 「으로」(이름이 받침으로 끝난다).
+4. 본문 안의 Notion 주소 → 이 사이트 주소. 링크 6개(개인정보처리방침의 「사업자 정보」 표 2 · 이용약관 제17조 ② 2 ·
+   이용약관의 「사업자 정보」 표 2). 링크 글자와 링크 주소를 함께 바꿨다.
+
+그 밖의 글자는 그대로다. 지문(`sha256`)은 이 원본으로 다시 고정했다.
+`notion_source` 는 쓰지 않는다 — 「원문 보기 (Notion)」 표시가 없고, `canonical` 이 이 사이트를 가리킨다.
+**이 폴더에는 Notion 으로 가는 링크가 없다.** 다시 넣지 않는다.
+
+공고일·시행일 장치는 쓰지 않았다(사람이 정함). 앱이 아직 스토어에 없고, 이 사이트에 이 앱의 판이 선 적이 없다.
+약관 제3조 ④(개정 7일 전 앱 안 공지)도 이번 이름 변경에는 적용하지 않는다(사람이 정함, 2026-10-12).
+
+올리지 **않은** 것:
+
+- **새 개인정보처리방침·이용약관 전문 개정안.** 앱 저장소 `docs/legal/*.draft.md` 에 있고 아직 확정 전이다
+  (실제 계약 법인명·처리 국가·보유기간 등 운영자가 확정할 항목이 남아 있다). 렌더러도 확정 대기 표식이 남은 원본을 막는다.
+  확정되면 `privacy-<시행일>.md` 로 올리고 `tools/ADDING-AN-APP.md` §4-1 의 공고·시행 장치를 쓴다.
+- **계정 삭제 안내.** 접수·처리 절차가 아직 정해지지 않아 페이지를 내지 않는다. 정해지면 `account-deletion.md` 를 더한다.
+
+앱 쪽에 남은 일: 앱 저장소의 `docs/legal/policy-urls.json`(앱 화면의 링크)을 아래 주소로 바꾼다.
+
+### 배포 주소 — 바꾸지 말 것
+
+- 소개·문의: <https://superwork.ai.kr/mogugeo-tongsinmun/>
+- 개인정보처리방침: <https://superwork.ai.kr/mogugeo-tongsinmun/privacy/>
+- 서비스 이용약관: <https://superwork.ai.kr/mogugeo-tongsinmun/terms/>
+
+### 홈 목록 — `assets/apps.json`
+
+- 분류는 `life`(라이프·AI)다. 번역을 AI 가 한다. 소개 페이지가 있으므로 `intro` · `path` 가 `mogugeo-tongsinmun/` 이고,
+  홈 카드는 이 소개 페이지로 바로 간다(`apps/` 쇼케이스가 없다).
+- `desc` 는 소개 페이지 meta description 에서 이름과 끝 문장(「앱 소개, 문의 …」)을 뺀 것이다. `details` 의 글도 소개 페이지에서 옮겼다.
+  소개 문장을 고치면 `apps.json` 도 같이 고치고 `python3 tools/build-site.py` 를 돌린다.
+- 스토어에 없어서 `link` · `store` · `qr` 이 `null` 이고 `channels` 가 비어 있다. 소개 영상은 없다(`video: null`).
+- `assets/apps/mogugeo-tongsinmun/icon.png` 는 앱 저장소 `assets/generated/icon.png`(앱의 `app.json` 아이콘, 1024px)를 512px 로 줄인 것이다.
+- `thumb.jpg` · `thumb-sm.jpg` 는 `tools/make-app-thumb.py` 로 만들었다. 이름이 여섯 글자라 기본 글자 크기(160)로는
+  아이콘에 닿아서, 도구를 고치지 않고 이름 글자만 128 로 줄여 돌렸다:
+
+      python3 -c "
+      import importlib.util
+      spec = importlib.util.spec_from_file_location('thumb', 'tools/make-app-thumb.py'); t = importlib.util.module_from_spec(spec); spec.loader.exec_module(t)
+      f = t.font; t.font = lambda size, bold=True: f(128 if size == 160 else size, bold)
+      t.main('mogugeo-tongsinmun', '모국어통신문', '학교 가정통신문을 모국어로 확인')
+      "
+
+### 화면
+
+`styles.css` 의 색은 앱 저장소 `src/ui/theme.ts` 의 토큰(`paper` · `brand` · `kindSkin`)이다. 글자색 쌍은 4.5:1 이상으로 쟀다.
+히어로는 앱의 홈 카드 세 장을 **베트남어로 본 장면**과 그 한국어 원문을 HTML/CSS 로 그린 **예시**이고, 그렇다고 화면에 적어 두었다
+(실제 학교 자료가 아니다). 베트남어 낱말은 앱의 것을 그대로 썼다: `src/i18n/vi.ts`(`home.title` · `kind.*` · `due.by`)와
+`__fixtures__/translations.ts` 의 `REAL` 표본. 여기서 새 번역을 짓지 않는다.
+색을 바꾸려면 앱의 토큰부터 바꾼다.
+
+소개 페이지 머리말의 아이콘·og:image 는 아직 루트 마크(`/favicon.png` · `/superwork-512.png`)다 — 스토어에 없는 앱의 규칙이다
+(`tools/ADDING-AN-APP.md` §6).
+
+### 문구 규칙 — 이 페이지에서 가장 중요한 부분
+
+핵심 메시지는 **「학교 가정통신문을 모국어로 확인한다」** 다. 히어로·설명·FAQ 첫 질문이 이것을 말한다.
+
+말투는 담백하게 쓴다(사람이 정함, 2026-10-12). 약점을 늘어놓지 않는다. 사실은 한 줄씩 남기고, 자세한 것은
+개인정보처리방침으로 넘긴다. **사실을 지우거나 바꾸지 않는다.** 소개 문장이 방침과 어긋나면 방침이 맞다.
+고치기 전에 근거를 읽는다.
+
+- 번역: AI(OpenAI)가 한다. 「어색한 번역이 있으면 문의해 주세요」 · 「중요한 기한·금액은 원문과 함께 확인해 주세요」.
+  번역되는 것은 쪽지(할 일·기한·준비물)다. 원문 전문은 한국어로 함께 보여 준다(앱 `src/api/types.ts` 의 `summary`·`bodyText`).
+  언어는 한국어·베트남어·중국어·러시아어·일본어.
+- 광고·무료: 홈 목록 맨 아래 배너 하나, 쪽지 상세를 세 번째로 열 때부터 두 번에 한 번 전면. 앱 로드·종료 전면은 없다.
+  인앱 결제·구독은 없다(앱 저장소 `src/ads/gate.ts`).
+- 자동 수집 지역: 지금은 **경기도 학교 홈페이지**다. 나머지는 「공유로 넣기」다.
+- 공유 문서: 첫 공유 전 동의를 받고, 회사 서버를 거쳐 OpenAI 로 간다. 「보관하지 않습니다」라고 쓰지 않는다 — 방침의 정정 안내가
+  그 단정을 바로잡았다.
+- 「가입 없이」는 **학부모의 쪽지 보기**에만 해당한다. 서버에는 기기에서 만든 임의 식별정보와 Firebase 익명 인증정보가 생기고,
+  교사에게는 이메일·비밀번호 계정이 있다(방침 정정 안내 §1). 소개 페이지에는 「쪽지를 받을 때 고른 학교·학년·언어가 서버로 전송된다」
+  한 줄과 방침 링크만 둔다.
+- 「출시 준비 중」: 아직 스토어에 없다.
+
+### 스토어에 올라가면
+
+- 히어로 `.actions` 에 `Google Play 에서 받기` · `App Store 에서 받기` 단추를 건다.
+- 구조화 데이터에 `sameAs`(단추와 같은 목록)·`offers`(`price` `"0"`)·`operatingSystem` 을 더한다. `tools/check-pages.py` 가 단추와 `sameAs` 의 어긋남을 잡는다.
+- 아이콘을 스토어에 올린 512px·192px 로 `icon-512.png` · `icon-192.png` 에 두고 머리말의 아이콘·og:image 를 그것으로 바꾼다.
+  `assets/apps/mogugeo-tongsinmun/icon.png` 도 같은 512px 로 맞춘다(다른 앱은 둘이 같은 파일이다).
+- `assets/apps.json` 의 `link` · `store` · `channels`(필요하면 `qr`)를 채우고 `python3 tools/build-site.py` 를 돌린다.
+- 스토어 등록정보의 **웹사이트** 칸에 `https://superwork.ai.kr/mogugeo-tongsinmun/` 을 넣는다(`app-ads.txt` 를 찾는 칸).
