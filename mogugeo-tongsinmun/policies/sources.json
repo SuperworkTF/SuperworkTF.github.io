@@ -11,7 +11,7 @@
       {
         "path": "privacy",
         "source": "privacy",
-        "sha256": "cae811919c6f889ac984c9b3155421df6ab697c6bb753d1940510566b03ee647"
+        "sha256": "1c2cf5528a66404f3d4fa3a1c79afe7ab3b0f5e1d0fa73bfd7ddbe3583c3a4a3"
       }
     ]
   },
@@ -22,7 +22,7 @@
       {
         "path": "terms",
         "source": "terms",
-        "sha256": "fe2d15d5665437150e5f165b8d2706f70f3367cc972b9a5730dc56c435b36449"
+        "sha256": "c479e70cd73ba071fe224960d8e5ba6b1dfd88b6c6230d07de9defefd7c6540e"
       }
     ]
   }
