@@ -74,6 +74,17 @@ def promote(kind: str, editions: list[dict], ready: dict) -> None:
     canonical["status"] = "current"
     for key in ("upcoming", "upcoming_effective", "upcoming_announced"):
         canonical.pop(key, None)
+    # 개정이 두 번 연달아 공고돼 있으면(해피퍼그 2026-10-15 · 2026-11-12) 하나가 올라온 뒤에도
+    # 정본 자리는 **남은 개정 공고를 계속 말해야 한다.** 지우기만 하면 다음 시행일까지 공고가
+    # 정본 자리에서 사라진다.
+    waiting = sorted((e for e in editions if e is not ready and e.get("status") == "upcoming"),
+                     key=lambda e: e["effective"])
+    if waiting:
+        nxt = waiting[0]
+        canonical["upcoming"] = f"./{nxt['path'].partition('/')[2]}/"
+        canonical["upcoming_effective"] = nxt["effective"]
+        if nxt.get("announced"):
+            canonical["upcoming_announced"] = nxt["announced"]
     if outgoing:
         canonical["previous"] = f"./{outgoing}/"
         canonical["previous_label"] = f"{outgoing} 시행"

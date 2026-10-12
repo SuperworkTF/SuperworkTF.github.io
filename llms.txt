@@ -13,6 +13,7 @@ SuperWork는 주식회사 케이티나스미디어의 사내 조직입니다. �
 - [우르르 — 소속 대항 미니게임, 한 판 20초](https://superwork.ai.kr/ururu/): 내 학교와 학과를 걸고 다른 학교와 겨루는 소속 대항 미니게임. 한 판 20초 안팎, 게임 20종. Android·iOS, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.ururu.app) · [App Store](https://apps.apple.com/kr/app/id6805813391)
 - [짤랑 — 근무표 위젯, 알바 급여계산](https://superwork.ai.kr/jjallang/): 출퇴근 버튼 하나로 야간·연장·휴일·주휴수당까지 계산해 홈 화면 위젯에 보여주는 근무 기록 앱. Android, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.jjallang.app)
 - [파일핏 — 사진 용량 줄이기·형식 변환·사진 PDF](https://superwork.ai.kr/filefit/): 사진 용량을 정한 KB 이하로 줄이고 JPG·PNG·WebP 변환, 크기 조절, 여러 장을 A4 PDF로 묶는 무료 도구. 파일을 서버에 올리지 않고 기기 안에서 처리합니다. 아직 스토어에 공개되지 않았습니다.
+- [HappyPug — 우리 동네 강아지들과 함께 걷는 산책 모임](https://superwork.ai.kr/happy-pug/): 같은 동네 반려인끼리 산책 모임을 만들고 함께 걷는 앱. Android·iOS, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.happypug.happypug) · [App Store](https://apps.apple.com/kr/app/id6791448066)
 
 ## 정책 문서
 
@@ -31,6 +32,11 @@ SuperWork는 주식회사 케이티나스미디어의 사내 조직입니다. �
 - [짤랑 서비스 이용약관](https://superwork.ai.kr/jjallang/terms/)
 - [파일핏 개인정보처리방침](https://superwork.ai.kr/filefit/privacy/)
 - [파일핏 서비스 이용약관](https://superwork.ai.kr/filefit/terms/)
+- [HappyPug 개인정보처리방침](https://superwork.ai.kr/happy-pug/privacy/)
+- [HappyPug 서비스 이용약관](https://superwork.ai.kr/happy-pug/terms/)
+- [HappyPug 위치기반서비스 이용약관](https://superwork.ai.kr/happy-pug/location-terms/)
+- [HappyPug 마케팅 정보 수신 동의](https://superwork.ai.kr/happy-pug/marketing-consent/)
+- [HappyPug 계정 삭제 안내](https://superwork.ai.kr/happy-pug/account-deletion/)
 
 ## 조직 소개
 

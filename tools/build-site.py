@@ -397,6 +397,26 @@ def build_home():
     path.write_text(html, encoding='utf-8')
 
 
+def moved_page(app):
+    """옛 쇼케이스 주소에 남기는 안내 한 장 — 새 소개 페이지로 바로 넘긴다."""
+    target = SITE_URL + app['intro']
+    return f'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>{e(app["name"])} — 새 주소로 옮겼습니다</title>
+<meta name="robots" content="noindex"/>
+<link rel="canonical" href="{e(target)}"/>
+<meta http-equiv="refresh" content="0; url={e(target)}"/>
+</head>
+<body>
+<p>{e(app["name"])} 소개와 정책 문서는 <a href="{e(target)}">{e(target)}</a> 로 옮겼습니다.</p>
+</body>
+</html>
+'''
+
+
 def main():
     apps = DATA['apps']
     out_root = ROOT / 'apps'
@@ -412,8 +432,19 @@ def main():
         out = ROOT / app['path'] / 'index.html'
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(detail(app, (same + rest)[:8]), encoding='utf-8')
+    # 소개 페이지로 옮겨 간 앱의 옛 쇼케이스 주소는 지우지 않고 새 주소로 넘긴다.
+    # 그 주소가 QR·공유 링크·스토어 등록정보에 이미 나가 있을 수 있다(해피퍼그 apps/happy-pug/).
+    # 정적 HTML 의 meta refresh 만 쓴다 — 스크립트는 넣지 않는다(README 원칙 5).
+    moved = [a for a in apps if a.get('intro') and a.get('formerPath')]
+    for app in moved:
+        former = app['formerPath']
+        if not former.startswith('apps/') or former.count('/') != 2:
+            raise SystemExit(f"{app['id']}: 옛 주소는 apps/<앱>/ 이어야 한다 — {former!r}")
+        out = ROOT / former / 'index.html'
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(moved_page(app), encoding='utf-8')
     build_home()
-    print(f'index.html 생성 구역 7곳, apps/ 쇼케이스 {len(showcase)}개')
+    print(f'index.html 생성 구역 7곳, apps/ 쇼케이스 {len(showcase)}개, 옮겨 간 주소 {len(moved)}개')
 
 
 if __name__ == '__main__':

@@ -177,13 +177,24 @@ def text_and_links(fragment: str):
     return re.sub(r"\s+", " ", "".join(parser.text)).strip(), parser.links
 
 
+CELL = "\x01"
+
+
 def assert_fidelity(source: str, body: str):
     # Independent per-line/per-cell reading of the sanitized source. Check the
     # ordered text and all actual Markdown links, including links in tables.
-    lines = re.sub(r"</?(?:table|tr|td)\b[^>]*>", "\n", source).splitlines()
+    # 표 칸은 목록이 아니다 — 「2026. 05. 27.」처럼 숫자와 점으로 시작하는 칸을 목록 표시로 읽어
+    # 앞머리를 떼면 기대값만 글자를 잃는다(해피퍼그 개정 이력). 칸 글자 앞에 표식을 달아 구분한다.
+    marked = re.sub(r"<td\b[^>]*>(.*?)</td>", lambda m: f"\n{CELL}{m.group(1)}\n", source, flags=re.DOTALL)
+    lines = re.sub(r"</?(?:table|tr|td)\b[^>]*>", "\n", marked).splitlines()
     expected: list[str] = []
     for line in lines:
         text = line.strip()
+        if text.startswith(CELL):
+            text = text[len(CELL):].strip()
+            if text:
+                expected.append(MARKDOWN.renderInline(text))
+            continue
         if not text or text == "---":
             continue
         if text.startswith("#"):
@@ -464,6 +475,10 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict,
 DOCUMENTS = (
     ("privacy", "개인정보처리방침"),
     ("terms", "이용약관"),
+    # 위치정보법상 위치기반서비스사업자는 약관을 따로 낸다. 마케팅(광고성 정보) 수신 동의는
+    # 정보통신망법 제50조의 별도 동의 문서다 — 둘 다 해피퍼그가 처음 낸다.
+    ("location-terms", "위치기반서비스 약관"),
+    ("marketing-consent", "마케팅 수신 동의"),
     ("account-deletion", "계정 삭제"),
 )
 

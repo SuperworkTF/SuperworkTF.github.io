@@ -546,7 +546,7 @@
       "qr": "assets/apps/happy-pug/qr.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/happy-pug/thumb-sm.jpg",
-      "path": "apps/happy-pug/",
+      "path": "happy-pug/",
       "details": {
         "headline": null,
         "lead": "동네 강아지 친구들과 함께 걷는 산책 모임, 반려인을 위한 커뮤니티.",
@@ -577,7 +577,9 @@
         "Google Play",
         "App Store",
         "원스토어"
-      ]
+      ],
+      "intro": "happy-pug/",
+      "formerPath": "apps/happy-pug/"
     },
     {
       "id": "ururu",
