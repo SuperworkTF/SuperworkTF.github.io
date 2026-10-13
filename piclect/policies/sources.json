@@ -5,9 +5,8 @@
     "theme_color": "#0B0B0C"
   },
   "privacy": {
-    "public_url": "https://cautious-oxygen-897.notion.site/3d5f49ce71ed8180a5d0e9f17e30a677",
+    "public_url": "https://superwork.ai.kr/piclect/privacy/",
     "title": "개인정보처리방침",
-    "notion_source": true,
     "editions": [
       {
         "path": "privacy",
@@ -17,9 +16,8 @@
     ]
   },
   "terms": {
-    "public_url": "https://cautious-oxygen-897.notion.site/3d5f49ce71ed81348d93eba10254bed2",
+    "public_url": "https://superwork.ai.kr/piclect/terms/",
     "title": "서비스 이용약관",
-    "notion_source": true,
     "editions": [
       {
         "path": "terms",

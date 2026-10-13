@@ -1,0 +1,17 @@
+{
+  "app": {
+    "dir": "maze-escape",
+    "brand": "어둠의 미로",
+    "theme_color": "#f7f4eb"
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "public_url": "https://superwork.ai.kr/maze-escape/privacy/",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy"
+      }
+    ]
+  }
+}

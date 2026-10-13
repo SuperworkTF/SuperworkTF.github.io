@@ -85,3 +85,52 @@ p { margin: 0 0 1rem; }
 .faq-item h3 { font-size: 1.1rem; margin: 0 0 .6rem; }
 .faq-item p { margin: 0; }
 @media (max-width: 700px) { .faq-list { grid-template-columns: 1fr; } }
+
+/* 정책 페이지(tools/render-policies.py 가 만드는 <앱>/privacy/ 등)가 쓰는 규칙 — word-doodle/styles.css 와 같다 */
+.brand-mark { display: inline-block; width: 1.65rem; height: 1.65rem; border: 2px solid currentColor; border-radius: 44% 56% 48% 52%; transform: rotate(-12deg); position: relative; }
+.brand-mark::after { content: ""; position: absolute; width: 1.1rem; border-top: 2px solid currentColor; top: 50%; left: 15%; transform: rotate(-35deg); }
+.legal-shell { padding-top: 3.5rem; padding-bottom: 4rem; }
+.document-heading h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); margin: 0 0 1.25rem; }
+.toc { padding: 1rem 1.3rem; margin: 2rem 0; background: var(--sheet); border: 1px solid var(--line); border-radius: .6rem; }
+.toc summary { cursor: pointer; font-weight: 700; }
+.toc ol { padding-left: 1.5rem; margin: 1rem 0 .25rem; }
+.toc li { margin-bottom: .5rem; }
+.table-help { color: var(--muted); font-size: .85rem; margin: 0 0 2rem; }
+.policy-body { font-size: 1rem; line-height: 1.95; }
+.policy-body > p, .policy-body > ul, .policy-body > ol { max-width: 54rem; }
+.policy-body h2 { font-size: 1.5rem; margin: 3.5rem 0 1.4rem; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+.policy-body h3 { font-size: 1.15rem; margin: 2rem 0 1rem; }
+.policy-body p { margin-bottom: 1.2rem; }
+.policy-body ul, .policy-body ol { padding-left: 1.5rem; }
+.policy-body li { margin-bottom: .8rem; padding-left: .15rem; }
+.policy-body li > ul, .policy-body li > ol { margin-top: .7rem; }
+.policy-body strong { font-weight: 750; }
+.policy-body code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .88em; background: var(--wash); border-radius: .2rem; padding: .1rem .3rem; overflow-wrap: anywhere; }
+.policy-body hr { margin-block: 2.5rem; border: 0; border-top: 1px solid var(--line); }
+.table-scroll { overflow-x: auto; overscroll-behavior-x: contain; margin: 1.5rem 0; border: 1px solid var(--line); border-radius: .5rem; background: var(--sheet); }
+table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .94rem; line-height: 1.8; }
+table[data-columns="2"] { min-width: 520px; }
+table[data-columns="5"], table[data-columns="6"] { min-width: 900px; }
+table[data-columns="7"] { min-width: 1120px; }
+th, td { text-align: left; vertical-align: top; padding: 1rem; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-width: 8rem; }
+th { font-weight: 750; background: var(--wash); }
+th:last-child, td:last-child { border-right: 0; }
+tr:last-child td { border-bottom: 0; }
+td a { overflow-wrap: anywhere; }
+@media (max-width: 700px) {
+  .legal-shell { padding-top: 2.5rem; }
+  .policy-body { line-height: 1.9; }
+  .policy-body h2 { font-size: 1.3rem; margin-top: 2.5rem; }
+  .table-scroll { margin-block: 1.2rem; }
+}
+@media print {
+  body { background: white; color: black; }
+  .shell { width: 100%; max-width: none; }
+  .site-header, .site-footer, .skip-link, .toc, .table-help { display: none; }
+  .legal-shell { padding: 0; }
+  .table-scroll { overflow: visible; }
+  table, table[data-columns] { min-width: 0; font-size: 8pt; }
+  th, td { min-width: 0; padding: .4rem; }
+  .policy-body { font-size: 10pt; }
+  .policy-body h2, .policy-body h3 { break-after: avoid; }
+}

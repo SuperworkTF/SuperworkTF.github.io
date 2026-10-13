@@ -1,0 +1,17 @@
+{
+  "app": {
+    "dir": "pinch-runner",
+    "brand": "핀치 러너",
+    "theme_color": "#f7f4eb"
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "public_url": "https://superwork.ai.kr/pinch-runner/privacy/",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy"
+      }
+    ]
+  }
+}

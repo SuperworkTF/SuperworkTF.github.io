@@ -475,6 +475,8 @@ def page(kind: str, source: str, metadata: dict, app: dict, *, edition: dict,
 DOCUMENTS = (
     ("privacy", "개인정보처리방침"),
     ("terms", "이용약관"),
+    # 유료 상품의 청약철회·환불 기준을 따로 내는 앱이 있다 — 트롯스텝이 처음 낸다.
+    ("refund", "환불 정책"),
     # 위치정보법상 위치기반서비스사업자는 약관을 따로 낸다. 마케팅(광고성 정보) 수신 동의는
     # 정보통신망법 제50조의 별도 동의 문서다 — 둘 다 해피퍼그가 처음 낸다.
     ("location-terms", "위치기반서비스 약관"),

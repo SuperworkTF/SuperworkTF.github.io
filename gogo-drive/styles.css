@@ -1,0 +1,139 @@
+/* 생성: tools/build-site.py 가 assets/app-intro.css 와 apps.json 의 accent 로 쓴다. 손으로 고치지 않는다. */
+/* apps/<앱>/ 소개 페이지가 함께 쓴다 — 그려보카(word-doodle/styles.css)의 소개 페이지 스타일을 따른다.
+   앱마다 다른 것은 --accent 하나이고, 각 페이지의 <style> 에서 정한다(tools/build-site.py). 외부 자원은 쓰지 않는다. */
+:root {
+  color-scheme: light;
+  --paper: #f7f4eb;
+  --sheet: #fffdf7;
+  --ink: #24372e;
+  --muted: #59645b;
+  --line: #d4d9cb;
+  --accent: #8d442a;
+  --wash: #eaf0e1;
+  --font: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+}
+@supports (color: color-mix(in srgb, red, blue)) {
+  :root { --wash: color-mix(in srgb, var(--accent) 9%, var(--paper)); }
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 2rem; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font); line-height: 1.8; overflow-wrap: anywhere; }
+img { display: block; max-width: 100%; }
+a { color: var(--ink); text-underline-offset: .22em; text-decoration-thickness: 1px; }
+a:hover { color: var(--accent); }
+a:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; border-radius: 3px; }
+.skip-link { position: absolute; z-index: 2; top: .5rem; left: 1rem; padding: .65rem 1rem; background: var(--ink); color: white; transform: translateY(-180%); }
+.skip-link:focus { transform: translateY(0); color: white; }
+.shell { width: min(100% - 3rem, 1120px); margin-inline: auto; }
+.site-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem 2rem; padding-block: 1.6rem; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: .6rem; font-size: 1.3rem; font-weight: 800; letter-spacing: -.05em; text-decoration: none; }
+.brand img { width: 1.9rem; height: 1.9rem; border-radius: .5rem; border: 1px solid var(--line); }
+.site-nav { display: flex; flex-wrap: wrap; gap: .25rem 1.4rem; font-size: .9rem; }
+.site-nav a { padding-block: .45rem; }
+.site-nav a[aria-current="page"] { font-weight: 750; text-decoration-thickness: 2px; }
+.eyebrow { margin: 0 0 1rem; font-size: .78rem; font-weight: 700; letter-spacing: .12em; color: var(--accent); }
+h1, h2, h3 { line-height: 1.4; letter-spacing: -.035em; word-break: keep-all; }
+p { margin: 0 0 1rem; }
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; padding-block: 5.5rem; }
+.hero h1 { font-size: clamp(2.3rem, 4.8vw, 3.9rem); font-weight: 800; margin: 0 0 1.5rem; line-height: 1.28; }
+.hero-copy { max-width: 31rem; font-size: 1.08rem; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-top: 2rem; }
+.button { display: inline-block; padding: .8rem 1.3rem; border: 1px solid var(--ink); border-radius: .55rem; background: var(--ink); color: var(--sheet); text-decoration: none; font-weight: 700; }
+.button:hover { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+.button[aria-disabled="true"] { background: transparent; color: var(--muted); border-color: var(--line); }
+.age-note { margin: 1.3rem 0 0; font-size: .85rem; color: var(--muted); }
+/* 그려보카의 낙서 카드 자리에 앱 대표 이미지를 붙인다 — 살짝 기운 종이 카드와 마스킹테이프 */
+.shot-card { position: relative; margin: 0; padding: 1rem; background: var(--sheet); border: 1px solid var(--line); border-radius: .7rem 1.7rem .7rem 1rem; box-shadow: .45rem .55rem 0 var(--wash); transform: rotate(2deg); }
+.shot-card::before { content: ""; display: block; position: absolute; z-index: 1; width: 5rem; height: 1.4rem; background: var(--wash); border: 1px solid var(--line); top: -.75rem; left: calc(50% - 2.5rem); transform: rotate(-5deg); opacity: .92; }
+.shot-card img { width: 100%; aspect-ratio: 2.34; object-fit: cover; border-radius: .4rem; }
+.shot-card figcaption { margin-top: .9rem; padding-top: .8rem; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.shot-card figcaption strong { color: var(--ink); }
+.section { padding-block: 3.5rem; border-top: 1px solid var(--line); }
+.section h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0 0 1rem; }
+.section-intro { color: var(--muted); max-width: 40rem; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; list-style: none; padding: 0; margin: 2rem 0 0; }
+.step { padding: 1.5rem; border: 1px solid var(--line); border-radius: .7rem; background: var(--sheet); }
+.step-number { font-family: Georgia, serif; font-size: 1.6rem; color: var(--accent); }
+.step h3 { font-size: 1.2rem; margin: .9rem 0 0; }
+.local-note { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; background: var(--wash); border: 1px solid var(--line); border-radius: .8rem; padding: 2.2rem; margin-bottom: 3.5rem; }
+.local-note h2 { font-size: 1.6rem; margin: 0; }
+.local-note p:last-child { margin: 0; }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: .5rem 1.5rem; margin: 0 0 1rem; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 650; }
+.contact { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; }
+.contact-address { font-weight: 650; }
+.document-links { display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; font-size: .95rem; margin-top: 1.25rem; }
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; padding-block: 1.8rem 2.5rem; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+.site-footer p { margin: 0; }
+@media (max-width: 700px) {
+  .shell { width: min(100% - 2.25rem, 1120px); }
+  .site-header { padding-block: 1.1rem; gap: .7rem; }
+  .site-nav { gap: .2rem 1rem; width: 100%; }
+  .hero { grid-template-columns: 1fr; padding-block: 3rem; gap: 3rem; }
+  .shot-card { width: calc(100% - 1rem); justify-self: center; margin-bottom: 1rem; }
+  .steps, .local-note, .contact { grid-template-columns: 1fr; }
+  .steps { gap: .85rem; }
+  .section { padding-block: 2.6rem; }
+  .local-note { padding: 1.5rem; gap: 1rem; margin-bottom: 2.6rem; }
+  .contact { gap: .8rem; }
+}
+.step p { margin: .7rem 0 0; color: var(--muted); font-size: .95rem; }
+.local-note .facts { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+/* 자주 묻는 질문 — 그려보카와 같다. 넓은 화면은 두 칸, 700px 이하는 한 칸 */
+.faq-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem 2.5rem; margin-top: 2rem; }
+.faq-item { padding-top: 1.2rem; border-top: 1px solid var(--line); }
+.faq-item h3 { font-size: 1.1rem; margin: 0 0 .6rem; }
+.faq-item p { margin: 0; }
+@media (max-width: 700px) { .faq-list { grid-template-columns: 1fr; } }
+
+/* 정책 페이지(tools/render-policies.py 가 만드는 <앱>/privacy/ 등)가 쓰는 규칙 — word-doodle/styles.css 와 같다 */
+.brand-mark { display: inline-block; width: 1.65rem; height: 1.65rem; border: 2px solid currentColor; border-radius: 44% 56% 48% 52%; transform: rotate(-12deg); position: relative; }
+.brand-mark::after { content: ""; position: absolute; width: 1.1rem; border-top: 2px solid currentColor; top: 50%; left: 15%; transform: rotate(-35deg); }
+.legal-shell { padding-top: 3.5rem; padding-bottom: 4rem; }
+.document-heading h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); margin: 0 0 1.25rem; }
+.toc { padding: 1rem 1.3rem; margin: 2rem 0; background: var(--sheet); border: 1px solid var(--line); border-radius: .6rem; }
+.toc summary { cursor: pointer; font-weight: 700; }
+.toc ol { padding-left: 1.5rem; margin: 1rem 0 .25rem; }
+.toc li { margin-bottom: .5rem; }
+.table-help { color: var(--muted); font-size: .85rem; margin: 0 0 2rem; }
+.policy-body { font-size: 1rem; line-height: 1.95; }
+.policy-body > p, .policy-body > ul, .policy-body > ol { max-width: 54rem; }
+.policy-body h2 { font-size: 1.5rem; margin: 3.5rem 0 1.4rem; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+.policy-body h3 { font-size: 1.15rem; margin: 2rem 0 1rem; }
+.policy-body p { margin-bottom: 1.2rem; }
+.policy-body ul, .policy-body ol { padding-left: 1.5rem; }
+.policy-body li { margin-bottom: .8rem; padding-left: .15rem; }
+.policy-body li > ul, .policy-body li > ol { margin-top: .7rem; }
+.policy-body strong { font-weight: 750; }
+.policy-body code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .88em; background: var(--wash); border-radius: .2rem; padding: .1rem .3rem; overflow-wrap: anywhere; }
+.policy-body hr { margin-block: 2.5rem; border: 0; border-top: 1px solid var(--line); }
+.table-scroll { overflow-x: auto; overscroll-behavior-x: contain; margin: 1.5rem 0; border: 1px solid var(--line); border-radius: .5rem; background: var(--sheet); }
+table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .94rem; line-height: 1.8; }
+table[data-columns="2"] { min-width: 520px; }
+table[data-columns="5"], table[data-columns="6"] { min-width: 900px; }
+table[data-columns="7"] { min-width: 1120px; }
+th, td { text-align: left; vertical-align: top; padding: 1rem; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); min-width: 8rem; }
+th { font-weight: 750; background: var(--wash); }
+th:last-child, td:last-child { border-right: 0; }
+tr:last-child td { border-bottom: 0; }
+td a { overflow-wrap: anywhere; }
+@media (max-width: 700px) {
+  .legal-shell { padding-top: 2.5rem; }
+  .policy-body { line-height: 1.9; }
+  .policy-body h2 { font-size: 1.3rem; margin-top: 2.5rem; }
+  .table-scroll { margin-block: 1.2rem; }
+}
+@media print {
+  body { background: white; color: black; }
+  .shell { width: 100%; max-width: none; }
+  .site-header, .site-footer, .skip-link, .toc, .table-help { display: none; }
+  .legal-shell { padding: 0; }
+  .table-scroll { overflow: visible; }
+  table, table[data-columns] { min-width: 0; font-size: 8pt; }
+  th, td { min-width: 0; padding: .4rem; }
+  .policy-body { font-size: 10pt; }
+  .policy-body h2, .policy-body h3 { break-after: avoid; }
+}
+
+:root { --accent: #c62828; }

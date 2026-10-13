@@ -1,0 +1,17 @@
+{
+  "app": {
+    "dir": "moongchi",
+    "brand": "뭉치뭉치",
+    "theme_color": "#f7f4eb"
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "public_url": "https://superwork.ai.kr/moongchi/privacy/",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy"
+      }
+    ]
+  }
+}

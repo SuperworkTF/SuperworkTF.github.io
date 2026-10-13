@@ -33,7 +33,7 @@
       "icon": "assets/apps/moongchi/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/moongchi/thumb-sm.jpg",
-      "path": "apps/moongchi/",
+      "path": "moongchi/",
       "details": {
         "headline": null,
         "lead": "동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임.",
@@ -123,7 +123,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.superwork.mungchimungchi",
         "toss": "https://minion.toss.im/vJzyykin"
       },
-      "accent": "#8a5b00"
+      "accent": "#8a5b00",
+      "formerPath": "apps/moongchi/"
     },
     {
       "id": "animalpedia",
@@ -141,7 +142,7 @@
       "icon": "assets/apps/animalpedia/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/animalpedia/thumb-sm.jpg",
-      "path": "apps/animalpedia/",
+      "path": "animalpedia/",
       "details": {
         "headline": null,
         "lead": "깜찍한 동물들을 하나씩 모아 나만의 도감을 채워가는 힐링 컬렉션.",
@@ -231,7 +232,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.animalpedia.play",
         "toss": "https://minion.toss.im/5yKqzNuD"
       },
-      "accent": "#2f7a3a"
+      "accent": "#2f7a3a",
+      "formerPath": "apps/animalpedia/"
     },
     {
       "id": "dongtoesa",
@@ -249,7 +251,7 @@
       "icon": "assets/apps/dongtoesa/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/dongtoesa/thumb-sm.jpg",
-      "path": "apps/dongtoesa/",
+      "path": "dongtoesa/",
       "details": {
         "headline": null,
         "lead": "골목골목 출몰하는 악귀를 물리치는 통쾌한 한국형 퇴마 액션 RPG.",
@@ -339,7 +341,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.superworks.townexorcist",
         "toss": "https://minion.toss.im/9pr1fMaw"
       },
-      "accent": "#1f5fbf"
+      "accent": "#1f5fbf",
+      "formerPath": "apps/dongtoesa/"
     },
     {
       "id": "bunsik-madness",
@@ -357,7 +360,7 @@
       "icon": "assets/apps/bunsik-madness/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/bunsik-madness/thumb-sm.jpg",
-      "path": "apps/bunsik-madness/",
+      "path": "bunsik-madness/",
       "details": {
         "headline": null,
         "lead": "밀려드는 주문을 퍼즐로 척척! 손맛 터지는 분식집 운영 게임.",
@@ -447,7 +450,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.superwork.bunsikmadness",
         "toss": "https://minion.toss.im/rjut6Vsr"
       },
-      "accent": "#c0441c"
+      "accent": "#c0441c",
+      "formerPath": "apps/bunsik-madness/"
     },
     {
       "id": "coin-tower",
@@ -465,7 +469,7 @@
       "icon": "assets/apps/coin-tower/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/coin-tower/thumb-sm.jpg",
-      "path": "apps/coin-tower/",
+      "path": "coin-tower/",
       "details": {
         "headline": null,
         "lead": "한 손으로 즐기는 뱀서류 액션! 코인으로 캐릭터를 강화하며 더 높이 올라가세요.",
@@ -551,7 +555,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.superworks.cointower",
         "toss": "https://minion.toss.im/tBZC0Zuf"
       },
-      "accent": "#0b7285"
+      "accent": "#0b7285",
+      "formerPath": "apps/coin-tower/"
     },
     {
       "id": "gogo-drive",
@@ -569,7 +574,7 @@
       "icon": "assets/apps/gogo-drive/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/gogo-drive/thumb-sm.jpg",
-      "path": "apps/gogo-drive/",
+      "path": "gogo-drive/",
       "details": {
         "headline": null,
         "lead": "달리고, 피하고, 추월하라! 생동감 넘치는 3D 도시를 질주하는 드라이빙 게임.",
@@ -659,7 +664,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.gogodrive.app",
         "toss": "https://minion.toss.im/nvcfeukj"
       },
-      "accent": "#c62828"
+      "accent": "#c62828",
+      "formerPath": "apps/gogo-drive/"
     },
     {
       "id": "maze-escape",
@@ -677,7 +683,7 @@
       "icon": "assets/apps/maze-escape/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/maze-escape/thumb-sm.jpg",
-      "path": "apps/maze-escape/",
+      "path": "maze-escape/",
       "details": {
         "headline": null,
         "lead": "칠흑 같은 미로 속, 손전등 하나와 발소리에 의지해 보이지 않는 추격자를 피해 탈출하라.",
@@ -767,7 +773,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.darkmaze.mazeescape",
         "toss": "https://minion.toss.im/zhHOCcSB"
       },
-      "accent": "#7a5a32"
+      "accent": "#7a5a32",
+      "formerPath": "apps/maze-escape/"
     },
     {
       "id": "evolve-2048",
@@ -785,7 +792,7 @@
       "icon": "assets/apps/evolve-2048/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/evolve-2048/thumb-sm.jpg",
-      "path": "apps/evolve-2048/",
+      "path": "evolve-2048/",
       "details": {
         "headline": null,
         "lead": "숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!",
@@ -875,7 +882,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.evolve2048.game",
         "toss": "https://minion.toss.im/nPdsNHwv"
       },
-      "accent": "#5b3cc4"
+      "accent": "#5b3cc4",
+      "formerPath": "apps/evolve-2048/"
     },
     {
       "id": "ghost-stack",
@@ -893,7 +901,7 @@
       "icon": "assets/apps/ghost-stack/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/ghost-stack/thumb-sm.jpg",
-      "path": "apps/ghost-stack/",
+      "path": "ghost-stack/",
       "details": {
         "headline": null,
         "lead": "숨은 고수(고스트)와 겨루는 네온 야경 블록 쌓기! 탭 한 번으로 즐기는 하이퍼 캐주얼.",
@@ -983,7 +991,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.ghoststack.game",
         "toss": "https://minion.toss.im/95utLVEo"
       },
-      "accent": "#7b2fbf"
+      "accent": "#7b2fbf",
+      "formerPath": "apps/ghost-stack/"
     },
     {
       "id": "pinch-runner",
@@ -1001,7 +1010,7 @@
       "icon": "assets/apps/pinch-runner/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/pinch-runner/thumb-sm.jpg",
-      "path": "apps/pinch-runner/",
+      "path": "pinch-runner/",
       "details": {
         "headline": null,
         "lead": "오므리면 작아지고, 벌리면 커진다! 두 손가락 핀치 하나로 즐기는 한 끗 차이 엔드리스 러너.",
@@ -1091,7 +1100,8 @@
         "play": "https://play.google.com/store/apps/details?id=com.superworks.pinchrunner",
         "toss": "https://minion.toss.im/bp9PYHQ"
       },
-      "accent": "#b4461f"
+      "accent": "#b4461f",
+      "formerPath": "apps/pinch-runner/"
     },
     {
       "id": "happy-pug",
@@ -1289,7 +1299,7 @@
       "icon": "assets/apps/dasseotda/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/dasseotda/thumb-sm.jpg",
-      "path": "apps/dasseotda/",
+      "path": "dasseotda/",
       "details": {
         "headline": null,
         "lead": "집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요.",
@@ -1378,7 +1388,8 @@
       "stores": {
         "toss": "https://minion.toss.im/XrdRugY9"
       },
-      "accent": "#1d60c9"
+      "accent": "#1d60c9",
+      "formerPath": "apps/dasseotda/"
     },
     {
       "id": "trotstep",
@@ -1396,7 +1407,7 @@
       "icon": "assets/apps/trotstep/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/trotstep/thumb-sm.jpg",
-      "path": "apps/trotstep/",
+      "path": "trotstep/",
       "details": {
         "headline": null,
         "lead": "매일 걷는 걸음이 최애 가수를 향한 응원이 됩니다. 걸음으로 모은 투표권으로 응원하세요.",
@@ -1483,7 +1494,8 @@
         }
       },
       "stores": {},
-      "accent": "#c2185b"
+      "accent": "#c2185b",
+      "formerPath": "apps/trotstep/"
     },
     {
       "id": "price-time-machine",
@@ -1501,7 +1513,7 @@
       "icon": "assets/apps/price-time-machine/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/price-time-machine/thumb-sm.jpg",
-      "path": "apps/price-time-machine/",
+      "path": "price-time-machine/",
       "details": {
         "headline": null,
         "lead": "그때 그 가격, 지금은 얼마? 시점별 물가를 한눈에 비교하는 타임머신.",
@@ -1531,7 +1543,8 @@
       "stores": {
         "toss": "https://minion.toss.im/zJkHpMOC"
       },
-      "accent": "#4a4fd9"
+      "accent": "#4a4fd9",
+      "formerPath": "apps/price-time-machine/"
     },
     {
       "id": "hachanhan-image",
@@ -1549,7 +1562,7 @@
       "icon": "assets/apps/hachanhan-image/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/hachanhan-image/thumb-sm.jpg",
-      "path": "apps/hachanhan-image/",
+      "path": "hachanhan-image/",
       "details": {
         "headline": null,
         "lead": "못 그려도 괜찮아! 사진 한 장이면 피식 웃기는 낙서풍 그림으로 뚝딱.",
@@ -1579,7 +1592,8 @@
       "stores": {
         "toss": "https://minion.toss.im/1PKZKt7u"
       },
-      "accent": "#7a6000"
+      "accent": "#7a6000",
+      "formerPath": "apps/hachanhan-image/"
     },
     {
       "id": "dream-gallery",
@@ -1597,7 +1611,7 @@
       "icon": "assets/apps/dream-gallery/icon.png",
       "thumbPos": "center",
       "thumbSm": "assets/apps/dream-gallery/thumb-sm.jpg",
-      "path": "apps/dream-gallery/",
+      "path": "dream-gallery/",
       "details": {
         "headline": null,
         "lead": "당신이 꾼 꿈을 AI가 한 장의 일러스트로. 꿈을 그림으로 모으는 갤러리.",
@@ -1627,7 +1641,8 @@
       "stores": {
         "toss": "https://minion.toss.im/hM4w0a2a"
       },
-      "accent": "#7d5f36"
+      "accent": "#7d5f36",
+      "formerPath": "apps/dream-gallery/"
     },
     {
       "id": "mogugeo-tongsinmun",

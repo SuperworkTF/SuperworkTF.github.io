@@ -38,25 +38,54 @@ def stores(app):
     return {k: got[k] for k in STORES if got.get(k)}
 
 
-def jsonld(app):
-    oses = sorted({STORES[k][1] for k in stores(app)})
-    data = {
-        '@context': 'https://schema.org',
+def jsonld(app, image):
+    """SoftwareApplication + BreadcrumbList. check-pages.py 가 보는 것: name·url·description·image·sameAs."""
+    got = stores(app)
+    url = SITE_URL + app['path']
+    node = {
         '@type': 'SoftwareApplication',
+        '@id': url + '#app',
         'name': app['name'],
-        'description': app['details']['lead'],
-        'applicationCategory': 'GameApplication' if app['category'] == 'game' else 'UtilitiesApplication',
-        'genre': app['genre'],
-        'url': SITE_URL + app['path'],
-        'image': SITE_URL + app['thumb'],
-        'publisher': {'@type': 'Organization', 'name': 'Superwork', 'url': SITE_URL},
+        'description': app['desc'],
+        'applicationCategory': 'GameApplication' if app['category'] == 'game' else 'LifestyleApplication',
+        'url': url,
+        'image': image,
+        'inLanguage': 'ko',
+        'publisher': {'@type': 'Organization', '@id': SITE_URL + '#organization', 'name': 'SuperWork', 'url': SITE_URL},
     }
+    oses = [STORES[k][1] for k in got]
     if oses:
-        data['operatingSystem'] = ', '.join(oses)
-    if stores(app):
-        data['installUrl'] = list(stores(app).values())
-    body = json.dumps(data, ensure_ascii=False, indent=1).replace('</', '<\\/')
-    return f'<script type="application/ld+json">\n{body}\n</script>\n'
+        node['operatingSystem'] = oses
+    same = [u for k, u in got.items() if k in ('appstore', 'play')]
+    if same:
+        node['offers'] = {'@type': 'Offer', 'price': '0', 'priceCurrency': 'KRW'}
+        node['sameAs'] = same
+    crumbs = {'@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': 1, 'name': 'SuperWork 앱 안내', 'item': SITE_URL},
+        {'@type': 'ListItem', 'position': 2, 'name': app['name'], 'item': url}]}
+    body = json.dumps({'@context': 'https://schema.org', '@graph': [node, crumbs]}, ensure_ascii=False, indent=2)
+    return '<script type="application/ld+json">\n' + body.replace('</', '<\\/') + '\n  </script>\n'
+
+
+# 정책 문서 칸 → 메뉴 이름. tools/render-policies.py 의 DOCUMENTS 와 같은 차례·이름이다.
+DOC_LABELS = (('privacy', '개인정보처리방침'), ('terms', '이용약관'), ('refund', '환불 정책'),
+              ('location-terms', '위치기반서비스 약관'), ('marketing-consent', '마케팅 수신 동의'),
+              ('account-deletion', '계정 삭제'))
+GENERATED = '<!-- 생성: tools/build-site.py 가 apps.json 에서 쓴다. 손으로 고치지 않는다 -->'
+
+
+def at_root(app):
+    """소개가 /<앱>/ 에 서는 앱인가 (아니면 옛 쇼케이스 자리 apps/<앱>/)."""
+    return not app['path'].startswith('apps/')
+
+
+def policy_docs(app):
+    """<앱>/policies/sources.json 이 내는 문서 칸 — (칸, 메뉴 이름). 정책이 없으면 빈 목록."""
+    f = ROOT / app['path'] / 'policies' / 'sources.json'
+    if not at_root(app) or not f.exists():
+        return []
+    have = json.loads(f.read_text(encoding='utf-8'))
+    return [(k, label) for k, label in DOC_LABELS if k in have]
 
 
 CONTACT = 'superwork.master+help@gmail.com'
@@ -66,7 +95,9 @@ STORE_CTA = {'appstore': 'App Store 에서 받기', 'play': 'Google Play 에서 
 
 def detail(app):
     """apps/<앱>/index.html — 그려보카(word-doodle/) 소개 페이지와 같은 짜임·스타일(assets/app-intro.css)."""
-    base = '../../'
+    root = at_root(app)
+    base = '../' if root else '../../'
+    docs = policy_docs(app)
     cat = CATS[app['category']]
     name, desc = e(app['name']), e(app['desc'])
     got = stores(app)
@@ -114,12 +145,17 @@ def detail(app):
       <div class="faq-list">{faq_items}
       </div>
     </section>''' if faq else ''
+    doc_nav = ''.join(f'\n      <a href="./{k}/">{label}</a>' for k, label in docs) or \
+        f'\n      <a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])} 앱</a>'
+    doc_links = ''.join(f'\n          <a href="./{k}/">{label} <span aria-hidden="true">↗</span></a>' for k, label in docs) or \
+        f'\n          <a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])} 앱 더 보기 <span aria-hidden="true">↗</span></a>'
+    policy_line = ('개인정보처리방침 등 정책 문서는 이 페이지 아래 「문의와 정책 안내」에서 확인할 수 있습니다.' if docs
+                   else '개인정보처리방침과 이용약관은 앱이 출시된 스토어의 앱 정보와 앱 안에서 확인할 수 있습니다.')
     body = f'''  <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="{name} 소개">{icon}{name}</a>
     <nav class="site-nav" aria-label="주요 메뉴">
-      <a href="./" aria-current="page">앱 소개</a>
-      <a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])} 앱</a>
+      <a href="./" aria-current="page">앱 소개</a>{doc_nav}
       <a href="{base}">전체 앱 안내</a>
     </nav>
   </header>
@@ -149,30 +185,40 @@ def detail(app):
           <dt>분류</dt><dd>{e(cat["label"])} · {e(app["genre"])}</dd>
           <dt>출시 채널</dt><dd>{e(channels)}</dd>
         </dl>
-        <p>개인정보처리방침과 이용약관은 앱이 출시된 스토어의 앱 정보와 앱 안에서 확인할 수 있습니다.</p>
+        <p>{policy_line}</p>
       </div>
     </section>{faq_block}
     <section class="section contact" id="contact" aria-labelledby="contact-heading">
       <div>
         <p class="eyebrow">도움이 필요할 때</p>
-        <h2 id="contact-heading">문의 안내</h2>
+        <h2 id="contact-heading">{'문의와 정책 안내' if docs else '문의 안내'}</h2>
       </div>
       <div>
         <p>앱 이용에 관한 궁금한 점이나 도움이 필요한 내용을 이메일로 보내 주세요.</p>
         <p><a class="contact-address" href="mailto:{CONTACT}">{CONTACT}</a></p>
-        <div class="document-links">
-          <a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])} 앱 더 보기 <span aria-hidden="true">↗</span></a>
+        <div class="document-links">{doc_links}
           <a href="{base}">SuperWork 전체 앱 안내 <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
   </main>
   <footer class="site-footer shell">
-    <p>{name} · 앱 소개</p>
+    <p>{name} · {'앱 소개와 정책 안내' if docs else '앱 소개'}</p>
     <a href="{base}">전체 앱 안내</a>
   </footer>'''
     title = f'{app["name"]} — {app["genre"]}'
+    url = SITE_URL + app['path']
+    if root:  # 정본 소개 — check-pages.py 의 규칙(아이콘·og:image 는 이 앱 폴더의 PNG)을 따른다
+        image = url + 'icon-512.png'
+        icons = (f'  <link rel="icon" type="image/png" sizes="192x192" href="{url}icon-192.png">\n'
+                 f'  <link rel="apple-touch-icon" href="{url}icon-192.png">\n')
+        card, style = 'summary', '  <link rel="stylesheet" href="./styles.css">'
+    else:
+        image, icons, card = SITE_URL + app['thumb'], '', 'summary_large_image'
+        style = (f'  <link rel="stylesheet" href="{base}assets/app-intro.css">\n'
+                 f'  <style>:root {{ --accent: {e(app.get("accent", "#8d442a"))}; }}</style>')
     return f'''<!doctype html>
+{GENERATED}
 <html lang="ko">
 <head>
   <meta charset="utf-8">
@@ -180,23 +226,29 @@ def detail(app):
   <meta name="description" content="{desc}">
   <meta name="theme-color" content="#f7f4eb">
   <title>{e(title)}</title>
-  <link rel="canonical" href="{SITE_URL}{e(app["path"])}">
-  <meta property="og:type" content="website">
+  <link rel="canonical" href="{url}">
+{icons}  <meta property="og:type" content="website">
   <meta property="og:site_name" content="SuperWork">
   <meta property="og:locale" content="ko_KR">
-  <meta property="og:url" content="{SITE_URL}{e(app["path"])}">
+  <meta property="og:url" content="{url}">
   <meta property="og:title" content="{e(title)}">
   <meta property="og:description" content="{desc}">
-  <meta property="og:image" content="{SITE_URL}{e(app["thumb"])}">
-  <meta name="twitter:card" content="summary_large_image">
-  {jsonld(app)}  <link rel="stylesheet" href="{base}assets/app-intro.css">
-  <style>:root {{ --accent: {e(app.get("accent", "#8d442a"))}; }}</style>
+  <meta property="og:image" content="{image}">
+  <meta name="twitter:card" content="{card}">
+  {jsonld(app, image)}{style}
 </head>
 <body>
 {body}
 </body>
 </html>
 '''
+
+
+def app_styles(app):
+    """/<앱>/styles.css — 소개와 정책 페이지가 함께 쓴다. 공용 app-intro.css 에 이 앱의 강조색만 얹는다."""
+    css = (ROOT / 'assets/app-intro.css').read_text(encoding='utf-8')
+    return (f'/* 생성: tools/build-site.py 가 assets/app-intro.css 와 apps.json 의 accent 로 쓴다. 손으로 고치지 않는다. */\n'
+            f'{css}\n:root {{ --accent: {app.get("accent", "#8d442a")}; }}\n')
 
 
 ICONS = {
@@ -337,8 +389,8 @@ def home_channels():
 def home_intro_links():
     """푸터의 「앱 소개 · 정책」 — 루트가 모든 앱 소개(<앱>/)를 잇는다(check-pages.py). 가나다순.
     tools/render-llms.py 는 이 a.card 의 차례와 주소만 읽고, 제목·설명은 각 소개 페이지에서 가져온다."""
-    intros = sorted((a for a in DATA['apps'] if a.get('intro')), key=lambda a: a['name'])
-    return '\n'.join(f'<a class="card" href="./{e(a["intro"])}"><div class="t">{e(a["name"])}</div></a>' for a in intros)
+    intros = sorted((a for a in DATA['apps'] if a.get('intro') or at_root(a)), key=lambda a: a['name'])
+    return '\n'.join(f'<a class="card" href="./{e(a.get("intro") or a["path"])}"><div class="t">{e(a["name"])}</div></a>' for a in intros)
 
 
 def build_home():
@@ -356,7 +408,7 @@ def build_home():
 
 def moved_page(app):
     """옛 쇼케이스 주소에 남기는 안내 한 장 — 새 소개 페이지로 바로 넘긴다."""
-    target = SITE_URL + app['intro']
+    target = SITE_URL + (app.get('intro') or app['path'])
     return f'''<!doctype html>
 <html lang="ko">
 <head>
@@ -381,16 +433,25 @@ def main():
         shutil.rmtree(out_root)
     showcase = [a for a in apps if not a.get('intro')]
     for app in showcase:
-        # 정본 소개 페이지(<앱>/index.html)를 덮어쓰지 않도록 apps/ 밖에는 쓰지 않는다
-        if not app['path'].startswith('apps/') or app['path'].count('/') != 2:
+        if at_root(app):
+            # /<앱>/ 소개를 이 스크립트가 쓴다. 손으로 쓴 소개(생성 표식이 없는 index.html)는 덮지 않는다.
+            if app['path'] != f"{app['id']}/":
+                raise SystemExit(f"{app['id']}: 소개 주소는 <id>/ 여야 한다 — {app['path']!r}")
+            out = ROOT / app['path'] / 'index.html'
+            if out.exists() and GENERATED not in out.read_text(encoding='utf-8'):
+                raise SystemExit(f'{out} 는 손으로 쓴 소개다 — apps.json 에 intro 로 적는다')
+            for icon in ('icon-192.png', 'icon-512.png'):
+                if not (out.parent / icon).exists():
+                    raise SystemExit(f'{out.parent / icon} 가 없다 — 아이콘(정사각 PNG)을 먼저 둔다')
+            (out.parent / 'styles.css').write_text(app_styles(app), encoding='utf-8')
+        elif app['path'].count('/') != 2:
             raise SystemExit(f"{app['id']}: 쇼케이스 주소는 apps/<앱>/ 이어야 한다 — {app['path']!r}")
         out = ROOT / app['path'] / 'index.html'
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(detail(app), encoding='utf-8')
-    # 소개 페이지로 옮겨 간 앱의 옛 쇼케이스 주소는 지우지 않고 새 주소로 넘긴다.
-    # 그 주소가 QR·공유 링크·스토어 등록정보에 이미 나가 있을 수 있다(해피퍼그 apps/happy-pug/).
+    # 옛 쇼케이스 주소(apps/<앱>/)는 지우지 않고 새 소개로 넘긴다 — QR·공유 링크·스토어 등록정보에 나가 있을 수 있다.
     # 정적 HTML 의 meta refresh 만 쓴다 — 스크립트는 넣지 않는다(README 원칙 5).
-    moved = [a for a in apps if a.get('intro') and a.get('formerPath')]
+    moved = [a for a in apps if a.get('formerPath')]
     for app in moved:
         former = app['formerPath']
         if not former.startswith('apps/') or former.count('/') != 2:
@@ -399,7 +460,7 @@ def main():
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(moved_page(app), encoding='utf-8')
     build_home()
-    print(f'index.html 생성 구역 7곳, apps/ 쇼케이스 {len(showcase)}개, 옮겨 간 주소 {len(moved)}개')
+    print(f'index.html 생성 구역 7곳, 생성 소개 {len(showcase)}개(그중 /<앱>/ {sum(map(at_root, showcase))}개), 옮겨 간 주소 {len(moved)}개')
 
 
 if __name__ == '__main__':
