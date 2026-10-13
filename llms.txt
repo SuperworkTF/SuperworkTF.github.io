@@ -2,7 +2,7 @@
 
 > 주식회사 케이티나스미디어 SuperWork가 만드는 앱들의 소개·문의·정책 문서를 모아 둡니다.
 
-SuperWork는 주식회사 케이티나스미디어의 사내 조직입니다. 스토어의 개발자 이름은 kt nasmedia, Nasmedia Co.,Ltd입니다. 문의: superwork.master@gmail.com
+SuperWork는 주식회사 케이티나스미디어의 사내 조직입니다. 스토어의 개발자 이름은 kt nasmedia, Nasmedia Co.,Ltd입니다. 문의: superwork.master+help@gmail.com
 
 ## 앱
 

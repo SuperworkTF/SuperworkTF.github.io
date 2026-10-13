@@ -1,16 +1,21 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>다썼다 — Superwork</title>
-<meta name="description" content="집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요."/>
-<meta name="theme-color" content="#0a0c10"/>
-<meta property="og:title" content="다썼다 — Superwork"/>
-<meta property="og:description" content="집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요."/>
-<meta property="og:type" content="website"/>
-<link rel="canonical" href="https://superwork.ai.kr/apps/dasseotda/"/>
-<script type="application/ld+json">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요.">
+  <meta name="theme-color" content="#f7f4eb">
+  <title>다썼다 — 생활·편의 · AI</title>
+  <link rel="canonical" href="https://superwork.ai.kr/apps/dasseotda/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SuperWork">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:url" content="https://superwork.ai.kr/apps/dasseotda/">
+  <meta property="og:title" content="다썼다 — 생활·편의 · AI">
+  <meta property="og:description" content="집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요.">
+  <meta property="og:image" content="https://superwork.ai.kr/assets/apps/dasseotda/thumb.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
 {
  "@context": "https://schema.org",
  "@type": "SoftwareApplication",
@@ -31,106 +36,121 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="../../assets/site.css"/>
-<style>
-.app-hero{position:relative;min-height:540px;display:flex;align-items:flex-end;overflow:hidden}
-.app-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 18s ease-in-out infinite alternate}
-.app-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,12,16,.15) 0%,rgba(10,12,16,.55) 55%,var(--bg) 100%)}
-.app-hero.soft>img{filter:blur(28px) brightness(.7) saturate(1.2);transform:scale(1.2);animation:none}
-@keyframes kb{to{transform:scale(1.12) translate(-2%,-2%)}}
-.app-hero .wrap{position:relative;z-index:1;padding-bottom:52px}
-.crumbs{display:flex;gap:8px;flex-wrap:wrap;color:rgba(255,255,255,.7);font-weight:700;font-size:14px;margin-bottom:26px}
-.crumbs a:hover{color:#fff}
-.app-id{display:flex;align-items:center;gap:22px;margin-bottom:20px}
-.app-id img{width:96px;height:96px;border-radius:24px;box-shadow:0 14px 34px rgba(0,0,0,.5)}
-.app-id .genre{color:var(--accent);font-weight:800}
-.app-id h1{font-size:clamp(38px,6vw,72px);line-height:1.05;font-weight:900;letter-spacing:-.03em}
-.app-lead{font-size:clamp(17px,2vw,21px);max-width:720px;color:rgba(255,255,255,.9);margin-bottom:30px}
-.app-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-
-.block{padding:72px 0 0}
-.block>h2{font-size:clamp(26px,3.4vw,38px);font-weight:900;letter-spacing:-.02em;margin-bottom:24px}
-.block>h2 small{display:block;color:var(--accent);font-size:13px;letter-spacing:.12em;margin-bottom:10px}
-.media-grid{display:grid;grid-template-columns:2fr 1fr;gap:24px}
-.art{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
-.art img{width:100%;aspect-ratio:2.34;object-fit:cover}
-.art video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
-.side{display:grid;gap:16px;align-content:start}
-.side h3{font-size:15px;color:var(--dim);margin-bottom:12px}
-.facts-table{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:15px}
-.facts-table dt{color:var(--dim)}
-.qr{display:flex;gap:18px;align-items:center}
-.qr img{width:112px;height:112px;border-radius:12px;background:#fff;padding:6px}
-.qr p{color:var(--dim);font-size:14px}
-
-.svc-head{font-size:clamp(24px,3vw,34px);font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
-.svc-lead{color:#c9ced6;font-size:18px;max-width:820px;margin-bottom:18px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.chips span{font-size:14px;font-weight:700;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line)}
-.svc-section{margin-top:40px}
-.svc-section h3{font-size:22px;font-weight:800;margin-bottom:8px}
-.svc-section>p{color:var(--dim);margin-bottom:18px;max-width:820px}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.item b{display:block;font-size:18px;margin-bottom:6px}
-.item p{color:var(--dim);font-size:15px}
-.item .no{color:var(--accent);font-weight:900;font-size:14px;margin-bottom:8px;display:block}
-.privacy{margin-top:40px;background:linear-gradient(135deg,rgba(61,90,128,.25),rgba(0,217,163,.06));border-color:rgba(120,160,220,.35)}
-.privacy h3{font-size:20px;margin-bottom:8px}
-.privacy p{color:#c9ced6}
-
-.docs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.doc{display:flex;flex-direction:column;gap:6px}
-.doc b{font-size:18px}
-.doc span{color:var(--dim);font-size:13px;overflow-wrap:anywhere}
-.note{color:var(--dim);font-size:14px;margin-top:14px}
-@media(max-width:860px){.media-grid{grid-template-columns:1fr}.app-hero{min-height:460px}.app-id img{width:72px;height:72px}}
-</style>
+  <link rel="stylesheet" href="../../assets/app-intro.css">
+  <style>:root { --accent: #1d60c9; }</style>
 </head>
 <body>
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand grad" href="../../">Superwork</a>
-    <nav class="site-nav">
-      <a href="../../#workflow" class="hide-sm">개발 체계</a>
-      <a href="../../#tools">도구</a>
-      <a href="../../#apps" aria-current="page">앱</a>
-      <a href="../../#channels">채널</a>
-      <a href="../../#directory">정책</a>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="site-header shell">
+    <a class="brand" href="./" aria-label="다썼다 소개"><img src="../../assets/apps/dasseotda/icon.png" alt="" width="30" height="30">다썼다</a>
+    <nav class="site-nav" aria-label="주요 메뉴">
+      <a href="./" aria-current="page">앱 소개</a>
+      <a href="../../#apps-life">라이프·AI 앱</a>
+      <a href="../../">전체 앱 안내</a>
     </nav>
-  </div>
-</header>
-<main>
-
-<section class="app-hero">
-  <img src="../../assets/apps/dasseotda/thumb.jpg" alt="" style="object-position:center">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="위치"><a href="../../#apps">앱</a><span>/</span><a href="../../#apps-life">라이프·AI</a><span>/</span><span>다썼다</span></nav>
-    <div class="app-id"><img src="../../assets/apps/dasseotda/icon.png" alt=""><div><div class="genre">생활·편의 · AI</div><h1>다썼다</h1></div></div>
-    <p class="app-lead">집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요.</p>
-    <div class="app-cta"><a class="btn btn-primary" href="https://minion.toss.im/XrdRugY9" target="_blank" rel="noopener">앱인토스 ↗</a></div>
-  </div>
-</section>
-<div class="wrap">
-  <section class="block"><h2><small>OVERVIEW</small>한눈에 보기</h2>
-    <div class="media-grid"><figure class="art reveal"><img src="../../assets/apps/dasseotda/thumb.jpg" alt="다썼다 대표 이미지"></figure><aside class="side"><div class="panel reveal"><h3>이용 정보</h3><dl class="facts-table"><dt>분류</dt><dd>라이프·AI · 생활·편의 · AI</dd><dt>출시 채널</dt><dd>앱인토스</dd><dt>문의</dt><dd>superwork.master@gmail.com</dd></dl></div><div class="panel qr reveal"><img src="../../assets/apps/dasseotda/qr.png" alt="다썼다 QR"><p>휴대폰 카메라로 스캔하면<br>바로 열립니다.</p></div></aside></div></section>
-  <section class="block"><h2><small>SERVICE</small>서비스 설명</h2><p class="svc-lead reveal">집에 있는 물건의 사용기한을 사진 한 장으로 관리하는 살림 비서. AI가 품목·기한을 자동 인식해요.</p><div class="svc-section"><h3 class="reveal">주요 특징</h3><div class="items"><div class="panel item reveal"><b>📷 사진으로 등록</b></div><div class="panel item reveal"><b>⏰ 사용기한 알림</b></div><div class="panel item reveal"><b>🔍 재고 검색</b></div></div></div></section>
-  <section class="block"><h2><small>POLICY</small>정책 문서</h2>
-  <p class="note">이 앱의 개인정보처리방침과 이용약관은 앱이 출시된 스토어와 앱 안에서 확인할 수 있습니다.</p></section>
-  <section class="block"><h2><small>MORE</small>다른 앱도 둘러보세요</h2>
-    <div class="track"><a class="acard reveal" href="../../apps/happy-pug/"><div class="acard-media"><img src="../../assets/apps/happy-pug/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/happy-pug/icon.png" alt=""><div><div class="acard-genre">반려 커뮤니티</div><b>해피퍼그</b></div></div><p class="acard-desc">동네 강아지 친구들과 함께 걷는 산책 모임, 반려인을 위한 커뮤니티.</p></a><a class="acard reveal" href="../../ururu/"><div class="acard-media"><img src="../../assets/apps/ururu/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/ururu/icon.png" alt=""><div><div class="acard-genre">소속 대항 미니게임</div><b>우르르</b></div></div><p class="acard-desc">내 학교와 학과를 걸고 다른 학교와 겨루는 소속 대항 미니게임. 한 판 20초 안팎, 게임 20종.</p></a><a class="acard reveal" href="../../apps/trotstep/"><div class="acard-media"><img src="../../assets/apps/trotstep/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/trotstep/icon.png" alt=""><div><div class="acard-genre">라이프스타일·팬덤</div><b>트롯스텝</b></div></div><p class="acard-desc">매일 걷는 걸음이 최애 가수를 향한 응원이 됩니다. 걸음으로 모은 투표권으로 응원하세요.</p></a><a class="acard reveal" href="../../apps/price-time-machine/"><div class="acard-media"><img src="../../assets/apps/price-time-machine/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/price-time-machine/icon.png" alt=""><div><div class="acard-genre">생활정보 서비스</div><b>물가타임머신</b></div></div><p class="acard-desc">그때 그 가격, 지금은 얼마? 시점별 물가를 한눈에 비교하는 타임머신.</p></a><a class="acard reveal" href="../../apps/hachanhan-image/"><div class="acard-media"><img src="../../assets/apps/hachanhan-image/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/hachanhan-image/icon.png" alt=""><div><div class="acard-genre">AI 이미지·재미</div><b>하찮은이미지</b></div></div><p class="acard-desc">못 그려도 괜찮아! 사진 한 장이면 피식 웃기는 낙서풍 그림으로 뚝딱.</p></a><a class="acard reveal" href="../../apps/dream-gallery/"><div class="acard-media"><img src="../../assets/apps/dream-gallery/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/dream-gallery/icon.png" alt=""><div><div class="acard-genre">AI 아트·갤러리</div><b>드림갤러리</b></div></div><p class="acard-desc">당신이 꾼 꿈을 AI가 한 장의 일러스트로. 꿈을 그림으로 모으는 갤러리.</p></a><a class="acard reveal" href="../../apps/moongchi/"><div class="acard-media"><img src="../../assets/apps/moongchi/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/moongchi/icon.png" alt=""><div><div class="acard-genre">힐링 캐주얼 게임</div><b>뭉치뭉치</b></div></div><p class="acard-desc">동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임.</p></a><a class="acard reveal" href="../../apps/animalpedia/"><div class="acard-media"><img src="../../assets/apps/animalpedia/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/animalpedia/icon.png" alt=""><div><div class="acard-genre">수집·힐링 게임</div><b>귀여운동물사전</b></div></div><p class="acard-desc">깜찍한 동물들을 하나씩 모아 나만의 도감을 채워가는 힐링 컬렉션.</p></a></div></section>
-</div>
-<div style="height:80px"></div>
-</main>
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div><a class="brand grad" href="../../">Superwork</a></div>
-      <div><h4>사이트</h4><ul><li><a href="../../#workflow">개발 체계</a></li><li><a href="../../#tools">도구</a></li><li><a href="../../#apps">앱</a></li><li><a href="../../#channels">채널</a></li></ul></div>
-      <div><h4>정책</h4><ul><li><a href="../../#directory">정책 및 약관</a></li><li><a href="../../app-ads.txt">app-ads.txt</a></li></ul></div>
-      <div><h4>문의</h4><ul><li><a href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a></li></ul></div>
-    </div>
-    <p class="copyright">© 2026 Superwork. All rights reserved.</p>
-  </div>
-</footer>
+  </header>
+  <main id="main" class="shell" tabindex="-1">
+    <section class="hero" aria-labelledby="intro-heading">
+      <div>
+        <p class="eyebrow">SNAP · CHECK · USE UP</p>
+        <h1 id="intro-heading">찍기만 하면,<br>기한은 알아서.</h1>
+        <p class="hero-copy">다썼다는 집에 있는 물건이나 영수증을 찍으면 AI가 품목·카테고리·사용기한을 채워 주는 생활 관리 앱입니다. 기한이 가까운 물건부터 먼저 보여 드려요.</p>
+        <div class="actions">
+          <a class="button" href="https://minion.toss.im/XrdRugY9">토스 앱에서 열기</a>
+          <a href="#how-it-works">다썼다 알아보기 <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="age-note">토스 앱에서 바로 · 설치 없이</p>
+      </div>
+      <figure class="shot-card">
+        <img src="../../assets/apps/dasseotda/thumb.jpg" alt="다썼다 대표 이미지" style="object-position:center">
+        <figcaption><strong>다썼다</strong><span>생활·편의 · AI</span></figcaption>
+      </figure>
+    </section>
+    <section class="section" id="how-it-works" aria-labelledby="how-heading">
+      <p class="eyebrow">이렇게 써요</p>
+      <h2 id="how-heading">찍고, 확인하고, 다 쓰면 기록해요.</h2>
+      <p class="section-intro">일일이 적지 않아도 괜찮아요. 사진 한 장으로 담고, 다 쓰거나 버린 물건은 기록으로 남겨요.</p>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-number" aria-hidden="true">01</span>
+          <h3>사진으로 담기</h3>
+          <p>물건을 찍거나 영수증을 스캔하거나 앨범에서 사진을 골라요. 영수증은 여러 품목을 한 번에 읽어요.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">02</span>
+          <h3>확인하고 저장</h3>
+          <p>AI가 채운 품목·카테고리·사용기한·수량·금액을 확인하고, 다르면 그 자리에서 고쳐요.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">03</span>
+          <h3>다 쓰면 기록</h3>
+          <p>「다 썼어요」나 「버렸어요」를 누르면 기록으로 옮겨지고, 이번 달 쓴 돈과 버린 돈이 모여요.</p>
+        </li>
+      </ol>
+    </section>
+    <section class="local-note" aria-labelledby="info-heading">
+      <div>
+        <p class="eyebrow">알아 두면 좋아요</p>
+        <h2 id="info-heading">가입 없이 시작하는<br>우리 집 기한 노트</h2>
+      </div>
+      <div>
+        <p>따로 회원가입을 하지 않아도 모든 기능을 쓸 수 있어요. 토스 앱에서는 토스 계정으로 연결되고, 연결되지 않으면 게스트로 이어서 이용합니다. 등록한 물건 정보는 기기와 서비스 서버에 함께 저장돼요.</p>
+        <p>찍은 사진은 품목과 기한을 알아보기 위해 서버로 보내 AI로 분석합니다. 사진·데이터 처리와 광고에 관한 자세한 내용은 앱 안 개인정보 처리방침에서 확인해 주세요.</p>
+        <dl class="facts">
+          <dt>분류</dt><dd>라이프·AI · 생활·편의 · AI</dd>
+          <dt>출시 채널</dt><dd>앱인토스</dd>
+        </dl>
+        <p>개인정보처리방침과 이용약관은 앱이 출시된 스토어의 앱 정보와 앱 안에서 확인할 수 있습니다.</p>
+      </div>
+    </section>
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <p class="eyebrow">궁금할 때 먼저 보기</p>
+      <h2 id="faq-heading">자주 묻는 질문</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>무료인가요? 광고가 나오나요?</h3>
+          <p>무료로 이용할 수 있고, 보관 중인 물건은 500개까지 담을 수 있어요. 다 쓰거나 버린 물건은 이 개수에 들어가지 않으며, 한도가 차면 광고를 끝까지 보고 5개씩 더 담을 수 있어요. 홈 화면 아래와 사진 분석 중 화면에 배너 광고가 나오고, 화면 전체를 덮는 전면 광고는 없어요.</p>
+        </div>
+        <div class="faq-item">
+          <h3>사용기한은 어떻게 정해지나요?</h3>
+          <p>사진에서 포장에 적힌 날짜를 읽으면 그 날짜를 써요. 읽지 못하면 식품·화장품·약·생활용품·기타 카테고리와 개봉 여부에 따라 보통 기간으로 추정하고, 날짜는 직접 고칠 수 있어요.</p>
+        </div>
+        <div class="faq-item">
+          <h3>영수증 한 장으로 여러 물건을 담을 수 있나요?</h3>
+          <p>네. 영수증을 찍으면 여러 품목을 한 번에 읽어 와요. 담을 항목을 골라 체크하고, 수량과 금액도 그 자리에서 고칠 수 있어요.</p>
+        </div>
+        <div class="faq-item">
+          <h3>기한이 다가오면 알림을 받을 수 있나요?</h3>
+          <p>지금은 푸시 알림을 보내지 않아요. 대신 앱을 열면 홈에서 「기한이 지났어요」 「곧 만료돼요」 항목을 먼저 보여 드려요.</p>
+        </div>
+        <div class="faq-item">
+          <h3>AI가 잘못 알아보면 어떻게 하나요?</h3>
+          <p>확인 화면에서 품목·카테고리·사용기한을 직접 고친 뒤 저장하면 돼요. 확신이 낮은 결과에는 「확인이 필요해요」가 표시되고, 알아보지 못하면 직접 입력하거나 다시 찍을 수 있어요.</p>
+        </div>
+        <div class="faq-item">
+          <h3>내 데이터를 지울 수 있나요?</h3>
+          <p>설정의 「내 데이터 전체 삭제」를 누르면 서버의 물건·기록·변경 이력과 이 기기의 저장 내용이 모두 지워져요. 삭제한 데이터는 되돌릴 수 없어요.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section contact" id="contact" aria-labelledby="contact-heading">
+      <div>
+        <p class="eyebrow">도움이 필요할 때</p>
+        <h2 id="contact-heading">문의 안내</h2>
+      </div>
+      <div>
+        <p>앱 이용에 관한 궁금한 점이나 도움이 필요한 내용을 이메일로 보내 주세요.</p>
+        <p><a class="contact-address" href="mailto:superwork.master+help@gmail.com">superwork.master+help@gmail.com</a></p>
+        <div class="document-links">
+          <a href="../../#apps-life">라이프·AI 앱 더 보기 <span aria-hidden="true">↗</span></a>
+          <a href="../../">SuperWork 전체 앱 안내 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer shell">
+    <p>다썼다 · 앱 소개</p>
+    <a href="../../">전체 앱 안내</a>
+  </footer>
 </body>
 </html>

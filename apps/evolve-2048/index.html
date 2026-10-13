@@ -1,16 +1,21 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>진화 2048 — Superwork</title>
-<meta name="description" content="숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!"/>
-<meta name="theme-color" content="#0a0c10"/>
-<meta property="og:title" content="진화 2048 — Superwork"/>
-<meta property="og:description" content="숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!"/>
-<meta property="og:type" content="website"/>
-<link rel="canonical" href="https://superwork.ai.kr/apps/evolve-2048/"/>
-<script type="application/ld+json">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!">
+  <meta name="theme-color" content="#f7f4eb">
+  <title>진화 2048 — 퍼즐 게임</title>
+  <link rel="canonical" href="https://superwork.ai.kr/apps/evolve-2048/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SuperWork">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:url" content="https://superwork.ai.kr/apps/evolve-2048/">
+  <meta property="og:title" content="진화 2048 — 퍼즐 게임">
+  <meta property="og:description" content="숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!">
+  <meta property="og:image" content="https://superwork.ai.kr/assets/apps/evolve-2048/thumb.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
 {
  "@context": "https://schema.org",
  "@type": "SoftwareApplication",
@@ -32,106 +37,121 @@
  ]
 }
 </script>
-<link rel="stylesheet" href="../../assets/site.css"/>
-<style>
-.app-hero{position:relative;min-height:540px;display:flex;align-items:flex-end;overflow:hidden}
-.app-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 18s ease-in-out infinite alternate}
-.app-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,12,16,.15) 0%,rgba(10,12,16,.55) 55%,var(--bg) 100%)}
-.app-hero.soft>img{filter:blur(28px) brightness(.7) saturate(1.2);transform:scale(1.2);animation:none}
-@keyframes kb{to{transform:scale(1.12) translate(-2%,-2%)}}
-.app-hero .wrap{position:relative;z-index:1;padding-bottom:52px}
-.crumbs{display:flex;gap:8px;flex-wrap:wrap;color:rgba(255,255,255,.7);font-weight:700;font-size:14px;margin-bottom:26px}
-.crumbs a:hover{color:#fff}
-.app-id{display:flex;align-items:center;gap:22px;margin-bottom:20px}
-.app-id img{width:96px;height:96px;border-radius:24px;box-shadow:0 14px 34px rgba(0,0,0,.5)}
-.app-id .genre{color:var(--accent);font-weight:800}
-.app-id h1{font-size:clamp(38px,6vw,72px);line-height:1.05;font-weight:900;letter-spacing:-.03em}
-.app-lead{font-size:clamp(17px,2vw,21px);max-width:720px;color:rgba(255,255,255,.9);margin-bottom:30px}
-.app-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-
-.block{padding:72px 0 0}
-.block>h2{font-size:clamp(26px,3.4vw,38px);font-weight:900;letter-spacing:-.02em;margin-bottom:24px}
-.block>h2 small{display:block;color:var(--accent);font-size:13px;letter-spacing:.12em;margin-bottom:10px}
-.media-grid{display:grid;grid-template-columns:2fr 1fr;gap:24px}
-.art{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
-.art img{width:100%;aspect-ratio:2.34;object-fit:cover}
-.art video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
-.side{display:grid;gap:16px;align-content:start}
-.side h3{font-size:15px;color:var(--dim);margin-bottom:12px}
-.facts-table{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:15px}
-.facts-table dt{color:var(--dim)}
-.qr{display:flex;gap:18px;align-items:center}
-.qr img{width:112px;height:112px;border-radius:12px;background:#fff;padding:6px}
-.qr p{color:var(--dim);font-size:14px}
-
-.svc-head{font-size:clamp(24px,3vw,34px);font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
-.svc-lead{color:#c9ced6;font-size:18px;max-width:820px;margin-bottom:18px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.chips span{font-size:14px;font-weight:700;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line)}
-.svc-section{margin-top:40px}
-.svc-section h3{font-size:22px;font-weight:800;margin-bottom:8px}
-.svc-section>p{color:var(--dim);margin-bottom:18px;max-width:820px}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.item b{display:block;font-size:18px;margin-bottom:6px}
-.item p{color:var(--dim);font-size:15px}
-.item .no{color:var(--accent);font-weight:900;font-size:14px;margin-bottom:8px;display:block}
-.privacy{margin-top:40px;background:linear-gradient(135deg,rgba(61,90,128,.25),rgba(0,217,163,.06));border-color:rgba(120,160,220,.35)}
-.privacy h3{font-size:20px;margin-bottom:8px}
-.privacy p{color:#c9ced6}
-
-.docs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.doc{display:flex;flex-direction:column;gap:6px}
-.doc b{font-size:18px}
-.doc span{color:var(--dim);font-size:13px;overflow-wrap:anywhere}
-.note{color:var(--dim);font-size:14px;margin-top:14px}
-@media(max-width:860px){.media-grid{grid-template-columns:1fr}.app-hero{min-height:460px}.app-id img{width:72px;height:72px}}
-</style>
+  <link rel="stylesheet" href="../../assets/app-intro.css">
+  <style>:root { --accent: #5b3cc4; }</style>
 </head>
 <body>
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand grad" href="../../">Superwork</a>
-    <nav class="site-nav">
-      <a href="../../#workflow" class="hide-sm">개발 체계</a>
-      <a href="../../#tools">도구</a>
-      <a href="../../#apps" aria-current="page">앱</a>
-      <a href="../../#channels">채널</a>
-      <a href="../../#directory">정책</a>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="site-header shell">
+    <a class="brand" href="./" aria-label="진화 2048 소개"><img src="../../assets/apps/evolve-2048/icon.png" alt="" width="30" height="30">진화 2048</a>
+    <nav class="site-nav" aria-label="주요 메뉴">
+      <a href="./" aria-current="page">앱 소개</a>
+      <a href="../../#apps-game">게임 앱</a>
+      <a href="../../">전체 앱 안내</a>
     </nav>
-  </div>
-</header>
-<main>
-
-<section class="app-hero">
-  <img src="../../assets/apps/evolve-2048/thumb.jpg" alt="" style="object-position:center">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="위치"><a href="../../#apps">앱</a><span>/</span><a href="../../#apps-game">게임</a><span>/</span><span>진화 2048</span></nav>
-    <div class="app-id"><img src="../../assets/apps/evolve-2048/icon.png" alt=""><div><div class="genre">퍼즐 게임</div><h1>진화 2048</h1></div></div>
-    <p class="app-lead">숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!</p>
-    <div class="app-cta"><a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.evolve2048.game" target="_blank" rel="noopener">Google Play ↗</a><a class="btn btn-primary" href="https://minion.toss.im/nPdsNHwv" target="_blank" rel="noopener">앱인토스 ↗</a></div>
-  </div>
-</section>
-<div class="wrap">
-  <section class="block"><h2><small>OVERVIEW</small>한눈에 보기</h2>
-    <div class="media-grid"><figure class="art reveal"><img src="../../assets/apps/evolve-2048/thumb.jpg" alt="진화 2048 대표 이미지"></figure><aside class="side"><div class="panel reveal"><h3>이용 정보</h3><dl class="facts-table"><dt>분류</dt><dd>게임 · 퍼즐 게임</dd><dt>출시 채널</dt><dd>Google Play · 앱인토스</dd><dt>문의</dt><dd>superwork.master@gmail.com</dd></dl></div></aside></div></section>
-  <section class="block"><h2><small>SERVICE</small>서비스 설명</h2><p class="svc-lead reveal">숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐!</p><div class="svc-section"><h3 class="reveal">주요 특징</h3><div class="items"><div class="panel item reveal"><b>🥚 합칠수록 진화</b></div><div class="panel item reveal"><b>🧩 클래식 2048</b></div><div class="panel item reveal"><b>📴 오프라인 플레이</b></div></div></div></section>
-  <section class="block"><h2><small>POLICY</small>정책 문서</h2>
-  <p class="note">이 앱의 개인정보처리방침과 이용약관은 앱이 출시된 스토어와 앱 안에서 확인할 수 있습니다.</p></section>
-  <section class="block"><h2><small>MORE</small>다른 앱도 둘러보세요</h2>
-    <div class="track"><a class="acard reveal" href="../../apps/moongchi/"><div class="acard-media"><img src="../../assets/apps/moongchi/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/moongchi/icon.png" alt=""><div><div class="acard-genre">힐링 캐주얼 게임</div><b>뭉치뭉치</b></div></div><p class="acard-desc">동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임.</p></a><a class="acard reveal" href="../../apps/animalpedia/"><div class="acard-media"><img src="../../assets/apps/animalpedia/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/animalpedia/icon.png" alt=""><div><div class="acard-genre">수집·힐링 게임</div><b>귀여운동물사전</b></div></div><p class="acard-desc">깜찍한 동물들을 하나씩 모아 나만의 도감을 채워가는 힐링 컬렉션.</p></a><a class="acard reveal" href="../../apps/dongtoesa/"><div class="acard-media"><img src="../../assets/apps/dongtoesa/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/dongtoesa/icon.png" alt=""><div><div class="acard-genre">캐주얼 액션 RPG</div><b>동네퇴마사</b></div></div><p class="acard-desc">골목골목 출몰하는 악귀를 물리치는 통쾌한 한국형 퇴마 액션 RPG.</p></a><a class="acard reveal" href="../../apps/bunsik-madness/"><div class="acard-media"><img src="../../assets/apps/bunsik-madness/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/bunsik-madness/icon.png" alt=""><div><div class="acard-genre">분식 퍼즐 게임</div><b>분식대란</b></div></div><p class="acard-desc">밀려드는 주문을 퍼즐로 척척! 손맛 터지는 분식집 운영 게임.</p></a><a class="acard reveal" href="../../apps/coin-tower/"><div class="acard-media"><img src="../../assets/apps/coin-tower/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/coin-tower/icon.png" alt=""><div><div class="acard-genre">뱀서류 로그라이크</div><b>코인 타워</b></div></div><p class="acard-desc">한 손으로 즐기는 뱀서류 액션! 코인으로 캐릭터를 강화하며 더 높이 올라가세요.</p></a><a class="acard reveal" href="../../apps/gogo-drive/"><div class="acard-media"><img src="../../assets/apps/gogo-drive/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/gogo-drive/icon.png" alt=""><div><div class="acard-genre">3D 캐주얼 레이싱</div><b>고고 드라이브</b></div></div><p class="acard-desc">달리고, 피하고, 추월하라! 생동감 넘치는 3D 도시를 질주하는 드라이빙 게임.</p></a><a class="acard reveal" href="../../apps/maze-escape/"><div class="acard-media"><img src="../../assets/apps/maze-escape/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/maze-escape/icon.png" alt=""><div><div class="acard-genre">1인칭 생존 호러</div><b>어둠의 미로</b></div></div><p class="acard-desc">칠흑 같은 미로 속, 손전등 하나와 발소리에 의지해 보이지 않는 추격자를 피해 탈출하라.</p></a><a class="acard reveal" href="../../apps/ghost-stack/"><div class="acard-media"><img src="../../assets/apps/ghost-stack/thumb-sm.jpg" alt="" loading="lazy" style="object-position:center"><span class="acard-more">자세히 보기 →</span></div><div class="acard-body"><img src="../../assets/apps/ghost-stack/icon.png" alt=""><div><div class="acard-genre">캐주얼 게임</div><b>고스트 스택</b></div></div><p class="acard-desc">숨은 고수(고스트)와 겨루는 네온 야경 블록 쌓기! 탭 한 번으로 즐기는 하이퍼 캐주얼.</p></a></div></section>
-</div>
-<div style="height:80px"></div>
-</main>
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div><a class="brand grad" href="../../">Superwork</a></div>
-      <div><h4>사이트</h4><ul><li><a href="../../#workflow">개발 체계</a></li><li><a href="../../#tools">도구</a></li><li><a href="../../#apps">앱</a></li><li><a href="../../#channels">채널</a></li></ul></div>
-      <div><h4>정책</h4><ul><li><a href="../../#directory">정책 및 약관</a></li><li><a href="../../app-ads.txt">app-ads.txt</a></li></ul></div>
-      <div><h4>문의</h4><ul><li><a href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a></li></ul></div>
-    </div>
-    <p class="copyright">© 2026 Superwork. All rights reserved.</p>
-  </div>
-</footer>
+  </header>
+  <main id="main" class="shell" tabindex="-1">
+    <section class="hero" aria-labelledby="intro-heading">
+      <div>
+        <p class="eyebrow">MERGE · EVOLVE · COLLECT</p>
+        <h1 id="intro-heading">합칠수록 자라는<br>동물 2048.</h1>
+        <p class="hero-copy">진화 2048은 익숙한 2048 규칙에 동물 진화를 더한 퍼즐 게임입니다. 같은 타일을 합치면 동물이 알에서 전설까지 11단계로 자라요.</p>
+        <div class="actions">
+          <a class="button" href="https://play.google.com/store/apps/details?id=com.evolve2048.game">Google Play 에서 받기</a><a class="button" href="https://minion.toss.im/nPdsNHwv">토스 앱에서 열기</a>
+          <a href="#how-it-works">진화 2048 알아보기 <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="age-note">무료 · Google Play · 앱인토스</p>
+      </div>
+      <figure class="shot-card">
+        <img src="../../assets/apps/evolve-2048/thumb.jpg" alt="진화 2048 대표 이미지" style="object-position:center">
+        <figcaption><strong>진화 2048</strong><span>퍼즐 게임</span></figcaption>
+      </figure>
+    </section>
+    <section class="section" id="how-it-works" aria-labelledby="how-heading">
+      <p class="eyebrow">한 판의 흐름</p>
+      <h2 id="how-heading">밀고, 합치고, 도감을 채워요.</h2>
+      <p class="section-intro">규칙은 2048 그대로예요. 숫자 대신 동물이 자라는 모습을 보며 한 판씩 즐겨 보세요.</p>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-number" aria-hidden="true">01</span>
+          <h3>스와이프로 합치기</h3>
+          <p>상하좌우로 밀어 같은 타일을 합쳐요. 합쳐진 타일의 값만큼 점수가 올라가요.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">02</span>
+          <h3>알에서 전설까지</h3>
+          <p>판마다 동물이 무작위로 정해지고, 타일을 합칠수록 알·아기·성체를 거쳐 전설까지 11단계로 자라요.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">03</span>
+          <h3>도감에 남기기</h3>
+          <p>동물마다 어디까지 키웠는지 도감에 기록돼요. 전설까지 키우면 카드에 완성 표시가 붙어요.</p>
+        </li>
+      </ol>
+    </section>
+    <section class="local-note" aria-labelledby="info-heading">
+      <div>
+        <p class="eyebrow">가입 없이 바로</p>
+        <h2 id="info-heading">기록은 내 기기에,<br>판은 언제든 이어서.</h2>
+      </div>
+      <div>
+        <p>회원가입 없이 바로 시작합니다. 최고 점수, 도감 진행도, 진행 중인 판은 기기 안에 저장되며 따로 서버에 보내지 않아요. 앱을 껐다 켜도 「이어하기」로 하던 판을 그대로 이어 할 수 있습니다.</p>
+        <p>Google Play 버전은 인터넷 연결 없이도 모든 기능이 동작합니다. 앱인토스 버전은 토스 게임 로그인과 리더보드, 광고를 위해 인터넷을 씁니다.</p>
+        <dl class="facts">
+          <dt>분류</dt><dd>게임 · 퍼즐 게임</dd>
+          <dt>출시 채널</dt><dd>Google Play · 앱인토스</dd>
+        </dl>
+        <p>개인정보처리방침과 이용약관은 앱이 출시된 스토어의 앱 정보와 앱 안에서 확인할 수 있습니다.</p>
+      </div>
+    </section>
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <p class="eyebrow">궁금할 때 먼저 보기</p>
+      <h2 id="faq-heading">자주 묻는 질문</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>무료인가요?</h3>
+          <p>네, 무료입니다. 유료 상품이나 인앱결제는 없습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>막히면 어떻게 하나요?</h3>
+          <p>화면 아래 도움 아이템 4가지(한 칸·가로줄·세로줄·같은 수 지우기)로 판을 정리할 수 있어요. 아이템마다 판당 무료 1번, 추가로 2번 더 쓸 수 있고, 앱인토스에서는 추가 사용 때 짧은 보상형 광고를 봅니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>2048을 만들면 끝나나요?</h3>
+          <p>아니요. 2048(전설)을 만들어도 판은 계속됩니다. 빈 칸이 없고 더 합칠 타일도 없을 때 게임이 끝나요. 되돌리기와 이어 살리기 기능은 없습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>랭킹이 있나요?</h3>
+          <p>앱인토스에서는 최고 점수를 경신하면 토스 게임센터 리더보드에 올라가고, 메인 화면에서 리더보드를 볼 수 있어요. Google Play 버전에는 리더보드가 없습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>어떤 기기에서 할 수 있나요?</h3>
+          <p>Google Play(Android 6.0 이상)와 토스 앱 안의 앱인토스에서 할 수 있어요. 화면은 세로 방향이며, 한국어로 제공됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>기록은 어디에 저장되나요? 권한이 필요한가요?</h3>
+          <p>점수와 도감 기록은 기기 안에만 저장돼요. 앱 데이터를 지우거나 앱을 삭제하면 기록도 함께 사라집니다. Google Play 버전은 따로 요청하는 권한이 없습니다.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section contact" id="contact" aria-labelledby="contact-heading">
+      <div>
+        <p class="eyebrow">도움이 필요할 때</p>
+        <h2 id="contact-heading">문의 안내</h2>
+      </div>
+      <div>
+        <p>앱 이용에 관한 궁금한 점이나 도움이 필요한 내용을 이메일로 보내 주세요.</p>
+        <p><a class="contact-address" href="mailto:superwork.master+help@gmail.com">superwork.master+help@gmail.com</a></p>
+        <div class="document-links">
+          <a href="../../#apps-game">게임 앱 더 보기 <span aria-hidden="true">↗</span></a>
+          <a href="../../">SuperWork 전체 앱 안내 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer shell">
+    <p>진화 2048 · 앱 소개</p>
+    <a href="../../">전체 앱 안내</a>
+  </footer>
 </body>
 </html>

@@ -29,158 +29,6 @@ CATS = {c['id']: c for c in DATA['categories']}
 STORES = {'appstore': ('App Store', 'iOS'), 'play': ('Google Play', 'Android'), 'toss': ('앱인토스', 'Web (Toss)')}
 
 
-def header(base, current):
-    def nav(href, label, key, cls=''):
-        cur = ' aria-current="page"' if key == current else ''
-        return f'<a href="{base}{href}"{cls}{cur}>{label}</a>'
-    return f'''<header class="site-header">
-  <div class="wrap">
-    <a class="brand grad" href="{base}">Superwork</a>
-    <nav class="site-nav">
-      {nav('#workflow', '개발 체계', '', ' class="hide-sm"')}
-      {nav('#tools', '도구', '')}
-      {nav('#apps', '앱', 'apps')}
-      {nav('#channels', '채널', '')}
-      {nav('#directory', '정책', '')}
-    </nav>
-  </div>
-</header>'''
-
-
-def footer(base):
-    return f'''<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div><a class="brand grad" href="{base}">Superwork</a></div>
-      <div><h4>사이트</h4><ul><li><a href="{base}#workflow">개발 체계</a></li><li><a href="{base}#tools">도구</a></li><li><a href="{base}#apps">앱</a></li><li><a href="{base}#channels">채널</a></li></ul></div>
-      <div><h4>정책</h4><ul><li><a href="{base}#directory">정책 및 약관</a></li><li><a href="{base}app-ads.txt">app-ads.txt</a></li></ul></div>
-      <div><h4>문의</h4><ul><li><a href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a></li></ul></div>
-    </div>
-    <p class="copyright">© 2026 Superwork. All rights reserved.</p>
-  </div>
-</footer>'''
-
-
-def page(title, desc, base, current, body, style='', head_extra=''):
-    return f'''<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>{e(title)}</title>
-<meta name="description" content="{e(desc)}"/>
-<meta name="theme-color" content="#0a0c10"/>
-<meta property="og:title" content="{e(title)}"/>
-<meta property="og:description" content="{e(desc)}"/>
-<meta property="og:type" content="website"/>
-{head_extra}<link rel="stylesheet" href="{base}assets/site.css"/>
-<style>{style}</style>
-</head>
-<body>
-{header(base, current)}
-<main>
-{body}
-</main>
-{footer(base)}
-</body>
-</html>
-'''
-
-
-DETAIL_STYLE = '''
-.app-hero{position:relative;min-height:540px;display:flex;align-items:flex-end;overflow:hidden}
-.app-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 18s ease-in-out infinite alternate}
-.app-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,12,16,.15) 0%,rgba(10,12,16,.55) 55%,var(--bg) 100%)}
-.app-hero.soft>img{filter:blur(28px) brightness(.7) saturate(1.2);transform:scale(1.2);animation:none}
-@keyframes kb{to{transform:scale(1.12) translate(-2%,-2%)}}
-.app-hero .wrap{position:relative;z-index:1;padding-bottom:52px}
-.crumbs{display:flex;gap:8px;flex-wrap:wrap;color:rgba(255,255,255,.7);font-weight:700;font-size:14px;margin-bottom:26px}
-.crumbs a:hover{color:#fff}
-.app-id{display:flex;align-items:center;gap:22px;margin-bottom:20px}
-.app-id img{width:96px;height:96px;border-radius:24px;box-shadow:0 14px 34px rgba(0,0,0,.5)}
-.app-id .genre{color:var(--accent);font-weight:800}
-.app-id h1{font-size:clamp(38px,6vw,72px);line-height:1.05;font-weight:900;letter-spacing:-.03em}
-.app-lead{font-size:clamp(17px,2vw,21px);max-width:720px;color:rgba(255,255,255,.9);margin-bottom:30px}
-.app-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-
-.block{padding:72px 0 0}
-.block>h2{font-size:clamp(26px,3.4vw,38px);font-weight:900;letter-spacing:-.02em;margin-bottom:24px}
-.block>h2 small{display:block;color:var(--accent);font-size:13px;letter-spacing:.12em;margin-bottom:10px}
-.media-grid{display:grid;grid-template-columns:2fr 1fr;gap:24px}
-.art{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
-.art img{width:100%;aspect-ratio:2.34;object-fit:cover}
-.art video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
-.side{display:grid;gap:16px;align-content:start}
-.side h3{font-size:15px;color:var(--dim);margin-bottom:12px}
-.facts-table{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:15px}
-.facts-table dt{color:var(--dim)}
-.qr{display:flex;gap:18px;align-items:center}
-.qr img{width:112px;height:112px;border-radius:12px;background:#fff;padding:6px}
-.qr p{color:var(--dim);font-size:14px}
-
-.svc-head{font-size:clamp(24px,3vw,34px);font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
-.svc-lead{color:#c9ced6;font-size:18px;max-width:820px;margin-bottom:18px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.chips span{font-size:14px;font-weight:700;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line)}
-.svc-section{margin-top:40px}
-.svc-section h3{font-size:22px;font-weight:800;margin-bottom:8px}
-.svc-section>p{color:var(--dim);margin-bottom:18px;max-width:820px}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.item b{display:block;font-size:18px;margin-bottom:6px}
-.item p{color:var(--dim);font-size:15px}
-.item .no{color:var(--accent);font-weight:900;font-size:14px;margin-bottom:8px;display:block}
-.privacy{margin-top:40px;background:linear-gradient(135deg,rgba(61,90,128,.25),rgba(0,217,163,.06));border-color:rgba(120,160,220,.35)}
-.privacy h3{font-size:20px;margin-bottom:8px}
-.privacy p{color:#c9ced6}
-
-.docs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.doc{display:flex;flex-direction:column;gap:6px}
-.doc b{font-size:18px}
-.doc span{color:var(--dim);font-size:13px;overflow-wrap:anywhere}
-.note{color:var(--dim);font-size:14px;margin-top:14px}
-@media(max-width:860px){.media-grid{grid-template-columns:1fr}.app-hero{min-height:460px}.app-id img{width:72px;height:72px}}
-'''
-
-
-def media(app, base):
-    if app.get('video'):
-        poster = f' poster="{base}{e(app["videoPoster"])}"' if app.get('videoPoster') else ''
-        return (f'<figure class="art reveal"><video src="{base}{e(app["video"])}"{poster} '
-                f'autoplay muted loop playsinline preload="metadata" aria-label="{e(app["name"])} 소개 영상"></video></figure>')
-    return f'<figure class="art reveal"><img src="{base}{e(app["thumb"])}" alt="{e(app["name"])} 대표 이미지"></figure>'
-
-
-def card(o, base):
-    icon = f'<img src="{base}{e(o["icon"])}" alt="">' if o.get('icon') else ''
-    return (f'<a class="acard reveal" href="{base}{e(o["path"])}">'
-            f'<div class="acard-media"><img src="{base}{e(o["thumbSm"])}" alt="" loading="lazy" style="object-position:{e(o["thumbPos"])}"><span class="acard-more">자세히 보기 →</span></div>'
-            f'<div class="acard-body">{icon}<div><div class="acard-genre">{e(o["genre"])}</div><b>{e(o["name"])}</b></div></div>'
-            f'<p class="acard-desc">{e(o["desc"])}</p></a>')
-
-
-def service(app):
-    d = app['details']
-    out = []
-    if d.get('headline'):
-        out.append(f'<p class="svc-head reveal">{e(d["headline"])}</p>')
-    out.append(f'<p class="svc-lead reveal">{e(d["lead"])}</p>')
-    if d.get('facts'):
-        out.append('<div class="chips reveal">' + ''.join(f'<span>{e(f)}</span>' for f in d['facts']) + '</div>')
-    for sec in d.get('sections', []):
-        numbered = all(i.get('desc') for i in sec['items']) and len(sec['items']) <= 3
-        items = ''
-        for n, i in enumerate(sec['items'], 1):
-            no = f'<span class="no">{n:02d}</span>' if numbered else ''
-            desc = f'<p>{e(i["desc"])}</p>' if i.get('desc') else ''
-            items += f'<div class="panel item reveal">{no}<b>{e(i["title"])}</b>{desc}</div>'
-        intro = f'<p>{e(sec["intro"])}</p>' if sec.get('intro') else ''
-        out.append(f'<div class="svc-section"><h3 class="reveal">{e(sec["title"])}</h3>{intro}<div class="items">{items}</div></div>')
-    if d.get('privacy'):
-        p = d['privacy']
-        out.append(f'<div class="panel privacy reveal"><h3>{e(p["title"])}</h3><p>{e(p["body"])}</p></div>')
-    return ''.join(out)
-
-
 def stores(app):
     """스토어 주소를 STORES 순서로 돌려준다. 모르는 키는 오타로 보고 멈춘다."""
     got = app.get('stores') or {}
@@ -211,47 +59,144 @@ def jsonld(app):
     return f'<script type="application/ld+json">\n{body}\n</script>\n'
 
 
-def detail(app, others):
+CONTACT = 'superwork.master+help@gmail.com'
+# 단추 글 — 그려보카 소개 페이지의 「Google Play 에서 받기」 꼴을 따른다
+STORE_CTA = {'appstore': 'App Store 에서 받기', 'play': 'Google Play 에서 받기', 'toss': '토스 앱에서 열기'}
+
+
+def detail(app):
+    """apps/<앱>/index.html — 그려보카(word-doodle/) 소개 페이지와 같은 짜임·스타일(assets/app-intro.css)."""
     base = '../../'
     cat = CATS[app['category']]
-    icon = f'<img src="{base}{e(app["icon"])}" alt="">' if app.get('icon') else ''
-    cta = (''.join(f'<a class="btn btn-primary" href="{e(url)}" target="_blank" rel="noopener">{e(STORES[k][0])} ↗</a>'
-                   for k, url in stores(app).items())
-           or '<span class="btn btn-ghost" aria-disabled="true">스토어 링크 준비 중</span>')
-
-    facts = [('분류', f'{cat["label"]} · {app["genre"]}')]
-    if stores(app):
-        facts.append(('출시 채널', ' · '.join(STORES[k][0] for k in stores(app))))
-    facts.append(('문의', 'superwork.master@gmail.com'))
-    side = [f'<div class="panel reveal"><h3>이용 정보</h3><dl class="facts-table">'
-            + ''.join(f'<dt>{e(k)}</dt><dd>{e(v)}</dd>' for k, v in facts) + '</dl></div>']
-    if app.get('qr'):
-        side.append(f'<div class="panel qr reveal"><img src="{base}{e(app["qr"])}" alt="{e(app["name"])} QR"><p>휴대폰 카메라로 스캔하면<br>바로 열립니다.</p></div>')
-
-    policy_block = '''<section class="block"><h2><small>POLICY</small>정책 문서</h2>
-  <p class="note">이 앱의 개인정보처리방침과 이용약관은 앱이 출시된 스토어와 앱 안에서 확인할 수 있습니다.</p></section>'''
-
-    body = f'''
-<section class="app-hero{' soft' if app.get('heroSoft') else ''}">
-  <img src="{base}{e(app["thumb"])}" alt="" style="object-position:{e(app["thumbPos"])}">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="위치"><a href="{base}#apps">앱</a><span>/</span><a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])}</a><span>/</span><span>{e(app["name"])}</span></nav>
-    <div class="app-id">{icon}<div><div class="genre">{e(app["genre"])}</div><h1>{e(app["name"])}</h1></div></div>
-    <p class="app-lead">{e(app["desc"])}</p>
-    <div class="app-cta">{cta}</div>
-  </div>
-</section>
-<div class="wrap">
-  <section class="block"><h2><small>{'VIDEO' if app.get('video') else 'OVERVIEW'}</small>{'소개 영상' if app.get('video') else '한눈에 보기'}</h2>
-    <div class="media-grid">{media(app, base)}<aside class="side">{''.join(side)}</aside></div></section>
-  <section class="block"><h2><small>SERVICE</small>서비스 설명</h2>{service(app)}</section>
-  {policy_block}
-  <section class="block"><h2><small>MORE</small>다른 앱도 둘러보세요</h2>
-    <div class="track">{''.join(card(o, base) for o in others)}</div></section>
-</div>
-<div style="height:80px"></div>'''
-    return page(f'{app["name"]} — Superwork', app['desc'], base, 'apps', body, DETAIL_STYLE,
-                f'<link rel="canonical" href="{SITE_URL}{e(app["path"])}"/>\n{jsonld(app)}')
+    name, desc = e(app['name']), e(app['desc'])
+    got = stores(app)
+    icon = f'<img src="{base}{e(app["icon"])}" alt="" width="30" height="30">' if app.get('icon') else ''
+    buttons = ''.join(f'<a class="button" href="{e(url)}">{STORE_CTA[k]}</a>' for k, url in got.items())
+    if not buttons:
+        buttons = '<span class="button" aria-disabled="true">스토어 링크 준비 중</span>'
+    channels = ' · '.join(STORES[k][0] for k in got) or '준비 중'
+    pg = app['details'].get('page') or {}
+    br = lambda s: e(s).replace('\n', '<br>')
+    how = pg.get('how')
+    if how:
+        how_items = [(i['title'], i.get('desc')) for i in how['items']]
+    else:  # 소개 글이 아직 없는 앱은 특징 이름만 보인다
+        how = {'eyebrow': '주요 특징', 'title': f'{app["name"]}, 이런 앱이에요.',
+               'intro': app['details']['lead'] if app['details']['lead'] != app['desc'] else ''}
+        how_items = [(i['title'], None) for sec in app['details'].get('sections', []) for i in sec['items']]
+    steps = ''.join(f'''
+        <li class="step">
+          <span class="step-number" aria-hidden="true">{n:02d}</span>
+          <h3>{e(t)}</h3>{f"""
+          <p>{e(d)}</p>""" if d else ''}
+        </li>''' for n, (t, d) in enumerate(how_items, 1))
+    intro = f'\n      <p class="section-intro">{e(how["intro"])}</p>' if how.get('intro') else ''
+    how_block = f'''
+    <section class="section" id="how-it-works" aria-labelledby="how-heading">
+      <p class="eyebrow">{e(how["eyebrow"])}</p>
+      <h2 id="how-heading">{e(how["title"])}</h2>{intro}
+      <ol class="steps">{steps}
+      </ol>
+    </section>''' if how_items else ''
+    more = f'\n          <a href="#how-it-works">{name} 알아보기 <span aria-hidden="true">↓</span></a>' if how_items else ''
+    n2 = pg.get('note2') or {'eyebrow': '이용 정보', 'title': '어디서 받고,\n무엇을 확인하나요', 'body': []}
+    n2_body = ''.join(f'\n        <p>{e(p)}</p>' for p in n2['body'])
+    faq = pg.get('faq') or []
+    faq_items = ''.join(f'''
+        <div class="faq-item">
+          <h3>{e(f["q"])}</h3>
+          <p>{e(f["a"])}</p>
+        </div>''' for f in faq)
+    faq_block = f'''
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <p class="eyebrow">궁금할 때 먼저 보기</p>
+      <h2 id="faq-heading">자주 묻는 질문</h2>
+      <div class="faq-list">{faq_items}
+      </div>
+    </section>''' if faq else ''
+    body = f'''  <a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="site-header shell">
+    <a class="brand" href="./" aria-label="{name} 소개">{icon}{name}</a>
+    <nav class="site-nav" aria-label="주요 메뉴">
+      <a href="./" aria-current="page">앱 소개</a>
+      <a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])} 앱</a>
+      <a href="{base}">전체 앱 안내</a>
+    </nav>
+  </header>
+  <main id="main" class="shell" tabindex="-1">
+    <section class="hero" aria-labelledby="intro-heading">
+      <div>
+        <p class="eyebrow">{e(pg.get("eyebrow") or app["genre"])}</p>
+        <h1 id="intro-heading">{br(pg["headline"]) if pg.get("headline") else name}</h1>
+        <p class="hero-copy">{e(pg.get("heroCopy") or app["desc"])}</p>
+        <div class="actions">
+          {buttons}{more}
+        </div>
+        <p class="age-note">{e(pg.get("note") or f'{cat["label"]} · {channels}')}</p>
+      </div>
+      <figure class="shot-card">
+        <img src="{base}{e(app["thumb"])}" alt="{name} 대표 이미지" style="object-position:{e(app["thumbPos"])}">
+        <figcaption><strong>{name}</strong><span>{e(app["genre"])}</span></figcaption>
+      </figure>
+    </section>{how_block}
+    <section class="local-note" aria-labelledby="info-heading">
+      <div>
+        <p class="eyebrow">{e(n2["eyebrow"])}</p>
+        <h2 id="info-heading">{br(n2["title"])}</h2>
+      </div>
+      <div>{n2_body}
+        <dl class="facts">
+          <dt>분류</dt><dd>{e(cat["label"])} · {e(app["genre"])}</dd>
+          <dt>출시 채널</dt><dd>{e(channels)}</dd>
+        </dl>
+        <p>개인정보처리방침과 이용약관은 앱이 출시된 스토어의 앱 정보와 앱 안에서 확인할 수 있습니다.</p>
+      </div>
+    </section>{faq_block}
+    <section class="section contact" id="contact" aria-labelledby="contact-heading">
+      <div>
+        <p class="eyebrow">도움이 필요할 때</p>
+        <h2 id="contact-heading">문의 안내</h2>
+      </div>
+      <div>
+        <p>앱 이용에 관한 궁금한 점이나 도움이 필요한 내용을 이메일로 보내 주세요.</p>
+        <p><a class="contact-address" href="mailto:{CONTACT}">{CONTACT}</a></p>
+        <div class="document-links">
+          <a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])} 앱 더 보기 <span aria-hidden="true">↗</span></a>
+          <a href="{base}">SuperWork 전체 앱 안내 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer shell">
+    <p>{name} · 앱 소개</p>
+    <a href="{base}">전체 앱 안내</a>
+  </footer>'''
+    title = f'{app["name"]} — {app["genre"]}'
+    return f'''<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{desc}">
+  <meta name="theme-color" content="#f7f4eb">
+  <title>{e(title)}</title>
+  <link rel="canonical" href="{SITE_URL}{e(app["path"])}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SuperWork">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:url" content="{SITE_URL}{e(app["path"])}">
+  <meta property="og:title" content="{e(title)}">
+  <meta property="og:description" content="{desc}">
+  <meta property="og:image" content="{SITE_URL}{e(app["thumb"])}">
+  <meta name="twitter:card" content="summary_large_image">
+  {jsonld(app)}  <link rel="stylesheet" href="{base}assets/app-intro.css">
+  <style>:root {{ --accent: {e(app.get("accent", "#8d442a"))}; }}</style>
+</head>
+<body>
+{body}
+</body>
+</html>
+'''
 
 
 ICONS = {
@@ -419,11 +364,9 @@ def main():
         # 정본 소개 페이지(<앱>/index.html)를 덮어쓰지 않도록 apps/ 밖에는 쓰지 않는다
         if not app['path'].startswith('apps/') or app['path'].count('/') != 2:
             raise SystemExit(f"{app['id']}: 쇼케이스 주소는 apps/<앱>/ 이어야 한다 — {app['path']!r}")
-        same = [o for o in apps if o['category'] == app['category'] and o['id'] != app['id']]
-        rest = [o for o in apps if o['category'] != app['category']]
         out = ROOT / app['path'] / 'index.html'
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(detail(app, (same + rest)[:8]), encoding='utf-8')
+        out.write_text(detail(app), encoding='utf-8')
     build_home()
     print(f'index.html 생성 구역 7곳, apps/ 쇼케이스 {len(showcase)}개')
 
