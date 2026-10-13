@@ -301,9 +301,9 @@ def home_flow():
             '<div class="band orbit">orbit <span>배포</span></div></div>\n'
             '<div class="flow-track"><div class="flow-line" aria-hidden="true"></div>\n<ol class="flow-steps">\n'
             + '\n'.join(nodes) + '\n</ol></div>\n'
-            '<div class="flow-legend"><span><i style="background:var(--accent)"></i>에이전트가 하는 일</span>'
-            '<span><i style="background:#ffd166"></i>사람이 정하는 지점</span>'
-            '<span><i style="background:#7aa8ff"></i>orbit 배포 구간</span></div>')
+            '<div class="flow-legend"><span><i style="background:var(--teal)"></i>에이전트가 하는 일</span>'
+            '<span><i style="background:var(--accent2)"></i>사람이 정하는 지점</span>'
+            '<span><i style="background:var(--sky)"></i>orbit 배포 구간</span></div>')
 
 
 TOOL_STATUS = {'public': '공개', 'soon': 'GitHub 공개 예정', 'draft': '소개 준비 중'}
