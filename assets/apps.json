@@ -538,12 +538,12 @@
         "📍 친구 매칭",
         "🏅 산책 인증"
       ],
-      "link": "https://onesto.re/0001005937",
-      "store": "원스토어로 받기",
+      "link": "https://play.google.com/store/apps/details?id=com.happypug.happypug",
+      "store": "Google Play",
       "video": null,
       "thumb": "assets/apps/happy-pug/thumb.jpg",
       "icon": "assets/apps/happy-pug/icon.png",
-      "qr": "assets/apps/happy-pug/qr.png",
+      "qr": null,
       "thumbPos": "center",
       "thumbSm": "assets/apps/happy-pug/thumb-sm.jpg",
       "path": "happy-pug/",
@@ -575,8 +575,7 @@
       },
       "channels": [
         "Google Play",
-        "App Store",
-        "원스토어"
+        "App Store"
       ],
       "intro": "happy-pug/",
       "formerPath": "apps/happy-pug/"
