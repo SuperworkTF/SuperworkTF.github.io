@@ -21,6 +21,13 @@ render = importlib.util.module_from_spec(_spec)
 assert _spec.loader is not None
 _spec.loader.exec_module(render)
 
+_switch_spec = importlib.util.spec_from_file_location(
+    "switch_effective", pathlib.Path(__file__).with_name("switch-effective.py")
+)
+switch = importlib.util.module_from_spec(_switch_spec)
+assert _switch_spec.loader is not None
+_switch_spec.loader.exec_module(switch)
+
 
 class PolicyPublisherTests(unittest.TestCase):
     app = {"dir": "word-doodle", "brand": "그려보카", "theme_color": "#f7f4eb"}
@@ -102,6 +109,12 @@ class PolicyPublisherTests(unittest.TestCase):
         self.assertIn('tabindex="0"', body)
         self.assertIn('href="https://example.com/"', body)
 
+    def test_fidelity_reads_table_cells_that_start_like_a_list(self):
+        source = '<table header-row="true">\n<tr>\n<td>시행일</td>\n</tr>\n<tr>\n<td>2026. 05. 27.</td>\n</tr>\n</table>\n'
+        body = render.render_body(source)
+        render.assert_fidelity(source, body)
+        self.assertIn("<td>2026. 05. 27.</td>", body)
+
     def test_fidelity_rejects_missing_text(self):
         with self.assertRaisesRegex(ValueError, "Policy text mismatch"):
             render.assert_fidelity("즉시 삭제", "<p>삭제</p>")
@@ -124,6 +137,12 @@ class PolicyPublisherTests(unittest.TestCase):
             render.kinds_of("x", {"privacy": {}, "faq": {}})
         with self.assertRaises(SystemExit):
             render.kinds_of("x", {"terms": {}})
+
+    def test_location_and_marketing_documents_sit_between_terms_and_deletion(self):
+        sources = {"account-deletion": {}, "marketing-consent": {}, "privacy": {},
+                   "location-terms": {}, "terms": {}}
+        self.assertEqual(render.kinds_of("x", sources),
+                         ("privacy", "terms", "location-terms", "marketing-consent", "account-deletion"))
 
     def test_only_the_canonical_place_is_indexed(self):
         """검색에 서는 것은 정본 자리 하나다. 날짜 주소는 열리되 `noindex` 다."""
@@ -161,6 +180,42 @@ class SitemapTests(unittest.TestCase):
     def test_sitemap_uses_the_cname_origin(self):
         self.assertIn(f"<loc>{sitemap.origin()}/</loc>", sitemap.sitemap())
         self.assertTrue(sitemap.origin().startswith("https://"))
+
+
+class SwitchEffectiveTests(unittest.TestCase):
+    """시행일 자동 전환 — 개정이 둘 공고된 동안 정본 자리가 남은 공고를 잃지 않는가."""
+
+    def editions(self):
+        return [
+            {"path": "privacy", "source": "privacy-2026-05-27", "status": "current",
+             "effective": "2026-05-27", "upcoming": "./2026-10-15/",
+             "upcoming_effective": "2026-10-15", "upcoming_announced": "2026-09-18"},
+            {"path": "privacy/2026-05-27", "source": "privacy-2026-05-27", "status": "dated",
+             "effective": "2026-05-27"},
+            {"path": "privacy/2026-10-15", "source": "privacy-2026-10-15", "status": "upcoming",
+             "effective": "2026-10-15", "announced": "2026-09-18", "current": "../"},
+            {"path": "privacy/2026-11-12", "source": "privacy-2026-11-12", "status": "upcoming",
+             "effective": "2026-11-12", "announced": "2026-10-13", "current": "../"},
+        ]
+
+    def test_promote_keeps_the_next_announcement(self):
+        editions = self.editions()
+        switch.promote("privacy", editions, editions[2])
+        canonical = editions[0]
+        self.assertEqual(canonical["source"], "privacy-2026-10-15")
+        self.assertEqual(canonical["previous"], "./2026-05-27/")
+        self.assertEqual(canonical["upcoming"], "./2026-11-12/")
+        self.assertEqual(canonical["upcoming_effective"], "2026-11-12")
+        self.assertEqual(canonical["upcoming_announced"], "2026-10-13")
+
+    def test_promote_last_revision_clears_the_announcement(self):
+        editions = self.editions()
+        switch.promote("privacy", editions, editions[2])
+        switch.promote("privacy", editions, editions[3])
+        canonical = editions[0]
+        self.assertEqual(canonical["source"], "privacy-2026-11-12")
+        self.assertEqual(canonical["previous"], "./2026-10-15/")
+        self.assertNotIn("upcoming", canonical)
 
 
 if __name__ == "__main__":
