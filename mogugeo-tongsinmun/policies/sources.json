@@ -1,0 +1,29 @@
+{
+  "app": {
+    "dir": "mogugeo-tongsinmun",
+    "brand": "모국어통신문",
+    "theme_color": "#F5F7FB"
+  },
+  "privacy": {
+    "public_url": "https://superwork.ai.kr/mogugeo-tongsinmun/privacy/",
+    "title": "개인정보처리방침",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy",
+        "sha256": "1c2cf5528a66404f3d4fa3a1c79afe7ab3b0f5e1d0fa73bfd7ddbe3583c3a4a3"
+      }
+    ]
+  },
+  "terms": {
+    "public_url": "https://superwork.ai.kr/mogugeo-tongsinmun/terms/",
+    "title": "서비스 이용약관",
+    "editions": [
+      {
+        "path": "terms",
+        "source": "terms",
+        "sha256": "c479e70cd73ba071fe224960d8e5ba6b1dfd88b6c6230d07de9defefd7c6540e"
+      }
+    ]
+  }
+}
