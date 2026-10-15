@@ -260,6 +260,7 @@ ICONS = {
     'chart': '<path d="M3 21h18M6 21v-7M11 21V9M16 21v-4M21 21V5"/>',
     'orbit': '<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"/><circle cx="19.6" cy="7.4" r="1.4" fill="currentColor"/>',
     'factory': '<path d="M3 21V10l6 4V10l6 4V6l6 3v12z"/><path d="M7 17h2M12 17h2M17 17h2"/>',
+    'image': '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-9 9"/>',
     'plug': '<path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/>',
     'puzzle': '<path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3z"/>',
     'megaphone': '<path d="M3 11v2a1 1 0 0 0 1 1h3l6 5V5L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14"/>',
@@ -306,6 +307,7 @@ def home_flow():
             '<span><i style="background:var(--sky)"></i>orbit 배포 구간</span></div>')
 
 
+TOOL_TABS_MAX = 6
 TOOL_STATUS = {'public': '공개', 'soon': 'GitHub 공개 예정', 'draft': '소개 준비 중'}
 
 
@@ -317,11 +319,14 @@ def home_tools():
             raise SystemExit(f"도구 {tool['name']!r} 의 group {tool['group']!r} 이 toolGroups 에 없다")
         if tool['status'] not in TOOL_STATUS or (tool['status'] == 'public') != bool(tool.get('url')):
             raise SystemExit(f"도구 {tool['name']!r}: status 가 public 이면 url 이 있어야 하고, 아니면 없어야 한다")
-    out = []
-    for g in SITE['toolGroups']:
+    # 분류는 탭으로 나란히 둔다 — 스크립트 없이 라디오 버튼으로 바꾼다(화살표 키로도 넘긴다).
+    # 탭과 칸을 잇는 규칙은 index.html 에 TOOL_TABS_MAX 개까지 적혀 있다.
+    shown = [g for g in SITE['toolGroups'] if any(x['group'] == g['id'] for x in SITE['tools'])]
+    if len(shown) > TOOL_TABS_MAX:
+        raise SystemExit(f'도구 분류가 {len(shown)}개다 — index.html 의 탭 규칙을 {TOOL_TABS_MAX}개 넘게 늘리고 TOOL_TABS_MAX 를 고친다')
+    inputs, tabs, panels = [], [], []
+    for n, g in enumerate(shown):
         items = [x for x in SITE['tools'] if x['group'] == g['id']]
-        if not items:
-            continue
         cards = []
         for x in items:
             if x['status'] == 'public':
@@ -337,15 +342,33 @@ def home_tools():
                 body += '<div class="tool-chips">' + ''.join(f'<span>{e(c)}</span>' for c in x['chips']) + '</div>'
             stat = f'<span class="tool-stat">{e(x["stat"])}</span>' if x.get('stat') else '<span></span>'
             cards.append(
-                f'<article class="tool reveal{" empty" if not body else ""}">'
+                f'<article class="tool{" empty" if not body else ""}">'
                 f'<div class="tool-top"><span class="tool-icon">{svg(x["icon"])}</span><h4>{e(x["name"])}</h4></div>'
                 f'{body}<div class="tool-foot">{stat}{foot}</div></article>')
-        out.append(
-            f'<div class="tool-group reveal" id="tools-{e(g["id"])}">'
-            f'<div class="tool-group-head"><span class="tool-group-icon">{svg(g["icon"])}</span>'
-            f'<div><h3>{e(g["label"])}<i>{len(items)}</i></h3><p>{e(g["desc"])}</p></div></div>'
-            f'<div class="tool-grid">{"".join(cards)}</div></div>')
-    return '\n'.join(out)
+        gid = e(g['id'])
+        inputs.append(f'<input class="tool-tab-input" type="radio" name="tool-tab" id="tool-tab-{gid}"'
+                      f' aria-label="{e(g["label"])}">')
+        tabs.append(f'<label class="tool-tab" for="tool-tab-{gid}" style="--i:{n}"><span class="tool-tab-icon">{svg(g["icon"])}</span>'
+                    f'<b>{e(g["label"])}</b><i>{len(items)}</i></label>')
+        panels.append(f'<div class="tool-group" id="tools-{gid}" style="--i:{n}"><h3 class="tool-group-desc">'
+                      f'<span>{e(g["label"])}</span>{e(g["desc"])}</h3>'
+                      f'<div class="tool-grid">{"".join(cards)}</div></div>')
+    # 탭은 저절로 차례대로 넘어간다. 한 칸이 보이는 몫(1/분류 수)이 분류 수에 따라 달라서 그 비율만 여기서 쓴다.
+    # 누가 탭을 고르면(라디오가 체크되면) index.html 의 규칙이 자동 넘김을 멈추고 고른 칸에 머문다.
+    k = len(shown)
+    share = 100 / k
+    cycle = (f'<style>.tools{{--n:{k}}}'
+             f'@keyframes tool-cycle{{0%{{opacity:0;visibility:visible;translate:0 14px}}'
+             f'{share * .06:.2f}%,{share * .94:.2f}%{{opacity:1;visibility:visible;translate:0 0}}'
+             f'{share:.2f}%,100%{{opacity:0;visibility:hidden;translate:0 -8px}}}}'
+             f'@keyframes tool-tab-on{{0%,{share * .97:.2f}%{{color:var(--text);background:var(--card);'
+             f'box-shadow:inset 0 0 0 1px rgba(var(--gold),.45),0 8px 24px -12px rgba(var(--gold),.5)}}'
+             f'{share:.2f}%,100%{{color:var(--dim);background:rgba(0,0,0,0);'
+             f'box-shadow:inset 0 0 0 1px rgba(var(--gold),0),0 8px 24px -12px rgba(var(--gold),0)}}}}'
+             f'@keyframes tool-tab-bar{{0%{{transform:scaleX(0);opacity:1}}{share * .97:.2f}%{{transform:scaleX(1);opacity:1}}'
+             f'{share:.2f}%,100%{{transform:scaleX(1);opacity:0}}}}</style>\n')
+    return (cycle + '\n'.join(inputs) + '\n<div class="tool-tabs reveal" aria-hidden="true">' + ''.join(tabs) + '</div>\n'
+            '<div class="tool-panels">\n' + '\n'.join(panels) + '\n</div>')
 
 
 def home_card(a):
