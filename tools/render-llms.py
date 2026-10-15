@@ -43,7 +43,9 @@ _spec.loader.exec_module(pages)
 
 SITE = pages.SITE
 TARGET = SITE / "llms.txt"
-DOCUMENT_LABELS = {"privacy": "개인정보처리방침", "terms": "서비스 이용약관", "account-deletion": "계정 삭제 안내"}
+DOCUMENT_LABELS = {"privacy": "개인정보처리방침", "terms": "서비스 이용약관",
+                   "location-terms": "위치기반서비스 이용약관", "marketing-consent": "마케팅 정보 수신 동의",
+                   "account-deletion": "계정 삭제 안내"}
 
 
 class Cards(HTMLParser):

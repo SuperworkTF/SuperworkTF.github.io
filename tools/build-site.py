@@ -16,6 +16,7 @@ README 원칙 5 에 따라 결과물에 실행되는 <script> 를 넣지 않는�
 import json
 import re
 import shutil
+import sys
 from html import escape as e
 from pathlib import Path
 
@@ -24,222 +25,230 @@ SITE_URL = 'https://superwork.ai.kr/'
 DATA = json.loads((ROOT / 'assets/apps.json').read_text(encoding='utf-8'))
 SITE = json.loads((ROOT / 'assets/site.json').read_text(encoding='utf-8'))
 CATS = {c['id']: c for c in DATA['categories']}
-OS = {'앱인토스': 'Web (Toss)', 'Google Play': 'Android', '원스토어': 'Android', 'App Store': 'iOS'}
+# apps.json 의 stores 키 → (단추·출시 채널 이름, 운영체제). 단추는 이 순서로 놓는다.
+STORES = {'appstore': ('App Store', 'iOS'), 'play': ('Google Play', 'Android'), 'toss': ('앱인토스', 'Web (Toss)')}
 
 
-def header(base, current):
-    def nav(href, label, key, cls=''):
-        cur = ' aria-current="page"' if key == current else ''
-        return f'<a href="{base}{href}"{cls}{cur}>{label}</a>'
-    return f'''<header class="site-header">
-  <div class="wrap">
-    <a class="brand grad" href="{base}">Superwork</a>
-    <nav class="site-nav">
-      {nav('#workflow', '개발 체계', '', ' class="hide-sm"')}
-      {nav('#tools', '도구', '')}
-      {nav('#apps', '앱', 'apps')}
-      {nav('#channels', '채널', '')}
-      {nav('#directory', '정책', '')}
+def stores(app):
+    """스토어 주소를 STORES 순서로 돌려준다. 모르는 키는 오타로 보고 멈춘다."""
+    got = app.get('stores') or {}
+    unknown = set(got) - set(STORES)
+    if unknown:
+        sys.exit(f'{app["id"]}: 모르는 stores 키 {sorted(unknown)} — {sorted(STORES)} 중에서 쓴다')
+    return {k: got[k] for k in STORES if got.get(k)}
+
+
+def jsonld(app, image):
+    """SoftwareApplication + BreadcrumbList. check-pages.py 가 보는 것: name·url·description·image·sameAs."""
+    got = stores(app)
+    url = SITE_URL + app['path']
+    node = {
+        '@type': 'SoftwareApplication',
+        '@id': url + '#app',
+        'name': app['name'],
+        'description': app['desc'],
+        'applicationCategory': 'GameApplication' if app['category'] == 'game' else 'LifestyleApplication',
+        'url': url,
+        'image': image,
+        'inLanguage': 'ko',
+        'publisher': {'@type': 'Organization', '@id': SITE_URL + '#organization', 'name': 'SuperWork', 'url': SITE_URL},
+    }
+    oses = [STORES[k][1] for k in got]
+    if oses:
+        node['operatingSystem'] = oses
+    same = [u for k, u in got.items() if k in ('appstore', 'play')]
+    if same:
+        node['offers'] = {'@type': 'Offer', 'price': '0', 'priceCurrency': 'KRW'}
+        node['sameAs'] = same
+    crumbs = {'@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': 1, 'name': 'SuperWork 앱 안내', 'item': SITE_URL},
+        {'@type': 'ListItem', 'position': 2, 'name': app['name'], 'item': url}]}
+    body = json.dumps({'@context': 'https://schema.org', '@graph': [node, crumbs]}, ensure_ascii=False, indent=2)
+    return '<script type="application/ld+json">\n' + body.replace('</', '<\\/') + '\n  </script>\n'
+
+
+# 정책 문서 칸 → 메뉴 이름. tools/render-policies.py 의 DOCUMENTS 와 같은 차례·이름이다.
+DOC_LABELS = (('privacy', '개인정보처리방침'), ('terms', '이용약관'), ('refund', '환불 정책'),
+              ('location-terms', '위치기반서비스 약관'), ('marketing-consent', '마케팅 수신 동의'),
+              ('account-deletion', '계정 삭제'))
+GENERATED = '<!-- 생성: tools/build-site.py 가 apps.json 에서 쓴다. 손으로 고치지 않는다 -->'
+
+
+def at_root(app):
+    """소개가 /<앱>/ 에 서는 앱인가 (아니면 옛 쇼케이스 자리 apps/<앱>/)."""
+    return not app['path'].startswith('apps/')
+
+
+def policy_docs(app):
+    """<앱>/policies/sources.json 이 내는 문서 칸 — (칸, 메뉴 이름). 정책이 없으면 빈 목록."""
+    f = ROOT / app['path'] / 'policies' / 'sources.json'
+    if not at_root(app) or not f.exists():
+        return []
+    have = json.loads(f.read_text(encoding='utf-8'))
+    return [(k, label) for k, label in DOC_LABELS if k in have]
+
+
+CONTACT = 'superwork.master+help@gmail.com'
+# 단추 글 — 그려보카 소개 페이지의 「Google Play 에서 받기」 꼴을 따른다
+STORE_CTA = {'appstore': 'App Store 에서 받기', 'play': 'Google Play 에서 받기', 'toss': '토스 앱에서 열기'}
+
+
+def detail(app):
+    """apps/<앱>/index.html — 그려보카(word-doodle/) 소개 페이지와 같은 짜임·스타일(assets/app-intro.css)."""
+    root = at_root(app)
+    base = '../' if root else '../../'
+    docs = policy_docs(app)
+    cat = CATS[app['category']]
+    name, desc = e(app['name']), e(app['desc'])
+    got = stores(app)
+    icon = f'<img src="{base}{e(app["icon"])}" alt="" width="30" height="30">' if app.get('icon') else ''
+    buttons = ''.join(f'<a class="button" href="{e(url)}">{STORE_CTA[k]}</a>' for k, url in got.items())
+    if not buttons:
+        buttons = '<span class="button" aria-disabled="true">스토어 링크 준비 중</span>'
+    channels = ' · '.join(STORES[k][0] for k in got) or '준비 중'
+    pg = app['details'].get('page') or {}
+    br = lambda s: e(s).replace('\n', '<br>')
+    how = pg.get('how')
+    if how:
+        how_items = [(i['title'], i.get('desc')) for i in how['items']]
+    else:  # 소개 글이 아직 없는 앱은 특징 이름만 보인다
+        how = {'eyebrow': '주요 특징', 'title': f'{app["name"]}, 이런 앱이에요.',
+               'intro': app['details']['lead'] if app['details']['lead'] != app['desc'] else ''}
+        how_items = [(i['title'], None) for sec in app['details'].get('sections', []) for i in sec['items']]
+    steps = ''.join(f'''
+        <li class="step">
+          <span class="step-number" aria-hidden="true">{n:02d}</span>
+          <h3>{e(t)}</h3>{f"""
+          <p>{e(d)}</p>""" if d else ''}
+        </li>''' for n, (t, d) in enumerate(how_items, 1))
+    intro = f'\n      <p class="section-intro">{e(how["intro"])}</p>' if how.get('intro') else ''
+    how_block = f'''
+    <section class="section" id="how-it-works" aria-labelledby="how-heading">
+      <p class="eyebrow">{e(how["eyebrow"])}</p>
+      <h2 id="how-heading">{e(how["title"])}</h2>{intro}
+      <ol class="steps">{steps}
+      </ol>
+    </section>''' if how_items else ''
+    more = f'\n          <a href="#how-it-works">{name} 알아보기 <span aria-hidden="true">↓</span></a>' if how_items else ''
+    n2 = pg.get('note2') or {'eyebrow': '이용 정보', 'title': '어디서 받고,\n무엇을 확인하나요', 'body': []}
+    n2_body = ''.join(f'\n        <p>{e(p)}</p>' for p in n2['body'])
+    faq = pg.get('faq') or []
+    faq_items = ''.join(f'''
+        <div class="faq-item">
+          <h3>{e(f["q"])}</h3>
+          <p>{e(f["a"])}</p>
+        </div>''' for f in faq)
+    faq_block = f'''
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <p class="eyebrow">궁금할 때 먼저 보기</p>
+      <h2 id="faq-heading">자주 묻는 질문</h2>
+      <div class="faq-list">{faq_items}
+      </div>
+    </section>''' if faq else ''
+    doc_nav = ''.join(f'\n      <a href="./{k}/">{label}</a>' for k, label in docs) or \
+        f'\n      <a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])} 앱</a>'
+    doc_links = ''.join(f'\n          <a href="./{k}/">{label} <span aria-hidden="true">↗</span></a>' for k, label in docs) or \
+        f'\n          <a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])} 앱 더 보기 <span aria-hidden="true">↗</span></a>'
+    policy_line = ('개인정보처리방침 등 정책 문서는 이 페이지 아래 「문의와 정책 안내」에서 확인할 수 있습니다.' if docs
+                   else '개인정보처리방침과 이용약관은 앱이 출시된 스토어의 앱 정보와 앱 안에서 확인할 수 있습니다.')
+    body = f'''  <a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="site-header shell">
+    <a class="brand" href="./" aria-label="{name} 소개">{icon}{name}</a>
+    <nav class="site-nav" aria-label="주요 메뉴">
+      <a href="./" aria-current="page">앱 소개</a>{doc_nav}
+      <a href="{base}">전체 앱 안내</a>
     </nav>
-  </div>
-</header>'''
-
-
-def footer(base):
-    return f'''<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div><a class="brand grad" href="{base}">Superwork</a></div>
-      <div><h4>사이트</h4><ul><li><a href="{base}#workflow">개발 체계</a></li><li><a href="{base}#tools">도구</a></li><li><a href="{base}#apps">앱</a></li><li><a href="{base}#channels">채널</a></li></ul></div>
-      <div><h4>정책</h4><ul><li><a href="{base}#directory">정책 및 약관</a></li><li><a href="{base}app-ads.txt">app-ads.txt</a></li></ul></div>
-      <div><h4>문의</h4><ul><li><a href="mailto:superwork.master@gmail.com">superwork.master@gmail.com</a></li></ul></div>
-    </div>
-    <p class="copyright">© 2026 Superwork. All rights reserved.</p>
-  </div>
-</footer>'''
-
-
-def page(title, desc, base, current, body, style='', head_extra=''):
+  </header>
+  <main id="main" class="shell" tabindex="-1">
+    <section class="hero" aria-labelledby="intro-heading">
+      <div>
+        <p class="eyebrow">{e(pg.get("eyebrow") or app["genre"])}</p>
+        <h1 id="intro-heading">{br(pg["headline"]) if pg.get("headline") else name}</h1>
+        <p class="hero-copy">{e(pg.get("heroCopy") or app["desc"])}</p>
+        <div class="actions">
+          {buttons}{more}
+        </div>
+        <p class="age-note">{e(pg.get("note") or f'{cat["label"]} · {channels}')}</p>
+      </div>
+      <figure class="shot-card">
+        <img src="{base}{e(app["thumb"])}" alt="{name} 대표 이미지" style="object-position:{e(app["thumbPos"])}">
+        <figcaption><strong>{name}</strong><span>{e(app["genre"])}</span></figcaption>
+      </figure>
+    </section>{how_block}
+    <section class="local-note" aria-labelledby="info-heading">
+      <div>
+        <p class="eyebrow">{e(n2["eyebrow"])}</p>
+        <h2 id="info-heading">{br(n2["title"])}</h2>
+      </div>
+      <div>{n2_body}
+        <dl class="facts">
+          <dt>분류</dt><dd>{e(cat["label"])} · {e(app["genre"])}</dd>
+          <dt>출시 채널</dt><dd>{e(channels)}</dd>
+        </dl>
+        <p>{policy_line}</p>
+      </div>
+    </section>{faq_block}
+    <section class="section contact" id="contact" aria-labelledby="contact-heading">
+      <div>
+        <p class="eyebrow">도움이 필요할 때</p>
+        <h2 id="contact-heading">{'문의와 정책 안내' if docs else '문의 안내'}</h2>
+      </div>
+      <div>
+        <p>앱 이용에 관한 궁금한 점이나 도움이 필요한 내용을 이메일로 보내 주세요.</p>
+        <p><a class="contact-address" href="mailto:{CONTACT}">{CONTACT}</a></p>
+        <div class="document-links">{doc_links}
+          <a href="{base}">SuperWork 전체 앱 안내 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer shell">
+    <p>{name} · {'앱 소개와 정책 안내' if docs else '앱 소개'}</p>
+    <a href="{base}">전체 앱 안내</a>
+  </footer>'''
+    title = f'{app["name"]} — {app["genre"]}'
+    url = SITE_URL + app['path']
+    if root:  # 정본 소개 — check-pages.py 의 규칙(아이콘·og:image 는 이 앱 폴더의 PNG)을 따른다
+        image = url + 'icon-512.png'
+        icons = (f'  <link rel="icon" type="image/png" sizes="192x192" href="{url}icon-192.png">\n'
+                 f'  <link rel="apple-touch-icon" href="{url}icon-192.png">\n')
+        card, style = 'summary', '  <link rel="stylesheet" href="./styles.css">'
+    else:
+        image, icons, card = SITE_URL + app['thumb'], '', 'summary_large_image'
+        style = (f'  <link rel="stylesheet" href="{base}assets/app-intro.css">\n'
+                 f'  <style>:root {{ --accent: {e(app.get("accent", "#8d442a"))}; }}</style>')
     return f'''<!doctype html>
+{GENERATED}
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>{e(title)}</title>
-<meta name="description" content="{e(desc)}"/>
-<meta name="theme-color" content="#0a0c10"/>
-<meta property="og:title" content="{e(title)}"/>
-<meta property="og:description" content="{e(desc)}"/>
-<meta property="og:type" content="website"/>
-{head_extra}<link rel="stylesheet" href="{base}assets/site.css"/>
-<style>{style}</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{desc}">
+  <meta name="theme-color" content="#f7f4eb">
+  <title>{e(title)}</title>
+  <link rel="canonical" href="{url}">
+{icons}  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SuperWork">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:url" content="{url}">
+  <meta property="og:title" content="{e(title)}">
+  <meta property="og:description" content="{desc}">
+  <meta property="og:image" content="{image}">
+  <meta name="twitter:card" content="{card}">
+  {jsonld(app, image)}{style}
 </head>
 <body>
-{header(base, current)}
-<main>
 {body}
-</main>
-{footer(base)}
 </body>
 </html>
 '''
 
 
-DETAIL_STYLE = '''
-.app-hero{position:relative;min-height:540px;display:flex;align-items:flex-end;overflow:hidden}
-.app-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 18s ease-in-out infinite alternate}
-.app-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,12,16,.15) 0%,rgba(10,12,16,.55) 55%,var(--bg) 100%)}
-.app-hero.soft>img{filter:blur(28px) brightness(.7) saturate(1.2);transform:scale(1.2);animation:none}
-@keyframes kb{to{transform:scale(1.12) translate(-2%,-2%)}}
-.app-hero .wrap{position:relative;z-index:1;padding-bottom:52px}
-.crumbs{display:flex;gap:8px;flex-wrap:wrap;color:rgba(255,255,255,.7);font-weight:700;font-size:14px;margin-bottom:26px}
-.crumbs a:hover{color:#fff}
-.app-id{display:flex;align-items:center;gap:22px;margin-bottom:20px}
-.app-id img{width:96px;height:96px;border-radius:24px;box-shadow:0 14px 34px rgba(0,0,0,.5)}
-.app-id .genre{color:var(--accent);font-weight:800}
-.app-id h1{font-size:clamp(38px,6vw,72px);line-height:1.05;font-weight:900;letter-spacing:-.03em}
-.app-lead{font-size:clamp(17px,2vw,21px);max-width:720px;color:rgba(255,255,255,.9);margin-bottom:30px}
-.app-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-
-.block{padding:72px 0 0}
-.block>h2{font-size:clamp(26px,3.4vw,38px);font-weight:900;letter-spacing:-.02em;margin-bottom:24px}
-.block>h2 small{display:block;color:var(--accent);font-size:13px;letter-spacing:.12em;margin-bottom:10px}
-.media-grid{display:grid;grid-template-columns:2fr 1fr;gap:24px}
-.art{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line)}
-.art img{width:100%;aspect-ratio:2.34;object-fit:cover}
-.art video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
-.side{display:grid;gap:16px;align-content:start}
-.side h3{font-size:15px;color:var(--dim);margin-bottom:12px}
-.facts-table{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:15px}
-.facts-table dt{color:var(--dim)}
-.qr{display:flex;gap:18px;align-items:center}
-.qr img{width:112px;height:112px;border-radius:12px;background:#fff;padding:6px}
-.qr p{color:var(--dim);font-size:14px}
-
-.svc-head{font-size:clamp(24px,3vw,34px);font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
-.svc-lead{color:#c9ced6;font-size:18px;max-width:820px;margin-bottom:18px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.chips span{font-size:14px;font-weight:700;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line)}
-.svc-section{margin-top:40px}
-.svc-section h3{font-size:22px;font-weight:800;margin-bottom:8px}
-.svc-section>p{color:var(--dim);margin-bottom:18px;max-width:820px}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.item b{display:block;font-size:18px;margin-bottom:6px}
-.item p{color:var(--dim);font-size:15px}
-.item .no{color:var(--accent);font-weight:900;font-size:14px;margin-bottom:8px;display:block}
-.privacy{margin-top:40px;background:linear-gradient(135deg,rgba(61,90,128,.25),rgba(0,217,163,.06));border-color:rgba(120,160,220,.35)}
-.privacy h3{font-size:20px;margin-bottom:8px}
-.privacy p{color:#c9ced6}
-
-.docs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.doc{display:flex;flex-direction:column;gap:6px}
-.doc b{font-size:18px}
-.doc span{color:var(--dim);font-size:13px;overflow-wrap:anywhere}
-.note{color:var(--dim);font-size:14px;margin-top:14px}
-@media(max-width:860px){.media-grid{grid-template-columns:1fr}.app-hero{min-height:460px}.app-id img{width:72px;height:72px}}
-'''
-
-
-def media(app, base):
-    if app.get('video'):
-        poster = f' poster="{base}{e(app["videoPoster"])}"' if app.get('videoPoster') else ''
-        return (f'<figure class="art reveal"><video src="{base}{e(app["video"])}"{poster} '
-                f'autoplay muted loop playsinline preload="metadata" aria-label="{e(app["name"])} 소개 영상"></video></figure>')
-    return f'<figure class="art reveal"><img src="{base}{e(app["thumb"])}" alt="{e(app["name"])} 대표 이미지"></figure>'
-
-
-def card(o, base):
-    icon = f'<img src="{base}{e(o["icon"])}" alt="">' if o.get('icon') else ''
-    return (f'<a class="acard reveal" href="{base}{e(o["path"])}">'
-            f'<div class="acard-media"><img src="{base}{e(o["thumbSm"])}" alt="" loading="lazy" style="object-position:{e(o["thumbPos"])}"><span class="acard-more">자세히 보기 →</span></div>'
-            f'<div class="acard-body">{icon}<div><div class="acard-genre">{e(o["genre"])}</div><b>{e(o["name"])}</b></div></div>'
-            f'<p class="acard-desc">{e(o["desc"])}</p></a>')
-
-
-def service(app):
-    d = app['details']
-    out = []
-    if d.get('headline'):
-        out.append(f'<p class="svc-head reveal">{e(d["headline"])}</p>')
-    out.append(f'<p class="svc-lead reveal">{e(d["lead"])}</p>')
-    if d.get('facts'):
-        out.append('<div class="chips reveal">' + ''.join(f'<span>{e(f)}</span>' for f in d['facts']) + '</div>')
-    for sec in d.get('sections', []):
-        numbered = all(i.get('desc') for i in sec['items']) and len(sec['items']) <= 3
-        items = ''
-        for n, i in enumerate(sec['items'], 1):
-            no = f'<span class="no">{n:02d}</span>' if numbered else ''
-            desc = f'<p>{e(i["desc"])}</p>' if i.get('desc') else ''
-            items += f'<div class="panel item reveal">{no}<b>{e(i["title"])}</b>{desc}</div>'
-        intro = f'<p>{e(sec["intro"])}</p>' if sec.get('intro') else ''
-        out.append(f'<div class="svc-section"><h3 class="reveal">{e(sec["title"])}</h3>{intro}<div class="items">{items}</div></div>')
-    if d.get('privacy'):
-        p = d['privacy']
-        out.append(f'<div class="panel privacy reveal"><h3>{e(p["title"])}</h3><p>{e(p["body"])}</p></div>')
-    return ''.join(out)
-
-
-def jsonld(app):
-    oses = sorted({OS[c] for c in app.get('channels', []) if c in OS})
-    data = {
-        '@context': 'https://schema.org',
-        '@type': 'SoftwareApplication',
-        'name': app['name'],
-        'description': app['details']['lead'],
-        'applicationCategory': 'GameApplication' if app['category'] == 'game' else 'UtilitiesApplication',
-        'genre': app['genre'],
-        'url': SITE_URL + app['path'],
-        'image': SITE_URL + app['thumb'],
-        'publisher': {'@type': 'Organization', 'name': 'Superwork', 'url': SITE_URL},
-    }
-    if oses:
-        data['operatingSystem'] = ', '.join(oses)
-    if app.get('link'):
-        data['installUrl'] = app['link']
-    body = json.dumps(data, ensure_ascii=False, indent=1).replace('</', '<\\/')
-    return f'<script type="application/ld+json">\n{body}\n</script>\n'
-
-
-def detail(app, others):
-    base = '../../'
-    cat = CATS[app['category']]
-    icon = f'<img src="{base}{e(app["icon"])}" alt="">' if app.get('icon') else ''
-    cta = (f'<a class="btn btn-primary" href="{e(app["link"])}" target="_blank" rel="noopener">{e(app["store"])} ↗</a>'
-           if app.get('link') else '<span class="btn btn-ghost" aria-disabled="true">스토어 링크 준비 중</span>')
-
-    facts = [('분류', f'{cat["label"]} · {app["genre"]}')]
-    if app.get('channels'):
-        facts.append(('출시 채널', ' · '.join(app['channels'])))
-    facts.append(('문의', 'superwork.master@gmail.com'))
-    side = [f'<div class="panel reveal"><h3>이용 정보</h3><dl class="facts-table">'
-            + ''.join(f'<dt>{e(k)}</dt><dd>{e(v)}</dd>' for k, v in facts) + '</dl></div>']
-    if app.get('qr'):
-        side.append(f'<div class="panel qr reveal"><img src="{base}{e(app["qr"])}" alt="{e(app["name"])} QR"><p>휴대폰 카메라로 스캔하면<br>바로 열립니다.</p></div>')
-
-    policy_block = '''<section class="block"><h2><small>POLICY</small>정책 문서</h2>
-  <p class="note">이 앱의 개인정보처리방침과 이용약관은 앱이 출시된 스토어와 앱 안에서 확인할 수 있습니다.</p></section>'''
-
-    body = f'''
-<section class="app-hero{' soft' if app.get('heroSoft') else ''}">
-  <img src="{base}{e(app["thumb"])}" alt="" style="object-position:{e(app["thumbPos"])}">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="위치"><a href="{base}#apps">앱</a><span>/</span><a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])}</a><span>/</span><span>{e(app["name"])}</span></nav>
-    <div class="app-id">{icon}<div><div class="genre">{e(app["genre"])}</div><h1>{e(app["name"])}</h1></div></div>
-    <p class="app-lead">{e(app["desc"])}</p>
-    <div class="app-cta">{cta}</div>
-  </div>
-</section>
-<div class="wrap">
-  <section class="block"><h2><small>{'VIDEO' if app.get('video') else 'OVERVIEW'}</small>{'소개 영상' if app.get('video') else '한눈에 보기'}</h2>
-    <div class="media-grid">{media(app, base)}<aside class="side">{''.join(side)}</aside></div></section>
-  <section class="block"><h2><small>SERVICE</small>서비스 설명</h2>{service(app)}</section>
-  {policy_block}
-  <section class="block"><h2><small>MORE</small>다른 앱도 둘러보세요</h2>
-    <div class="track">{''.join(card(o, base) for o in others)}</div></section>
-</div>
-<div style="height:80px"></div>'''
-    return page(f'{app["name"]} — Superwork', app['desc'], base, 'apps', body, DETAIL_STYLE,
-                f'<link rel="canonical" href="{SITE_URL}{e(app["path"])}"/>\n{jsonld(app)}')
+def app_styles(app):
+    """/<앱>/styles.css — 소개와 정책 페이지가 함께 쓴다. 공용 app-intro.css 에 이 앱의 강조색만 얹는다."""
+    css = (ROOT / 'assets/app-intro.css').read_text(encoding='utf-8')
+    return (f'/* 생성: tools/build-site.py 가 assets/app-intro.css 와 apps.json 의 accent 로 쓴다. 손으로 고치지 않는다. */\n'
+            f'{css}\n:root {{ --accent: {app.get("accent", "#8d442a")}; }}\n')
 
 
 ICONS = {
@@ -251,6 +260,7 @@ ICONS = {
     'chart': '<path d="M3 21h18M6 21v-7M11 21V9M16 21v-4M21 21V5"/>',
     'orbit': '<circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-30 12 12)"/><circle cx="19.6" cy="7.4" r="1.4" fill="currentColor"/>',
     'factory': '<path d="M3 21V10l6 4V10l6 4V6l6 3v12z"/><path d="M7 17h2M12 17h2M17 17h2"/>',
+    'image': '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-9 9"/>',
     'plug': '<path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/>',
     'puzzle': '<path d="M10 3h4v3a2 2 0 1 0 4 0V3h3v7h-3a2 2 0 1 0 0 4h3v7h-7v-3a2 2 0 1 0-4 0v3H3v-7h3a2 2 0 1 0 0-4H3V3z"/>',
     'megaphone': '<path d="M3 11v2a1 1 0 0 0 1 1h3l6 5V5L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14"/>',
@@ -292,11 +302,12 @@ def home_flow():
             '<div class="band orbit">orbit <span>배포</span></div></div>\n'
             '<div class="flow-track"><div class="flow-line" aria-hidden="true"></div>\n<ol class="flow-steps">\n'
             + '\n'.join(nodes) + '\n</ol></div>\n'
-            '<div class="flow-legend"><span><i style="background:var(--accent)"></i>에이전트가 하는 일</span>'
-            '<span><i style="background:#ffd166"></i>사람이 정하는 지점</span>'
-            '<span><i style="background:#7aa8ff"></i>orbit 배포 구간</span></div>')
+            '<div class="flow-legend"><span><i style="background:var(--teal)"></i>에이전트가 하는 일</span>'
+            '<span><i style="background:var(--accent2)"></i>사람이 정하는 지점</span>'
+            '<span><i style="background:var(--sky)"></i>orbit 배포 구간</span></div>')
 
 
+TOOL_TABS_MAX = 6
 TOOL_STATUS = {'public': '공개', 'soon': 'GitHub 공개 예정', 'draft': '소개 준비 중'}
 
 
@@ -308,11 +319,14 @@ def home_tools():
             raise SystemExit(f"도구 {tool['name']!r} 의 group {tool['group']!r} 이 toolGroups 에 없다")
         if tool['status'] not in TOOL_STATUS or (tool['status'] == 'public') != bool(tool.get('url')):
             raise SystemExit(f"도구 {tool['name']!r}: status 가 public 이면 url 이 있어야 하고, 아니면 없어야 한다")
-    out = []
-    for g in SITE['toolGroups']:
+    # 분류는 탭으로 나란히 둔다 — 스크립트 없이 라디오 버튼으로 바꾼다(화살표 키로도 넘긴다).
+    # 탭과 칸을 잇는 규칙은 index.html 에 TOOL_TABS_MAX 개까지 적혀 있다.
+    shown = [g for g in SITE['toolGroups'] if any(x['group'] == g['id'] for x in SITE['tools'])]
+    if len(shown) > TOOL_TABS_MAX:
+        raise SystemExit(f'도구 분류가 {len(shown)}개다 — index.html 의 탭 규칙을 {TOOL_TABS_MAX}개 넘게 늘리고 TOOL_TABS_MAX 를 고친다')
+    inputs, tabs, panels = [], [], []
+    for n, g in enumerate(shown):
         items = [x for x in SITE['tools'] if x['group'] == g['id']]
-        if not items:
-            continue
         cards = []
         for x in items:
             if x['status'] == 'public':
@@ -328,15 +342,33 @@ def home_tools():
                 body += '<div class="tool-chips">' + ''.join(f'<span>{e(c)}</span>' for c in x['chips']) + '</div>'
             stat = f'<span class="tool-stat">{e(x["stat"])}</span>' if x.get('stat') else '<span></span>'
             cards.append(
-                f'<article class="tool reveal{" empty" if not body else ""}">'
+                f'<article class="tool{" empty" if not body else ""}">'
                 f'<div class="tool-top"><span class="tool-icon">{svg(x["icon"])}</span><h4>{e(x["name"])}</h4></div>'
                 f'{body}<div class="tool-foot">{stat}{foot}</div></article>')
-        out.append(
-            f'<div class="tool-group reveal" id="tools-{e(g["id"])}">'
-            f'<div class="tool-group-head"><span class="tool-group-icon">{svg(g["icon"])}</span>'
-            f'<div><h3>{e(g["label"])}<i>{len(items)}</i></h3><p>{e(g["desc"])}</p></div></div>'
-            f'<div class="tool-grid">{"".join(cards)}</div></div>')
-    return '\n'.join(out)
+        gid = e(g['id'])
+        inputs.append(f'<input class="tool-tab-input" type="radio" name="tool-tab" id="tool-tab-{gid}"'
+                      f' aria-label="{e(g["label"])}">')
+        tabs.append(f'<label class="tool-tab" for="tool-tab-{gid}" style="--i:{n}"><span class="tool-tab-icon">{svg(g["icon"])}</span>'
+                    f'<b>{e(g["label"])}</b><i>{len(items)}</i></label>')
+        panels.append(f'<div class="tool-group" id="tools-{gid}" style="--i:{n}"><h3 class="tool-group-desc">'
+                      f'<span>{e(g["label"])}</span>{e(g["desc"])}</h3>'
+                      f'<div class="tool-grid">{"".join(cards)}</div></div>')
+    # 탭은 저절로 차례대로 넘어간다. 한 칸이 보이는 몫(1/분류 수)이 분류 수에 따라 달라서 그 비율만 여기서 쓴다.
+    # 누가 탭을 고르면(라디오가 체크되면) index.html 의 규칙이 자동 넘김을 멈추고 고른 칸에 머문다.
+    k = len(shown)
+    share = 100 / k
+    cycle = (f'<style>.tools{{--n:{k}}}'
+             f'@keyframes tool-cycle{{0%{{opacity:0;visibility:visible;translate:0 14px}}'
+             f'{share * .06:.2f}%,{share * .94:.2f}%{{opacity:1;visibility:visible;translate:0 0}}'
+             f'{share:.2f}%,100%{{opacity:0;visibility:hidden;translate:0 -8px}}}}'
+             f'@keyframes tool-tab-on{{0%,{share * .97:.2f}%{{color:var(--text);background:var(--card);'
+             f'box-shadow:inset 0 0 0 1px rgba(var(--gold),.45),0 8px 24px -12px rgba(var(--gold),.5)}}'
+             f'{share:.2f}%,100%{{color:var(--dim);background:rgba(0,0,0,0);'
+             f'box-shadow:inset 0 0 0 1px rgba(var(--gold),0),0 8px 24px -12px rgba(var(--gold),0)}}}}'
+             f'@keyframes tool-tab-bar{{0%{{transform:scaleX(0);opacity:1}}{share * .97:.2f}%{{transform:scaleX(1);opacity:1}}'
+             f'{share:.2f}%,100%{{transform:scaleX(1);opacity:0}}}}</style>\n')
+    return (cycle + '\n'.join(inputs) + '\n<div class="tool-tabs reveal" aria-hidden="true">' + ''.join(tabs) + '</div>\n'
+            '<div class="tool-panels">\n' + '\n'.join(panels) + '\n</div>')
 
 
 def home_card(a):
@@ -380,8 +412,8 @@ def home_channels():
 def home_intro_links():
     """푸터의 「앱 소개 · 정책」 — 루트가 모든 앱 소개(<앱>/)를 잇는다(check-pages.py). 가나다순.
     tools/render-llms.py 는 이 a.card 의 차례와 주소만 읽고, 제목·설명은 각 소개 페이지에서 가져온다."""
-    intros = sorted((a for a in DATA['apps'] if a.get('intro')), key=lambda a: a['name'])
-    return '\n'.join(f'<a class="card" href="./{e(a["intro"])}"><div class="t">{e(a["name"])}</div></a>' for a in intros)
+    intros = sorted((a for a in DATA['apps'] if a.get('intro') or at_root(a)), key=lambda a: a['name'])
+    return '\n'.join(f'<a class="card" href="./{e(a.get("intro") or a["path"])}"><div class="t">{e(a["name"])}</div></a>' for a in intros)
 
 
 def build_home():
@@ -397,6 +429,26 @@ def build_home():
     path.write_text(html, encoding='utf-8')
 
 
+def moved_page(app):
+    """옛 쇼케이스 주소에 남기는 안내 한 장 — 새 소개 페이지로 바로 넘긴다."""
+    target = SITE_URL + (app.get('intro') or app['path'])
+    return f'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>{e(app["name"])} — 새 주소로 옮겼습니다</title>
+<meta name="robots" content="noindex"/>
+<link rel="canonical" href="{e(target)}"/>
+<meta http-equiv="refresh" content="0; url={e(target)}"/>
+</head>
+<body>
+<p>{e(app["name"])} 소개와 정책 문서는 <a href="{e(target)}">{e(target)}</a> 로 옮겼습니다.</p>
+</body>
+</html>
+'''
+
+
 def main():
     apps = DATA['apps']
     out_root = ROOT / 'apps'
@@ -404,16 +456,34 @@ def main():
         shutil.rmtree(out_root)
     showcase = [a for a in apps if not a.get('intro')]
     for app in showcase:
-        # 정본 소개 페이지(<앱>/index.html)를 덮어쓰지 않도록 apps/ 밖에는 쓰지 않는다
-        if not app['path'].startswith('apps/') or app['path'].count('/') != 2:
+        if at_root(app):
+            # /<앱>/ 소개를 이 스크립트가 쓴다. 손으로 쓴 소개(생성 표식이 없는 index.html)는 덮지 않는다.
+            if app['path'] != f"{app['id']}/":
+                raise SystemExit(f"{app['id']}: 소개 주소는 <id>/ 여야 한다 — {app['path']!r}")
+            out = ROOT / app['path'] / 'index.html'
+            if out.exists() and GENERATED not in out.read_text(encoding='utf-8'):
+                raise SystemExit(f'{out} 는 손으로 쓴 소개다 — apps.json 에 intro 로 적는다')
+            for icon in ('icon-192.png', 'icon-512.png'):
+                if not (out.parent / icon).exists():
+                    raise SystemExit(f'{out.parent / icon} 가 없다 — 아이콘(정사각 PNG)을 먼저 둔다')
+            (out.parent / 'styles.css').write_text(app_styles(app), encoding='utf-8')
+        elif app['path'].count('/') != 2:
             raise SystemExit(f"{app['id']}: 쇼케이스 주소는 apps/<앱>/ 이어야 한다 — {app['path']!r}")
-        same = [o for o in apps if o['category'] == app['category'] and o['id'] != app['id']]
-        rest = [o for o in apps if o['category'] != app['category']]
         out = ROOT / app['path'] / 'index.html'
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(detail(app, (same + rest)[:8]), encoding='utf-8')
+        out.write_text(detail(app), encoding='utf-8')
+    # 옛 쇼케이스 주소(apps/<앱>/)는 지우지 않고 새 소개로 넘긴다 — QR·공유 링크·스토어 등록정보에 나가 있을 수 있다.
+    # 정적 HTML 의 meta refresh 만 쓴다 — 스크립트는 넣지 않는다(README 원칙 5).
+    moved = [a for a in apps if a.get('formerPath')]
+    for app in moved:
+        former = app['formerPath']
+        if not former.startswith('apps/') or former.count('/') != 2:
+            raise SystemExit(f"{app['id']}: 옛 주소는 apps/<앱>/ 이어야 한다 — {former!r}")
+        out = ROOT / former / 'index.html'
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(moved_page(app), encoding='utf-8')
     build_home()
-    print(f'index.html 생성 구역 7곳, apps/ 쇼케이스 {len(showcase)}개')
+    print(f'index.html 생성 구역 7곳, 생성 소개 {len(showcase)}개(그중 /<앱>/ {sum(map(at_root, showcase))}개), 옮겨 간 주소 {len(moved)}개')
 
 
 if __name__ == '__main__':

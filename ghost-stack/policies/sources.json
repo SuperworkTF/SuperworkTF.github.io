@@ -1,0 +1,17 @@
+{
+  "app": {
+    "dir": "ghost-stack",
+    "brand": "고스트 스택",
+    "theme_color": "#f7f4eb"
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "public_url": "https://superwork.ai.kr/ghost-stack/privacy/",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy"
+      }
+    ]
+  }
+}

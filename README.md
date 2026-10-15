@@ -34,7 +34,9 @@
                              <!-- 생성: … --> 구역은 tools/build-site.py 가 채운다(손으로 고치지 않는다)
 /assets/apps.json · site.json 홈과 앱 쇼케이스가 쓰는 글 — 앱 소개 문장은 각 <app>/index.html 에서 옮긴다
 /assets/                     공용 스타일(site.css) · 앱 썸네일 · 앱 소개 영상 · 워커 사진
-/assets/brand/               배너 이미지와 배너 영상(hero.mp4). 지금은 홈에서 쓰지 않고 보관한다 — 쓸 자리가 생기면 건다
+/assets/brand/               홈 첫 화면 영상(hero-scene.mp4 · 포스터 hero-scene.jpg — tools/app-video/hero.html 로 굽는다).
+                             영상 안의 배경 사진 둘(hero-commute.jpg 퇴근길 · hero-bg.jpg 유리 외벽, AI 생성)은 다시 구울 때 쓴다.
+                             옛 배너 이미지와 배너 영상(hero.mp4)은 홈에서 쓰지 않고 보관한다
 /apps/<앱>/                  이 저장소에 소개 페이지가 없는 앱(토스·원스토어)의 쇼케이스 (생성물 — tools/build-site.py).
                              소개 페이지가 있는 앱은 /<app>/ 하나만 쓴다 — 앱마다 주소는 하나다.
                              주소에 분류를 넣지 않는다(분류는 홈 화면에서만 묶는다)

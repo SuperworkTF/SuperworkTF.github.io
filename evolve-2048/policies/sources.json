@@ -1,0 +1,17 @@
+{
+  "app": {
+    "dir": "evolve-2048",
+    "brand": "진화 2048",
+    "theme_color": "#f7f4eb"
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "public_url": "https://superwork.ai.kr/evolve-2048/privacy/",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy"
+      }
+    ]
+  }
+}

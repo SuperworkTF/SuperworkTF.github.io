@@ -1,0 +1,17 @@
+{
+  "app": {
+    "dir": "gogo-drive",
+    "brand": "고고 드라이브",
+    "theme_color": "#f7f4eb"
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "public_url": "https://superwork.ai.kr/gogo-drive/privacy/",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy"
+      }
+    ]
+  }
+}

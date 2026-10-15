@@ -1,0 +1,105 @@
+{
+  "app": {
+    "dir": "happy-pug",
+    "brand": "HappyPug",
+    "theme_color": "#FFF8F0"
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "public_url": "https://superwork.ai.kr/happy-pug/privacy/",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy-2026-05-27",
+        "status": "current",
+        "effective": "2026-05-27",
+        "upcoming": "./2026-10-15/",
+        "upcoming_effective": "2026-10-15",
+        "upcoming_announced": "2026-09-18"
+      },
+      {
+        "path": "privacy/2026-05-27",
+        "source": "privacy-2026-05-27",
+        "status": "dated",
+        "effective": "2026-05-27"
+      },
+      {
+        "path": "privacy/2026-10-15",
+        "source": "privacy-2026-10-15",
+        "status": "upcoming",
+        "effective": "2026-10-15",
+        "announced": "2026-09-18",
+        "current": "../"
+      },
+      {
+        "path": "privacy/2026-11-12",
+        "source": "privacy-2026-11-12",
+        "status": "upcoming",
+        "effective": "2026-11-12",
+        "announced": "2026-10-13",
+        "current": "../"
+      }
+    ]
+  },
+  "terms": {
+    "title": "이용약관",
+    "public_url": "https://superwork.ai.kr/happy-pug/terms/",
+    "editions": [
+      {
+        "path": "terms",
+        "source": "terms",
+        "status": "current",
+        "effective": "2026-05-15"
+      }
+    ]
+  },
+  "location-terms": {
+    "title": "위치기반서비스 이용약관",
+    "public_url": "https://superwork.ai.kr/happy-pug/location-terms/",
+    "editions": [
+      {
+        "path": "location-terms",
+        "source": "location-terms-2026-05-27",
+        "status": "current",
+        "effective": "2026-05-27",
+        "upcoming": "./2026-10-15/",
+        "upcoming_effective": "2026-10-15",
+        "upcoming_announced": "2026-09-18"
+      },
+      {
+        "path": "location-terms/2026-05-27",
+        "source": "location-terms-2026-05-27",
+        "status": "dated",
+        "effective": "2026-05-27"
+      },
+      {
+        "path": "location-terms/2026-10-15",
+        "source": "location-terms-2026-10-15",
+        "status": "upcoming",
+        "effective": "2026-10-15",
+        "announced": "2026-09-18",
+        "current": "../"
+      }
+    ]
+  },
+  "marketing-consent": {
+    "title": "마케팅 정보 수신 동의",
+    "public_url": "https://superwork.ai.kr/happy-pug/marketing-consent/",
+    "editions": [
+      {
+        "path": "marketing-consent",
+        "source": "marketing-consent"
+      }
+    ]
+  },
+  "account-deletion": {
+    "title": "계정 삭제 안내",
+    "public_url": "https://superwork.ai.kr/happy-pug/account-deletion/",
+    "editions": [
+      {
+        "path": "account-deletion",
+        "source": "account-deletion"
+      }
+    ]
+  }
+}

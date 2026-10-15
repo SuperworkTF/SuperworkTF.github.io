@@ -83,6 +83,27 @@
       "url": null
     },
     {
+      "group": "factory",
+      "name": "gamesmith",
+      "icon": "gamepad",
+      "status": "soon",
+      "tag": "만들고 싶은 게임을 말하면, 기획서부터 실행되는 게임까지",
+      "flow": [
+        "/game-plan",
+        "/game-review",
+        "/game-generate",
+        "/game-qa",
+        "/game-polish"
+      ],
+      "chips": [
+        "장르 템플릿 27종",
+        "퀘스트 · 수익화 기본 포함",
+        "Phaser 3"
+      ],
+      "stat": "진화 2048 · 고스트 스택",
+      "url": null
+    },
+    {
       "group": "plugin",
       "name": "orbit",
       "icon": "orbit",
@@ -101,6 +122,46 @@
       ],
       "stat": "TestFlight 배포 5건",
       "url": null
+    },
+    {
+      "group": "mcp",
+      "name": "openai-image-mcp-server",
+      "icon": "image",
+      "status": "public",
+      "tag": "OpenAI API 키 하나로 대화 중에 이미지를 만든다",
+      "flow": [
+        "생성",
+        "편집",
+        "변형"
+      ],
+      "chips": [
+        "gpt-image",
+        "캐릭터 레퍼런스",
+        "스프라이트 시트"
+      ],
+      "stat": null,
+      "url": "https://github.com/LimSuyun/openai-image-mcp-server"
+    },
+    {
+      "group": "mcp",
+      "name": "minigame-assets-mcp",
+      "icon": "gamepad",
+      "status": "public",
+      "tag": "Claude와 대화하며 미니게임 에셋을 만든다",
+      "flow": [
+        "컨셉",
+        "생성",
+        "검수",
+        "배포"
+      ],
+      "chips": [
+        "캐릭터 · 스프라이트",
+        "배경 · UI",
+        "로고 · 썸네일",
+        "BGM · 효과음"
+      ],
+      "stat": null,
+      "url": "https://github.com/LimSuyun/minigame-assets-mcp"
     },
     {
       "group": "mcp",

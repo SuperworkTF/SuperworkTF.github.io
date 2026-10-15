@@ -1,0 +1,21 @@
+{
+  "app": {
+    "dir": "dream-gallery",
+    "brand": "드림갤러리",
+    "theme_color": "#f7f4eb"
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "public_url": "https://superwork.ai.kr/dream-gallery/privacy/",
+    "editions": [
+      { "path": "privacy", "source": "privacy" }
+    ]
+  },
+  "terms": {
+    "title": "서비스 이용약관",
+    "public_url": "https://superwork.ai.kr/dream-gallery/terms/",
+    "editions": [
+      { "path": "terms", "source": "terms" }
+    ]
+  }
+}

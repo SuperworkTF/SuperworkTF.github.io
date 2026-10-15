@@ -2,38 +2,76 @@
 
 > 주식회사 케이티나스미디어 SuperWork가 만드는 앱들의 소개·문의·정책 문서를 모아 둡니다.
 
-SuperWork는 주식회사 케이티나스미디어의 사내 조직입니다. 스토어의 개발자 이름은 kt nasmedia, Nasmedia Co.,Ltd입니다. 문의: superwork.master@gmail.com
+SuperWork는 주식회사 케이티나스미디어의 사내 조직입니다. 스토어의 개발자 이름은 kt nasmedia, Nasmedia Co.,Ltd입니다. 문의: superwork.master+help@gmail.com
 
 ## 앱
 
+- [고고 드라이브 — 3D 캐주얼 레이싱](https://superwork.ai.kr/gogo-drive/): 달리고, 피하고, 추월하라! 생동감 넘치는 3D 도시를 질주하는 드라이빙 게임. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.gogodrive.app)
+- [고스트 스택 — 캐주얼 게임](https://superwork.ai.kr/ghost-stack/): 숨은 고수(고스트)와 겨루는 네온 야경 블록 쌓기! 탭 한 번으로 즐기는 하이퍼 캐주얼. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.ghoststack.game)
 - [구독자 — 새는 구독료를 결제 전에](https://superwork.ai.kr/subscribers/): 카드·간편결제 앱의 결제 알림에서 정기결제를 찾아 결제 전에 알려 드리는 Android 앱입니다. 결제 알림은 기기 안에서만 읽습니다. Android, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.superwork.subscribers)
+- [귀여운동물사전 — 수집·힐링 게임](https://superwork.ai.kr/animalpedia/): 깜찍한 동물들을 하나씩 모아 나만의 도감을 채워가는 힐링 컬렉션. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.animalpedia.play)
 - [그려보카 — 그림으로 기억하는 영단어](https://superwork.ai.kr/word-doodle/): 영단어를 낙서로 기억하고, 내가 그린 그림으로 복습하는 학습 앱. Android·iOS, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.worddoodle.app) · [App Store](https://apps.apple.com/kr/app/id6812946441)
+- [그림 이어받기 — 그림 릴레이 게임](https://superwork.ai.kr/geurim-relay/): 고양이로 시작한 그림이 5명을 거쳐 탕수육이 되어 돌아옵니다. 못 그릴수록 재밌는 그림 릴레이. Android, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.geurimrelay.app)
+- [동네퇴마사 — 캐주얼 액션 RPG](https://superwork.ai.kr/dongtoesa/): 골목골목 출몰하는 악귀를 물리치는 통쾌한 한국형 퇴마 액션 RPG. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.superworks.townexorcist)
+- [드림갤러리 — AI 아트·갤러리](https://superwork.ai.kr/dream-gallery/): 당신이 꾼 꿈을 AI가 한 장의 일러스트로. 꿈을 그림으로 모으는 갤러리. Web (Toss). 아직 스토어에 공개되지 않았습니다.
 - [모국어통신문 — 가정통신문 번역, 모국어로 확인](https://superwork.ai.kr/mogugeo-tongsinmun/): 학교 가정통신문을 준비물·회신·금액 쪽지로 정리해 베트남어·중국어·러시아어·일본어로 번역해 드리는 학부모 앱입니다. 다문화 가정도 할 일과 기한을 모국어로 확인할 수 있어요. 아직 스토어에 공개되지 않았습니다.
+- [뭉치뭉치 — 힐링 캐주얼 게임](https://superwork.ai.kr/moongchi/): 동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.superwork.mungchimungchi)
+- [분식대란 — 분식 퍼즐 게임](https://superwork.ai.kr/bunsik-madness/): 밀려드는 주문을 퍼즐로 척척! 손맛 터지는 분식집 운영 게임. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.superwork.bunsikmadness)
 - [셀렉터 — 남길 사진을 먼저 정하는 사진 정리](https://superwork.ai.kr/piclect/): 지울 사진을 고르는 대신 남길 사진을 먼저 정하는 사진 정리 앱. Android, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.piclect.app)
+- [어둠의 미로 — 1인칭 생존 호러](https://superwork.ai.kr/maze-escape/): 칠흑 같은 미로 속, 손전등 하나와 발소리에 의지해 보이지 않는 추격자를 피해 탈출하라. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.darkmaze.mazeescape)
 - [우르르 — 소속 대항 미니게임, 한 판 20초](https://superwork.ai.kr/ururu/): 내 학교와 학과를 걸고 다른 학교와 겨루는 소속 대항 미니게임. 한 판 20초 안팎, 게임 20종. Android·iOS, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.ururu.app) · [App Store](https://apps.apple.com/kr/app/id6805813391)
-- [짤랑 — 근무표 위젯, 알바 급여계산](https://superwork.ai.kr/jjallang/): 출퇴근 버튼 하나로 야간·연장·휴일·주휴수당까지 계산해 홈 화면 위젯에 보여주는 근무 기록 앱. Android, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.jjallang.app)
+- [진화 2048 — 퍼즐 게임](https://superwork.ai.kr/evolve-2048/): 숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐! Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.evolve2048.game)
+- [짤랑 — 근무표 위젯, 알바 급여계산](https://superwork.ai.kr/jjallang/): 출퇴근 버튼 하나로 야간·연장·휴일·주휴수당까지 계산해 홈 화면 위젯에 보여주는 근무 기록 앱. Android·iOS, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.jjallang.app) · [App Store](https://apps.apple.com/kr/app/id6813267953)
+- [코인 타워 — 뱀서류 로그라이크](https://superwork.ai.kr/coin-tower/): 한 손으로 즐기는 뱀서류 액션! 코인으로 캐릭터를 강화하며 더 높이 올라가세요. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.superworks.cointower)
+- [트롯스텝 — 라이프스타일·팬덤](https://superwork.ai.kr/trotstep/): 매일 걷는 걸음이 최애 가수를 향한 응원이 됩니다. 걸음으로 모은 투표권으로 응원하세요. 아직 스토어에 공개되지 않았습니다.
 - [파일핏 — 사진 용량 줄이기·형식 변환·사진 PDF](https://superwork.ai.kr/filefit/): 사진 용량을 정한 KB 이하로 줄이고 JPG·PNG·WebP 변환, 크기 조절, 여러 장을 A4 PDF로 묶는 무료 도구. 파일을 서버에 올리지 않고 기기 안에서 처리합니다. 아직 스토어에 공개되지 않았습니다.
+- [핀치 러너 — 캐주얼 러너 게임](https://superwork.ai.kr/pinch-runner/): 오므리면 작아지고, 벌리면 커진다! 두 손가락 핀치 하나로 즐기는 한 끗 차이 엔드리스 러너. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.superworks.pinchrunner)
+- [HappyPug — 우리 동네 강아지들과 함께 걷는 산책 모임](https://superwork.ai.kr/happy-pug/): 같은 동네 반려인끼리 산책 모임을 만들고 함께 걷는 앱. Android·iOS, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.happypug.happypug) · [App Store](https://apps.apple.com/kr/app/id6791448066)
 
 ## 정책 문서
 
+- [고고 드라이브 개인정보처리방침](https://superwork.ai.kr/gogo-drive/privacy/)
+- [고스트 스택 개인정보처리방침](https://superwork.ai.kr/ghost-stack/privacy/)
 - [구독자 개인정보처리방침](https://superwork.ai.kr/subscribers/privacy/)
 - [구독자 계정 삭제 안내](https://superwork.ai.kr/subscribers/account-deletion/)
+- [귀여운동물사전 개인정보처리방침](https://superwork.ai.kr/animalpedia/privacy/)
 - [그려보카 개인정보처리방침](https://superwork.ai.kr/word-doodle/privacy/)
 - [그려보카 서비스 이용약관](https://superwork.ai.kr/word-doodle/terms/)
+- [그림 이어받기 개인정보처리방침](https://superwork.ai.kr/geurim-relay/privacy/)
+- [그림 이어받기 서비스 이용약관](https://superwork.ai.kr/geurim-relay/terms/)
+- [동네퇴마사 개인정보처리방침](https://superwork.ai.kr/dongtoesa/privacy/)
+- [드림갤러리 개인정보처리방침](https://superwork.ai.kr/dream-gallery/privacy/)
+- [드림갤러리 서비스 이용약관](https://superwork.ai.kr/dream-gallery/terms/)
 - [모국어통신문 개인정보처리방침](https://superwork.ai.kr/mogugeo-tongsinmun/privacy/)
 - [모국어통신문 서비스 이용약관](https://superwork.ai.kr/mogugeo-tongsinmun/terms/)
+- [뭉치뭉치 개인정보처리방침](https://superwork.ai.kr/moongchi/privacy/)
+- [분식대란 개인정보처리방침](https://superwork.ai.kr/bunsik-madness/privacy/)
 - [셀렉터 개인정보처리방침](https://superwork.ai.kr/piclect/privacy/)
 - [셀렉터 서비스 이용약관](https://superwork.ai.kr/piclect/terms/)
+- [어둠의 미로 개인정보처리방침](https://superwork.ai.kr/maze-escape/privacy/)
 - [우르르 개인정보처리방침](https://superwork.ai.kr/ururu/privacy/)
 - [우르르 서비스 이용약관](https://superwork.ai.kr/ururu/terms/)
 - [우르르 계정 삭제 안내](https://superwork.ai.kr/ururu/account-deletion/)
+- [진화 2048 개인정보처리방침](https://superwork.ai.kr/evolve-2048/privacy/)
 - [짤랑 개인정보처리방침](https://superwork.ai.kr/jjallang/privacy/)
 - [짤랑 서비스 이용약관](https://superwork.ai.kr/jjallang/terms/)
+- [코인 타워 개인정보처리방침](https://superwork.ai.kr/coin-tower/privacy/)
+- [트롯스텝 개인정보처리방침](https://superwork.ai.kr/trotstep/privacy/)
+- [트롯스텝 서비스 이용약관](https://superwork.ai.kr/trotstep/terms/)
 - [파일핏 개인정보처리방침](https://superwork.ai.kr/filefit/privacy/)
 - [파일핏 서비스 이용약관](https://superwork.ai.kr/filefit/terms/)
+- [핀치 러너 개인정보처리방침](https://superwork.ai.kr/pinch-runner/privacy/)
+- [HappyPug 개인정보처리방침](https://superwork.ai.kr/happy-pug/privacy/)
+- [HappyPug 서비스 이용약관](https://superwork.ai.kr/happy-pug/terms/)
+- [HappyPug 위치기반서비스 이용약관](https://superwork.ai.kr/happy-pug/location-terms/)
+- [HappyPug 마케팅 정보 수신 동의](https://superwork.ai.kr/happy-pug/marketing-consent/)
+- [HappyPug 계정 삭제 안내](https://superwork.ai.kr/happy-pug/account-deletion/)
 
 ## 조직 소개
 
+- [다썼다](https://superwork.ai.kr/dasseotda/): 
+- [물가타임머신](https://superwork.ai.kr/price-time-machine/): 
+- [하찮은이미지](https://superwork.ai.kr/hachanhan-image/): 
 - [SuperWork — AI 네이티브 개발 조직](https://superwork.ai.kr/Superwork_KTNasmedia/): Superwork는 변증법 AI 에이전트 워크플로우로 기획·개발·검증·배포 전 과정을 자동화하는 팀입니다.
 
 ## Optional
