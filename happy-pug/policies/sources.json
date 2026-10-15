@@ -10,12 +10,15 @@
     "editions": [
       {
         "path": "privacy",
-        "source": "privacy-2026-05-27",
+        "source": "privacy-2026-10-15",
         "status": "current",
-        "effective": "2026-05-27",
-        "upcoming": "./2026-10-15/",
-        "upcoming_effective": "2026-10-15",
-        "upcoming_announced": "2026-09-18"
+        "effective": "2026-10-15",
+        "announced": "2026-09-18",
+        "upcoming": "./2026-11-12/",
+        "upcoming_effective": "2026-11-12",
+        "upcoming_announced": "2026-10-13",
+        "previous": "./2026-05-27/",
+        "previous_label": "2026-05-27 시행"
       },
       {
         "path": "privacy/2026-05-27",
@@ -26,10 +29,9 @@
       {
         "path": "privacy/2026-10-15",
         "source": "privacy-2026-10-15",
-        "status": "upcoming",
+        "status": "dated",
         "effective": "2026-10-15",
-        "announced": "2026-09-18",
-        "current": "../"
+        "announced": "2026-09-18"
       },
       {
         "path": "privacy/2026-11-12",
@@ -59,12 +61,12 @@
     "editions": [
       {
         "path": "location-terms",
-        "source": "location-terms-2026-05-27",
+        "source": "location-terms-2026-10-15",
         "status": "current",
-        "effective": "2026-05-27",
-        "upcoming": "./2026-10-15/",
-        "upcoming_effective": "2026-10-15",
-        "upcoming_announced": "2026-09-18"
+        "effective": "2026-10-15",
+        "announced": "2026-09-18",
+        "previous": "./2026-05-27/",
+        "previous_label": "2026-05-27 시행"
       },
       {
         "path": "location-terms/2026-05-27",
@@ -75,10 +77,9 @@
       {
         "path": "location-terms/2026-10-15",
         "source": "location-terms-2026-10-15",
-        "status": "upcoming",
+        "status": "dated",
         "effective": "2026-10-15",
-        "announced": "2026-09-18",
-        "current": "../"
+        "announced": "2026-09-18"
       }
     ]
   },
