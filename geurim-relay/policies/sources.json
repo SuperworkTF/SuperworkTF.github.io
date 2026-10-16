@@ -10,7 +10,29 @@
     "editions": [
       {
         "path": "privacy",
-        "source": "privacy"
+        "source": "privacy-2026-08-28",
+        "status": "current",
+        "effective": "2026-08-28",
+        "sha256": "f15714473d030da277a98b22d7bdd244e5a8c7e98ae7422df96a224da8fef74b",
+        "upcoming": "./2026-10-22/",
+        "upcoming_effective": "2026-10-22",
+        "upcoming_announced": "2026-10-15"
+      },
+      {
+        "path": "privacy/2026-08-28",
+        "source": "privacy-2026-08-28",
+        "status": "dated",
+        "effective": "2026-08-28",
+        "sha256": "f15714473d030da277a98b22d7bdd244e5a8c7e98ae7422df96a224da8fef74b"
+      },
+      {
+        "path": "privacy/2026-10-22",
+        "source": "privacy-2026-10-22",
+        "status": "upcoming",
+        "effective": "2026-10-22",
+        "announced": "2026-10-15",
+        "sha256": "1ed3d56bf4dd7ea295cb04bd4c1c816edfa437d70436a9b590cdcb66b719ba09",
+        "current": "../"
       }
     ]
   },
