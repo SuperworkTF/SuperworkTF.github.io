@@ -117,7 +117,12 @@ def llms() -> str:
         if app.get("offers", {}).get("price") == "0":
             facts.append("무료")
         stores = " · ".join(f"[{store_label(u)}]({u})" for u in app.get("sameAs", []))
-        tail = f" {stores}" if stores else " 아직 스토어에 공개되지 않았습니다."
+        if stores:
+            tail = f" {stores}"
+        elif app.get("installUrl"):
+            tail = f" 웹에서 바로 이용: {app['installUrl']}"
+        else:
+            tail = " 아직 스토어에 공개되지 않았습니다."
         lines.append(f"- [{page.titles[0].strip()}]({app['url']}): {' '.join(facts[:1])} "
                      f"{', '.join(facts[1:])}{'.' if len(facts) > 1 else ''}{tail}".replace("  ", " "))
     lines += ["", "## 정책 문서", ""]

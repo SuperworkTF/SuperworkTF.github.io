@@ -26,7 +26,8 @@ DATA = json.loads((ROOT / 'assets/apps.json').read_text(encoding='utf-8'))
 SITE = json.loads((ROOT / 'assets/site.json').read_text(encoding='utf-8'))
 CATS = {c['id']: c for c in DATA['categories']}
 # apps.json 의 stores 키 → (단추·출시 채널 이름, 운영체제). 단추는 이 순서로 놓는다.
-STORES = {'appstore': ('App Store', 'iOS'), 'play': ('Google Play', 'Android'), 'toss': ('앱인토스', 'Web (Toss)')}
+STORES = {'appstore': ('App Store', 'iOS'), 'play': ('Google Play', 'Android'), 'toss': ('앱인토스', 'Web (Toss)'),
+          'web': ('웹', 'Web')}
 
 
 def stores(app):
@@ -57,6 +58,8 @@ def jsonld(app, image):
     if oses:
         node['operatingSystem'] = oses
     same = [u for k, u in got.items() if k in ('appstore', 'play')]
+    if got.get('web'):  # 설치 없이 브라우저에서 여는 서비스 — llms.txt 가 이 주소를 읽는다
+        node['installUrl'] = got['web']
     if same:
         node['offers'] = {'@type': 'Offer', 'price': '0', 'priceCurrency': 'KRW'}
         node['sameAs'] = same
@@ -90,7 +93,8 @@ def policy_docs(app):
 
 CONTACT = 'superwork.master+help@gmail.com'
 # 단추 글 — 그려보카 소개 페이지의 「Google Play 에서 받기」 꼴을 따른다
-STORE_CTA = {'appstore': 'App Store 에서 받기', 'play': 'Google Play 에서 받기', 'toss': '토스 앱에서 열기'}
+STORE_CTA = {'appstore': 'App Store 에서 받기', 'play': 'Google Play 에서 받기', 'toss': '토스 앱에서 열기',
+             'web': '웹에서 바로 열기'}
 
 
 def detail(app):

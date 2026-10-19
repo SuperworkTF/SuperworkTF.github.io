@@ -18,6 +18,7 @@ SuperWork는 주식회사 케이티나스미디어의 사내 조직입니다. �
 - [뭉치뭉치 — 힐링 캐주얼 게임](https://superwork.ai.kr/moongchi/): 동글동글 귀여운 친구들이 뭉칠수록 커지는 말랑말랑 힐링 캐주얼 게임. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.superwork.mungchimungchi)
 - [분식대란 — 분식 퍼즐 게임](https://superwork.ai.kr/bunsik-madness/): 밀려드는 주문을 퍼즐로 척척! 손맛 터지는 분식집 운영 게임. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.superwork.bunsikmadness)
 - [셀렉터 — 남길 사진을 먼저 정하는 사진 정리](https://superwork.ai.kr/piclect/): 지울 사진을 고르는 대신 남길 사진을 먼저 정하는 사진 정리 앱. Android, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.piclect.app)
+- [수험표 할인 지도 — 수능 수험생 할인 지도](https://superwork.ai.kr/suneung-map/): 수능 끝나고 수험표로 받는 할인을 지도에서 찾아요. 카페·외식·영화·놀이공원·항공·휴대폰 할인과 내 주변 매장을 한 번에. Web. 웹에서 바로 이용: https://suneung.superwork.ai.kr/
 - [어둠의 미로 — 1인칭 생존 호러](https://superwork.ai.kr/maze-escape/): 칠흑 같은 미로 속, 손전등 하나와 발소리에 의지해 보이지 않는 추격자를 피해 탈출하라. Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.darkmaze.mazeescape)
 - [우르르 — 소속 대항 미니게임, 한 판 20초](https://superwork.ai.kr/ururu/): 내 학교와 학과를 걸고 다른 학교와 겨루는 소속 대항 미니게임. 한 판 20초 안팎, 게임 20종. Android·iOS, 무료. [Google Play](https://play.google.com/store/apps/details?id=com.ururu.app) · [App Store](https://apps.apple.com/kr/app/id6805813391)
 - [진화 2048 — 퍼즐 게임](https://superwork.ai.kr/evolve-2048/): 숫자를 합칠수록 귀여운 젤리 몬스터가 알에서 용왕까지 진화하는 2048 퍼즐! Android·Web (Toss), 무료. [Google Play](https://play.google.com/store/apps/details?id=com.evolve2048.game)
@@ -48,6 +49,7 @@ SuperWork는 주식회사 케이티나스미디어의 사내 조직입니다. �
 - [분식대란 개인정보처리방침](https://superwork.ai.kr/bunsik-madness/privacy/)
 - [셀렉터 개인정보처리방침](https://superwork.ai.kr/piclect/privacy/)
 - [셀렉터 서비스 이용약관](https://superwork.ai.kr/piclect/terms/)
+- [수험표 할인 지도 개인정보처리방침](https://superwork.ai.kr/suneung-map/privacy/)
 - [어둠의 미로 개인정보처리방침](https://superwork.ai.kr/maze-escape/privacy/)
 - [우르르 개인정보처리방침](https://superwork.ai.kr/ururu/privacy/)
 - [우르르 서비스 이용약관](https://superwork.ai.kr/ururu/terms/)

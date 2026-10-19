@@ -1,0 +1,17 @@
+{
+  "app": {
+    "dir": "suneung-map",
+    "brand": "수험표 할인 지도",
+    "theme_color": "#2f6bff"
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "public_url": "https://superwork.ai.kr/suneung-map/privacy/",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy"
+      }
+    ]
+  }
+}
