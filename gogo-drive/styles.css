@@ -136,4 +136,193 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 고고 드라이브: 3D 도시 도로를 달리며 차선을 바꿔 앞차 세 대를 앞지르고, 레벨을 깬다 ───────── */
+/* 원근: 지평선(38cqw)의 소실점에서 길 아래(110cqw)까지. 길 위의 물체는 s(0~1)에 따라 함께 커지고 벌어진다 */
+.scene-gogo-drive { --loop: 11s; }
+.scene-gogo-drive .gd-stage { position: relative; aspect-ratio: 1 / 1.1; container-type: inline-size; overflow: hidden; background: #bfe3ff; }
+.scene-gogo-drive .gd-world { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scene-gogo-drive .gd-world .sky { fill: #bfe3ff; }
+.scene-gogo-drive .gd-world .sun { fill: #fff2b8; }
+.scene-gogo-drive .gd-world .far { fill: #9cc3e6; }
+.scene-gogo-drive .gd-world .near { fill: #f2a7a0; }
+.scene-gogo-drive .gd-world .grass { fill: #8fd18a; }
+.scene-gogo-drive .gd-world .walk { fill: #e9e4da; }
+.scene-gogo-drive .gd-world .road { fill: #5b6270; }
+.scene-gogo-drive .gd-world .edge { fill: none; stroke: #fff; stroke-width: .8; vector-effect: non-scaling-stroke; stroke-width: 3; }
+
+/* 차선 점선 — 소실점에서 나와 커지며 흘러온다 */
+.scene-gogo-drive .gd-dash {
+  position: absolute; left: 50%; top: 38cqw; width: 1.8cqw; height: 8cqw; margin: -8cqw 0 0 -.9cqw; border-radius: 1cqw; background: #fff;
+  transform-origin: 50% 100%; animation: gogo-drive-dash 1.2s cubic-bezier(.75, 0, .95, .5) infinite; animation-delay: var(--d);
+}
+@keyframes gogo-drive-dash {
+  from { transform: translate(calc((var(--l) - 50) * .02cqw), 1.4cqw) scale(.02); }
+  to { transform: translate(calc((var(--l) - 50) * 1.3cqw), 94cqw) scale(1.3); }
+}
+
+/* 차 — 뒷모습 */
+.scene-gogo-drive svg .cab { fill: color-mix(in srgb, var(--c) 80%, black); }
+.scene-gogo-drive svg .win { fill: #2c3a52; }
+.scene-gogo-drive svg .bod { fill: var(--c); }
+.scene-gogo-drive svg .tail { fill: #ff5a4f; }
+.scene-gogo-drive svg .plate { fill: #fff; }
+.scene-gogo-drive svg .tire { fill: #23262d; }
+.scene-gogo-drive .gd-car {
+  position: absolute; left: 50%; top: 38cqw; width: 26cqw; margin: -17.3cqw 0 0 -13cqw; transform-origin: 50% 100%;
+  animation: gogo-drive-car var(--loop) infinite both; animation-delay: var(--dl);
+}
+.scene-gogo-drive .gd-car svg, .scene-gogo-drive .gd-me svg { display: block; width: 100%; filter: drop-shadow(0 1cqw .4cqw rgba(0, 0, 0, .25)); }
+.scene-gogo-drive .c1 { --dl: 0s; transform: translate(0, 30cqw) scale(.42); }
+.scene-gogo-drive .c2 { --dl: 3s; transform: translate(10cqw, 12cqw) scale(.17); opacity: 0; }
+.scene-gogo-drive .c3 { --dl: 5.5s; transform: translate(-8cqw, 17cqw) scale(.24); }
+@keyframes gogo-drive-car {
+  0% { opacity: 1; transform: translate(calc((var(--l) - 50) * .04cqw), 2.9cqw) scale(.04); animation-timing-function: cubic-bezier(.75, 0, .95, .55); }
+  22% { opacity: 1; transform: translate(calc((var(--l) - 50) * 1.35cqw), 97cqw) scale(1.35); }
+  22.1%, 100% { opacity: 0; transform: translate(calc((var(--l) - 50) * 1.35cqw), 97cqw) scale(1.35); }
+}
+
+/* 내 차 — 조이스틱을 따라 차선을 바꾼다 */
+.scene-gogo-drive .gd-me {
+  --c: var(--accent); position: absolute; left: 50%; bottom: 4cqw; width: 30cqw; margin-left: -15cqw;
+  transform: translateX(32cqw); animation: gogo-drive-me var(--loop) ease-in-out infinite both;
+}
+@keyframes gogo-drive-me {
+  0%, 9% { transform: translateX(0); }
+  11% { transform: translateX(16cqw) rotate(4deg); }
+  13%, 38% { transform: translateX(32cqw); }
+  40% { transform: translateX(16cqw) rotate(-4deg); }
+  42%, 100% { transform: translateX(0); }
+}
+.scene-gogo-drive .gd-me svg { animation: gogo-drive-hum .3s ease-in-out infinite alternate; }
+@keyframes gogo-drive-hum { to { transform: translateY(.4cqw); } }
+
+/* 미션 카드 · 속도 · 조이스틱 */
+.scene-gogo-drive .gd-mission {
+  position: absolute; top: 3cqw; left: 3cqw; display: grid; grid-template-columns: auto auto; align-items: center; gap: .15rem .6rem;
+  padding: .55rem .75rem .6rem; border-radius: .8rem; background: var(--sheet); box-shadow: 0 10px 22px -14px rgba(0, 0, 0, .5);
+  font-size: .8rem; font-weight: 800; letter-spacing: -.02em; color: var(--ink); white-space: nowrap;
+}
+.scene-gogo-drive .gd-mission small { grid-column: 1 / -1; font-size: .66rem; font-weight: 800; color: var(--accent); }
+.scene-gogo-drive .gd-count { color: var(--accent); }
+.scene-gogo-drive .gd-count::after { content: "1/3"; animation: gogo-drive-count var(--loop) steps(1) infinite; }
+@keyframes gogo-drive-count { 0% { content: "0/3"; } 22% { content: "1/3"; } 49% { content: "2/3"; } 72%, 100% { content: "3/3"; } }
+.scene-gogo-drive .gd-goal { grid-column: 1 / -1; display: block; height: .3rem; margin-top: .25rem; border-radius: 99px; background: var(--line); overflow: hidden; }
+.scene-gogo-drive .gd-goal i { display: block; height: 100%; width: 40%; background: var(--accent); border-radius: inherit; animation: gogo-drive-goal var(--loop) linear infinite both; }
+@keyframes gogo-drive-goal { 0% { width: 4%; } 74%, 100% { width: 100%; } }
+.scene-gogo-drive .gd-speed {
+  position: absolute; top: 3cqw; right: 3cqw; padding: .4rem .7rem; border-radius: .8rem; background: #23262d; color: #fff;
+  font-size: .8rem; font-weight: 800; white-space: nowrap;
+}
+.scene-gogo-drive .gd-speed::before { content: "112"; font-size: 1.1rem; animation: gogo-drive-speed var(--loop) steps(1) infinite; }
+@keyframes gogo-drive-speed { 0% { content: "96"; } 6% { content: "104"; } 18% { content: "112"; } 34% { content: "108"; } 46% { content: "116"; } 62% { content: "121"; } 76%, 100% { content: "96"; } }
+.scene-gogo-drive .gd-stick {
+  position: absolute; left: 4cqw; bottom: 4cqw; width: 15cqw; height: 15cqw; border-radius: 50%;
+  background: rgba(255, 255, 255, .35); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .7);
+}
+.scene-gogo-drive .gd-stick i {
+  position: absolute; left: 50%; top: 50%; width: 7cqw; height: 7cqw; margin: -3.5cqw; border-radius: 50%; background: var(--sheet);
+  box-shadow: 0 4px 10px -4px rgba(0, 0, 0, .5); animation: gogo-drive-stick var(--loop) ease-in-out infinite both;
+}
+@keyframes gogo-drive-stick {
+  0%, 8% { transform: translateY(-2cqw); } 10%, 12% { transform: translate(4cqw, -2cqw); } 14%, 37% { transform: translateY(-2cqw); }
+  39%, 41% { transform: translate(-4cqw, -2cqw); } 43%, 74% { transform: translateY(-3cqw); } 78%, 100% { transform: none; }
+}
+
+/* 레벨 클리어 */
+.scene-gogo-drive .gd-clear {
+  position: absolute; left: 50%; top: 52%; display: grid; justify-items: center; gap: .25rem; padding: .85rem 1.3rem; border-radius: .9rem;
+  background: var(--sheet); box-shadow: 0 18px 36px -16px rgba(0, 0, 0, .55); white-space: nowrap;
+  opacity: 0; transform: translate(-50%, -50%); animation: gogo-drive-clear var(--loop) cubic-bezier(.2, 1.4, .4, 1) infinite both;
+}
+.scene-gogo-drive .gd-clear strong { font-size: 1.15rem; color: var(--accent); letter-spacing: -.03em; }
+.scene-gogo-drive .gd-clear span { font-size: .8rem; font-weight: 700; color: var(--ink); }
+@keyframes gogo-drive-clear {
+  0%, 75% { opacity: 0; transform: translate(-50%, -30%) scale(.8); }
+  79%, 93% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  97%, 100% { opacity: 0; transform: translate(-50%, -55%) scale(.95); }
+}
+
+@media (max-width: 700px) {
+  .scene-gogo-drive .gd-mission { font-size: .7rem; padding: .45rem .6rem .5rem; }
+  .scene-gogo-drive .gd-mission small { font-size: .6rem; }
+  .scene-gogo-drive .gd-speed { font-size: .68rem; padding: .35rem .55rem; }
+  .scene-gogo-drive .gd-speed::before { font-size: .92rem; }
+  .scene-gogo-drive .gd-clear strong { font-size: 1rem; }
+  .scene-gogo-drive .gd-clear span { font-size: .72rem; }
+}
+/* 멈춰 있을 때 — 오른쪽 차선으로 비켜 파란 차를 앞지르는 순간 */
+@media (prefers-reduced-motion: reduce) {
+  .scene-gogo-drive .gd-dash:nth-of-type(4n+1) { transform: translate(calc((var(--l) - 50) * .8cqw), 57.6cqw) scale(.8); }
+  .scene-gogo-drive .gd-dash:nth-of-type(4n+2) { transform: translate(calc((var(--l) - 50) * .4cqw), 28.8cqw) scale(.4); }
+  .scene-gogo-drive .gd-dash:nth-of-type(4n+3) { transform: translate(calc((var(--l) - 50) * .18cqw), 13cqw) scale(.18); }
+  .scene-gogo-drive .gd-dash:nth-of-type(4n) { transform: translate(calc((var(--l) - 50) * .07cqw), 5cqw) scale(.07); }
+  .scene-gogo-drive .c1 { transform: translate(0, 50cqw) scale(.7); }
+  .scene-gogo-drive .gd-stick i { transform: translate(4cqw, -2cqw); }
+}
+
 :root { --accent: #c62828; }

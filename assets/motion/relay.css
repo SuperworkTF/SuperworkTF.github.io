@@ -1,0 +1,50 @@
+/* ── 그림 이어받기: 그림 하나가 다섯 사람을 거쳐 탕수육이 된다 ─────────── */
+.scene-relay { --slot: 2.8s; --n: 5; }
+.relay-board { padding: 1.1rem 1.1rem 1rem; }
+.relay-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.6rem; }
+.relay-words { position: relative; flex: 1; height: 2.4rem; }
+.relay-word {
+  position: absolute; inset: 0 auto 0 0; display: inline-flex; align-items: center; gap: .5rem; padding: 0 1rem; border-radius: 99px;
+  background: var(--wash); font-weight: 800; letter-spacing: -.03em; white-space: nowrap;
+  opacity: 0; animation: r-show calc(var(--slot) * var(--n)) ease infinite both; animation-delay: calc(var(--i) * var(--slot));
+}
+.relay-word small { font-weight: 600; font-size: .78rem; color: var(--muted); }
+.relay-word.last { background: var(--accent); color: var(--sheet); }
+.relay-word.last small { color: color-mix(in srgb, var(--sheet) 75%, transparent); }
+.relay-timer { width: 2.4rem; height: 2.4rem; flex: none; transform: rotate(-90deg); }
+.relay-timer circle { fill: none; stroke-width: 4; }
+.relay-timer .track { stroke: var(--line); }
+.relay-timer .run { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 1; animation: r-timer var(--slot) linear infinite; }
+@keyframes r-timer { from { stroke-dashoffset: 0; } 92%, to { stroke-dashoffset: 1; } }
+.relay-canvas { position: relative; margin-top: .8rem; aspect-ratio: 200 / 140; border-radius: .9rem; border: 1px dashed var(--line);
+  background: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0 / 14px 14px, var(--sheet); }
+.relay-canvas svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; animation: r-show calc(var(--slot) * var(--n)) ease infinite both; animation-delay: calc(var(--i) * var(--slot)); }
+.relay-canvas path { fill: none; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: r-draw calc(var(--slot) * var(--n)) ease-out infinite both; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes r-show { 0% { opacity: 0; transform: translateY(6px); } 2%, 18% { opacity: 1; transform: none; } 20%, 100% { opacity: 0; } }
+@keyframes r-draw { 0% { stroke-dashoffset: 1; } 13%, 100% { stroke-dashoffset: 0; } }
+.relay-palette { display: flex; gap: .45rem; margin-top: .8rem; }
+.relay-palette span { width: 1.15rem; height: 1.15rem; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 2px color-mix(in srgb, black 10%, transparent); }
+.relay-chain { display: grid; grid-template-columns: repeat(5, 1fr); gap: .4rem; list-style: none; margin: 0; padding: .9rem 1.1rem 1.1rem; border-top: 1px solid var(--line); }
+.relay-chain li { position: relative; display: grid; justify-items: center; gap: .25rem; font-size: .72rem; color: var(--muted); }
+.relay-chain li::before {
+  content: attr(data-face); display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--line); font-size: 1rem;
+  /* 차례가 오기 전에는 첫 장면(켜진 상태)을 미리 보이지 않는다 — fill 없음 */
+  animation: r-turn calc(var(--slot) * var(--n)) ease infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.relay-chain li:not(:last-child)::after { content: ""; position: absolute; top: 1.1rem; left: calc(50% + 1.3rem); width: calc(100% - 2.6rem + .4rem); border-top: 2px dotted var(--line); }
+@keyframes r-turn { 0%, 19% { border-color: var(--accent); background: var(--wash); transform: scale(1.12); } 21%, 100% { border-color: var(--line); background: var(--paper); transform: none; } }
+
+@media (max-width: 700px) {
+  .relay-chain li { font-size: .66rem; }
+  .relay-chain li::before { width: 1.9rem; height: 1.9rem; font-size: .9rem; }
+  .relay-chain li:not(:last-child)::after { top: .95rem; left: calc(50% + 1.15rem); width: calc(100% - 2.3rem + .4rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .relay-word, .relay-canvas svg { opacity: 0; }
+  .relay-word.last, .relay-canvas svg:last-child { opacity: 1; }
+  .relay-canvas path { stroke-dashoffset: 0; }
+  .relay-chain li:last-child::before { border-color: var(--accent); background: var(--wash); }
+  .relay-timer .run { stroke-dashoffset: .35; }
+}

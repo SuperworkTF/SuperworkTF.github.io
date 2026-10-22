@@ -60,7 +60,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="트롯스텝 소개"><img src="../assets/apps/trotstep/icon.png" alt="" width="30" height="30">트롯스텝</a>
@@ -76,7 +76,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">WALK · CHEER · VOTE</p>
-        <h1 id="intro-heading">오늘 걷는 걸음이<br>최애 가수 응원이 돼요.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">오늘 걷는 걸음이</span></span><span class="line"><span style="--l:1">최애 가수 응원이 돼요.</span></span></h1>
         <p class="hero-copy">트롯스텝은 매일 걸은 걸음으로 투표권을 모아 좋아하는 트로트 가수를 응원하는 앱입니다. 1,000보를 걸을 때마다 투표권 1장이 쌓여요.</p>
         <div class="actions">
           <span class="button" aria-disabled="true">스토어 링크 준비 중</span>
@@ -84,9 +84,38 @@
         </div>
         <p class="age-note">만 14세 이상 · 무료(월간 구독 선택)</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/trotstep/thumb.jpg" alt="트롯스텝 대표 이미지" style="object-position:center">
-        <figcaption><strong>트롯스텝</strong><span>라이프스타일·팬덤</span></figcaption>
+      <figure class="scene scene-trotstep" aria-label="오늘 걸음 수가 올라가며 1,000보마다 투표권이 1장씩 쌓이고, 모은 투표권으로 최애 가수에게 투표해 응원 랭킹이 오르는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="ts-stage">
+          <div class="ts-head">
+            <div class="ts-steps"><small>👟 오늘 걸음</small><b></b></div>
+            <div class="ts-bar"><i></i><span>하루 최대 10,000보</span></div>
+          </div>
+          <div class="ts-walk">
+            <span style="--i:0"></span><span style="--i:1"></span><span style="--i:2"></span><span style="--i:3"></span><span style="--i:4"></span>
+            <span style="--i:5"></span><span style="--i:6"></span><span style="--i:7"></span><span style="--i:8"></span><span style="--i:9"></span>
+            <em>+1장</em>
+          </div>
+          <div class="ts-tickets">
+            <div class="ts-label"><span>🎫 투표권</span><b></b><small>1,000보마다 1장 · 하루 최대 10장</small></div>
+            <div class="ts-slots">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              <div class="ts-fill">
+                <span style="--i:0"></span><span style="--i:1"></span><span style="--i:2"></span><span style="--i:3"></span><span style="--i:4"></span>
+              </div>
+            </div>
+          </div>
+          <div class="ts-rank">
+            <div class="ts-rank-head"><span>🏆 응원 랭킹</span><em class="ts-vote">🎤 최애에게 투표</em></div>
+            <ol>
+              <li class="r-me"><span class="ts-name">💖 내 최애</span><span class="ts-meter"><i></i></span><em>+5표</em></li>
+              <li class="r-a"><span class="ts-name">가수 A</span><span class="ts-meter"><i></i></span></li>
+              <li class="r-b"><span class="ts-name">가수 B</span><span class="ts-meter"><i></i></span></li>
+            </ol>
+          </div>
+        </div>
+        </div>
+        <figcaption><strong>트롯스텝</strong><span>걸음이 모여 최애 응원으로</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
@@ -94,17 +123,17 @@
       <h2 id="how-heading">걷고, 모으고, 응원해요.</h2>
       <p class="section-intro">따로 운동 기록을 적을 필요 없어요. 휴대폰이 세어 준 걸음 수로 투표권이 쌓입니다.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>걸음 수 연결</h3>
           <p>iPhone은 Apple 건강, Android는 기기 걸음 센서와 헬스 커넥트에서 오늘의 걸음 수만 읽어 와요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>투표권 모으기</h3>
           <p>1,000보마다 투표권 1장, 하루 최대 10장까지 쌓여요. 원하면 응원 에너지 광고를 보고 하루 2번, 2장씩 더 받을 수 있어요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>최애에게 투표</h3>
           <p>모은 투표권으로 응원하는 가수에게 투표해 순위를 함께 올려요. 하루 목표 걸음 수도 직접 정할 수 있어요.</p>

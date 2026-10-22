@@ -72,7 +72,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="귀여운동물사전 소개"><img src="../assets/apps/animalpedia/icon.png" alt="" width="30" height="30">귀여운동물사전</a>
@@ -86,7 +86,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">COMBINE · RAISE · SHOWCASE</p>
-        <h1 id="intro-heading">재료를 섞으면,<br>세상에 하나뿐인 동물.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">재료를 섞으면,</span></span><span class="line"><span style="--l:1">세상에 하나뿐인 동물.</span></span></h1>
         <p class="hero-copy">귀여운동물사전은 매일 받는 재료를 조합해 AI가 만든 동물을 알에서 전설까지 키우는 육성 게임입니다. 전설이 된 동물은 다른 이용자의 응원을 받아 동물사전에 이름을 올릴 수 있어요.</p>
         <div class="actions">
           <a class="button" href="https://play.google.com/store/apps/details?id=com.animalpedia.play">Google Play 에서 받기</a><a class="button" href="https://minion.toss.im/5yKqzNuD">토스 앱에서 열기</a>
@@ -94,9 +94,45 @@
         </div>
         <p class="age-note">세로 화면 · 가입 없이 시작 · 무료</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/animalpedia/thumb.jpg" alt="귀여운동물사전 대표 이미지" style="object-position:center">
-        <figcaption><strong>귀여운동물사전</strong><span>수집·힐링 게임</span></figcaption>
+      <figure class="scene scene-animalpedia" aria-label="오늘의 재료 세 개를 조합해 알이 생기고, 먹이 주기와 놀아주기로 돌보며 전설 단계까지 키워 귀여워요 10표를 받고 동물사전에 오르는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="ap-stage">
+          <div class="ap-top"><b class="ap-step"></b><span class="ap-grow"><i></i></span></div>
+          <ul class="ap-items">
+            <li class="pick" style="--dx:36;--d:0s">🍓</li>
+            <li>🌿</li>
+            <li class="pick" style="--dx:0;--d:.35s">☁️</li>
+            <li>🐚</li>
+            <li class="pick" style="--dx:-36;--d:.7s">🌙</li>
+          </ul>
+          <b class="ap-votes">❤ 귀여워요 </b>
+          <div class="ap-nest">
+            <span class="ap-glow"></span>
+            <span class="ap-pot">조합</span>
+            <svg class="ap-egg" viewBox="0 0 100 100"><ellipse cx="50" cy="56" rx="28" ry="36"/><circle cx="40" cy="44" r="5"/><circle cx="60" cy="62" r="7"/><circle cx="44" cy="76" r="4"/><circle cx="64" cy="38" r="3.5"/></svg>
+            <svg class="ap-pet" viewBox="0 0 100 100">
+              <path class="ear" d="M20 46L24 12L46 34Z M80 46L76 12L54 34Z"/>
+              <path class="ear-in" d="M26 38L28 20L39 32Z M74 38L72 20L61 32Z"/>
+              <circle class="body" cx="50" cy="58" r="33"/>
+              <path class="cloud" d="M36 30a7 7 0 0 1 12-4a8 8 0 0 1 14 4a6 6 0 0 1 0 10H38a6 6 0 0 1-2-10Z"/>
+              <circle class="eye" cx="38" cy="56" r="4.6"/><circle class="eye" cx="62" cy="56" r="4.6"/>
+              <circle class="shine" cx="39.6" cy="54.4" r="1.6"/><circle class="shine" cx="63.6" cy="54.4" r="1.6"/>
+              <ellipse class="blush" cx="30" cy="66" rx="6" ry="3.6"/><ellipse class="blush" cx="70" cy="66" rx="6" ry="3.6"/>
+              <path class="mouth" d="M44 66q3 4 6 0q3 4 6 0"/>
+            </svg>
+            <svg class="ap-crown" viewBox="0 0 60 34"><path d="M4 30L2 6L17 18L30 2L43 18L58 6L56 30Z"/><circle cx="30" cy="20" r="4"/></svg>
+            <span class="ap-heart h1">❤</span><span class="ap-heart h2">💚</span>
+          </div>
+          <ul class="ap-care">
+            <li style="--i:0"><em>🍖</em>먹이 주기</li>
+            <li style="--i:1"><em>🎾</em>놀아주기</li>
+            <li style="--i:2"><em>🌳</em>산책</li>
+            <li style="--i:3"><em>🧸</em>돌봐주기</li>
+          </ul>
+          <div class="ap-stamp"><small>📖 동물사전</small><strong>영구 등재</strong></div>
+        </div>
+        </div>
+        <figcaption><strong>귀여운동물사전</strong><span>알에서 전설까지 키워요</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
@@ -104,17 +140,17 @@
       <h2 id="how-heading">모으고, 조합하고, 정성껏 키워요.</h2>
       <p class="section-intro">하루에 조금씩 들어와 재료를 받고 동물을 돌보는 게임이에요. 같은 재료를 넣어도 매번 다른 동물이 태어나요.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>재료 받고 조합하기</h3>
           <p>자루에서 오늘의 재료를 받고, 재료 3~5개를 골라 조합해요. 원하는 동물 설명을 100자까지 덧붙일 수 있어요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>돌보며 키우기</h3>
           <p>먹이 주기, 놀아주기, 산책 보내기, 돌봐주기로 컨디션과 성장 조건을 채워요. 알에서 전설까지 모두 11단계예요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>뽐내고 사전에 올리기</h3>
           <p>키운 동물을 뽐내기 광장에 올려 보세요. 전설 단계에서 귀여워요 10표를 받으면 동물사전에 영구 등재돼요.</p>

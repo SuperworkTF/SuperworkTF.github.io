@@ -97,6 +97,101 @@ STORE_CTA = {'appstore': 'App Store 에서 받기', 'play': 'Google Play 에서 
              'web': '웹에서 바로 열기'}
 
 
+# ── 소개 페이지 모션 장면 ───────────────────────────────────────────────
+# apps.json 의 details.page.motion 이 이름을 고른다. 장면은 그 앱의 한 판을 CSS 만으로 보여 준다
+# (assets/app-motion.css). 움직이지 않는 사람에게는 마지막 장면이 서 있다.
+
+# 그림 이어받기 — 다섯 사람이 차례로 그리고 맞히며 고양이가 탕수육이 된다. 낙서는 일부러 서툴게.
+RELAY = (
+    ('제시어', '고양이', '😺', [('#24372e', 'M60 92 C55 55 145 55 140 92 C140 124 60 124 60 92Z'),
+                               ('#24372e', 'M68 70 L74 40 L94 60 M106 60 L126 40 L132 70'),
+                               ('#24372e', 'M86 86 l0 3 M114 86 l0 3 M95 99 L100 104 L105 99'),
+                               ('#f08a24', 'M58 96 L32 90 M58 102 L32 108 M142 96 L168 90 M142 102 L168 108')]),
+    ('2번 답', '호랑이?', '🤔', [('#f08a24', 'M58 90 C52 52 148 52 142 90 C142 126 58 126 58 90Z'),
+                               ('#24372e', 'M78 62 l5 12 M100 57 l0 14 M122 62 l-5 12 M60 98 l14 0 M140 98 l-14 0'),
+                               ('#24372e', 'M86 86 l0 3 M114 86 l0 3 M92 104 Q100 112 108 104')]),
+    ('3번 답', '사자', '😎', [('#e2b100', 'M100 26 L112 42 L130 34 L130 54 L150 58 L140 74 L156 88 L140 98 L146 116 L126 114 L120 132 L104 120 L94 134 L86 116 L68 126 L68 108 L48 104 L60 90 L44 76 L62 68 L54 50 L74 52 L76 34 L90 44 Z'),
+                            ('#24372e', 'M76 84 C76 56 124 56 124 84 C124 110 76 110 76 84Z'),
+                            ('#24372e', 'M90 80 l0 3 M110 80 l0 3 M94 96 L100 100 L106 96')]),
+    ('4번 답', '대걸레?', '😵', [('#24372e', 'M134 18 L100 84'),
+                               ('#2563eb', 'M66 86 L128 84 M72 86 L62 126 M84 86 L80 130 M96 86 L96 132 M108 86 L112 130 M120 85 L130 124')]),
+    ('5번 답', '탕수육!', '🤣', [('#24372e', 'M28 100 C28 70 172 70 172 100 C172 130 28 130 28 100Z'),
+                               ('#c2611f', 'M62 92 C54 78 78 72 82 86 C86 98 66 102 62 92Z M96 84 C92 70 116 68 116 82 C116 94 98 96 96 84Z M126 96 C120 82 144 80 144 94 C144 106 128 106 126 96Z M84 108 C80 96 100 94 102 104 C104 114 86 116 84 108Z'),
+                               ('#d23c3c', 'M50 82 C74 70 96 98 118 78 C134 64 148 84 158 78')]),
+)
+RELAY_PALETTE = ('#24372e', '#2563eb', '#d23c3c', '#f08a24', '#e2b100', '#2f9e5b')
+
+
+def scene_relay(app):
+    words = ''.join(f'\n            <span class="relay-word{" last" if n == len(RELAY) - 1 else ""}" style="--i:{n}">'
+                    f'<small>{e(k)}</small>{e(w)}</span>' for n, (k, w, _, _) in enumerate(RELAY))
+    doodles = ''.join(f'\n          <svg viewBox="0 0 200 140" style="--i:{n}">' +
+                      ''.join(f'<path pathLength="1" stroke="{c}" d="{d}"/>' for c, d in paths) + '</svg>'
+                      for n, (_, _, _, paths) in enumerate(RELAY))
+    chain = ''.join(f'\n        <li style="--i:{n}" data-face="{f}">{n + 1}번째</li>' for n, (_, _, f, _) in enumerate(RELAY))
+    palette = ''.join(f'<span style="--c:{c}"></span>' for c in RELAY_PALETTE)
+    return f'''
+      <figure class="scene scene-relay" aria-label="한 판의 흐름: 고양이 그림이 다섯 사람을 거쳐 탕수육이 됩니다">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="relay-board">
+          <div class="relay-top">
+            <div class="relay-words">{words}
+            </div>
+            <svg class="relay-timer" viewBox="0 0 40 40"><circle class="track" cx="20" cy="20" r="16"/><circle class="run" pathLength="1" cx="20" cy="20" r="16"/></svg>
+          </div>
+          <div class="relay-canvas">{doodles}
+          </div>
+          <div class="relay-palette">{palette}</div>
+        </div>
+        <ol class="relay-chain">{chain}
+        </ol>
+        </div>
+        <figcaption><strong>{e(app["name"])}</strong><span>고양이 → 탕수육, 다섯 사람의 릴레이</span></figcaption>
+      </figure>'''
+
+
+# 수험표 할인 지도 — 내 위치 둘레에 할인 핀이 떨어지고, 수험표가 「할인 OK」 도장을 받는다.
+MAP_PINS = (('☕ 30%', '22%', '36%', '#8a5a3c'), ('🎬 7,000원', '74%', '33%', '#2f6bff'),
+            ('🍔 50%', '30%', '72%', '#e8541c'), ('🥤 1+1', '78%', '68%', '#2f9e5b'))
+
+
+def scene_map(app):
+    pins = ''.join(f'\n          <span class="pin" style="--i:{n};--x:{x};--y:{y};--c:{c}"><b>{e(t)}</b></span>'
+                   for n, (t, x, y, c) in enumerate(MAP_PINS))
+    return f'''
+      <figure class="scene scene-map" aria-label="지도에서 내 주변 수험생 할인을 찾는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="map">
+          <svg class="map-streets" viewBox="0 0 400 360" preserveAspectRatio="none">
+            <path class="river" d="M-20 300 C80 260 160 330 260 290 C330 262 380 300 430 280"/>
+            <rect class="park" x="250" y="160" width="110" height="70" rx="16"/>
+            <path class="road" d="M-10 130 L410 110 M-10 230 L410 250 M120 -10 L140 370 M280 -10 L250 370"/>
+            <path class="lane" d="M-10 130 L410 110 M-10 230 L410 250 M120 -10 L140 370 M280 -10 L250 370"/>
+          </svg>
+          <div class="map-search"><span>🔎 내 주변 수험생 할인</span><b></b></div>
+          <span class="map-me"></span>{pins}
+          <div class="ticket"><span>2027학년도 대학수학능력시험</span><strong>수험표</strong><span>2026. 11. 19.</span><em class="stamp">할인 OK</em></div>
+        </div>
+        </div>
+        <figcaption><strong>{e(app["name"])}</strong><span>내 주변 할인을 지도에서</span></figcaption>
+      </figure>'''
+
+
+SCENES = {'relay': scene_relay, 'map': scene_map}
+# 나머지 장면은 파일 한 쌍이다 — tools/scenes/<장면>.html (figure 한 덩어리) 와 assets/motion/<장면>.css.
+# html 에서 {{name}} 은 앱 이름, {{base}} 는 사이트 뿌리까지의 상대 경로로 바뀐다.
+SCENE_DIR = ROOT / 'tools/scenes'
+
+
+def scene_html(motion, app, base):
+    if motion in SCENES:
+        return SCENES[motion](app).lstrip('\n')
+    f = SCENE_DIR / f'{motion}.html'
+    if not f.exists():
+        sys.exit(f'{app["id"]}: 모르는 motion {motion!r} — {sorted(SCENES)} 또는 tools/scenes/<이름>.html')
+    return f.read_text(encoding='utf-8').rstrip('\n').replace('{{name}}', e(app['name'])).replace('{{base}}', base)
+
+
 def detail(app):
     """apps/<앱>/index.html — 그려보카(word-doodle/) 소개 페이지와 같은 짜임·스타일(assets/app-intro.css)."""
     root = at_root(app)
@@ -120,7 +215,7 @@ def detail(app):
                'intro': app['details']['lead'] if app['details']['lead'] != app['desc'] else ''}
         how_items = [(i['title'], None) for sec in app['details'].get('sections', []) for i in sec['items']]
     steps = ''.join(f'''
-        <li class="step">
+        <li class="step"{f' style="--i:{n - 1}"' if pg.get('motion') else ''}>
           <span class="step-number" aria-hidden="true">{n:02d}</span>
           <h3>{e(t)}</h3>{f"""
           <p>{e(d)}</p>""" if d else ''}
@@ -155,6 +250,28 @@ def detail(app):
         f'\n          <a href="{base}#apps-{e(cat["id"])}">{e(cat["label"])} 앱 더 보기 <span aria-hidden="true">↗</span></a>'
     policy_line = ('개인정보처리방침 등 정책 문서는 이 페이지 아래 「문의와 정책 안내」에서 확인할 수 있습니다.' if docs
                    else '개인정보처리방침과 이용약관은 앱이 출시된 스토어의 앱 정보와 앱 안에서 확인할 수 있습니다.')
+    motion = pg.get('motion')
+    if motion and pg.get('headline'):  # 줄마다 따로 올라오도록 한 줄씩 감싼다
+        headline = ''.join(f'<span class="line"><span style="--l:{n}">{e(t)}</span></span>'
+                           for n, t in enumerate(pg['headline'].split('\n')))
+    else:
+        headline = br(pg['headline']) if pg.get('headline') else name
+    figure = scene_html(motion, app, base) if motion else f'''      <figure class="shot-card">
+        <img src="{base}{e(app["thumb"])}" alt="{name} 대표 이미지" style="object-position:{e(app["thumbPos"])}">
+        <figcaption><strong>{name}</strong><span>{e(app["genre"])}</span></figcaption>
+      </figure>'''
+    hero = f'''    <section class="hero" aria-labelledby="intro-heading">
+      <div>
+        <p class="eyebrow">{e(pg.get("eyebrow") or app["genre"])}</p>
+        <h1 id="intro-heading">{headline}</h1>
+        <p class="hero-copy">{e(pg.get("heroCopy") or app["desc"])}</p>
+        <div class="actions">
+          {buttons}{more}
+        </div>
+        <p class="age-note">{e(pg.get("note") or f'{cat["label"]} · {channels}')}</p>
+      </div>
+{figure}
+    </section>'''
     body = f'''  <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="{name} 소개">{icon}{name}</a>
@@ -164,21 +281,7 @@ def detail(app):
     </nav>
   </header>
   <main id="main" class="shell" tabindex="-1">
-    <section class="hero" aria-labelledby="intro-heading">
-      <div>
-        <p class="eyebrow">{e(pg.get("eyebrow") or app["genre"])}</p>
-        <h1 id="intro-heading">{br(pg["headline"]) if pg.get("headline") else name}</h1>
-        <p class="hero-copy">{e(pg.get("heroCopy") or app["desc"])}</p>
-        <div class="actions">
-          {buttons}{more}
-        </div>
-        <p class="age-note">{e(pg.get("note") or f'{cat["label"]} · {channels}')}</p>
-      </div>
-      <figure class="shot-card">
-        <img src="{base}{e(app["thumb"])}" alt="{name} 대표 이미지" style="object-position:{e(app["thumbPos"])}">
-        <figcaption><strong>{name}</strong><span>{e(app["genre"])}</span></figcaption>
-      </figure>
-    </section>{how_block}
+{hero}{how_block}
     <section class="local-note" aria-labelledby="info-heading">
       <div>
         <p class="eyebrow">{e(n2["eyebrow"])}</p>
@@ -241,7 +344,7 @@ def detail(app):
   <meta name="twitter:card" content="{card}">
   {jsonld(app, image)}{style}
 </head>
-<body>
+<body{' class="motion"' if motion else ''}>
 {body}
 </body>
 </html>
@@ -251,6 +354,10 @@ def detail(app):
 def app_styles(app):
     """/<앱>/styles.css — 소개와 정책 페이지가 함께 쓴다. 공용 app-intro.css 에 이 앱의 강조색만 얹는다."""
     css = (ROOT / 'assets/app-intro.css').read_text(encoding='utf-8')
+    motion = (app['details'].get('page') or {}).get('motion')
+    if motion:  # 모션을 고른 앱만 모션 공통 규칙과 자기 장면 규칙을 싣는다
+        css += '\n' + (ROOT / 'assets/app-motion.css').read_text(encoding='utf-8')
+        css += '\n' + (ROOT / f'assets/motion/{motion}.css').read_text(encoding='utf-8')
     return (f'/* 생성: tools/build-site.py 가 assets/app-intro.css 와 apps.json 의 accent 로 쓴다. 손으로 고치지 않는다. */\n'
             f'{css}\n:root {{ --accent: {app.get("accent", "#8d442a")}; }}\n')
 

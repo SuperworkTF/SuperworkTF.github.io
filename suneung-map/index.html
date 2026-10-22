@@ -64,7 +64,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="수험표 할인 지도 소개"><img src="../assets/apps/suneung-map/icon.png" alt="" width="30" height="30">수험표 할인 지도</a>
@@ -78,7 +78,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">수능 · 수험표 · 할인</p>
-        <h1 id="intro-heading">수험표 한 장으로,<br>내 주변 할인을 찾아요.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">수험표 한 장으로,</span></span><span class="line"><span style="--l:1">내 주변 할인을 찾아요.</span></span></h1>
         <p class="hero-copy">수험표 할인 지도는 2027학년도 수능(2026년 11월 19일)이 끝난 뒤 수험표로 받을 수 있는 할인을 지도에 모았습니다. 설치나 가입 없이 웹에서 바로 열어요.</p>
         <div class="actions">
           <a class="button" href="https://suneung.superwork.ai.kr/">웹에서 바로 열기</a>
@@ -86,9 +86,25 @@
         </div>
         <p class="age-note">무료 · 웹 · 가입 없음</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/suneung-map/thumb.jpg" alt="수험표 할인 지도 대표 이미지" style="object-position:center">
-        <figcaption><strong>수험표 할인 지도</strong><span>수능 수험생 할인 지도</span></figcaption>
+      <figure class="scene scene-map" aria-label="지도에서 내 주변 수험생 할인을 찾는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="map">
+          <svg class="map-streets" viewBox="0 0 400 360" preserveAspectRatio="none">
+            <path class="river" d="M-20 300 C80 260 160 330 260 290 C330 262 380 300 430 280"/>
+            <rect class="park" x="250" y="160" width="110" height="70" rx="16"/>
+            <path class="road" d="M-10 130 L410 110 M-10 230 L410 250 M120 -10 L140 370 M280 -10 L250 370"/>
+            <path class="lane" d="M-10 130 L410 110 M-10 230 L410 250 M120 -10 L140 370 M280 -10 L250 370"/>
+          </svg>
+          <div class="map-search"><span>🔎 내 주변 수험생 할인</span><b></b></div>
+          <span class="map-me"></span>
+          <span class="pin" style="--i:0;--x:22%;--y:36%;--c:#8a5a3c"><b>☕ 30%</b></span>
+          <span class="pin" style="--i:1;--x:74%;--y:33%;--c:#2f6bff"><b>🎬 7,000원</b></span>
+          <span class="pin" style="--i:2;--x:30%;--y:72%;--c:#e8541c"><b>🍔 50%</b></span>
+          <span class="pin" style="--i:3;--x:78%;--y:68%;--c:#2f9e5b"><b>🥤 1+1</b></span>
+          <div class="ticket"><span>2027학년도 대학수학능력시험</span><strong>수험표</strong><span>2026. 11. 19.</span><em class="stamp">할인 OK</em></div>
+        </div>
+        </div>
+        <figcaption><strong>수험표 할인 지도</strong><span>내 주변 할인을 지도에서</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
@@ -96,17 +112,17 @@
       <h2 id="how-heading">열고, 찾고, 받으러 가요.</h2>
       <p class="section-intro">할인은 브랜드 공식 공지를 확인한 것만 지도에 올립니다. 받기 전에는 매장이나 공식 안내를 한 번 더 확인해 주세요.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>내 주변 할인 보기</h3>
           <p>‘내 위치’를 누르면 가까운 할인 매장이 지도에 떠요. 위치는 지도를 옮기는 데에만 쓰고 서버로 보내지 않아요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>분류와 지역으로 모아보기</h3>
           <p>카페·외식·영화·놀이공원·항공·휴대폰처럼 분류별로, 지역별·브랜드별로 할인을 모아 볼 수 있어요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>끝났거나 틀린 할인 알리기</h3>
           <p>할인이 끝났거나 내용이 다르면 바로 제보해 주세요. 확인한 뒤 지도에 반영합니다.</p>

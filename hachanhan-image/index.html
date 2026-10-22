@@ -63,7 +63,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="하찮은이미지 소개"><img src="../assets/apps/hachanhan-image/icon.png" alt="" width="30" height="30">하찮은이미지</a>
@@ -85,24 +85,72 @@
         </div>
         <p class="age-note">라이프·AI · 앱인토스</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/hachanhan-image/thumb.jpg" alt="하찮은이미지 대표 이미지" style="object-position:center">
-        <figcaption><strong>하찮은이미지</strong><span>AI 이미지·재미</span></figcaption>
+      <figure class="scene scene-hachanhan-image" aria-label="강아지 사진 한 장이 스캔되며 피식 웃기는 낙서풍 그림으로 바뀌고, 공유 버튼을 눌러 바로 공유하는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="hci-stage">
+          <div class="hci-head"><span class="a">📷 사진 한 장</span><span class="b">✏️ 낙서로 바꾸는 중…</span><span class="c">😆 하찮게 완성!</span></div>
+          <div class="hci-pic">
+            <svg class="hci-photo" viewBox="0 0 200 160" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="hci-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fc9ec"/><stop offset=".62" stop-color="#d7e9f2"/><stop offset=".62" stop-color="#8dbb6a"/><stop offset="1" stop-color="#5f9447"/></linearGradient>
+                <radialGradient id="hci-fur" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#f1d3a2"/><stop offset=".7" stop-color="#d9a86a"/><stop offset="1" stop-color="#b98447"/></radialGradient>
+                <radialGradient id="hci-ear" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="#a8713a"/><stop offset="1" stop-color="#7a4f26"/></radialGradient>
+              </defs>
+              <rect width="200" height="160" fill="url(#hci-sky)"/>
+              <ellipse cx="40" cy="30" rx="26" ry="9" fill="#fff" opacity=".7"/><ellipse cx="160" cy="22" rx="20" ry="7" fill="#fff" opacity=".6"/>
+              <ellipse cx="100" cy="150" rx="58" ry="12" fill="#3f6b2e" opacity=".35"/>
+              <path d="M62 160 C62 118 78 100 100 100 C122 100 138 118 138 160Z" fill="url(#hci-fur)"/>
+              <ellipse cx="100" cy="76" rx="38" ry="34" fill="url(#hci-fur)"/>
+              <path d="M66 58 C54 62 50 88 60 98 C68 90 72 74 72 62Z" fill="url(#hci-ear)"/>
+              <path d="M134 58 C146 62 150 88 140 98 C132 90 128 74 128 62Z" fill="url(#hci-ear)"/>
+              <ellipse cx="100" cy="92" rx="18" ry="13" fill="#f7e6c8"/>
+              <ellipse cx="86" cy="72" rx="5" ry="5.6" fill="#2b1d12"/><ellipse cx="114" cy="72" rx="5" ry="5.6" fill="#2b1d12"/>
+              <circle cx="87.6" cy="70.2" r="1.6" fill="#fff"/><circle cx="115.6" cy="70.2" r="1.6" fill="#fff"/>
+              <ellipse cx="100" cy="86" rx="6.5" ry="4.6" fill="#2b1d12"/>
+              <path d="M100 90.5 V96 M93 97 Q100 102 107 97" stroke="#2b1d12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            </svg>
+            <svg class="hci-doodle" viewBox="0 0 200 160" preserveAspectRatio="xMidYMid slice">
+              <rect width="200" height="160" fill="#fffef6"/>
+              <path class="fill" d="M58 74 C56 46 84 38 104 40 C134 42 146 62 140 86 C136 108 112 116 96 114 C70 112 60 98 58 74Z" fill="#ffd36e"/>
+              <path class="fill" d="M72 122 C88 116 116 116 130 124 L132 152 L70 152Z" fill="#9ad3ff"/>
+              <circle cx="146" cy="104" r="7" fill="#ff9aa8" opacity=".75"/><circle cx="62" cy="100" r="6" fill="#ff9aa8" opacity=".75"/>
+              <g class="ink">
+                <path d="M62 78 C58 52 82 42 102 43 C130 44 142 62 138 84 C135 106 114 114 98 113 C74 111 64 100 62 78Z"/>
+                <path d="M66 58 C56 56 50 74 58 86 M136 56 C148 52 154 72 142 84"/>
+                <path d="M84 70 m-3 0 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0"/>
+                <path d="M114 68 m-5 0 a5 4 0 1 0 10 0 a5 4 0 1 0 -10 0"/>
+                <path d="M96 84 L104 83 L100 89Z"/>
+                <path d="M90 95 Q95 99 100 95 Q105 100 111 94"/>
+                <path d="M100 113 C98 120 78 118 74 124 L72 152 M110 113 C114 120 126 118 130 124 L132 152"/>
+                <path d="M80 152 L80 158 M124 152 L124 158"/>
+                <path d="M44 34 l5 9 l-9 -3 l10 -1 l-8 6 Z"/>
+              </g>
+            </svg>
+            <span class="hci-scan"></span>
+            <span class="hci-pisik">피식</span>
+          </div>
+          <div class="hci-bottom">
+            <span class="hci-chip">✏️ 낙서 변환</span><span class="hci-chip">😆 B급 감성</span>
+            <span class="hci-share">📤 바로 공유<i>✈️</i></span>
+          </div>
+        </div>
+        </div>
+        <figcaption><strong>하찮은이미지</strong><span>사진이 하찮은 낙서로 뚝딱</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
       <p class="eyebrow">주요 특징</p>
       <h2 id="how-heading">하찮은이미지, 이런 앱이에요.</h2>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>✏️ 낙서 변환</h3>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>😆 B급 감성</h3>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>📤 바로 공유</h3>
         </li>

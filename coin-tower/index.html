@@ -72,7 +72,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="코인 타워 소개"><img src="../assets/apps/coin-tower/icon.png" alt="" width="30" height="30">코인 타워</a>
@@ -86,7 +86,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">SHOOT · BUILD · CLIMB</p>
-        <h1 id="intro-heading">한 층씩 올라가는<br>로그라이크 슈팅.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">한 층씩 올라가는</span></span><span class="line"><span style="--l:1">로그라이크 슈팅.</span></span></h1>
         <p class="hero-copy">코인타워는 세로 화면에서 즐기는 로그라이크 슈팅 게임입니다. 손가락으로 캐릭터를 움직이면 공격은 저절로 나가요. 무기를 골라 조합하며 끝없는 타워를 올라가 보세요.</p>
         <div class="actions">
           <a class="button" href="https://play.google.com/store/apps/details?id=com.superworks.cointower">Google Play 에서 받기</a><a class="button" href="https://minion.toss.im/tBZC0Zuf">토스 앱에서 열기</a>
@@ -94,9 +94,34 @@
         </div>
         <p class="age-note">세로 화면 · 한 손 조작 · 무료</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/coin-tower/thumb.jpg" alt="코인 타워 대표 이미지" style="object-position:center">
-        <figcaption><strong>코인 타워</strong><span>뱀서류 로그라이크</span></figcaption>
+      <figure class="scene scene-coin-tower" aria-label="손가락으로 캐릭터를 움직이면 공격이 저절로 나가고, 쓰러진 적의 코인이 모이며, 레벨이 오르자 카드 3장 중 하나를 고르는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="ct-stage">
+          <div class="ct-floor"></div>
+          <div class="ct-hud">
+            <span class="ct-level">12층</span>
+            <b class="ct-coins">🪙 </b>
+            <span class="ct-xp"><i></i></span>
+          </div>
+          <div class="ct-foe" style="--x:30;--top:24;--d:0s"><span class="body"><i></i></span><span class="coin"></span></div>
+          <div class="ct-foe" style="--x:64;--top:32;--d:1.65s"><span class="body"><i></i></span><span class="coin"></span></div>
+          <div class="ct-foe" style="--x:46;--top:18;--d:3.3s"><span class="body"><i></i></span><span class="coin"></span></div>
+          <div class="ct-hero">
+            <i class="shot"></i><i class="shot"></i><i class="shot"></i>
+            <span class="me"></span>
+            <span class="finger"></span>
+          </div>
+          <div class="ct-levelup">
+            <strong>레벨 업!</strong>
+            <div class="ct-cards">
+              <span class="ct-card"><em>🗡️</em><small>무기</small>새 무기</span>
+              <span class="ct-card"><em>💪</em><small>능력</small>능력 강화</span>
+              <span class="ct-card pick"><em>🌀</em><small>진화</small>무기 진화</span>
+            </div>
+          </div>
+        </div>
+        </div>
+        <figcaption><strong>코인 타워</strong><span>움직이면 저절로 공격</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
@@ -104,17 +129,17 @@
       <h2 id="how-heading">피하고, 고르고, 더 높이 올라가요.</h2>
       <p class="section-intro">판마다 고르는 무기와 능력이 달라서 같은 판이 두 번 나오지 않아요. 몇 층까지 올랐는지가 곧 내 기록입니다.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>움직이면 자동 공격</h3>
           <p>한 손가락으로 캐릭터를 움직여 적을 피하세요. 공격은 저절로 나가고, 쓰러진 적이 남긴 코인을 모읍니다.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>카드 3장 중 하나</h3>
           <p>레벨이 오르면 무기와 능력 카드 3장이 나와요. 하나를 골라 나만의 조합을 만들고, 무기를 진화시켜 더 강해집니다.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>구역과 보스 돌파</h3>
           <p>15층마다 배경과 적이 다른 구역으로 넘어가고, 구역 끝에는 보스가 기다려요. 모은 코인으로 캐릭터를 강화해 다음 도전에서 더 높이 올라가세요.</p>

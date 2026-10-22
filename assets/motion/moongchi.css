@@ -1,0 +1,101 @@
+/* ── 뭉치뭉치: 병아리를 떨어뜨리면 병아리 둘이 햄스터로, 햄스터 둘이 토끼로 뭉친다 ─── */
+.scene-moongchi { --loop: 10s; }
+.scene-moongchi .mc-stage {
+  position: relative; aspect-ratio: 1; container-type: inline-size;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--accent) 7%, var(--sheet)), var(--sheet) 60%);
+}
+/* 위쪽: 진화 사다리 */
+.scene-moongchi .mc-ladder {
+  position: absolute; top: 4%; left: 5%; right: 5%; display: flex; align-items: center; gap: .3rem; flex-wrap: nowrap;
+  font-size: .78rem; color: var(--muted); white-space: nowrap;
+}
+.scene-moongchi .mc-ladder i { font-style: normal; }
+.scene-moongchi .mc-ladder small { margin-left: auto; font-size: .72rem; font-weight: 700; }
+.scene-moongchi .mc-step {
+  display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; font-size: 1.05rem;
+  background: var(--paper); border: 2px solid var(--line);
+}
+.scene-moongchi .mc-step.s3 { border-color: var(--accent); background: var(--wash); }
+.scene-moongchi .mc-step.s1 { animation: moongchi-s1 var(--loop) ease infinite both; }
+.scene-moongchi .mc-step.s2 { animation: moongchi-s2 var(--loop) ease infinite both; }
+.scene-moongchi .mc-step.s3 { animation: moongchi-s3 var(--loop) ease infinite both; }
+@keyframes moongchi-s1 { 0%, 22% { border-color: var(--accent); background: var(--wash); transform: scale(1.1); } 24%, 100% { border-color: var(--line); background: var(--paper); transform: none; } }
+@keyframes moongchi-s2 { 0%, 22% { border-color: var(--line); background: var(--paper); transform: none; } 24%, 34% { border-color: var(--accent); background: var(--wash); transform: scale(1.1); } 36%, 100% { border-color: var(--line); background: var(--paper); transform: none; } }
+@keyframes moongchi-s3 { 0%, 34% { border-color: var(--line); background: var(--paper); transform: none; } 36% { border-color: var(--accent); background: var(--wash); transform: scale(1.25); } 40%, 100% { border-color: var(--accent); background: var(--wash); transform: scale(1.1); } }
+
+/* 통 */
+.scene-moongchi .mc-jar {
+  position: absolute; left: 11%; right: 11%; top: 38%; bottom: 4%;
+  border: 3px solid color-mix(in srgb, var(--accent) 45%, var(--line)); border-top: 0; border-radius: 0 0 1.6rem 1.6rem;
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+}
+.scene-moongchi .mc-line { position: absolute; left: 0; right: 0; top: 6%; border-top: 2px dashed color-mix(in srgb, #e5484d 55%, transparent); }
+
+/* 동물 공 — 위치는 통 바닥 기준, 크기는 장면 폭에 비례 */
+.scene-moongchi .mc-play { position: absolute; inset: 0; animation: moongchi-play var(--loop) linear infinite both; }
+@keyframes moongchi-play { 0% { opacity: 0; } 2%, 94% { opacity: 1; } 99%, 100% { opacity: 0; } }
+.scene-moongchi .mc-ball {
+  position: absolute; width: calc(var(--d) * 1%); aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 40%, white), var(--c));
+  box-shadow: inset 0 -.25rem 0 color-mix(in srgb, black 10%, transparent), 0 6px 10px -6px rgba(0, 0, 0, .35);
+}
+.scene-moongchi .mc-ball b { font-size: calc(var(--d) * .56cqw); line-height: 1; }
+.scene-moongchi .chick { --d: 17; --c: #ffd86b; }
+.scene-moongchi .hamster { --d: 22; --c: #f3b47d; }
+.scene-moongchi .rabbit { --d: 28; --c: #f6c9d6; }
+.scene-moongchi .mc-l { left: 12.5%; bottom: 6%; }
+.scene-moongchi .mc-rt { left: 71.5%; bottom: 6%; }
+/* 마지막 장면(멈춘 모습)이 기본값이다 */
+.scene-moongchi .mc-ch, .scene-moongchi .mc-t1, .scene-moongchi .mc-d, .scene-moongchi .mc-h { opacity: 0; }
+.scene-moongchi .mc-ch { left: 30.5%; bottom: 6%; animation: moongchi-ch var(--loop) ease-in infinite both; }
+.scene-moongchi .mc-t1 { left: 54%; bottom: 6%; animation: moongchi-t1 var(--loop) ease-in infinite both; }
+.scene-moongchi .mc-d { left: 54%; bottom: 23%; animation: moongchi-d var(--loop) infinite both; }
+.scene-moongchi .mc-h { left: 50.5%; bottom: 6%; animation: moongchi-h var(--loop) infinite both; }
+.scene-moongchi .mc-r { left: 37.5%; bottom: 6%; animation: moongchi-r var(--loop) infinite both; }
+.scene-moongchi .mc-next { left: 41.5%; bottom: 68%; animation: moongchi-next var(--loop) ease infinite both; }
+.scene-moongchi .mc-d::after, .scene-moongchi .mc-next::after {
+  content: ""; position: absolute; left: 50%; top: 105%; height: 2.6rem; border-left: 2px dotted color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.scene-moongchi .mc-d::after { animation: moongchi-guide var(--loop) linear infinite both; }
+
+/* 떨어뜨리기: 0~12% 좌우로 자리 잡기, 13~19% 떨어짐, 22~25% 둘이 뭉침 */
+@keyframes moongchi-d {
+  0% { left: 16%; bottom: 68%; opacity: 1; scale: 1; animation-timing-function: ease-in-out; }
+  12% { left: 54%; bottom: 68%; opacity: 1; animation-timing-function: cubic-bezier(.5, 0, 1, .6); }
+  19% { left: 54%; bottom: 23%; scale: 1.08 .9; animation-timing-function: ease-out; }
+  21% { left: 54%; bottom: 23%; scale: 1; opacity: 1; animation-timing-function: ease-in; }
+  25% { left: 54%; bottom: 15%; scale: 0; opacity: 0; }
+  100% { left: 54%; bottom: 15%; scale: 0; opacity: 0; }
+}
+@keyframes moongchi-guide { 0%, 12% { opacity: 1; } 13%, 100% { opacity: 0; } }
+@keyframes moongchi-t1 { 0%, 21% { opacity: 1; scale: 1; bottom: 6%; } 25%, 100% { opacity: 0; scale: 0; bottom: 15%; } }
+/* 병아리 둘 → 햄스터 */
+@keyframes moongchi-h {
+  0%, 22% { opacity: 0; scale: 0; }
+  26% { opacity: 1; scale: 1.18; }
+  29%, 32% { opacity: 1; scale: 1; left: 50.5%; }
+  36%, 100% { opacity: 0; scale: 0; left: 45%; }
+}
+@keyframes moongchi-ch { 0%, 32% { opacity: 1; scale: 1; left: 30.5%; } 36%, 100% { opacity: 0; scale: 0; left: 36%; } }
+/* 햄스터 둘 → 토끼 */
+@keyframes moongchi-r {
+  0%, 34% { opacity: 0; scale: 0; }
+  38% { opacity: 1; scale: 1.2; }
+  42%, 100% { opacity: 1; scale: 1; }
+}
+@keyframes moongchi-next { 0%, 44% { opacity: 0; scale: 0; } 48% { opacity: 1; scale: 1.1; } 51%, 100% { opacity: 1; scale: 1; } }
+
+.scene-moongchi .mc-pop {
+  position: absolute; translate: -50% 0; padding: .2rem .6rem; border-radius: 99px; background: var(--accent); color: var(--sheet);
+  font-size: .8rem; font-weight: 800; white-space: nowrap; opacity: 0;
+}
+.scene-moongchi .mc-pop.p1 { left: 61%; bottom: 36%; animation: moongchi-p1 var(--loop) ease infinite both; }
+.scene-moongchi .mc-pop.p2 { left: 51.5%; bottom: 40%; opacity: 1; animation: moongchi-p2 var(--loop) ease infinite both; }
+@keyframes moongchi-p1 { 0%, 23% { opacity: 0; transform: translateY(.6rem) scale(.6); } 26% { opacity: 1; transform: none; } 31% { opacity: 1; transform: translateY(-.4rem); } 34%, 100% { opacity: 0; transform: translateY(-.8rem); } }
+@keyframes moongchi-p2 { 0%, 35% { opacity: 0; transform: translateY(.6rem) scale(.6); } 39% { opacity: 1; transform: none; } 88% { opacity: 1; transform: translateY(-.3rem); } 94%, 100% { opacity: 0; transform: translateY(-.3rem); } }
+
+@media (max-width: 700px) {
+  .scene-moongchi .mc-ladder { gap: .2rem; font-size: .7rem; }
+  .scene-moongchi .mc-step { width: 1.6rem; height: 1.6rem; font-size: .9rem; }
+  .scene-moongchi .mc-pop { font-size: .72rem; }
+}

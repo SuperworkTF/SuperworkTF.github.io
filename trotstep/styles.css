@@ -136,4 +136,164 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 트롯스텝: 걸음이 1,000보 쌓일 때마다 투표권이 1장, 모은 투표권으로 최애에게 투표하면 응원 랭킹이 오른다 ── */
+.scene-trotstep { --loop: 12s; }
+.scene-trotstep .ts-stage {
+  position: relative; aspect-ratio: 1.2; display: flex; flex-direction: column; gap: .7rem; padding: 1.05rem 1.1rem;
+  background: linear-gradient(170deg, color-mix(in srgb, var(--accent) 9%, var(--sheet)), var(--sheet) 55%);
+}
+
+/* 오늘 걸음 */
+.scene-trotstep .ts-head { display: grid; gap: .45rem; }
+.scene-trotstep .ts-steps { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; }
+.scene-trotstep .ts-steps small { font-size: .8rem; font-weight: 700; color: var(--muted); }
+.scene-trotstep .ts-steps b { font-size: 1.75rem; font-weight: 900; letter-spacing: -.04em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.scene-trotstep .ts-steps b::after { content: "5,000보"; animation: trotstep-count var(--loop) steps(1) infinite; }
+@keyframes trotstep-count { 0% { content: "0보"; } 2% { content: "250보"; } 4% { content: "500보"; } 6% { content: "750보"; } 8% { content: "1,000보"; } 10% { content: "1,250보"; } 12% { content: "1,500보"; } 14% { content: "1,750보"; } 16% { content: "2,000보"; } 18% { content: "2,250보"; } 20% { content: "2,500보"; } 22% { content: "2,750보"; } 24% { content: "3,000보"; } 26% { content: "3,250보"; } 28% { content: "3,500보"; } 30% { content: "3,750보"; } 32% { content: "4,000보"; } 34% { content: "4,250보"; } 36% { content: "4,500보"; } 38% { content: "4,750보"; } 40% { content: "5,000보"; } 94% { content: "5,000보"; } 97%, 100% { content: "0보"; } }
+.scene-trotstep .ts-bar { position: relative; height: .55rem; border-radius: 99px; background: var(--line); }
+.scene-trotstep .ts-bar i { position: absolute; inset: 0 auto 0 0; width: 50%; border-radius: inherit; background: var(--accent); animation: trotstep-bar var(--loop) linear infinite; }
+.scene-trotstep .ts-bar span { position: absolute; right: 0; top: .8rem; font-size: .66rem; color: var(--muted); }
+@keyframes trotstep-bar { 0% { width: 0; } 40%, 94% { width: 50%; } 97%, 100% { width: 0; } }
+
+/* 발자국이 걸어간다 */
+.scene-trotstep .ts-walk { position: relative; height: 2rem; margin-top: .2rem; display: flex; align-items: center; gap: 5.2%; padding-left: .3rem; }
+.scene-trotstep .ts-walk span {
+  width: .62rem; height: .95rem; border-radius: 50% 50% 45% 45%; background: color-mix(in srgb, var(--accent) 75%, var(--sheet));
+  rotate: 90deg; opacity: .3; animation: trotstep-foot var(--loop) ease-out infinite both; animation-delay: calc(var(--i) * .46s);
+}
+.scene-trotstep .ts-walk span:nth-child(odd) { translate: 0 -.35rem; }
+.scene-trotstep .ts-walk span:nth-child(even) { translate: 0 .35rem; }
+@keyframes trotstep-foot { 0% { opacity: 0; scale: .4; } 3% { opacity: 1; scale: 1.1; } 6% { scale: 1; } 30% { opacity: .3; } 50%, 100% { opacity: 0; scale: 1; } }
+.scene-trotstep .ts-walk em {
+  position: absolute; left: 60%; top: .2rem; padding: .15rem .5rem; border-radius: 99px; background: var(--accent); color: #fff;
+  font-style: normal; font-size: .72rem; font-weight: 800; opacity: 0; animation: trotstep-plus var(--loop) ease-out infinite;
+}
+@keyframes trotstep-plus { 0% { opacity: 0; } 6.5% { opacity: 0; transform: translateY(.5rem); } 8.0% { opacity: 1; transform: none; } 12.0% { opacity: 0; transform: translateY(-.6rem); } 14.5% { opacity: 0; transform: translateY(.5rem); } 16.0% { opacity: 1; transform: none; } 20.0% { opacity: 0; transform: translateY(-.6rem); } 22.5% { opacity: 0; transform: translateY(.5rem); } 24.0% { opacity: 1; transform: none; } 28.0% { opacity: 0; transform: translateY(-.6rem); } 30.5% { opacity: 0; transform: translateY(.5rem); } 32.0% { opacity: 1; transform: none; } 36.0% { opacity: 0; transform: translateY(-.6rem); } 38.5% { opacity: 0; transform: translateY(.5rem); } 40.0% { opacity: 1; transform: none; } 44.0% { opacity: 0; transform: translateY(-.6rem); } 100% { opacity: 0; } }
+
+/* 투표권 열 칸 */
+.scene-trotstep .ts-label { display: flex; align-items: baseline; gap: .4rem; font-size: .8rem; font-weight: 700; }
+.scene-trotstep .ts-label b { color: var(--accent); font-size: .95rem; }
+.scene-trotstep .ts-label b::after { content: "5장"; animation: trotstep-tickets var(--loop) steps(1) infinite; }
+@keyframes trotstep-tickets { 0%, 7.9% { content: "0장"; } 8% { content: "1장"; } 16% { content: "2장"; } 24% { content: "3장"; } 32% { content: "4장"; } 40% { content: "5장"; } 55% { content: "0장"; } }
+.scene-trotstep .ts-label small { margin-left: auto; font-size: .66rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.scene-trotstep .ts-slots { position: relative; display: grid; grid-template-columns: repeat(10, 1fr); margin-top: .4rem; }
+.scene-trotstep .ts-slots > span, .scene-trotstep .ts-fill span { height: 1.55rem; margin: 0 .14rem; border-radius: .35rem; }
+.scene-trotstep .ts-slots > span { border: 1.5px dashed var(--line); }
+.scene-trotstep .ts-fill {
+  position: absolute; inset: 0; display: grid; grid-template-columns: repeat(10, 1fr); clip-path: inset(0 50% 0 0);
+  animation: trotstep-fill var(--loop) steps(1) infinite, trotstep-fly var(--loop) ease-in infinite;
+}
+.scene-trotstep .ts-fill span {
+  position: relative; background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #ffb347));
+  box-shadow: 0 4px 8px -5px var(--accent); animation: trotstep-pop var(--loop) ease-out infinite; animation-delay: calc((var(--i) + 1) * var(--loop) * .08);
+}
+.scene-trotstep .ts-fill span::after { content: "★"; position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: .7rem; }
+@keyframes trotstep-fill { 0%, 7.9% { clip-path: inset(0 100% 0 0); } 8% { clip-path: inset(0 90% 0 0); } 16% { clip-path: inset(0 80% 0 0); } 24% { clip-path: inset(0 70% 0 0); } 32% { clip-path: inset(0 60% 0 0); } 40%, 55.9% { clip-path: inset(0 50% 0 0); } 56%, 100% { clip-path: inset(0 100% 0 0); } }
+@keyframes trotstep-fly { 0%, 49% { transform: none; opacity: 1; } 55% { transform: translateY(4.5rem) scale(.5); opacity: 0; } 56%, 100% { transform: none; opacity: 1; } }
+@keyframes trotstep-pop { 0% { transform: scale(1.5) rotate(-10deg); } 4% { transform: scale(.95); } 6%, 100% { transform: none; } }
+
+/* 응원 랭킹 */
+.scene-trotstep .ts-rank { margin-top: auto; padding: .7rem .8rem .8rem; border-radius: .9rem; background: var(--sheet); border: 1px solid var(--line); }
+.scene-trotstep .ts-rank-head { display: flex; align-items: center; justify-content: space-between; font-size: .8rem; font-weight: 800; }
+.scene-trotstep .ts-vote {
+  padding: .28rem .6rem; border-radius: 99px; background: var(--accent); color: #fff; font-style: normal; font-size: .72rem; white-space: nowrap;
+  animation: trotstep-press var(--loop) ease infinite;
+}
+@keyframes trotstep-press { 0%, 43% { transform: none; box-shadow: none; } 46% { transform: scale(1.08); box-shadow: 0 0 0 .35rem color-mix(in srgb, var(--accent) 22%, transparent); } 48% { transform: scale(.92); } 51%, 100% { transform: none; box-shadow: none; } }
+.scene-trotstep ol { --row: 1.55rem; --gap: .35rem; position: relative; list-style: none; margin: .55rem 0 0; padding: 0; height: calc(var(--row) * 3 + var(--gap) * 2); animation: trotstep-reset var(--loop) ease infinite; }
+@keyframes trotstep-reset { 0%, 91% { opacity: 1; } 94%, 97% { opacity: 0; } 100% { opacity: 1; } }
+.scene-trotstep li { position: absolute; left: 0; right: 0; top: calc(var(--r) * (var(--row) + var(--gap))); height: var(--row); display: grid; grid-template-columns: 5.2rem 1fr; align-items: center; gap: .5rem; font-size: .76rem; }
+.scene-trotstep .r-me { --r: 0; z-index: 1; font-weight: 800; color: var(--accent); animation: trotstep-up var(--loop) cubic-bezier(.4, 1.4, .5, 1) infinite; }
+.scene-trotstep .r-a { --r: 1; color: var(--muted); animation: trotstep-down var(--loop) ease infinite; }
+.scene-trotstep .r-b { --r: 2; color: var(--muted); }
+@keyframes trotstep-up { 0%, 64% { transform: translateY(calc(var(--row) + var(--gap))); } 72%, 100% { transform: none; } }
+@keyframes trotstep-down { 0%, 64% { transform: translateY(calc(-1 * (var(--row) + var(--gap)))); } 72%, 100% { transform: none; } }
+.scene-trotstep .ts-meter { height: .7rem; border-radius: 99px; background: var(--wash); overflow: hidden; }
+.scene-trotstep .ts-meter i { display: block; height: 100%; border-radius: inherit; background: color-mix(in srgb, var(--muted) 45%, var(--sheet)); }
+.scene-trotstep .r-me .ts-meter i { width: 88%; background: var(--accent); animation: trotstep-grow var(--loop) ease-out infinite; }
+.scene-trotstep .r-a .ts-meter i { width: 74%; }
+.scene-trotstep .r-b .ts-meter i { width: 52%; }
+@keyframes trotstep-grow { 0%, 55% { width: 66%; } 66%, 100% { width: 88%; } }
+.scene-trotstep .r-me em {
+  position: absolute; right: .2rem; top: 50%; translate: 0 -50%; padding: .1rem .45rem; border-radius: 99px; background: var(--sheet);
+  border: 1.5px solid var(--accent); font-style: normal; font-size: .7rem; opacity: 0; animation: trotstep-plus5 var(--loop) ease infinite;
+}
+@keyframes trotstep-plus5 { 0%, 55% { opacity: 0; transform: scale(.5); } 59% { opacity: 1; transform: scale(1.1); } 62%, 82% { opacity: 1; transform: none; } 86%, 100% { opacity: 0; } }
+
+@media (max-width: 700px) {
+  .scene-trotstep .ts-stage { aspect-ratio: .9; padding: .85rem .85rem; gap: .55rem; }
+  .scene-trotstep .ts-steps b { font-size: 1.45rem; }
+  .scene-trotstep .ts-label small { display: none; }
+  .scene-trotstep .ts-slots > span, .scene-trotstep .ts-fill span { height: 1.3rem; margin: 0 .09rem; }
+  .scene-trotstep li { grid-template-columns: 4.6rem 1fr; font-size: .7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-trotstep .ts-walk em { opacity: 0; }
+}
+
 :root { --accent: #c2185b; }

@@ -136,4 +136,119 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 수험표 할인 지도: 내 주변에 할인 핀이 떨어지고 수험표가 도장을 받는다 ───── */
+.scene-map { --loop: 9s; }
+.map { position: relative; aspect-ratio: 1.12; background: color-mix(in srgb, var(--accent) 6%, var(--sheet)); }
+.map-streets { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-streets .road { fill: none; stroke: var(--sheet); stroke-width: 14; stroke-linecap: round; }
+.map-streets .lane { fill: none; stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 6 8; }
+.map-streets .park { fill: color-mix(in srgb, #2f9e5b 18%, var(--sheet)); }
+.map-streets .river { fill: none; stroke: color-mix(in srgb, var(--accent) 22%, var(--sheet)); stroke-width: 22; stroke-linecap: round; }
+.map-search {
+  position: absolute; top: 4.5%; left: 5%; right: 5%; display: flex; align-items: center; gap: .55rem; padding: .6rem .95rem;
+  background: var(--sheet); border-radius: .8rem; box-shadow: 0 8px 20px -12px rgba(0, 0, 0, .35); font-size: .86rem; font-weight: 700;
+}
+.map-search b { margin-left: auto; color: var(--accent); white-space: nowrap; }
+.map-search b::after { content: "4곳"; animation: m-count var(--loop) steps(1) infinite; }
+@keyframes m-count { 0% { content: "0곳"; } 16% { content: "1곳"; } 22% { content: "2곳"; } 28% { content: "3곳"; } 34%, 100% { content: "4곳"; } }
+.map-me { position: absolute; left: 50%; top: 56%; width: .95rem; height: .95rem; margin: -.475rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--sheet); }
+.map-me::before, .map-me::after { content: ""; position: absolute; inset: -.3rem; border-radius: 50%; border: 2px solid var(--accent); animation: m-ping 2.4s ease-out infinite; }
+.map-me::after { animation-delay: 1.2s; }
+@keyframes m-ping { from { transform: scale(.6); opacity: .9; } to { transform: scale(4.2); opacity: 0; } }
+.pin { position: absolute; left: var(--x); top: var(--y); animation: m-pin var(--loop) cubic-bezier(.3, 1.5, .5, 1) infinite both; animation-delay: calc(.9s + var(--i) * .55s); }
+.pin::before { content: ""; display: block; width: 1.5rem; height: 1.5rem; margin: -1.5rem 0 0 -.75rem; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--c, var(--accent)); box-shadow: inset 0 0 0 .38rem color-mix(in srgb, var(--c, var(--accent)) 60%, white); }
+.pin b {
+  position: absolute; bottom: 1.85rem; left: 50%; translate: -50% 0; padding: .3rem .6rem; border-radius: 99px; background: var(--sheet); white-space: nowrap;
+  font-size: .82rem; color: #e8541c; box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .45);
+  animation: m-chip var(--loop) ease infinite both; animation-delay: calc(.9s + var(--i) * .55s);
+}
+@keyframes m-pin { 0% { transform: translateY(-3rem); opacity: 0; } 4% { opacity: 1; } 8% { transform: none; } 84% { transform: none; opacity: 1; } 92%, 100% { transform: translateY(-.6rem); opacity: 0; } }
+@keyframes m-chip { 0%, 8% { scale: .4; opacity: 0; } 13% { scale: 1.08; opacity: 1; } 16%, 84% { scale: 1; opacity: 1; } 90%, 100% { opacity: 0; } }
+.ticket {
+  position: absolute; left: 5%; bottom: 5%; width: 46%; padding: .7rem .85rem .75rem; border-radius: .7rem; background: var(--sheet);
+  border: 1px solid var(--line); box-shadow: 0 16px 30px -18px rgba(0, 0, 0, .5); font-size: .72rem; line-height: 1.5;
+  animation: m-ticket var(--loop) cubic-bezier(.2, .9, .3, 1.2) infinite both;
+}
+.ticket::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: .35rem; border-radius: .7rem .7rem 0 0; background: var(--accent); }
+.ticket strong { display: block; font-size: .92rem; color: var(--ink); margin-top: .15rem; }
+.ticket span { color: var(--muted); }
+.ticket .stamp {
+  position: absolute; right: -.6rem; top: 34%; padding: .15rem .45rem; border: 2.5px solid #e8541c; border-radius: .4rem; color: #e8541c;
+  font-weight: 900; font-size: .8rem; letter-spacing: -.02em; background: color-mix(in srgb, var(--sheet) 85%, transparent);
+  animation: m-stamp var(--loop) ease infinite both;
+}
+@keyframes m-ticket { 0%, 30% { transform: translate(-30%, 130%) rotate(-12deg); opacity: 0; } 40% { transform: rotate(-4deg); opacity: 1; } 86% { transform: rotate(-4deg); opacity: 1; } 94%, 100% { transform: translate(-10%, 40%) rotate(-8deg); opacity: 0; } }
+@keyframes m-stamp { 0%, 45% { transform: rotate(-14deg) scale(2.4); opacity: 0; } 50% { transform: rotate(-14deg) scale(.92); opacity: 1; } 53%, 86% { transform: rotate(-14deg) scale(1); opacity: 1; } 94%, 100% { opacity: 0; } }
+
+@media (max-width: 700px) {
+  .map-search { font-size: .78rem; }
+  .pin b { font-size: .74rem; }
+  .ticket { width: 54%; }
+}
+
 :root { --accent: #2f6bff; }

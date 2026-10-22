@@ -72,7 +72,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="고고 드라이브 소개"><img src="../assets/apps/gogo-drive/icon.png" alt="" width="30" height="30">고고 드라이브</a>
@@ -86,7 +86,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">DRIVE · MISSION · RECORD</p>
-        <h1 id="intro-heading">한 손으로 달리는<br>20개의 도로 미션.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">한 손으로 달리는</span></span><span class="line"><span style="--l:1">20개의 도로 미션.</span></span></h1>
         <p class="hero-copy">고고드라이브는 밝은 3D 도시 도로를 달리며 레벨마다 다른 미션을 깨는 드라이빙 게임입니다. 조이스틱 하나로 방향과 속도를 조절하고, 손을 떼도 차는 계속 달려요.</p>
         <div class="actions">
           <a class="button" href="https://play.google.com/store/apps/details?id=com.gogodrive.app">Google Play 에서 받기</a><a class="button" href="https://minion.toss.im/nvcfeukj">토스 앱에서 열기</a>
@@ -94,9 +94,32 @@
         </div>
         <p class="age-note">세로 화면 · 한 손 조작 · 무료</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/gogo-drive/thumb.jpg" alt="고고 드라이브 대표 이미지" style="object-position:center">
-        <figcaption><strong>고고 드라이브</strong><span>3D 캐주얼 레이싱</span></figcaption>
+      <figure class="scene scene-gogo-drive" aria-label="3D 도시 도로를 달리며 조이스틱으로 차선을 바꿔 앞차 세 대를 앞지르고 레벨을 깨는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="gd-stage">
+          <svg class="gd-world" viewBox="0 0 100 110" preserveAspectRatio="none">
+            <rect class="sky" width="100" height="39"/>
+            <circle class="sun" cx="80" cy="15" r="5"/>
+            <path class="far" d="M0 39V27H6V22H12V29H17V18H24V30H30V24H34V39Z M66 39V20H72V26H78V15H85V28H90V23H96V30H100V39Z"/>
+            <path class="near" d="M0 39V31H9V25H15V33H22V39Z M78 39V29H84V24H92V32H100V39Z"/>
+            <rect class="grass" y="38" width="100" height="72"/>
+            <path class="walk" d="M50 38L-14 110H114Z"/>
+            <path class="road" d="M50 38L-4 110H104Z"/>
+            <path class="edge" d="M50 38L-4 110M50 38L104 110"/>
+          </svg>
+          <span class="gd-dash" style="--l:32;--d:0s"></span><span class="gd-dash" style="--l:32;--d:-.3s"></span><span class="gd-dash" style="--l:32;--d:-.6s"></span><span class="gd-dash" style="--l:32;--d:-.9s"></span>
+          <span class="gd-dash" style="--l:68;--d:-.15s"></span><span class="gd-dash" style="--l:68;--d:-.45s"></span><span class="gd-dash" style="--l:68;--d:-.75s"></span><span class="gd-dash" style="--l:68;--d:-1.05s"></span>
+          <span class="gd-car c3" style="--l:14;--c:#2fa36b"><svg viewBox="0 0 60 40"><path class="cab" d="M10 17L13 6Q15 2 20 2H40Q45 2 47 6L50 17Z"/><path class="win" d="M15 16L17 7H43L45 16Z"/><rect class="bod" x="2" y="15" width="56" height="18" rx="5"/><rect class="tail" x="5" y="19" width="11" height="5" rx="2"/><rect class="tail" x="44" y="19" width="11" height="5" rx="2"/><rect class="plate" x="24" y="22" width="12" height="6" rx="1"/><rect class="tire" x="6" y="32" width="10" height="7" rx="2"/><rect class="tire" x="44" y="32" width="10" height="7" rx="2"/></svg></span>
+          <span class="gd-car c2" style="--l:86;--c:#f2b632"><svg viewBox="0 0 60 40"><path class="cab" d="M10 17L13 6Q15 2 20 2H40Q45 2 47 6L50 17Z"/><path class="win" d="M15 16L17 7H43L45 16Z"/><rect class="bod" x="2" y="15" width="56" height="18" rx="5"/><rect class="tail" x="5" y="19" width="11" height="5" rx="2"/><rect class="tail" x="44" y="19" width="11" height="5" rx="2"/><rect class="plate" x="24" y="22" width="12" height="6" rx="1"/><rect class="tire" x="6" y="32" width="10" height="7" rx="2"/><rect class="tire" x="44" y="32" width="10" height="7" rx="2"/></svg></span>
+          <span class="gd-car c1" style="--l:50;--c:#2f80ed"><svg viewBox="0 0 60 40"><path class="cab" d="M10 17L13 6Q15 2 20 2H40Q45 2 47 6L50 17Z"/><path class="win" d="M15 16L17 7H43L45 16Z"/><rect class="bod" x="2" y="15" width="56" height="18" rx="5"/><rect class="tail" x="5" y="19" width="11" height="5" rx="2"/><rect class="tail" x="44" y="19" width="11" height="5" rx="2"/><rect class="plate" x="24" y="22" width="12" height="6" rx="1"/><rect class="tire" x="6" y="32" width="10" height="7" rx="2"/><rect class="tire" x="44" y="32" width="10" height="7" rx="2"/></svg></span>
+          <span class="gd-me"><svg viewBox="0 0 60 40"><path class="cab" d="M10 17L13 6Q15 2 20 2H40Q45 2 47 6L50 17Z"/><path class="win" d="M15 16L17 7H43L45 16Z"/><rect class="bod" x="2" y="15" width="56" height="18" rx="5"/><rect class="tail" x="5" y="19" width="11" height="5" rx="2"/><rect class="tail" x="44" y="19" width="11" height="5" rx="2"/><rect class="plate" x="24" y="22" width="12" height="6" rx="1"/><rect class="tire" x="6" y="32" width="10" height="7" rx="2"/><rect class="tire" x="44" y="32" width="10" height="7" rx="2"/></svg></span>
+          <div class="gd-mission"><small>미션</small><span>차 3대 앞지르기</span><b class="gd-count"></b><i class="gd-goal"><i></i></i></div>
+          <b class="gd-speed"> km/h</b>
+          <span class="gd-stick"><i></i></span>
+          <div class="gd-clear"><strong>레벨 클리어!</strong><span>⏱ 0:42.18 · 최단 기록</span></div>
+        </div>
+        </div>
+        <figcaption><strong>고고 드라이브</strong><span>피하고 앞질러 결승까지</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
@@ -104,17 +127,17 @@
       <h2 id="how-heading">미션을 보고, 달리고, 기록을 깨요.</h2>
       <p class="section-intro">레벨마다 목표 거리와 미션이 정해져 있어요. 같은 레벨은 늘 같은 코스라서 다시 달리면 내 기록과 겨룰 수 있습니다.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>미션 확인</h3>
           <p>출발 전에 이번 레벨의 미션을 보여 줘요. 충돌 없이 달리기, 경찰 피하기, 차 앞지르기, 일정 속도 유지하기처럼 레벨마다 목표가 달라요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>조이스틱으로 주행</h3>
           <p>조이스틱을 좌우로 밀면 방향을, 위아래로 밀면 속도를 바꿔요. 위급할 때는 급정지 버튼으로 속도를 단번에 절반으로 줄일 수 있어요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>최단 기록 도전</h3>
           <p>목표 거리에 닿으면 레벨 클리어. 레벨별 가장 빠른 주행 시간이 남아서, 다시 달려 신기록에 도전할 수 있어요.</p>

@@ -63,7 +63,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="물가타임머신 소개"><img src="../assets/apps/price-time-machine/icon.png" alt="" width="30" height="30">물가타임머신</a>
@@ -85,24 +85,63 @@
         </div>
         <p class="age-note">라이프·AI · 앱인토스</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/price-time-machine/thumb.jpg" alt="물가타임머신 대표 이미지" style="object-position:center">
-        <figcaption><strong>물가타임머신</strong><span>생활정보 서비스</span></figcaption>
+      <figure class="scene scene-price-time-machine" aria-label="타임머신 다이얼이 돌아가면 같은 물건의 그때 가격과 지금 가격이 나란히 놓이고 변화 그래프가 그려지는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="ptm-stage">
+          <div class="ptm-top">
+            <svg class="ptm-dial" viewBox="0 0 60 60">
+              <circle class="rim" cx="30" cy="30" r="26"/>
+              <path class="ticks" d="M30 7v5M30 48v5M7 30h5M48 30h5M13.7 13.7l3.5 3.5M42.8 42.8l3.5 3.5M13.7 46.3l3.5-3.5M42.8 17.2l3.5-3.5"/>
+              <g class="hand"><path d="M30 30V14"/><circle cx="30" cy="30" r="3.2"/></g>
+            </svg>
+            <div class="ptm-title"><b>타임머신 출발!</b><span>그때 그 가격, 지금은 얼마?</span></div>
+          </div>
+          <div class="ptm-phases">
+            <div class="ptm-phase pa">
+              <p class="ptm-item"><span>🍜</span>짜장면 한 그릇<em>예시</em></p>
+              <div class="ptm-pair">
+                <div class="ptm-card then"><small>그때</small><div class="ptm-coins" style="--n:2"><i></i><i></i></div></div>
+                <span class="ptm-arrow">→</span>
+                <div class="ptm-card now"><small>지금</small><div class="ptm-coins" style="--n:5"><i></i><i></i><i></i><i></i><i></i></div></div>
+              </div>
+              <svg class="ptm-graph" viewBox="0 0 300 80" preserveAspectRatio="none">
+                <path class="area" d="M8 70 C60 66 90 60 130 52 S210 30 292 14 V76 H8Z"/>
+                <path class="line" pathLength="1" d="M8 70 C60 66 90 60 130 52 S210 30 292 14"/>
+              </svg>
+            </div>
+            <div class="ptm-phase pb">
+              <p class="ptm-item"><span>🚌</span>버스 한 번<em>예시</em></p>
+              <div class="ptm-pair">
+                <div class="ptm-card then"><small>그때</small><div class="ptm-coins" style="--n:1"><i></i></div></div>
+                <span class="ptm-arrow">→</span>
+                <div class="ptm-card now"><small>지금</small><div class="ptm-coins" style="--n:4"><i></i><i></i><i></i><i></i></div></div>
+              </div>
+              <svg class="ptm-graph" viewBox="0 0 300 80" preserveAspectRatio="none">
+                <path class="area" d="M8 72 C50 70 80 50 120 48 S200 38 292 20 V76 H8Z"/>
+                <path class="line" pathLength="1" d="M8 72 C50 70 80 50 120 48 S200 38 292 20"/>
+              </svg>
+            </div>
+            <div class="ptm-axis"><span>그때</span><b>📈 변화 그래프</b><span>지금</span></div>
+            <span class="ptm-feel">체감 물가 ↑</span>
+          </div>
+        </div>
+        </div>
+        <figcaption><strong>물가타임머신</strong><span>그때와 지금을 나란히</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
       <p class="eyebrow">주요 특징</p>
       <h2 id="how-heading">물가타임머신, 이런 앱이에요.</h2>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>💰 시점별 비교</h3>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>📈 변화 그래프</h3>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>⏱️ 체감 물가</h3>
         </li>

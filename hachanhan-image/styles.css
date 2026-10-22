@@ -136,4 +136,138 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 하찮은이미지: 사진 한 장이 스캔되며 피식 웃기는 낙서로 바뀌고, 바로 공유 ── */
+.scene-hachanhan-image { --loop: 10s; }
+.scene-hachanhan-image .hci-stage {
+  position: relative; aspect-ratio: 1.08; display: flex; flex-direction: column; gap: .7rem; padding: 1rem 1.1rem;
+  background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--accent) 16%, transparent) 1px, transparent 0) 0 0 / 16px 16px, color-mix(in srgb, #ffd84d 10%, var(--sheet));
+}
+
+/* 지금 무엇을 하는지 */
+.scene-hachanhan-image .hci-head { position: relative; height: 1.6rem; font-size: .86rem; font-weight: 800; }
+.scene-hachanhan-image .hci-head span { position: absolute; left: 0; top: 0; white-space: nowrap; opacity: 0; }
+.scene-hachanhan-image .hci-head .a { color: var(--muted); animation: hachanhan-image-a var(--loop) steps(1) infinite; }
+.scene-hachanhan-image .hci-head .b { color: var(--muted); animation: hachanhan-image-b var(--loop) steps(1) infinite; }
+.scene-hachanhan-image .hci-head .c { color: var(--accent); opacity: 1; animation: hachanhan-image-c var(--loop) ease infinite; }
+@keyframes hachanhan-image-a { 0% { opacity: 1; } 10%, 100% { opacity: 0; } }
+@keyframes hachanhan-image-b { 0%, 9.9% { opacity: 0; } 10%, 41.9% { opacity: 1; } 42%, 100% { opacity: 0; } }
+@keyframes hachanhan-image-c { 0%, 42% { opacity: 0; transform: scale(.7); transform-origin: left; } 46% { opacity: 1; transform: scale(1.1); } 49%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+
+/* 사진 → 낙서 */
+.scene-hachanhan-image .hci-pic {
+  position: relative; flex: 1; border-radius: 1rem; overflow: hidden; border: 3px solid var(--ink);
+  box-shadow: .3rem .3rem 0 color-mix(in srgb, var(--accent) 55%, transparent); transform: rotate(-1deg);
+}
+.scene-hachanhan-image .hci-pic svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scene-hachanhan-image .hci-photo { animation: hachanhan-image-photo var(--loop) ease infinite; }
+@keyframes hachanhan-image-photo { 0% { opacity: 0; transform: scale(1.06); } 5%, 100% { opacity: 1; transform: none; } }
+.scene-hachanhan-image .hci-doodle { animation: hachanhan-image-reveal var(--loop) linear infinite; }
+@keyframes hachanhan-image-reveal { 0%, 10% { clip-path: inset(0 0 100% 0); opacity: 1; } 40%, 92% { clip-path: inset(0 0 0 0); opacity: 1; } 97%, 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
+.scene-hachanhan-image .hci-doodle .ink path { fill: none; stroke: #222; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.scene-hachanhan-image .hci-doodle .ink path:nth-child(5) { fill: #222; }
+.scene-hachanhan-image .hci-doodle .ink path:last-child { stroke: #f2b400; fill: #ffe27a; stroke-width: 2.4; }
+.scene-hachanhan-image .hci-doodle .fill { transform: translate(4px, 3px); }
+.scene-hachanhan-image .hci-doodle .ink, .scene-hachanhan-image .hci-doodle .fill { transform-box: view-box; transform-origin: 100px 90px; animation: hachanhan-image-boing var(--loop) ease-in-out infinite; }
+.scene-hachanhan-image .hci-doodle .fill { animation-name: hachanhan-image-boing2; }
+@keyframes hachanhan-image-boing { 0%, 42% { transform: none; } 45% { transform: rotate(-4deg) scale(1.04); } 48% { transform: rotate(3deg); } 51% { transform: rotate(-1.5deg); } 54%, 100% { transform: none; } }
+@keyframes hachanhan-image-boing2 { 0%, 42% { transform: translate(4px, 3px); } 45% { transform: translate(4px, 3px) rotate(-4deg) scale(1.04); } 48% { transform: translate(4px, 3px) rotate(3deg); } 51% { transform: translate(4px, 3px) rotate(-1.5deg); } 54%, 100% { transform: translate(4px, 3px); } }
+
+.scene-hachanhan-image .hci-scan {
+  position: absolute; left: 0; right: 0; top: 0; height: 2.2rem; translate: 0 -100%; opacity: 0;
+  background: linear-gradient(transparent, color-mix(in srgb, #ffd84d 55%, transparent)); border-bottom: 3px dashed var(--ink);
+  animation: hachanhan-image-scan var(--loop) linear infinite;
+}
+@keyframes hachanhan-image-scan { 0%, 10% { top: 0; opacity: 0; } 11% { opacity: 1; } 39% { opacity: 1; } 40%, 100% { top: 100%; opacity: 0; } }
+
+.scene-hachanhan-image .hci-pisik {
+  position: absolute; right: 7%; top: 9%; padding: .3rem .7rem; border-radius: 1rem 1rem 1rem .2rem; background: var(--sheet); border: 2.5px solid var(--ink);
+  font-size: 1rem; font-weight: 900; color: var(--ink); transform: rotate(8deg); animation: hachanhan-image-pisik var(--loop) ease infinite;
+}
+@keyframes hachanhan-image-pisik { 0%, 46% { opacity: 0; transform: rotate(8deg) scale(.3); } 50% { opacity: 1; transform: rotate(8deg) scale(1.15); } 53%, 92% { opacity: 1; transform: rotate(8deg); } 96%, 100% { opacity: 0; transform: rotate(8deg); } }
+
+/* 아래: 특징 + 바로 공유 */
+.scene-hachanhan-image .hci-bottom { display: flex; align-items: center; gap: .4rem; }
+.scene-hachanhan-image .hci-chip { padding: .25rem .55rem; border-radius: 99px; background: var(--sheet); border: 1.5px solid var(--line); font-size: .72rem; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.scene-hachanhan-image .hci-share {
+  position: relative; margin-left: auto; padding: .45rem .85rem; border-radius: .7rem; background: var(--ink); color: var(--sheet);
+  font-size: .82rem; font-weight: 800; white-space: nowrap; box-shadow: .2rem .2rem 0 #ffd84d; animation: hachanhan-image-press var(--loop) ease infinite;
+}
+@keyframes hachanhan-image-press { 0%, 62% { transform: none; box-shadow: .2rem .2rem 0 #ffd84d; } 65% { transform: translate(.2rem, .2rem); box-shadow: 0 0 0 #ffd84d; } 68%, 100% { transform: none; box-shadow: .2rem .2rem 0 #ffd84d; } }
+.scene-hachanhan-image .hci-share i { position: absolute; right: .4rem; top: -.2rem; font-style: normal; font-size: 1.1rem; opacity: 0; animation: hachanhan-image-plane var(--loop) ease-in infinite; }
+@keyframes hachanhan-image-plane { 0%, 65% { opacity: 0; transform: none; } 67% { opacity: 1; transform: translate(0, -.4rem); } 80% { opacity: 1; transform: translate(-1.5rem, -8rem) rotate(-15deg); } 84%, 100% { opacity: 0; transform: translate(-2rem, -10rem) rotate(-20deg); } }
+
+@media (max-width: 700px) {
+  .scene-hachanhan-image .hci-stage { aspect-ratio: .95; padding: .85rem; gap: .55rem; }
+  .scene-hachanhan-image .hci-chip:nth-child(2) { display: none; }
+  .scene-hachanhan-image .hci-share { font-size: .76rem; padding: .4rem .7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-hachanhan-image .hci-head .a, .scene-hachanhan-image .hci-head .b, .scene-hachanhan-image .hci-scan, .scene-hachanhan-image .hci-share i { opacity: 0; }
+}
+
 :root { --accent: #7a6000; }

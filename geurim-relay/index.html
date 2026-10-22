@@ -71,7 +71,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="그림 이어받기 소개"><img src="../assets/apps/geurim-relay/icon.png" alt="" width="30" height="30">그림 이어받기</a>
@@ -86,7 +86,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">DRAW · GUESS · RELAY</p>
-        <h1 id="intro-heading">고양이가<br>탕수육이 되어 돌아와요.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">고양이가</span></span><span class="line"><span style="--l:1">탕수육이 되어 돌아와요.</span></span></h1>
         <p class="hero-copy">그림 이어받기는 그림 하나가 다섯 사람을 거치며 엉뚱하게 변해 가는 릴레이 게임입니다. 누군가 그린 그림을 보고 단어를 맞히면, 그 답을 또 다른 사람이 그려요.</p>
         <div class="actions">
           <a class="button" href="https://play.google.com/store/apps/details?id=com.geurimrelay.app">Google Play 에서 받기</a>
@@ -94,9 +94,37 @@
         </div>
         <p class="age-note">무료 · Google Play</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/geurim-relay/thumb.jpg" alt="그림 이어받기 대표 이미지" style="object-position:center">
-        <figcaption><strong>그림 이어받기</strong><span>그림 릴레이 게임</span></figcaption>
+      <figure class="scene scene-relay" aria-label="한 판의 흐름: 고양이 그림이 다섯 사람을 거쳐 탕수육이 됩니다">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="relay-board">
+          <div class="relay-top">
+            <div class="relay-words">
+            <span class="relay-word" style="--i:0"><small>제시어</small>고양이</span>
+            <span class="relay-word" style="--i:1"><small>2번 답</small>호랑이?</span>
+            <span class="relay-word" style="--i:2"><small>3번 답</small>사자</span>
+            <span class="relay-word" style="--i:3"><small>4번 답</small>대걸레?</span>
+            <span class="relay-word last" style="--i:4"><small>5번 답</small>탕수육!</span>
+            </div>
+            <svg class="relay-timer" viewBox="0 0 40 40"><circle class="track" cx="20" cy="20" r="16"/><circle class="run" pathLength="1" cx="20" cy="20" r="16"/></svg>
+          </div>
+          <div class="relay-canvas">
+          <svg viewBox="0 0 200 140" style="--i:0"><path pathLength="1" stroke="#24372e" d="M60 92 C55 55 145 55 140 92 C140 124 60 124 60 92Z"/><path pathLength="1" stroke="#24372e" d="M68 70 L74 40 L94 60 M106 60 L126 40 L132 70"/><path pathLength="1" stroke="#24372e" d="M86 86 l0 3 M114 86 l0 3 M95 99 L100 104 L105 99"/><path pathLength="1" stroke="#f08a24" d="M58 96 L32 90 M58 102 L32 108 M142 96 L168 90 M142 102 L168 108"/></svg>
+          <svg viewBox="0 0 200 140" style="--i:1"><path pathLength="1" stroke="#f08a24" d="M58 90 C52 52 148 52 142 90 C142 126 58 126 58 90Z"/><path pathLength="1" stroke="#24372e" d="M78 62 l5 12 M100 57 l0 14 M122 62 l-5 12 M60 98 l14 0 M140 98 l-14 0"/><path pathLength="1" stroke="#24372e" d="M86 86 l0 3 M114 86 l0 3 M92 104 Q100 112 108 104"/></svg>
+          <svg viewBox="0 0 200 140" style="--i:2"><path pathLength="1" stroke="#e2b100" d="M100 26 L112 42 L130 34 L130 54 L150 58 L140 74 L156 88 L140 98 L146 116 L126 114 L120 132 L104 120 L94 134 L86 116 L68 126 L68 108 L48 104 L60 90 L44 76 L62 68 L54 50 L74 52 L76 34 L90 44 Z"/><path pathLength="1" stroke="#24372e" d="M76 84 C76 56 124 56 124 84 C124 110 76 110 76 84Z"/><path pathLength="1" stroke="#24372e" d="M90 80 l0 3 M110 80 l0 3 M94 96 L100 100 L106 96"/></svg>
+          <svg viewBox="0 0 200 140" style="--i:3"><path pathLength="1" stroke="#24372e" d="M134 18 L100 84"/><path pathLength="1" stroke="#2563eb" d="M66 86 L128 84 M72 86 L62 126 M84 86 L80 130 M96 86 L96 132 M108 86 L112 130 M120 85 L130 124"/></svg>
+          <svg viewBox="0 0 200 140" style="--i:4"><path pathLength="1" stroke="#24372e" d="M28 100 C28 70 172 70 172 100 C172 130 28 130 28 100Z"/><path pathLength="1" stroke="#c2611f" d="M62 92 C54 78 78 72 82 86 C86 98 66 102 62 92Z M96 84 C92 70 116 68 116 82 C116 94 98 96 96 84Z M126 96 C120 82 144 80 144 94 C144 106 128 106 126 96Z M84 108 C80 96 100 94 102 104 C104 114 86 116 84 108Z"/><path pathLength="1" stroke="#d23c3c" d="M50 82 C74 70 96 98 118 78 C134 64 148 84 158 78"/></svg>
+          </div>
+          <div class="relay-palette"><span style="--c:#24372e"></span><span style="--c:#2563eb"></span><span style="--c:#d23c3c"></span><span style="--c:#f08a24"></span><span style="--c:#e2b100"></span><span style="--c:#2f9e5b"></span></div>
+        </div>
+        <ol class="relay-chain">
+        <li style="--i:0" data-face="😺">1번째</li>
+        <li style="--i:1" data-face="🤔">2번째</li>
+        <li style="--i:2" data-face="😎">3번째</li>
+        <li style="--i:3" data-face="😵">4번째</li>
+        <li style="--i:4" data-face="🤣">5번째</li>
+        </ol>
+        </div>
+        <figcaption><strong>그림 이어받기</strong><span>고양이 → 탕수육, 다섯 사람의 릴레이</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
@@ -104,17 +132,17 @@
       <h2 id="how-heading">그리고, 맞히고, 다시 그려요.</h2>
       <p class="section-intro">잘 그릴 필요 없어요. 어설픈 그림일수록 다음 사람이 엉뚱하게 맞히고, 그 오답이 또 다음 사람의 제시어가 됩니다.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>제한시간 안에 그리기</h3>
           <p>제시어를 20~45초 안에 그려요. 단어 난이도에 따라 시간이 다르고, 도구는 6색 팔레트가 전부예요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>그림만 보고 맞히기</h3>
           <p>모르는 사람이 그린 그림을 보고 15초 안에 단어를 적어요. 그 답이 다음 사람의 제시어가 됩니다.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>끝까지 되짚어 보기</h3>
           <p>완성된 릴레이는 처음부터 끝까지 되짚어 볼 수 있고, 누가 내 그림을 뭐라고 답했는지 알림으로 알려 드려요.</p>

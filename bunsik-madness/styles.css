@@ -136,4 +136,184 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 분식대란: 떡 3개를 맞춰 모으고, 조리대에서 떡볶이를 만들어 손님에게 낸다 ─── */
+.scene-bunsik-madness { --loop: 12s; }
+.scene-bunsik-madness .bs-wrap { padding: .9rem .9rem 1rem; background: color-mix(in srgb, var(--accent) 6%, var(--sheet)); }
+.scene-bunsik-madness .bs-play { animation: bunsik-madness-play var(--loop) linear infinite both; }
+@keyframes bunsik-madness-play { 0% { opacity: 0; } 2%, 94% { opacity: 1; } 99%, 100% { opacity: 0; } }
+
+/* 가게: 손님 · 말풍선 · 조리대 */
+.scene-bunsik-madness .bs-shop { position: relative; aspect-ratio: 3.1; margin-bottom: .7rem; }
+.scene-bunsik-madness .bs-guest {
+  position: absolute; left: 2%; bottom: 4%; width: 3.3rem; height: 3.3rem; border-radius: 50%; display: grid; place-items: center;
+  background: var(--sheet); border: 2px solid var(--line); font-size: 2rem; line-height: 1;
+}
+.scene-bunsik-madness .bs-guest i { grid-area: 1 / 1; font-style: normal; }
+.scene-bunsik-madness .bs-guest .wait { opacity: 0; animation: bunsik-madness-wait var(--loop) steps(1) infinite both; }
+.scene-bunsik-madness .bs-guest .happy { animation: bunsik-madness-happy var(--loop) steps(1) infinite both; }
+@keyframes bunsik-madness-wait { 0% { opacity: 1; } 70%, 100% { opacity: 0; } }
+@keyframes bunsik-madness-happy { 0% { opacity: 0; } 70%, 100% { opacity: 1; } }
+.scene-bunsik-madness .bs-bubble {
+  position: absolute; left: 23%; bottom: 46%; padding: .35rem .7rem; border-radius: .8rem .8rem .8rem .2rem; white-space: nowrap;
+  background: var(--sheet); border: 1.5px solid var(--line); font-size: .82rem; font-weight: 800; box-shadow: 0 6px 14px -10px rgba(0, 0, 0, .4);
+}
+.scene-bunsik-madness .bs-bubble.order { opacity: 0; animation: bunsik-madness-order var(--loop) ease infinite both; }
+.scene-bunsik-madness .bs-bubble.paid { color: var(--accent); border-color: var(--accent); animation: bunsik-madness-paid var(--loop) ease infinite both; }
+@keyframes bunsik-madness-order { 0%, 3% { opacity: 0; transform: translateY(.4rem) scale(.8); } 6%, 66% { opacity: 1; transform: none; } 69%, 100% { opacity: 0; transform: none; } }
+@keyframes bunsik-madness-paid { 0%, 70% { opacity: 0; transform: translateY(.4rem) scale(.7); } 73% { opacity: 1; transform: scale(1.1); } 76%, 92% { opacity: 1; transform: none; } 95%, 100% { opacity: 0; transform: none; } }
+.scene-bunsik-madness .bs-counter {
+  position: absolute; right: 1%; bottom: 4%; width: 40%; height: 46%; border-radius: .7rem;
+  background: linear-gradient(#9a6a3e, #7a4f2a); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .18);
+}
+.scene-bunsik-madness .bs-counter small { position: absolute; left: .55rem; bottom: .3rem; font-size: .66rem; font-weight: 700; color: rgba(255, 255, 255, .8); }
+.scene-bunsik-madness .bs-cook { position: absolute; right: .55rem; bottom: .5rem; width: 36%; height: .4rem; border-radius: 99px; background: rgba(0, 0, 0, .3); overflow: hidden; }
+.scene-bunsik-madness .bs-cook i { position: absolute; inset: 0; background: #ffb547; transform-origin: left; transform: scaleX(0); animation: bunsik-madness-cook var(--loop) linear infinite both; }
+@keyframes bunsik-madness-cook { 0%, 36% { transform: scaleX(0); } 54%, 60% { transform: scaleX(1); } 62%, 100% { transform: scaleX(0); } }
+.scene-bunsik-madness .bs-get, .scene-bunsik-madness .bs-done {
+  position: absolute; top: 0; padding: .2rem .55rem; border-radius: 99px; font-size: .74rem; font-weight: 800; white-space: nowrap; opacity: 0;
+}
+.scene-bunsik-madness .bs-get { left: 58%; background: #fff3e0; color: #a14a12; border: 1.5px solid #e9b98c; animation: bunsik-madness-get var(--loop) ease infinite both; }
+.scene-bunsik-madness .bs-done { right: 2%; background: var(--accent); color: var(--sheet); animation: bunsik-madness-done var(--loop) ease infinite both; }
+@keyframes bunsik-madness-get { 0%, 26% { opacity: 0; transform: translateY(2.5rem) scale(.6); } 30% { opacity: 1; transform: none; } 42% { opacity: 1; transform: none; } 46%, 100% { opacity: 0; transform: translateY(-.3rem); } }
+@keyframes bunsik-madness-done { 0%, 54% { opacity: 0; transform: scale(.5); } 56% { opacity: 1; transform: scale(1.12); } 58%, 64% { opacity: 1; transform: none; } 67%, 100% { opacity: 0; transform: none; } }
+
+/* 떡볶이 한 그릇 — 조리대에서 손님 앞으로 */
+.scene-bunsik-madness .bs-dish {
+  position: absolute; left: 17%; bottom: 4%; width: 3rem; height: 1.9rem; border: .22rem solid #fff; border-radius: 45% 45% 50% 50% / 35% 35% 65% 65%;
+  background: radial-gradient(ellipse at 50% 30%, #f05a3a, #c42a14 70%); box-shadow: 0 6px 10px -6px rgba(0, 0, 0, .5);
+  animation: bunsik-madness-dish var(--loop) cubic-bezier(.4, 0, .3, 1) infinite both;
+}
+.scene-bunsik-madness .bs-dish i { position: absolute; width: .9rem; height: .3rem; border-radius: 99px; background: #fff6ea; }
+.scene-bunsik-madness .bs-dish i:nth-child(1) { left: .25rem; top: .35rem; rotate: -18deg; }
+.scene-bunsik-madness .bs-dish i:nth-child(2) { left: 1rem; top: .65rem; rotate: 12deg; }
+.scene-bunsik-madness .bs-dish i:nth-child(3) { left: 1.5rem; top: .25rem; rotate: -30deg; }
+@keyframes bunsik-madness-dish {
+  0%, 53% { left: 67%; bottom: 46%; opacity: 0; transform: scale(.4); }
+  56% { left: 67%; bottom: 46%; opacity: 1; transform: scale(1.12); }
+  58%, 62% { left: 67%; bottom: 46%; opacity: 1; transform: none; }
+  70%, 92% { left: 17%; bottom: 4%; opacity: 1; transform: none; }
+  96%, 100% { left: 17%; bottom: 4%; opacity: 0; transform: none; }
+}
+
+/* 6×6 재료 판 — 기본값은 맞추고 채운 뒤(마지막 장면)다 */
+.scene-bunsik-madness .bs-board {
+  position: relative; aspect-ratio: 1; border-radius: 1rem; overflow: hidden; container-type: inline-size;
+  background: color-mix(in srgb, #7a4f2a 18%, var(--sheet)); box-shadow: inset 0 0 0 2px color-mix(in srgb, #7a4f2a 25%, transparent);
+}
+.scene-bunsik-madness .bs-play { position: absolute; inset: 2%; overflow: hidden; }
+.scene-bunsik-madness .bs-t {
+  position: absolute; width: calc(100% / 6); height: calc(100% / 6); left: calc(var(--c) * 100% / 6); top: calc(var(--r) * 100% / 6); padding: .6cqw;
+}
+.scene-bunsik-madness .bs-t b {
+  display: grid; place-items: center; height: 100%; border-radius: 22%; font-size: 4.8cqw; font-weight: 900; letter-spacing: -.06em;
+  background: var(--bg); color: var(--fg); box-shadow: inset 0 -.5cqw 0 rgba(0, 0, 0, .14);
+}
+.scene-bunsik-madness .bs-t.d { --bg: #fff3e0; --fg: #a14a12; }
+.scene-bunsik-madness .bs-t.o { --bg: #e9b872; --fg: #6b3d0f; }
+.scene-bunsik-madness .bs-t.g { --bg: #2f4a2b; --fg: #dff2cf; }
+.scene-bunsik-madness .bs-t.fall { animation: bunsik-madness-fall var(--loop) ease-in infinite both; }
+.scene-bunsik-madness .bs-t.sw-dn { z-index: 2; animation: bunsik-madness-dn var(--loop) ease-in-out infinite both; }
+.scene-bunsik-madness .bs-t.hit { opacity: 0; animation: bunsik-madness-hit var(--loop) ease infinite both; }
+.scene-bunsik-madness .bs-t.sw-up { z-index: 2; animation-name: bunsik-madness-up; }
+@keyframes bunsik-madness-fall { 0%, 29% { transform: translateY(-100%); } 34% { transform: translateY(6%); } 36%, 100% { transform: none; } }
+@keyframes bunsik-madness-dn { 0%, 12% { transform: translateY(-100%); } 18%, 100% { transform: none; } }
+@keyframes bunsik-madness-up {
+  0%, 12% { transform: translateY(100%); opacity: 1; scale: 1; filter: none; } 18%, 20% { transform: none; opacity: 1; scale: 1; filter: none; }
+  22%, 25% { transform: none; opacity: 1; scale: 1.12; filter: brightness(1.15) drop-shadow(0 0 6px #ffb547); }
+  28%, 100% { transform: none; opacity: 0; scale: 0; }
+}
+@keyframes bunsik-madness-hit {
+  0%, 20% { opacity: 1; scale: 1; filter: none; }
+  22%, 25% { opacity: 1; scale: 1.12; filter: brightness(1.15) drop-shadow(0 0 6px #ffb547); }
+  28%, 100% { opacity: 0; scale: 0; }
+}
+.scene-bunsik-madness .bs-t.sw-dn b, .scene-bunsik-madness .bs-t.sw-up b { animation: bunsik-madness-pick var(--loop) ease infinite both; }
+@keyframes bunsik-madness-pick { 0%, 6% { outline: 0 solid transparent; } 8%, 18% { outline: .6cqw solid #ffb547; outline-offset: -.3cqw; } 20%, 100% { outline: 0 solid transparent; } }
+
+.scene-bunsik-madness .bs-hand {
+  position: absolute; z-index: 3; left: calc(2% + 96% * 3.55 / 6); top: calc(2% + 96% * 3.5 / 6); font-size: 2rem; opacity: 0;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .3)); animation: bunsik-madness-hand var(--loop) ease-in-out infinite both;
+}
+@keyframes bunsik-madness-hand {
+  0%, 5% { opacity: 0; top: calc(2% + 96% * 3.5 / 6); } 8%, 12% { opacity: 1; top: calc(2% + 96% * 3.5 / 6); }
+  18% { opacity: 1; top: calc(2% + 96% * 4.5 / 6); } 22%, 100% { opacity: 0; top: calc(2% + 96% * 4.5 / 6); }
+}
+
+@media (max-width: 700px) {
+  .scene-bunsik-madness .bs-wrap { padding: .75rem .75rem .85rem; }
+  .scene-bunsik-madness .bs-guest { width: 2.6rem; height: 2.6rem; font-size: 1.55rem; }
+  .scene-bunsik-madness .bs-bubble { left: 21%; font-size: .72rem; padding: .3rem .55rem; }
+  .scene-bunsik-madness .bs-get, .scene-bunsik-madness .bs-done { font-size: .66rem; }
+  .scene-bunsik-madness .bs-dish { width: 2.5rem; height: 1.6rem; }
+  .scene-bunsik-madness .bs-dish i { width: .75rem; height: .26rem; }
+  .scene-bunsik-madness .bs-dish i:nth-child(2) { left: .8rem; top: .55rem; }
+  .scene-bunsik-madness .bs-dish i:nth-child(3) { left: 1.25rem; }
+  .scene-bunsik-madness .bs-hand { font-size: 1.6rem; }
+}
+
 :root { --accent: #c0441c; }

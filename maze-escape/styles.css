@@ -136,4 +136,184 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 어둠의 미로: 손전등으로 길을 비추고, 발소리에 불을 끄고 숨었다가, 금빛 화살표를 따라 보물로 탈출 ── */
+.scene-maze-escape { --loop: 12s; }
+.scene-maze-escape .mz-stage { position: relative; aspect-ratio: 1 / 1.1; container-type: inline-size; overflow: hidden; background: #0a0907; color: #f3e6cf; }
+
+/* 1인칭 복도 — 앞으로 걸어 들어가며 조금씩 다가온다 */
+.scene-maze-escape .mz-world { position: absolute; inset: 0; transform-origin: 50% 50%; animation: maze-escape-walk var(--loop) ease-in-out infinite both; }
+@keyframes maze-escape-walk {
+  0% { transform: none; } 34% { transform: scale(1.15); } 40%, 56% { transform: scale(1.15); }
+  80%, 96% { transform: scale(1.75); } 100% { transform: none; }
+}
+.scene-maze-escape .mz-world svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scene-maze-escape .ceil { fill: #1e1812; }
+.scene-maze-escape .floor { fill: #3a2e22; }
+.scene-maze-escape .wall-l { fill: #54432f; }
+.scene-maze-escape .wall-r { fill: #4a3a29; }
+.scene-maze-escape .side { fill: #120e0a; }
+.scene-maze-escape .end { fill: #2e241a; }
+.scene-maze-escape .brick { fill: none; stroke: rgba(0, 0, 0, .35); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.scene-maze-escape .mz-gem {
+  position: absolute; left: 50%; top: 59cqw; font-size: 1.5rem; line-height: 1; transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 6px #ffd36b) drop-shadow(0 0 14px #ffb72b); animation: maze-escape-gem var(--loop) ease infinite both;
+}
+@keyframes maze-escape-gem { 0%, 60% { filter: drop-shadow(0 0 4px #ffd36b); } 76%, 96% { filter: drop-shadow(0 0 8px #fff2c0) drop-shadow(0 0 22px #ffb72b); } 100% { filter: drop-shadow(0 0 4px #ffd36b); } }
+.scene-maze-escape .mz-cell { position: absolute; left: 30%; top: 90cqw; font-size: 1.2rem; line-height: 1; transform: translate(-50%, -50%) rotate(-70deg); animation: maze-escape-cell var(--loop) ease infinite both; }
+@keyframes maze-escape-cell { 0%, 27% { opacity: 1; translate: 0 0; } 31%, 97% { opacity: 0; translate: 0 -6cqw; } 100% { opacity: 1; translate: 0 0; } }
+/* 추격자는 거의 보이지 않는다 — 불이 꺼졌을 때 옆 통로에서 눈빛만 잠깐 */
+.scene-maze-escape .mz-eyes {
+  position: absolute; left: 77%; top: 46cqw; width: 1.5cqw; height: .9cqw; border-radius: 50%; background: #ff4a2a;
+  box-shadow: 3cqw 0 #ff4a2a, 0 0 6px #ff4a2a; opacity: 0; animation: maze-escape-eyes var(--loop) ease infinite both;
+}
+@keyframes maze-escape-eyes { 0%, 44% { opacity: 0; } 47%, 51% { opacity: .75; } 48% { opacity: .2; } 54%, 100% { opacity: 0; } }
+
+/* 손전등 — 빛 둘레 밖은 칠흑 */
+.scene-maze-escape .mz-light {
+  position: absolute; left: -100cqw; top: -110cqw; width: 300cqw; height: 330cqw; pointer-events: none;
+  background: radial-gradient(circle at center, rgba(255, 214, 140, .14) 0, rgba(255, 214, 140, .06) 8%, rgba(8, 6, 4, .55) 13%, rgba(8, 6, 4, .965) 21%);
+  transform: translate(0, -3cqw); animation: maze-escape-sweep var(--loop) ease-in-out infinite both;
+}
+@keyframes maze-escape-sweep {
+  0% { transform: translate(0, -3cqw); } 12% { transform: translate(-22cqw, -2cqw); } 24%, 29% { transform: translate(-18cqw, 30cqw); }
+  34% { transform: translate(0, 0); } 39% { transform: translate(22cqw, -4cqw); } 56% { transform: translate(18cqw, -4cqw); }
+  62%, 96% { transform: translate(0, 2cqw); } 100% { transform: translate(0, -3cqw); }
+}
+/* 불을 끄고 숨는다 (끄면 배터리가 다시 찬다) · 끝에서 암전 */
+.scene-maze-escape .mz-off { position: absolute; inset: 0; background: #050403; opacity: 0; animation: maze-escape-off var(--loop) steps(1) infinite both; }
+@keyframes maze-escape-off { 0% { opacity: 0; } 40% { opacity: .96; } 56% { opacity: 0; } 97% { opacity: 1; } 99.5%, 100% { opacity: 0; } }
+
+/* 손전등 배터리 · 금빛 화살표 */
+.scene-maze-escape .mz-hud { position: absolute; top: 3cqw; left: 3cqw; right: 3cqw; display: flex; justify-content: space-between; align-items: center; }
+.scene-maze-escape .mz-battery { display: flex; align-items: center; gap: .4rem; padding: .3rem .55rem; border-radius: 99px; background: rgba(255, 255, 255, .1); }
+.scene-maze-escape .mz-battery em { font-style: normal; font-size: .9rem; animation: maze-escape-torch var(--loop) steps(1) infinite both; }
+@keyframes maze-escape-torch { 0% { opacity: 1; } 40% { opacity: .3; } 56%, 100% { opacity: 1; } }
+.scene-maze-escape .mz-battery > i { display: block; width: 18cqw; height: .5rem; border-radius: 99px; background: rgba(255, 255, 255, .15); overflow: hidden; }
+.scene-maze-escape .mz-battery > i > i { display: block; height: 100%; width: 72%; border-radius: inherit; background: #ffd36b; animation: maze-escape-bat var(--loop) linear infinite both; }
+@keyframes maze-escape-bat { 0% { width: 64%; } 28% { width: 46%; } 31% { width: 92%; } 40% { width: 86%; } 56% { width: 94%; } 96% { width: 72%; } 100% { width: 64%; } }
+.scene-maze-escape .mz-arrow {
+  position: absolute; left: 50%; top: 0; width: 9cqw; margin-left: -4.5cqw; filter: drop-shadow(0 0 6px #ffb72b);
+  animation: maze-escape-arrow var(--loop) ease-in-out infinite both;
+}
+.scene-maze-escape .mz-arrow svg { display: block; width: 100%; fill: #ffc93d; }
+@keyframes maze-escape-arrow {
+  0% { transform: rotate(0); } 12% { transform: rotate(20deg); } 26% { transform: rotate(14deg); } 34% { transform: rotate(-6deg); }
+  39% { transform: rotate(-24deg); } 40% { opacity: 1; } 41%, 55% { opacity: .25; transform: rotate(-20deg); } 56% { opacity: 1; }
+  62% { transform: rotate(0) scale(1.25); } 66%, 100% { transform: rotate(0) scale(1); }
+}
+
+/* 발소리 — 옆 통로 쪽에서 가까워진다 */
+.scene-maze-escape .mz-steps {
+  position: absolute; right: 5cqw; top: 46cqw; display: grid; justify-items: center; gap: .1rem; opacity: 0;
+  animation: maze-escape-steps var(--loop) ease infinite both;
+}
+.scene-maze-escape .mz-steps em { font-style: normal; font-size: 1.25rem; line-height: 1; }
+.scene-maze-escape .mz-steps small, .scene-maze-escape .mz-heart small { font-size: .66rem; font-weight: 700; color: #cdbb9c; white-space: nowrap; }
+.scene-maze-escape .mz-steps i {
+  position: absolute; left: 50%; top: 1.6cqw; width: 8cqw; height: 8cqw; margin-left: -4cqw; border-radius: 50%; border: 2px solid #f3e6cf;
+  opacity: 0; animation: maze-escape-ring 1.1s ease-out infinite;
+}
+.scene-maze-escape .mz-steps i + i { animation-delay: .55s; }
+@keyframes maze-escape-ring { from { transform: scale(.5); opacity: .7; } to { transform: scale(2); opacity: 0; } }
+@keyframes maze-escape-steps { 0%, 28% { opacity: 0; transform: scale(.8); } 34% { opacity: .55; transform: scale(.9); } 46% { opacity: 1; transform: scale(1.15); } 56% { opacity: .5; transform: scale(1); } 62%, 100% { opacity: 0; transform: scale(.9); } }
+
+/* 심장 소리 — 추격자가 가까울수록 빨라진다 */
+.scene-maze-escape .mz-heart { position: absolute; left: 50%; bottom: 3cqw; display: grid; justify-items: center; gap: .1rem; transform: translateX(-50%); }
+.scene-maze-escape .mz-heart em { font-style: normal; font-size: 1.5rem; line-height: 1; color: #e2372b; text-shadow: 0 0 10px rgba(226, 55, 43, .7); animation: maze-escape-beat var(--loop) linear infinite; }
+@keyframes maze-escape-beat {
+  0%, 100%, 0.2%, 8.2%, 16.2%, 24.2%, 32.2%, 35.7%, 38.2%, 40.7%, 43.2%, 45.7%, 48.2%, 50.7%, 53.2%, 59.2%, 67.2%, 75.2%, 83.2%, 91.2%, 2.4%, 10.4%, 18.4%, 26.4%, 34.4%, 37.9%, 40.4%, 42.9%, 45.4%, 47.9%, 50.4%, 52.9%, 55.4%, 61.4%, 69.4%, 77.4%, 85.4%, 93.4% { transform: scale(1); }
+  1%, 9%, 17%, 25%, 33%, 36.5%, 39%, 41.5%, 44%, 46.5%, 49%, 51.5%, 54%, 60%, 68%, 76%, 84%, 92% { transform: scale(1.32); }
+}
+
+/* 탈출 */
+.scene-maze-escape .mz-clear {
+  position: absolute; left: 50%; top: 40%; display: grid; justify-items: center; gap: .25rem; padding: .85rem 1.3rem; border-radius: .9rem;
+  background: var(--sheet); color: var(--ink); white-space: nowrap; box-shadow: 0 0 0 2px #ffc93d, 0 18px 40px -12px rgba(255, 183, 43, .55);
+  opacity: 0; transform: translate(-50%, -50%); animation: maze-escape-clear var(--loop) cubic-bezier(.2, 1.4, .4, 1) infinite both;
+}
+.scene-maze-escape .mz-clear strong { font-size: 1.15rem; color: var(--accent); letter-spacing: -.03em; }
+.scene-maze-escape .mz-clear span { font-size: .8rem; font-weight: 700; }
+@keyframes maze-escape-clear { 0%, 79% { opacity: 0; transform: translate(-50%, -30%) scale(.8); } 83%, 95% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 97%, 100% { opacity: 0; transform: translate(-50%, -50%); } }
+
+@media (max-width: 700px) {
+  .scene-maze-escape .mz-gem { font-size: 1.15rem; }
+  .scene-maze-escape .mz-cell { font-size: .95rem; }
+  .scene-maze-escape .mz-steps em { font-size: 1rem; }
+  .scene-maze-escape .mz-heart em { font-size: 1.2rem; }
+  .scene-maze-escape .mz-steps small, .scene-maze-escape .mz-heart small { font-size: .6rem; }
+  .scene-maze-escape .mz-clear strong { font-size: 1rem; }
+  .scene-maze-escape .mz-clear span { font-size: .72rem; }
+}
+/* 멈춰 있을 때 — 손전등이 복도 끝 보물을 비추고, 옆에서 발소리가 들리는 순간 */
+@media (prefers-reduced-motion: reduce) {
+  .scene-maze-escape .mz-world { transform: scale(1.15); }
+  .scene-maze-escape .mz-steps { opacity: .9; }
+  .scene-maze-escape .mz-steps i:first-of-type { opacity: .5; transform: scale(1.4); }
+}
+
 :root { --accent: #7a5a32; }

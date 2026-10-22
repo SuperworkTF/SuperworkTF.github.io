@@ -136,4 +136,221 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 귀여운동물사전: 재료 셋을 조합해 알이 생기고, 돌보며 전설까지 자라 동물사전에 오른다 ──────── */
+.scene-animalpedia { --loop: 12s; }
+.scene-animalpedia .ap-stage {
+  position: relative; aspect-ratio: 1 / 1.1; container-type: inline-size; overflow: hidden;
+  background: radial-gradient(circle at 50% 52%, color-mix(in srgb, var(--accent) 10%, var(--sheet)) 0 30%, transparent 31%),
+    linear-gradient(color-mix(in srgb, var(--accent) 6%, var(--sheet)), color-mix(in srgb, var(--accent) 14%, var(--sheet)));
+}
+.scene-animalpedia ul { margin: 0; padding: 0; list-style: none; }
+
+/* 단계 · 성장 막대 */
+.scene-animalpedia .ap-top { position: absolute; top: 3cqw; left: 4cqw; right: 4cqw; display: flex; align-items: center; gap: .7rem; }
+.scene-animalpedia .ap-step {
+  padding: .3rem .7rem; border-radius: 99px; background: var(--accent); color: var(--sheet); font-size: .78rem; font-weight: 800; white-space: nowrap;
+}
+.scene-animalpedia .ap-step::after { content: "11/11단계 · 전설"; animation: animalpedia-step var(--loop) steps(1) infinite; }
+@keyframes animalpedia-step {
+  0% { content: "오늘의 재료"; } 23% { content: "1/11단계 · 알"; } 42% { content: "4/11단계"; } 48% { content: "7/11단계"; }
+  54% { content: "9/11단계"; } 59%, 100% { content: "11/11단계 · 전설"; }
+}
+.scene-animalpedia .ap-grow { flex: 1; height: .5rem; border-radius: 99px; background: color-mix(in srgb, var(--accent) 15%, var(--sheet)); overflow: hidden; }
+.scene-animalpedia .ap-grow i { display: block; height: 100%; width: 100%; border-radius: inherit; background: linear-gradient(90deg, #8fd36b, var(--accent)); animation: animalpedia-grow var(--loop) ease infinite both; }
+@keyframes animalpedia-grow { 0%, 22% { width: 0; } 25% { width: 9%; } 42% { width: 36%; } 48% { width: 64%; } 54% { width: 82%; } 59%, 97% { width: 100%; } 100% { width: 0; } }
+
+/* 오늘의 재료 다섯 — 셋을 골라 가운데로 */
+.scene-animalpedia .ap-items { position: absolute; top: 14cqw; left: 4cqw; right: 4cqw; display: grid; grid-template-columns: repeat(5, 1fr); gap: 3cqw; }
+.scene-animalpedia .ap-items li {
+  display: grid; place-items: center; aspect-ratio: 1; border-radius: 3cqw; background: var(--sheet); font-size: 1.6rem;
+  box-shadow: 0 0 0 2px var(--line), 0 6px 14px -10px rgba(0, 0, 0, .4); opacity: 0; animation: animalpedia-item var(--loop) ease infinite both;
+}
+.scene-animalpedia .ap-items li.pick { animation-name: animalpedia-pick; animation-delay: var(--d); }
+@keyframes animalpedia-item { 0%, 12% { opacity: 1; transform: none; } 17%, 97% { opacity: 0; transform: scale(.8); } 100% { opacity: 1; transform: none; } }
+@keyframes animalpedia-pick {
+  0%, 2% { opacity: 1; transform: none; box-shadow: 0 0 0 2px var(--line), 0 6px 14px -10px rgba(0, 0, 0, .4); }
+  4%, 11% { opacity: 1; transform: translateY(-2cqw); box-shadow: 0 0 0 3px var(--accent), 0 10px 18px -10px rgba(0, 0, 0, .5); }
+  16% { opacity: 0; transform: translate(calc(var(--dx) * 1cqw), 38cqw) scale(.4); box-shadow: none; }
+  17%, 97% { opacity: 0; transform: translate(calc(var(--dx) * 1cqw), 38cqw) scale(.4); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* 가운데 둥지 — 조합 → 알 → 아기 → 전설 */
+.scene-animalpedia .ap-nest { position: absolute; left: 50%; top: 56cqw; width: 46cqw; height: 46cqw; margin: -23cqw 0 0 -23cqw; }
+.scene-animalpedia .ap-nest > * { position: absolute; }
+.scene-animalpedia .ap-pot {
+  inset: 14%; display: grid; place-items: center; border-radius: 50%; border: 3px dashed color-mix(in srgb, var(--accent) 55%, var(--sheet));
+  color: var(--accent); font-weight: 800; font-size: .9rem; opacity: 0; animation: animalpedia-pot var(--loop) ease infinite both;
+}
+@keyframes animalpedia-pot {
+  0%, 13% { opacity: 1; transform: none; box-shadow: none; }
+  18% { opacity: 1; transform: scale(1.08); box-shadow: 0 0 0 8px color-mix(in srgb, #ffd84d 40%, transparent); }
+  22% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 30px 10px #ffe9a0; }
+  24%, 97% { opacity: 0; transform: scale(.4); }
+  100% { opacity: 1; transform: none; }
+}
+.scene-animalpedia .ap-egg { inset: 0; width: 100%; opacity: 0; transform-origin: 50% 90%; animation: animalpedia-egg var(--loop) ease infinite both; }
+.scene-animalpedia .ap-egg ellipse { fill: #fff6df; stroke: #e7d3a6; stroke-width: 2; }
+.scene-animalpedia .ap-egg circle { fill: #9fd58a; }
+.scene-animalpedia .ap-egg circle:nth-of-type(2n) { fill: #ffb8c6; }
+@keyframes animalpedia-egg {
+  0%, 22% { opacity: 0; transform: scale(.3); }
+  25% { opacity: 1; transform: scale(1.08); } 27% { transform: scale(1); }
+  31% { transform: rotate(-8deg); } 33% { transform: rotate(8deg); } 35% { transform: rotate(-6deg); } 37% { transform: rotate(6deg); }
+  39% { opacity: 1; transform: scale(1.12); } 41%, 100% { opacity: 0; transform: scale(1.4); }
+}
+.scene-animalpedia .ap-pet { inset: 0; width: 100%; transform-origin: 50% 85%; animation: animalpedia-pet var(--loop) cubic-bezier(.3, 1.5, .5, 1) infinite both; }
+.scene-animalpedia .ap-pet .ear, .scene-animalpedia .ap-pet .body { fill: #ffd7c4; }
+.scene-animalpedia .ap-pet .ear-in { fill: #ffa9b6; }
+.scene-animalpedia .ap-pet .cloud { fill: #fff; stroke: #e2e8f0; stroke-width: 1.5; }
+.scene-animalpedia .ap-pet .eye { fill: #3a2a24; }
+.scene-animalpedia .ap-pet .shine { fill: #fff; }
+.scene-animalpedia .ap-pet .blush { fill: #ff9fae; opacity: .7; }
+.scene-animalpedia .ap-pet .mouth { fill: none; stroke: #3a2a24; stroke-width: 2; stroke-linecap: round; }
+@keyframes animalpedia-pet {
+  0%, 40% { opacity: 0; transform: scale(.2); }
+  43%, 55% { opacity: 1; transform: scale(.62); }
+  59% { opacity: 1; transform: scale(1.06); } 61%, 96% { opacity: 1; transform: scale(1); }
+  99%, 100% { opacity: 0; transform: scale(.8); }
+}
+.scene-animalpedia .ap-crown { left: 34%; top: -12%; width: 32%; animation: animalpedia-crown var(--loop) cubic-bezier(.3, 1.6, .5, 1) infinite both; }
+.scene-animalpedia .ap-crown path { fill: #ffcf3a; stroke: #e0a500; stroke-width: 2; stroke-linejoin: round; }
+.scene-animalpedia .ap-crown circle { fill: #ff6f91; }
+@keyframes animalpedia-crown { 0%, 57% { opacity: 0; transform: translateY(-8cqw) scale(.4); } 61%, 96% { opacity: 1; transform: rotate(-6deg); } 99%, 100% { opacity: 0; } }
+.scene-animalpedia .ap-glow {
+  inset: -22%; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 220, 110, .65), rgba(255, 220, 110, 0));
+  animation: animalpedia-glow var(--loop) ease infinite both;
+}
+@keyframes animalpedia-glow { 0%, 57% { opacity: 0; transform: scale(.5); } 61%, 96% { opacity: 1; transform: none; } 99%, 100% { opacity: 0; } }
+/* 돌볼 때마다 하트가 퐁 */
+.scene-animalpedia .ap-heart { top: 10%; font-size: 1.2rem; color: #e2476b; opacity: 0; animation: animalpedia-heart var(--loop) ease-out infinite both; }
+.scene-animalpedia .h1 { left: 8%; }
+.scene-animalpedia .h2 { right: 8%; animation-delay: .25s; }
+@keyframes animalpedia-heart {
+  0%, 30.9% { opacity: 0; transform: translateY(4cqw) scale(.5); } 31.5% { opacity: 1; transform: translateY(2cqw) scale(1); } 36% { opacity: 0; transform: translateY(-8cqw); }
+  38.9% { opacity: 0; transform: translateY(4cqw) scale(.5); } 39.5% { opacity: 1; transform: translateY(2cqw) scale(1); } 44% { opacity: 0; transform: translateY(-8cqw); }
+  46.9% { opacity: 0; transform: translateY(4cqw) scale(.5); } 47.5% { opacity: 1; transform: translateY(2cqw) scale(1); } 52% { opacity: 0; transform: translateY(-8cqw); }
+  54.9% { opacity: 0; transform: translateY(4cqw) scale(.5); } 55.5% { opacity: 1; transform: translateY(2cqw) scale(1); } 60%, 100% { opacity: 0; transform: translateY(-8cqw); }
+}
+
+/* 돌보기 버튼 넷 — 차례로 눌린다 */
+.scene-animalpedia .ap-care {
+  position: absolute; left: 4cqw; right: 4cqw; bottom: 4cqw; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.4cqw;
+  opacity: 0; animation: animalpedia-care var(--loop) ease infinite both;
+}
+@keyframes animalpedia-care { 0%, 23% { opacity: 0; transform: translateY(6cqw); } 27%, 66% { opacity: 1; transform: none; } 70%, 100% { opacity: 0; transform: translateY(6cqw); } }
+.scene-animalpedia .ap-care li {
+  display: grid; justify-items: center; gap: .15rem; padding: .55rem 0 .5rem; border-radius: .8rem; background: var(--sheet);
+  font-size: .68rem; font-weight: 800; color: var(--ink); white-space: nowrap; box-shadow: 0 0 0 2px var(--line);
+  animation: animalpedia-press var(--loop) ease infinite both; animation-delay: calc(var(--i) * .96s);
+}
+.scene-animalpedia .ap-care em { font-style: normal; font-size: 1.3rem; line-height: 1.1; }
+@keyframes animalpedia-press {
+  0%, 29% { transform: none; box-shadow: 0 0 0 2px var(--line); background: var(--sheet); }
+  30.5% { transform: scale(.9); box-shadow: 0 0 0 3px var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--sheet)); }
+  33% { transform: none; box-shadow: 0 0 0 3px var(--accent); }
+  37%, 100% { transform: none; box-shadow: 0 0 0 2px var(--line); background: var(--sheet); }
+}
+
+/* 뽐내기 광장의 귀여워요 → 동물사전 영구 등재 */
+.scene-animalpedia .ap-votes {
+  position: absolute; left: 50%; top: 17cqw; padding: .45rem .9rem; border-radius: 99px; background: var(--sheet); color: #e2476b;
+  font-size: .9rem; font-weight: 800; white-space: nowrap; box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .4);
+  transform: translateX(-50%); animation: animalpedia-votes var(--loop) ease infinite both;
+}
+.scene-animalpedia .ap-votes::after { content: "10/10"; animation: animalpedia-count var(--loop) steps(1) infinite; }
+@keyframes animalpedia-votes { 0%, 68% { opacity: 0; transform: translate(-50%, -3cqw); } 71%, 96% { opacity: 1; transform: translate(-50%, 0); } 99%, 100% { opacity: 0; transform: translate(-50%, 0); } }
+@keyframes animalpedia-count { 0% { content: "7/10"; } 74% { content: "8/10"; } 77% { content: "9/10"; } 80%, 100% { content: "10/10"; } }
+.scene-animalpedia .ap-stamp {
+  position: absolute; left: 50%; bottom: 6cqw; display: grid; justify-items: center; padding: .45rem 1rem .5rem; border-radius: .7rem;
+  border: 3px solid var(--accent); background: color-mix(in srgb, var(--sheet) 92%, transparent); color: var(--accent); white-space: nowrap;
+  transform: translateX(-50%) rotate(-6deg); animation: animalpedia-stamp var(--loop) ease infinite both;
+}
+.scene-animalpedia .ap-stamp small { font-size: .72rem; font-weight: 800; }
+.scene-animalpedia .ap-stamp strong { font-size: 1.2rem; letter-spacing: -.02em; }
+@keyframes animalpedia-stamp {
+  0%, 81% { opacity: 0; transform: translateX(-50%) rotate(-6deg) scale(2.2); }
+  84% { opacity: 1; transform: translateX(-50%) rotate(-6deg) scale(.94); }
+  86%, 96% { opacity: 1; transform: translateX(-50%) rotate(-6deg) scale(1); }
+  99%, 100% { opacity: 0; transform: translateX(-50%) rotate(-6deg) scale(1); }
+}
+
+@media (max-width: 700px) {
+  .scene-animalpedia .ap-step { font-size: .7rem; }
+  .scene-animalpedia .ap-items li { font-size: 1.2rem; }
+  .scene-animalpedia .ap-care li { font-size: .58rem; padding: .4rem 0; }
+  .scene-animalpedia .ap-care em { font-size: 1rem; }
+  .scene-animalpedia .ap-votes { font-size: .8rem; }
+  .scene-animalpedia .ap-stamp strong { font-size: 1rem; }
+}
+/* 멈춰 있을 때 — 왕관을 쓴 전설 동물, 귀여워요 10표, 동물사전 영구 등재 */
+@media (prefers-reduced-motion: reduce) {
+  .scene-animalpedia .ap-items li, .scene-animalpedia .ap-pot, .scene-animalpedia .ap-egg, .scene-animalpedia .ap-care, .scene-animalpedia .ap-heart { opacity: 0; }
+}
+
 :root { --accent: #2f7a3a; }

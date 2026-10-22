@@ -136,4 +136,120 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 그림 이어받기: 그림 하나가 다섯 사람을 거쳐 탕수육이 된다 ─────────── */
+.scene-relay { --slot: 2.8s; --n: 5; }
+.relay-board { padding: 1.1rem 1.1rem 1rem; }
+.relay-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.6rem; }
+.relay-words { position: relative; flex: 1; height: 2.4rem; }
+.relay-word {
+  position: absolute; inset: 0 auto 0 0; display: inline-flex; align-items: center; gap: .5rem; padding: 0 1rem; border-radius: 99px;
+  background: var(--wash); font-weight: 800; letter-spacing: -.03em; white-space: nowrap;
+  opacity: 0; animation: r-show calc(var(--slot) * var(--n)) ease infinite both; animation-delay: calc(var(--i) * var(--slot));
+}
+.relay-word small { font-weight: 600; font-size: .78rem; color: var(--muted); }
+.relay-word.last { background: var(--accent); color: var(--sheet); }
+.relay-word.last small { color: color-mix(in srgb, var(--sheet) 75%, transparent); }
+.relay-timer { width: 2.4rem; height: 2.4rem; flex: none; transform: rotate(-90deg); }
+.relay-timer circle { fill: none; stroke-width: 4; }
+.relay-timer .track { stroke: var(--line); }
+.relay-timer .run { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 1; animation: r-timer var(--slot) linear infinite; }
+@keyframes r-timer { from { stroke-dashoffset: 0; } 92%, to { stroke-dashoffset: 1; } }
+.relay-canvas { position: relative; margin-top: .8rem; aspect-ratio: 200 / 140; border-radius: .9rem; border: 1px dashed var(--line);
+  background: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0) 0 0 / 14px 14px, var(--sheet); }
+.relay-canvas svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; animation: r-show calc(var(--slot) * var(--n)) ease infinite both; animation-delay: calc(var(--i) * var(--slot)); }
+.relay-canvas path { fill: none; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1;
+  animation: r-draw calc(var(--slot) * var(--n)) ease-out infinite both; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes r-show { 0% { opacity: 0; transform: translateY(6px); } 2%, 18% { opacity: 1; transform: none; } 20%, 100% { opacity: 0; } }
+@keyframes r-draw { 0% { stroke-dashoffset: 1; } 13%, 100% { stroke-dashoffset: 0; } }
+.relay-palette { display: flex; gap: .45rem; margin-top: .8rem; }
+.relay-palette span { width: 1.15rem; height: 1.15rem; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 2px color-mix(in srgb, black 10%, transparent); }
+.relay-chain { display: grid; grid-template-columns: repeat(5, 1fr); gap: .4rem; list-style: none; margin: 0; padding: .9rem 1.1rem 1.1rem; border-top: 1px solid var(--line); }
+.relay-chain li { position: relative; display: grid; justify-items: center; gap: .25rem; font-size: .72rem; color: var(--muted); }
+.relay-chain li::before {
+  content: attr(data-face); display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--line); font-size: 1rem;
+  /* 차례가 오기 전에는 첫 장면(켜진 상태)을 미리 보이지 않는다 — fill 없음 */
+  animation: r-turn calc(var(--slot) * var(--n)) ease infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.relay-chain li:not(:last-child)::after { content: ""; position: absolute; top: 1.1rem; left: calc(50% + 1.3rem); width: calc(100% - 2.6rem + .4rem); border-top: 2px dotted var(--line); }
+@keyframes r-turn { 0%, 19% { border-color: var(--accent); background: var(--wash); transform: scale(1.12); } 21%, 100% { border-color: var(--line); background: var(--paper); transform: none; } }
+
+@media (max-width: 700px) {
+  .relay-chain li { font-size: .66rem; }
+  .relay-chain li::before { width: 1.9rem; height: 1.9rem; font-size: .9rem; }
+  .relay-chain li:not(:last-child)::after { top: .95rem; left: calc(50% + 1.15rem); width: calc(100% - 2.3rem + .4rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .relay-word, .relay-canvas svg { opacity: 0; }
+  .relay-word.last, .relay-canvas svg:last-child { opacity: 1; }
+  .relay-canvas path { stroke-dashoffset: 0; }
+  .relay-chain li:last-child::before { border-color: var(--accent); background: var(--wash); }
+  .relay-timer .run { stroke-dashoffset: .35; }
+}
+
 :root { --accent: #2563eb; }

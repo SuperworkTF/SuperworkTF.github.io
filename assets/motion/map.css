@@ -1,0 +1,49 @@
+/* ── 수험표 할인 지도: 내 주변에 할인 핀이 떨어지고 수험표가 도장을 받는다 ───── */
+.scene-map { --loop: 9s; }
+.map { position: relative; aspect-ratio: 1.12; background: color-mix(in srgb, var(--accent) 6%, var(--sheet)); }
+.map-streets { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-streets .road { fill: none; stroke: var(--sheet); stroke-width: 14; stroke-linecap: round; }
+.map-streets .lane { fill: none; stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 6 8; }
+.map-streets .park { fill: color-mix(in srgb, #2f9e5b 18%, var(--sheet)); }
+.map-streets .river { fill: none; stroke: color-mix(in srgb, var(--accent) 22%, var(--sheet)); stroke-width: 22; stroke-linecap: round; }
+.map-search {
+  position: absolute; top: 4.5%; left: 5%; right: 5%; display: flex; align-items: center; gap: .55rem; padding: .6rem .95rem;
+  background: var(--sheet); border-radius: .8rem; box-shadow: 0 8px 20px -12px rgba(0, 0, 0, .35); font-size: .86rem; font-weight: 700;
+}
+.map-search b { margin-left: auto; color: var(--accent); white-space: nowrap; }
+.map-search b::after { content: "4곳"; animation: m-count var(--loop) steps(1) infinite; }
+@keyframes m-count { 0% { content: "0곳"; } 16% { content: "1곳"; } 22% { content: "2곳"; } 28% { content: "3곳"; } 34%, 100% { content: "4곳"; } }
+.map-me { position: absolute; left: 50%; top: 56%; width: .95rem; height: .95rem; margin: -.475rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--sheet); }
+.map-me::before, .map-me::after { content: ""; position: absolute; inset: -.3rem; border-radius: 50%; border: 2px solid var(--accent); animation: m-ping 2.4s ease-out infinite; }
+.map-me::after { animation-delay: 1.2s; }
+@keyframes m-ping { from { transform: scale(.6); opacity: .9; } to { transform: scale(4.2); opacity: 0; } }
+.pin { position: absolute; left: var(--x); top: var(--y); animation: m-pin var(--loop) cubic-bezier(.3, 1.5, .5, 1) infinite both; animation-delay: calc(.9s + var(--i) * .55s); }
+.pin::before { content: ""; display: block; width: 1.5rem; height: 1.5rem; margin: -1.5rem 0 0 -.75rem; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--c, var(--accent)); box-shadow: inset 0 0 0 .38rem color-mix(in srgb, var(--c, var(--accent)) 60%, white); }
+.pin b {
+  position: absolute; bottom: 1.85rem; left: 50%; translate: -50% 0; padding: .3rem .6rem; border-radius: 99px; background: var(--sheet); white-space: nowrap;
+  font-size: .82rem; color: #e8541c; box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .45);
+  animation: m-chip var(--loop) ease infinite both; animation-delay: calc(.9s + var(--i) * .55s);
+}
+@keyframes m-pin { 0% { transform: translateY(-3rem); opacity: 0; } 4% { opacity: 1; } 8% { transform: none; } 84% { transform: none; opacity: 1; } 92%, 100% { transform: translateY(-.6rem); opacity: 0; } }
+@keyframes m-chip { 0%, 8% { scale: .4; opacity: 0; } 13% { scale: 1.08; opacity: 1; } 16%, 84% { scale: 1; opacity: 1; } 90%, 100% { opacity: 0; } }
+.ticket {
+  position: absolute; left: 5%; bottom: 5%; width: 46%; padding: .7rem .85rem .75rem; border-radius: .7rem; background: var(--sheet);
+  border: 1px solid var(--line); box-shadow: 0 16px 30px -18px rgba(0, 0, 0, .5); font-size: .72rem; line-height: 1.5;
+  animation: m-ticket var(--loop) cubic-bezier(.2, .9, .3, 1.2) infinite both;
+}
+.ticket::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: .35rem; border-radius: .7rem .7rem 0 0; background: var(--accent); }
+.ticket strong { display: block; font-size: .92rem; color: var(--ink); margin-top: .15rem; }
+.ticket span { color: var(--muted); }
+.ticket .stamp {
+  position: absolute; right: -.6rem; top: 34%; padding: .15rem .45rem; border: 2.5px solid #e8541c; border-radius: .4rem; color: #e8541c;
+  font-weight: 900; font-size: .8rem; letter-spacing: -.02em; background: color-mix(in srgb, var(--sheet) 85%, transparent);
+  animation: m-stamp var(--loop) ease infinite both;
+}
+@keyframes m-ticket { 0%, 30% { transform: translate(-30%, 130%) rotate(-12deg); opacity: 0; } 40% { transform: rotate(-4deg); opacity: 1; } 86% { transform: rotate(-4deg); opacity: 1; } 94%, 100% { transform: translate(-10%, 40%) rotate(-8deg); opacity: 0; } }
+@keyframes m-stamp { 0%, 45% { transform: rotate(-14deg) scale(2.4); opacity: 0; } 50% { transform: rotate(-14deg) scale(.92); opacity: 1; } 53%, 86% { transform: rotate(-14deg) scale(1); opacity: 1; } 94%, 100% { opacity: 0; } }
+
+@media (max-width: 700px) {
+  .map-search { font-size: .78rem; }
+  .pin b { font-size: .74rem; }
+  .ticket { width: 54%; }
+}

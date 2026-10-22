@@ -1,0 +1,103 @@
+/* ── 진화 2048: 판을 왼쪽으로 밀면 2+2 는 아기로, 1024+1024 는 전설 2048 로 진화한다 ─── */
+.scene-evolve-2048 { --loop: 10s; }
+.scene-evolve-2048 .ev-wrap { padding: 1rem 1rem 1.1rem; background: color-mix(in srgb, var(--accent) 5%, var(--sheet)); }
+.scene-evolve-2048 .ev-top { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .8rem; }
+.scene-evolve-2048 .ev-stages { display: flex; gap: .25rem; list-style: none; margin: 0; padding: 0; }
+.scene-evolve-2048 .ev-stages li {
+  display: flex; align-items: center; gap: .15rem; padding: .2rem .45rem .2rem .3rem; border-radius: 99px; white-space: nowrap;
+  background: var(--sheet); border: 1.5px solid var(--line); font-size: .72rem; font-weight: 700; color: var(--muted);
+}
+.scene-evolve-2048 .ev-stages b { font-size: .9rem; line-height: 1; }
+.scene-evolve-2048 .ev-stages .st4 { border-color: #f0a50a; color: #a35f00; background: #fff6dc; animation: evolve-2048-st4 var(--loop) ease infinite both; }
+@keyframes evolve-2048-st4 {
+  0%, 27% { border-color: var(--line); color: var(--muted); background: var(--sheet); transform: none; }
+  30% { border-color: #f0a50a; color: #a35f00; background: #fff6dc; transform: scale(1.15); }
+  34%, 100% { border-color: #f0a50a; color: #a35f00; background: #fff6dc; transform: none; }
+}
+.scene-evolve-2048 .ev-score {
+  position: relative; display: grid; justify-items: center; padding: .25rem .7rem; border-radius: .6rem; background: var(--accent); color: var(--sheet); line-height: 1.15;
+}
+.scene-evolve-2048 .ev-score small { font-size: .62rem; opacity: .8; }
+.scene-evolve-2048 .ev-score b { font-size: .95rem; font-variant-numeric: tabular-nums; }
+.scene-evolve-2048 .ev-score b::after { content: "20,464"; animation: evolve-2048-score var(--loop) steps(1) infinite both; }
+@keyframes evolve-2048-score { 0% { content: "18,412"; } 28%, 100% { content: "20,464"; } }
+.scene-evolve-2048 .ev-score em {
+  position: absolute; top: 50%; right: 100%; translate: 0 -50%; margin-right: .4rem; font-style: normal; font-size: .75rem; font-weight: 800; color: var(--accent); white-space: nowrap;
+  animation: evolve-2048-plus var(--loop) ease infinite both;
+}
+@keyframes evolve-2048-plus { 0%, 27% { opacity: 0; transform: translateY(-.4rem); } 30%, 46% { opacity: 1; transform: none; } 54%, 100% { opacity: 0; transform: translateY(.3rem); } }
+
+/* 판 */
+.scene-evolve-2048 .ev-board {
+  position: relative; aspect-ratio: 1; border-radius: 1rem; padding: 0; container-type: inline-size;
+  background: color-mix(in srgb, var(--accent) 22%, var(--sheet));
+}
+.scene-evolve-2048 .ev-cells, .scene-evolve-2048 .ev-play { position: absolute; inset: 2%; }
+.scene-evolve-2048 .ev-cells { display: grid; grid-template-columns: repeat(4, 1fr); }
+.scene-evolve-2048 .ev-cells i { margin: 6%; border-radius: .6rem; background: color-mix(in srgb, var(--sheet) 55%, transparent); }
+.scene-evolve-2048 .ev-play { animation: evolve-2048-play var(--loop) linear infinite both; }
+@keyframes evolve-2048-play { 0% { opacity: 0; } 2%, 94% { opacity: 1; } 99%, 100% { opacity: 0; } }
+.scene-evolve-2048 .ev-t {
+  position: absolute; width: 22%; height: 22%; left: calc(var(--c) * 25% + 1.5%); top: calc(var(--r) * 25% + 1.5%);
+  display: grid; place-content: center; justify-items: center; gap: .3cqw; border-radius: .6rem;
+  background: var(--bg); color: var(--fg, var(--ink)); font-weight: 900; font-size: 5.4cqw; line-height: 1; letter-spacing: -.04em;
+  box-shadow: inset 0 -.25rem 0 color-mix(in srgb, black 10%, transparent);
+}
+.scene-evolve-2048 .ev-t b { font-size: 7cqw; }
+.scene-evolve-2048 .v2 { --bg: #f4f0ff; }
+.scene-evolve-2048 .v4 { --bg: #e7ddff; }
+.scene-evolve-2048 .v8 { --bg: #d7c7fd; }
+.scene-evolve-2048 .v16 { --bg: #c3abf8; }
+.scene-evolve-2048 .v32 { --bg: #a98af0; --fg: #fff; }
+.scene-evolve-2048 .v64 { --bg: #8e6ae4; --fg: #fff; }
+.scene-evolve-2048 .v1024 { --bg: #5b3cc4; --fg: #fff; font-size: 4.6cqw; }
+.scene-evolve-2048 .v2048 {
+  --bg: linear-gradient(145deg, #ffd35a, #f59e0b); --fg: #fff; font-size: 4.6cqw; z-index: 2; text-shadow: 0 1px 0 rgba(150, 80, 0, .45);
+  box-shadow: inset 0 -.25rem 0 rgba(150, 80, 0, .25), 0 0 0 3px #fff6dc, 0 0 22px 4px rgba(245, 158, 11, .55);
+}
+
+/* 미는 동안 — 기본값은 다 민 뒤(마지막 장면)다 */
+.scene-evolve-2048 .ta, .scene-evolve-2048 .tb, .scene-evolve-2048 .td, .scene-evolve-2048 .te { opacity: 0; }
+.scene-evolve-2048 .ta { animation: evolve-2048-ta var(--loop) infinite both; }
+.scene-evolve-2048 .tb { animation: evolve-2048-tb var(--loop) infinite both; }
+.scene-evolve-2048 .tc { animation: evolve-2048-tc var(--loop) infinite both; }
+.scene-evolve-2048 .td { animation: evolve-2048-td var(--loop) infinite both; }
+.scene-evolve-2048 .te { animation: evolve-2048-te var(--loop) infinite both; }
+.scene-evolve-2048 .tf { animation: evolve-2048-tf var(--loop) infinite both; }
+.scene-evolve-2048 .tm { animation: evolve-2048-pop var(--loop) infinite both; }
+.scene-evolve-2048 .tl { animation: evolve-2048-legend var(--loop) infinite both; }
+.scene-evolve-2048 .tn { animation: evolve-2048-spawn var(--loop) infinite both; }
+@keyframes evolve-2048-ta { 0%, 26% { opacity: 1; } 27%, 100% { opacity: 0; } }
+@keyframes evolve-2048-tb { 0%, 20% { left: 26.5%; opacity: 1; animation-timing-function: ease-in; } 26% { left: 1.5%; opacity: 1; } 27%, 100% { left: 1.5%; opacity: 0; } }
+@keyframes evolve-2048-tc { 0%, 20% { left: 51.5%; animation-timing-function: ease-in; } 26%, 100% { left: 26.5%; } }
+@keyframes evolve-2048-td { 0%, 20% { left: 26.5%; opacity: 1; animation-timing-function: ease-in; } 26% { left: 1.5%; opacity: 1; } 27%, 100% { left: 1.5%; opacity: 0; } }
+@keyframes evolve-2048-te { 0%, 20% { left: 76.5%; opacity: 1; animation-timing-function: ease-in; } 26% { left: 1.5%; opacity: 1; } 27%, 100% { left: 1.5%; opacity: 0; } }
+@keyframes evolve-2048-tf { 0%, 20% { left: 76.5%; animation-timing-function: ease-in; } 26%, 100% { left: 51.5%; } }
+@keyframes evolve-2048-pop { 0%, 26% { opacity: 0; scale: .6; } 27% { opacity: 1; scale: .9; } 29% { scale: 1.15; } 32%, 100% { opacity: 1; scale: 1; } }
+@keyframes evolve-2048-legend { 0%, 26% { opacity: 0; scale: .6; rotate: 0deg; } 27% { opacity: 1; scale: .9; } 30% { scale: 1.3; rotate: -6deg; } 34%, 100% { opacity: 1; scale: 1; rotate: 0deg; } }
+@keyframes evolve-2048-spawn { 0%, 34% { opacity: 0; scale: 0; } 38%, 100% { opacity: 1; scale: 1; } }
+
+.scene-evolve-2048 .ev-legend {
+  position: absolute; z-index: 3; left: 26%; top: 57%; padding: .25rem .6rem; border-radius: 99px;
+  background: #fff6dc; color: #a35f00; border: 1.5px solid #f0a50a; font-size: .78rem; font-weight: 800; white-space: nowrap;
+  animation: evolve-2048-badge var(--loop) ease infinite both;
+}
+@keyframes evolve-2048-badge { 0%, 28% { opacity: 0; transform: translateY(-.5rem) scale(.7); } 32%, 86% { opacity: 1; transform: none; } 92%, 100% { opacity: 0; transform: none; } }
+
+/* 손가락이 판을 왼쪽으로 쓸어 넘긴다 */
+.scene-evolve-2048 .ev-swipe {
+  position: absolute; z-index: 4; top: 60%; left: 70%; font-size: 2rem; opacity: 0; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .3));
+  animation: evolve-2048-swipe var(--loop) ease-in-out infinite both;
+}
+@keyframes evolve-2048-swipe { 0%, 11% { opacity: 0; left: 72%; } 13% { opacity: 1; left: 72%; } 22% { opacity: 1; left: 22%; } 25%, 100% { opacity: 0; left: 18%; } }
+
+@media (max-width: 700px) {
+  .scene-evolve-2048 .ev-wrap { padding: .8rem .8rem .9rem; }
+  .scene-evolve-2048 .ev-stages { gap: .15rem; }
+  .scene-evolve-2048 .ev-stages li { padding: .15rem .3rem .15rem .2rem; font-size: .64rem; }
+  .scene-evolve-2048 .ev-stages b { font-size: .78rem; }
+  .scene-evolve-2048 .ev-score { padding: .2rem .5rem; }
+  .scene-evolve-2048 .ev-score b { font-size: .82rem; }
+  .scene-evolve-2048 .ev-legend { font-size: .7rem; }
+  .scene-evolve-2048 .ev-swipe { font-size: 1.6rem; }
+}

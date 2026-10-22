@@ -136,4 +136,228 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 동네퇴마사: 밤 골목에 귀신이 내려오고, 슬롯의 무기가 저절로 쏘며, 부적이 번쩍여 남은 귀신을 물리친다 ── */
+.scene-dongtoesa { --loop: 10s; }
+.scene-dongtoesa .dt-stage { position: relative; aspect-ratio: 1 / 1.1; container-type: inline-size; overflow: hidden; background: #0f1731; color: #fff; }
+.scene-dongtoesa .dt-alley { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scene-dongtoesa .dt-alley .sky { fill: #111a38; }
+.scene-dongtoesa .dt-alley .moon { fill: #fff1c2; filter: drop-shadow(0 0 10px #fff1c2); }
+.scene-dongtoesa .dt-alley .wall { fill: #1b2550; }
+.scene-dongtoesa .dt-alley .roof { fill: #283466; }
+.scene-dongtoesa .dt-alley .win { fill: #ffcf6b; opacity: .8; }
+.scene-dongtoesa .dt-alley .win.dim { opacity: .25; }
+.scene-dongtoesa .dt-alley .road { fill: #222c55; }
+.scene-dongtoesa .dt-alley .lane { stroke: #3b4778; stroke-width: 3; stroke-dasharray: 14 16; }
+.scene-dongtoesa .dt-alley .lamp-glow { fill: rgba(255, 214, 120, .14); }
+.scene-dongtoesa .dt-alley .pole { fill: none; stroke: #4a557f; stroke-width: 4; }
+.scene-dongtoesa .dt-alley .lamp { fill: #ffd678; }
+
+.scene-dongtoesa .dt-hud {
+  position: absolute; top: 3cqw; left: 3cqw; right: 3cqw; display: flex; justify-content: space-between; align-items: center; gap: .5rem;
+  font-size: .78rem; font-weight: 800; letter-spacing: -.02em;
+}
+.scene-dongtoesa .dt-hud > * { padding: .3rem .65rem; border-radius: 99px; background: rgba(0, 0, 0, .4); white-space: nowrap; }
+.scene-dongtoesa .dt-stone::after { content: "100"; animation: dongtoesa-stone var(--loop) steps(1) infinite; }
+@keyframes dongtoesa-stone { 0% { content: "150"; } 6%, 100% { content: "100"; } }
+
+/* 귀신 — 위에서 내려오다 화살·방울에 맞아 사라진다 */
+.scene-dongtoesa .dt-ghost {
+  position: absolute; top: 0; left: var(--x); width: 12cqw; margin-left: -6cqw; transform: translateY(var(--y, 20cqw));
+  animation: var(--loop) linear infinite both;
+}
+.scene-dongtoesa .dt-ghost svg { display: block; width: 100%; overflow: visible; animation: dongtoesa-sway 1.6s ease-in-out infinite alternate; }
+.scene-dongtoesa .dt-ghost path:first-child { fill: #e9f0ff; filter: drop-shadow(0 0 5px rgba(170, 200, 255, .8)); }
+.scene-dongtoesa .dt-ghost circle, .scene-dongtoesa .dt-ghost ellipse { fill: #1b2550; }
+.scene-dongtoesa .dt-ghost.big { width: 17cqw; margin-left: -8.5cqw; }
+.scene-dongtoesa .dt-ghost.big path:first-child { fill: #ff9a8a; filter: drop-shadow(0 0 7px rgba(255, 90, 70, .8)); }
+.scene-dongtoesa .dt-ghost .horn { fill: none; stroke: #ff9a8a; stroke-width: 2.5; stroke-linejoin: round; }
+.scene-dongtoesa .dt-ghost .mouth { fill: none; stroke: #1b2550; stroke-width: 2.2; stroke-linecap: round; }
+.scene-dongtoesa .g1 { --y: 30cqw; animation-name: dongtoesa-g1; }
+.scene-dongtoesa .g2 { --y: 16cqw; animation-name: dongtoesa-g2; }
+.scene-dongtoesa .g3 { --y: 40cqw; opacity: 0; animation-name: dongtoesa-g3; }
+.scene-dongtoesa .g4 { --y: 44cqw; animation-name: dongtoesa-g4; }
+@keyframes dongtoesa-sway { from { transform: translateX(-1.4cqw) rotate(-4deg); } to { transform: translateX(1.4cqw) rotate(4deg); } }
+@keyframes dongtoesa-g1 {
+  0%, 4% { opacity: 0; transform: translateY(-16cqw); filter: none; }
+  8% { opacity: 1; }
+  28% { opacity: 1; transform: translateY(36cqw); filter: none; }
+  30% { opacity: 1; transform: translateY(37cqw) scale(1.25); filter: brightness(1.6) drop-shadow(0 0 8px #ffe27a); }
+  34%, 100% { opacity: 0; transform: translateY(37cqw) scale(.3); }
+}
+@keyframes dongtoesa-g2 {
+  0%, 12% { opacity: 0; transform: translateY(-16cqw); filter: none; }
+  16% { opacity: 1; }
+  44% { opacity: 1; transform: translateY(42cqw); filter: none; }
+  46% { opacity: 1; transform: translateY(43cqw) scale(1.25); filter: brightness(1.6) drop-shadow(0 0 8px #ffe27a); }
+  50%, 100% { opacity: 0; transform: translateY(43cqw) scale(.3); }
+}
+@keyframes dongtoesa-g3 {
+  0%, 28% { opacity: 0; transform: translateY(-16cqw); filter: none; }
+  32% { opacity: 1; }
+  63% { opacity: 1; transform: translateY(60cqw); filter: none; }
+  65% { opacity: 1; transform: translateY(60cqw) scale(1.3); filter: brightness(2) drop-shadow(0 0 10px #ffe27a); }
+  69%, 100% { opacity: 0; transform: translateY(60cqw) scale(.2); }
+}
+@keyframes dongtoesa-g4 {
+  0%, 22% { opacity: 0; transform: translateY(-22cqw); filter: none; }
+  27% { opacity: 1; }
+  63% { opacity: 1; transform: translateY(50cqw); filter: none; }
+  65% { opacity: 1; transform: translateY(50cqw) scale(1.3); filter: brightness(2) drop-shadow(0 0 12px #ffe27a); }
+  69%, 100% { opacity: 0; transform: translateY(50cqw) scale(.2); }
+}
+
+/* 슬롯 다섯 칸 — 셋에 무기가 놓여 있고, 가운데 칸은 눌러서 새로 놓는다 */
+.scene-dongtoesa .dt-slots {
+  position: absolute; left: 3cqw; right: 3cqw; bottom: 3cqw; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2cqw;
+  margin: 0; padding: 0; list-style: none;
+}
+.scene-dongtoesa .dt-slots li {
+  position: relative; aspect-ratio: 1; display: grid; place-items: center; border-radius: 2.6cqw;
+  border: 2px dashed rgba(255, 255, 255, .22); background: rgba(255, 255, 255, .04);
+}
+.scene-dongtoesa .dt-slots li.on { border: 2px solid color-mix(in srgb, var(--accent) 70%, white); background: color-mix(in srgb, var(--accent) 45%, #0f1731); }
+.scene-dongtoesa .dt-slots li.new { animation: dongtoesa-slot var(--loop) steps(1) infinite both; }
+@keyframes dongtoesa-slot {
+  0% { border: 2px dashed rgba(255, 255, 255, .5); background: rgba(255, 255, 255, .06); }
+  6%, 100% { border: 2px solid color-mix(in srgb, var(--accent) 70%, white); background: color-mix(in srgb, var(--accent) 45%, #0f1731); }
+}
+.scene-dongtoesa .dt-slots em { position: absolute; font-style: normal; font-size: 1.3rem; color: rgba(255, 255, 255, .7); opacity: 0; animation: dongtoesa-plus var(--loop) steps(1) infinite both; }
+@keyframes dongtoesa-plus { 0% { opacity: 1; } 6%, 100% { opacity: 0; } }
+.scene-dongtoesa .dt-gun { position: relative; display: grid; place-items: center; }
+.scene-dongtoesa .dt-gun b { font-size: 1.9rem; line-height: 1; }
+.scene-dongtoesa .new .dt-gun { animation: dongtoesa-place var(--loop) cubic-bezier(.3, 1.6, .5, 1) infinite both; }
+@keyframes dongtoesa-place { 0%, 5% { opacity: 0; transform: scale(.2); } 9% { opacity: 1; transform: scale(1); } 96% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.6); } }
+/* 무기는 저절로 위로 쏜다 */
+.scene-dongtoesa .dt-shot {
+  position: absolute; left: 50%; top: -1cqw; width: 1.4cqw; height: 4.5cqw; margin-left: -.7cqw; border-radius: 99px;
+  background: linear-gradient(#fff6c9, #ffcf4a); box-shadow: 0 0 8px #ffd24a; opacity: 0;
+  animation: dongtoesa-shot .8s linear infinite;
+}
+.scene-dongtoesa li:nth-child(2) .dt-shot { animation-delay: -.3s; }
+.scene-dongtoesa li:nth-child(3) .dt-shot { animation-delay: -.55s; }
+.scene-dongtoesa li:nth-child(4) .dt-shot { animation-delay: -.1s; background: linear-gradient(#e6f0ff, #8fb6ff); box-shadow: 0 0 8px #8fb6ff; }
+@keyframes dongtoesa-shot { 0% { opacity: 0; transform: translateY(0); } 10% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-58cqw); } }
+.scene-dongtoesa .dt-tap {
+  position: absolute; left: 50%; bottom: 11.6cqw; width: 12cqw; height: 12cqw; margin: 0 0 -6cqw -6cqw; border-radius: 50%;
+  border: 3px solid #fff; opacity: 0; animation: dongtoesa-tap var(--loop) ease-out infinite both;
+}
+@keyframes dongtoesa-tap { 0% { opacity: 0; transform: scale(.4); } 2% { opacity: .9; } 7%, 100% { opacity: 0; transform: scale(1.5); } }
+
+/* 부적 — 위급할 때 꺼내 번쩍 */
+.scene-dongtoesa .dt-charm {
+  position: absolute; right: 4cqw; top: 13cqw; width: 9cqw; height: 13cqw; border-radius: .6cqw;
+  background: #f5d455; box-shadow: 0 0 0 1px #b88c16 inset, 0 6px 14px -6px rgba(0, 0, 0, .6);
+  animation: dongtoesa-charm var(--loop) ease infinite both;
+}
+.scene-dongtoesa .dt-charm i { position: absolute; left: 22%; right: 22%; height: 3px; background: #c4231b; border-radius: 2px; }
+.scene-dongtoesa .dt-charm i:nth-child(1) { top: 16%; height: auto; aspect-ratio: 1; border-radius: 50%; background: none; border: 2.5px solid #c4231b; }
+.scene-dongtoesa .dt-charm i:nth-child(2) { top: 62%; }
+.scene-dongtoesa .dt-charm i:nth-child(3) { top: 76%; left: 30%; right: 30%; }
+@keyframes dongtoesa-charm {
+  0%, 54% { transform: none; filter: none; }
+  57% { transform: rotate(-8deg) scale(1.15); filter: drop-shadow(0 0 6px #ffe27a); }
+  62% { transform: translate(-36cqw, 24cqw) rotate(0) scale(2.2); filter: drop-shadow(0 0 14px #ffe27a); }
+  66% { transform: translate(-36cqw, 24cqw) scale(2.6); filter: brightness(1.3) drop-shadow(0 0 26px #fff3b0); opacity: 1; }
+  72% { transform: translate(-36cqw, 20cqw) scale(2.6); opacity: 0; }
+  73%, 92% { transform: none; opacity: 0; }
+  98%, 100% { transform: none; opacity: 1; filter: none; }
+}
+.scene-dongtoesa .dt-flash {
+  position: absolute; inset: 0; background: radial-gradient(circle at 46% 48%, #fffbe6 0, rgba(255, 226, 122, .75) 30%, rgba(255, 226, 122, 0) 72%);
+  opacity: 0; animation: dongtoesa-flash var(--loop) ease-out infinite both; pointer-events: none;
+}
+@keyframes dongtoesa-flash { 0%, 63% { opacity: 0; } 65% { opacity: .95; } 74%, 100% { opacity: 0; } }
+
+/* 임무 완료 */
+.scene-dongtoesa .dt-clear {
+  position: absolute; left: 50%; top: 40%; display: grid; gap: .2rem; justify-items: center; padding: .85rem 1.2rem; border-radius: .9rem;
+  background: var(--sheet); color: var(--ink); text-align: center; white-space: nowrap; box-shadow: 0 18px 36px -16px rgba(0, 0, 0, .7);
+  transform: translate(-50%, -50%); opacity: 0; animation: dongtoesa-clear var(--loop) cubic-bezier(.2, 1.4, .4, 1) infinite both;
+}
+.scene-dongtoesa .dt-clear strong { font-size: 1.1rem; color: var(--accent); letter-spacing: -.03em; }
+.scene-dongtoesa .dt-clear span { font-size: .78rem; color: var(--muted); }
+@keyframes dongtoesa-clear {
+  0%, 74% { opacity: 0; transform: translate(-50%, -30%) scale(.8); }
+  78%, 92% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  96%, 100% { opacity: 0; transform: translate(-50%, -60%) scale(.95); }
+}
+
+@media (max-width: 700px) {
+  .scene-dongtoesa .dt-hud { font-size: .7rem; }
+  .scene-dongtoesa .dt-gun b { font-size: 1.35rem; }
+  .scene-dongtoesa .dt-slots em { font-size: 1rem; }
+  .scene-dongtoesa .dt-clear strong { font-size: 1rem; }
+  .scene-dongtoesa .dt-clear span { font-size: .72rem; }
+}
+/* 멈춰 있을 때 — 무기 셋이 쏘고, 귀신과 악귀가 골목에 서 있고, 부적은 손에 쥔 채 */
+@media (prefers-reduced-motion: reduce) {
+  .scene-dongtoesa .dt-shot { opacity: 1; transform: translateY(-14cqw); }
+  .scene-dongtoesa .g3 { opacity: 0; }
+}
+
 :root { --accent: #1f5fbf; }

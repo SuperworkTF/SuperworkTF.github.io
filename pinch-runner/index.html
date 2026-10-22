@@ -72,7 +72,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="핀치 러너 소개"><img src="../assets/apps/pinch-runner/icon.png" alt="" width="30" height="30">핀치 러너</a>
@@ -86,7 +86,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">PINCH · SHRINK · CRUSH</p>
-        <h1 id="intro-heading">두 손가락으로<br>크기를 바꾸며 달려요.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">두 손가락으로</span></span><span class="line"><span style="--l:1">크기를 바꾸며 달려요.</span></span></h1>
         <p class="hero-copy">핀치 러너는 두 손가락을 벌리고 좁혀 캐릭터의 크기를 바꾸는 달리기 게임입니다. 좁은 터널은 작아져서 지나가고, 앞을 막는 적은 커져서 부숴요.</p>
         <div class="actions">
           <a class="button" href="https://play.google.com/store/apps/details?id=com.superworks.pinchrunner">Google Play 에서 받기</a><a class="button" href="https://minion.toss.im/bp9PYHQ">토스 앱에서 열기</a>
@@ -94,9 +94,21 @@
         </div>
         <p class="age-note">세로 화면 · 두 손가락 조작 · 무료</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/pinch-runner/thumb.jpg" alt="핀치 러너 대표 이미지" style="object-position:center">
-        <figcaption><strong>핀치 러너</strong><span>캐주얼 러너 게임</span></figcaption>
+      <figure class="scene scene-pinch-runner" aria-label="달리던 캐릭터가 손가락을 오므리자 작아져 터널을 지나 10점, 벌리자 커져 적을 짓눌러 20점을 얻는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="pr-world">
+          <span class="pr-hills"></span>
+          <div class="pr-hud"><small>점수</small><b></b></div>
+          <span class="pr-tunnel"></span>
+          <span class="pr-enemy"><i></i></span>
+          <span class="pr-runner"><span class="pr-body"><i class="eye"></i><i class="eye"></i></span><i class="leg"></i><i class="leg"></i></span>
+          <span class="pr-pop p10">+10</span>
+          <span class="pr-pop p20">+20</span>
+          <span class="pr-ground"></span>
+          <div class="pr-pinch"><span class="dot l"></span><span class="dot r"></span><em class="in">오므리면 작게</em><em class="out">벌리면 크게</em></div>
+        </div>
+        </div>
+        <figcaption><strong>핀치 러너</strong><span>오므려 통과, 벌려서 분쇄</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
@@ -104,17 +116,17 @@
       <h2 id="how-heading">벌리면 커지고, 좁히면 작아져요.</h2>
       <p class="section-intro">버튼도 조이스틱도 없어요. 손가락 사이의 거리가 곧 캐릭터의 크기입니다. 첫 판에서는 「작게!」「크게!」 안내가 한 번씩 나와요.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>작아져서 터널 통과</h3>
           <p>위에서 내려온 터널 아래는 손가락을 좁혀 작아진 채로 지나가요. 통과하면 10점.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>커져서 적 격파</h3>
           <p>앞을 막는 적은 손가락을 벌려 더 크게 자라서 짓눌러요. 부수면 20점.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>아슬아슬하면 보너스</h3>
           <p>딱 맞게 스쳐 지나가면 5점이 더 붙어요. 시간이 지날수록 빨라지니 최고 점수와 생존 시간, 연속 성공 기록에 도전해 보세요.</p>

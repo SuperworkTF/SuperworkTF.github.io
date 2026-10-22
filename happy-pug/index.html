@@ -74,8 +74,9 @@
   }
   </script>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./cast.css">
 </head>
-<body>
+<body class="cast">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="HappyPug 소개"><span class="brand-mark" aria-hidden="true"></span>HappyPug</a>
@@ -89,45 +90,81 @@
     </nav>
   </header>
   <main id="main" class="shell" tabindex="-1">
-    <section class="hero" aria-labelledby="intro-heading">
-      <div>
-        <p class="eyebrow">NEIGHBORHOOD · WALK · TOGETHER</p>
-        <h1 id="intro-heading">우리 동네 강아지들과,<br>같이 걸어요.</h1>
-        <p class="hero-copy">HappyPug은 같은 동네 반려인끼리 산책 모임을 만들고 함께 걷는 앱입니다. 근처에 열린 모임에 참여하거나 직접 모임을 열고, 모임 채팅으로 만날 시간과 장소를 맞춥니다.</p>
-        <div class="actions">
-          <a class="button" href="https://play.google.com/store/apps/details?id=com.happypug.happypug">Google Play 에서 받기</a>
-          <a class="button" href="https://apps.apple.com/kr/app/id6791448066">App Store 에서 받기</a>
-        </div>
-        <p class="age-note">만 14세 이상 · 무료 · 광고와 인앱 결제가 없습니다</p>
+    <section class="cast-hero" aria-labelledby="intro-heading">
+      <svg class="cast-dunes" viewBox="0 0 1440 860" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe8f3"/><stop offset=".55" stop-color="#fbf0e2"/></linearGradient>
+          <linearGradient id="dune" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e5cb"/><stop offset="1" stop-color="#eed6b1"/></linearGradient>
+        </defs>
+        <rect width="1440" height="860" fill="url(#sky)"/>
+        <path d="M0 330 C260 250 420 330 640 300 C900 262 1100 230 1440 300 V860 H0Z" fill="#f4e6cf"/>
+        <path d="M0 450 C220 380 470 470 760 410 C1000 360 1230 420 1440 380 V860 H0Z" fill="url(#dune)"/>
+        <path d="M0 620 C300 540 560 640 860 580 C1100 532 1300 600 1440 560 V860 H0Z" fill="#f1dcba"/>
+      </svg>
+      <div class="cast-crowd" aria-hidden="true">
+        <img class="cast-dog far" src="../assets/apps/happy-pug/cast/gyeongju.webp" alt="" loading="eager" decoding="async" style="--x:5%;--y:30%;--h:15%;z-index:45;--n:0">
+        <img class="cast-dog far" src="../assets/apps/happy-pug/cast/jin.webp" alt="" loading="eager" decoding="async" style="--x:24%;--y:26%;--h:14%;z-index:40;--n:1">
+        <img class="cast-dog far" src="../assets/apps/happy-pug/cast/poongsani.webp" alt="" loading="eager" decoding="async" style="--x:73%;--y:27%;--h:15%;z-index:42;--n:2">
+        <img class="cast-dog far" src="../assets/apps/happy-pug/cast/sam.webp" alt="" loading="eager" decoding="async" style="--x:90%;--y:31%;--h:15%;z-index:46;--n:3">
+        <img class="cast-dog mid" src="../assets/apps/happy-pug/cast/nabi.webp" alt="" loading="lazy" decoding="async" style="--x:70%;--y:49%;--h:25%;z-index:74;--n:7">
+        <img class="cast-dog front" src="../assets/apps/happy-pug/cast/duui.webp" alt="" loading="lazy" decoding="async" style="--x:-3%;--y:64%;--h:46%;z-index:110;--n:11">
+        <img class="cast-dog front" src="../assets/apps/happy-pug/cast/kkaemoong.webp" alt="" loading="lazy" decoding="async" style="--x:101%;--y:66%;--h:44%;z-index:110;--n:12">
+        <span class="walker pomi" style="z-index:95;--ar:239 / 308;--spd:1.1s;top:63%;height:32%;--x0:36%;--x1:64%;--dur:26s"><span class="sprite" style="background-image:url(../assets/apps/happy-pug/cast/pomi-sprite.webp)"></span></span>
+        <span class="walker mongi" style="z-index:74;--ar:181 / 288;--spd:1.2s;top:50%;height:24%;--x0:22%;--x1:38%;--dur:22s;--delay:-6s"><span class="sprite" style="background-image:url(../assets/apps/happy-pug/cast/mongi-sprite.webp)"></span></span>
+        <span class="walker meongmeong" style="z-index:91;--ar:226 / 288;--spd:1s;top:55%;height:36%;--x0:76%;--x1:90%;--dur:20s;--delay:-13s"><span class="sprite" style="background-image:url(../assets/apps/happy-pug/cast/meongmeong-sprite.webp)"></span></span>
+        <span class="dancer bombom" style="z-index:92;--ar:229 / 308;--spd:1.8s;top:56%;height:36%;--x:13%"><span class="sprite" style="background-image:url(../assets/apps/happy-pug/cast/bombom-sprite.webp)"></span></span>
+        <span class="runner choco" style="z-index:53;--ar:251 / 268;--spd:.55s;top:37%;height:16%;--dur:14s;--delay:2.5s"><span class="sprite" style="background-image:url(../assets/apps/happy-pug/cast/choco-sprite.webp)"></span></span>
+        <span class="runner max" style="z-index:40;--ar:314 / 288;--spd:.6s;top:27%;height:13%;--dur:18s;--delay:9s"><span class="sprite" style="background-image:url(../assets/apps/happy-pug/cast/max-sprite.webp)"></span></span>
       </div>
-      <figure class="doodle-card">
-        <p class="tape">이번 주 모임</p>
-        <div class="meetup">
-          <div class="meetup-top">
-            <span class="meetup-when">토요일 오전 9:00</span>
-            <span class="meetup-mode">조용한 참여</span>
+      <div class="cast-copy">
+        <p class="eyebrow">NEIGHBORHOOD · WALK · TOGETHER</p>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">우리 동네 강아지들과,</span></span><span class="line"><span style="--l:1">같이 걸어요.</span></span></h1>
+        <p class="cast-sub">HappyPug에서 만나요</p>
+      </div>
+      <a class="cast-down" href="#cast-intro" aria-label="HappyPug 소개로 내려가기"><span aria-hidden="true"></span></a>
+    </section>
+    <section class="cast-intro" id="cast-intro" aria-labelledby="cast-intro-heading">
+      <p class="eyebrow">소개합니다</p>
+      <h2 id="cast-intro-heading">같은 동네 반려인끼리 모여<br>함께 걷는 산책 모임, HappyPug</h2>
+      <p class="hero-copy">HappyPug은 같은 동네 반려인끼리 산책 모임을 만들고 함께 걷는 앱입니다. 근처에 열린 모임에 참여하거나 직접 모임을 열고, 모임 채팅으로 만날 시간과 장소를 맞춥니다.</p>
+      <div class="cast-stores">
+        <a class="cast-store" href="https://play.google.com/store/apps/details?id=com.happypug.happypug">Google Play 에서 받기</a>
+        <a class="cast-store" href="https://apps.apple.com/kr/app/id6791448066">App Store 에서 받기</a>
+      </div>
+      <p class="age-note">만 14세 이상 · 무료 · 광고와 인앱 결제가 없습니다</p>
+      <figure class="cast-stage">
+        <div class="cast-backstage" aria-hidden="true">
+          <img class="cast-dog far" src="../assets/apps/happy-pug/cast/jin.webp" alt="" loading="eager" decoding="async" style="--x:12%;--y:8%;--h:46%;--n:0">
+          <img class="cast-dog near" src="../assets/apps/happy-pug/cast/mongi.webp" alt="" loading="eager" decoding="async" style="--x:24%;--y:34%;--h:62%;--n:1">
+          <img class="cast-dog far" src="../assets/apps/happy-pug/cast/sam.webp" alt="" loading="eager" decoding="async" style="--x:88%;--y:4%;--h:48%;--n:2">
+          <img class="cast-dog near" src="../assets/apps/happy-pug/cast/pomi-sweater.webp" alt="" loading="eager" decoding="async" style="--x:76%;--y:32%;--h:64%;--n:3">
+        </div>
+        <div class="phone">
+          <div class="phone-bar" aria-hidden="true"><span>9:41</span><span class="phone-island"></span><span>● ● ●</span></div>
+          <p class="phone-title">이번 주 모임</p>
+          <div class="phone-card">
+            <div class="meetup-top"><span>토요일 오전 9:00</span><span class="mode">조용한 참여</span></div>
+            <strong>주말 오전 서울숲 한 바퀴</strong>
+            <span class="place">서울숲 · 성수동 근처 · 모든 크기</span>
+            <div class="dogs" aria-label="참여한 강아지 4마리, 정원 8명"><img src="../assets/apps/happy-pug/cast/pomi.webp" alt=""><img src="../assets/apps/happy-pug/cast/mongi.webp" alt=""><img src="../assets/apps/happy-pug/cast/bombom.webp" alt=""><img src="../assets/apps/happy-pug/cast/meongmeong.webp" alt=""><b>4 / 8명</b></div>
           </div>
-          <p class="meetup-title">주말 오전 서울숲 한 바퀴</p>
-          <p class="meetup-place">서울숲 · 성수동 근처 · 모든 크기</p>
-          <div class="pack" aria-label="참여한 강아지 4마리, 정원 8명">
-            <span class="pup" aria-hidden="true">🐶</span>
-            <span class="pup" aria-hidden="true">🐕</span>
-            <span class="pup" aria-hidden="true">🐩</span>
-            <span class="pup" aria-hidden="true">🦮</span>
-            <span class="pack-count">4 / 8명</span>
-          </div>
-          <div class="route">
+          <div class="phone-card route">
             <svg viewBox="0 0 320 90" role="img" aria-label="산책 경로 그림">
               <title>내 폰에만 남는 산책 경로</title>
-              <path class="route-line" d="M12 70 C 50 20, 90 80, 130 46 S 210 10, 240 44 S 292 74, 308 26"/>
+              <path class="route-line" pathLength="1" d="M12 70 C 50 20, 90 80, 130 46 S 210 10, 240 44 S 292 74, 308 26"/>
               <circle class="route-dot" cx="12" cy="70" r="6"/>
-              <circle class="route-dot" cx="308" cy="26" r="6"/>
+              <circle class="route-dot end" cx="308" cy="26" r="6"/>
             </svg>
             <div class="route-meta"><span>2.4km · 38분</span><span>내 폰에만 저장</span></div>
           </div>
+          <p class="phone-bubble" aria-hidden="true">토요일에 서울숲에서 만나요! 🐾</p>
         </div>
         <figcaption>모임 카드와 산책 기록은 이렇게 보입니다 (예시)</figcaption>
       </figure>
+      <div class="cast-chips">
+        <ul aria-label="HappyPug로 할 수 있는 일"><li>🐾 근처 모임에 참여하거나 직접 열기</li><li>💬 모임 채팅으로 시간과 장소 맞추기</li><li>📍 서버에는 동네 단위만 저장</li><li>🗺️ 산책 경로는 내 폰에만</li><li>🤝 마음이 맞으면 친구로 1:1 채팅</li><li>🛡️ 신고 · 차단 · 거친 말 필터</li><li>🚫 광고 · 인앱 결제 없음</li></ul>
+        <ul aria-hidden="true"><li>🐾 근처 모임에 참여하거나 직접 열기</li><li>💬 모임 채팅으로 시간과 장소 맞추기</li><li>📍 서버에는 동네 단위만 저장</li><li>🗺️ 산책 경로는 내 폰에만</li><li>🤝 마음이 맞으면 친구로 1:1 채팅</li><li>🛡️ 신고 · 차단 · 거친 말 필터</li><li>🚫 광고 · 인앱 결제 없음</li></ul>
+      </div>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
       <p class="eyebrow">산책 모임이 열리는 방식</p>

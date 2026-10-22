@@ -136,4 +136,210 @@ td a { overflow-wrap: anywhere; }
   .policy-body h2, .policy-body h3 { break-after: avoid; }
 }
 
+/* 소개 페이지 모션 공통 — apps.json 의 details.page.motion 이 있는 앱만 styles.css 끝에 붙는다(tools/build-site.py).
+   앱마다 다른 장면은 assets/motion/<장면>.css 와 tools/scenes/<장면>.html 에 있고, 그 앱의 styles.css 에만 실린다.
+   스크립트 없이 CSS 로만 움직인다. 멈춰 있어도 다 읽히게 짠다: 애니메이션이 없거나(오래된 브라우저)
+   동작 줄이기를 켠 사람에게는 마지막 장면이 그대로 서 있다. */
+/* 떠다니는 빛과 핀이 화면 밖으로 나가도 휴대폰이 화면을 넓히지 않게 가장 바깥에서 자른다 */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+.motion .hero { position: relative; isolation: isolate; }
+/* 첫 화면 뒤에서 앱 색의 빛이 천천히 떠다닌다 */
+.motion .hero::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -10% auto auto; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  animation: m-drift 14s ease-in-out infinite alternate; pointer-events: none;
+}
+@keyframes m-drift { to { translate: -6rem 3rem; scale: 1.15; } }
+
+/* 헤드라인은 줄마다 아래에서 올라온다 */
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: m-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .actions, .motion .age-note { animation: m-fade .8s ease both; }
+.motion .hero .eyebrow { animation-delay: 0s; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .actions { animation-delay: .6s; }
+.motion .age-note { animation-delay: .75s; }
+@keyframes m-rise { from { transform: translateY(105%); } }
+@keyframes m-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* 쓰는 법 — 세 단계에 차례로 불이 들어오고, 아래 막대가 차오른다 */
+.motion .steps { --slot: 2.4s; }
+.motion .step { position: relative; overflow: hidden; transition: transform .3s ease; animation: m-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: m-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+.motion .step-number { display: inline-block; animation: m-num calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+@keyframes m-step { 0%, 33% { border-color: var(--accent); box-shadow: 0 14px 30px -18px var(--accent); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes m-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes m-num { 0% { transform: scale(1); } 6% { transform: scale(1.25); } 12%, 100% { transform: scale(1); } }
+.motion .step:hover { transform: translateY(-4px); }
+
+/* 아래 구역들은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: m-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+/* ── 장면 공통 ───────────────────────────────────────────── */
+.scene { position: relative; margin: 0; }
+.scene figcaption { margin-top: .9rem; display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; color: var(--muted); }
+.scene figcaption strong { color: var(--ink); }
+.scene-frame {
+  position: relative; overflow: hidden; background: var(--sheet); border: 1px solid var(--line); border-radius: 1.4rem;
+  box-shadow: 0 30px 60px -36px color-mix(in srgb, var(--accent) 70%, black), .45rem .55rem 0 var(--wash);
+  animation: m-float 6s ease-in-out infinite alternate;
+}
+@keyframes m-float { from { transform: rotate(1.5deg) translateY(0); } to { transform: rotate(.5deg) translateY(-8px); } }
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 22rem; height: 22rem; inset: auto -30% 0 auto; }
+  .scene { width: calc(100% - .5rem); justify-self: center; }
+}
+
+/* 동작 줄이기 — 움직임을 모두 멈춘다. 각 장면(assets/motion/<장면>.css)이 멈춘 자리에 마지막 장면을 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after { animation: none !important; }
+}
+
+/* ── 코인 타워: 움직이면 공격이 저절로 나가고, 적이 남긴 코인이 빨려 들어오고, 레벨 업 카드 3장 중 하나를 고른다 ── */
+.scene-coin-tower { --loop: 11s; }
+.scene-coin-tower .ct-stage { position: relative; aspect-ratio: 1 / 1.1; container-type: inline-size; overflow: hidden; background: #10313a; color: #fff; }
+/* 탑 바닥 — 돌 타일이 아래로 흘러 위로 올라가는 느낌 */
+.scene-coin-tower .ct-floor {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 120%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 60%),
+    linear-gradient(90deg, rgba(255, 255, 255, .06) 2px, transparent 0) 0 0 / 20cqw 20cqw,
+    linear-gradient(rgba(255, 255, 255, .06) 2px, transparent 0) 0 0 / 20cqw 20cqw,
+    #10313a;
+  animation: coin-tower-scroll 3s linear infinite;
+}
+@keyframes coin-tower-scroll { to { background-position: 0 0, 0 20cqw, 0 20cqw, 0 0; } }
+.scene-coin-tower .ct-floor::before, .scene-coin-tower .ct-floor::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 6cqw; background: repeating-linear-gradient(#1d4d58 0 9cqw, #163f49 9cqw 10cqw);
+}
+.scene-coin-tower .ct-floor::before { left: 0; }
+.scene-coin-tower .ct-floor::after { right: 0; }
+
+.scene-coin-tower .ct-hud {
+  position: absolute; z-index: 2; top: 3cqw; left: 8cqw; right: 8cqw; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .55rem;
+  font-size: .8rem; font-weight: 800;
+}
+.scene-coin-tower .ct-level, .scene-coin-tower .ct-coins { padding: .3rem .65rem; border-radius: 99px; background: rgba(0, 0, 0, .35); white-space: nowrap; }
+.scene-coin-tower .ct-coins { grid-column: 3; color: #ffd84d; }
+.scene-coin-tower .ct-coins::after { content: "40"; animation: coin-tower-count var(--loop) steps(1) infinite; }
+@keyframes coin-tower-count { 0% { content: "37"; } 26% { content: "38"; } 41% { content: "39"; } 56%, 100% { content: "40"; } }
+.scene-coin-tower .ct-xp { grid-column: 2; grid-row: 1; height: .45rem; border-radius: 99px; background: rgba(255, 255, 255, .15); overflow: hidden; }
+.scene-coin-tower .ct-xp i { display: block; height: 100%; width: 100%; border-radius: inherit; background: linear-gradient(90deg, #5ee0c8, #b6ffef); animation: coin-tower-xp var(--loop) linear infinite both; }
+@keyframes coin-tower-xp { 0% { width: 4%; } 57% { width: 100%; } 59%, 100% { width: 6%; } }
+
+/* 적 — 내려오다 맞아서 터지고 코인을 남긴다 */
+.scene-coin-tower .ct-foe { position: absolute; left: calc(var(--x) * 1cqw); top: calc(var(--top) * 1cqw); width: 0; height: 0; }
+.scene-coin-tower .ct-foe .body {
+  position: absolute; left: -5.5cqw; top: -5cqw; width: 11cqw; height: 10cqw; border-radius: 50% 50% 38% 38%;
+  background: radial-gradient(circle at 35% 30%, #c6a8ff, #8a5cf6 60%); box-shadow: 0 1.2cqw 0 -.2cqw rgba(0, 0, 0, .3);
+  animation: coin-tower-foe var(--loop) linear infinite both; animation-delay: var(--d);
+}
+.scene-coin-tower .ct-foe .body i {
+  position: absolute; left: 30%; top: 38%; width: 1.4cqw; height: 1.8cqw; border-radius: 50%; background: #2a1650; box-shadow: 3cqw 0 #2a1650;
+}
+.scene-coin-tower .ct-foe .coin {
+  position: absolute; left: -2.4cqw; top: -2.4cqw; width: 4.8cqw; height: 4.8cqw; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle at 35% 30%, #fff3b0, #ffc928 55%, #d99a00); box-shadow: 0 0 10px #ffd84d;
+  animation: coin-tower-coin var(--loop) ease-in infinite both; animation-delay: var(--d);
+}
+@keyframes coin-tower-foe {
+  0% { opacity: 0; transform: translateY(-4cqw) scale(.5); filter: none; }
+  3% { opacity: 1; transform: translateY(-3cqw) scale(1); }
+  16% { opacity: 1; transform: translateY(8cqw) scale(1); filter: none; }
+  17% { opacity: 1; transform: translateY(8cqw) scale(1.35); filter: brightness(2.4); }
+  20%, 100% { opacity: 0; transform: translateY(8cqw) scale(.2); filter: brightness(2.4); }
+}
+@keyframes coin-tower-coin {
+  0%, 16% { opacity: 0; transform: translateY(8cqw) scale(.3); }
+  17% { opacity: 1; transform: translateY(5cqw) scale(1.3); }
+  20% { opacity: 1; transform: translateY(8cqw) scale(1); }
+  26% { opacity: 1; transform: translate(calc((84 - var(--x)) * 1cqw), calc((6 - var(--top)) * 1cqw)) scale(.6); }
+  27%, 100% { opacity: 0; transform: translate(calc((84 - var(--x)) * 1cqw), calc((6 - var(--top)) * 1cqw)) scale(.6); }
+}
+
+/* 캐릭터 — 손가락을 따라 움직이고, 공격은 저절로 위로 */
+.scene-coin-tower .ct-hero {
+  position: absolute; left: 0; top: 76cqw; width: 11cqw; height: 11cqw; margin-left: -5.5cqw;
+  transform: translateX(54cqw); animation: coin-tower-move var(--loop) ease-in-out infinite both;
+}
+@keyframes coin-tower-move {
+  0% { transform: translateX(50cqw); } 8%, 22% { transform: translateX(30cqw); } 27%, 36% { transform: translateX(64cqw); }
+  41%, 52% { transform: translateX(46cqw); } 57%, 88% { transform: translateX(54cqw); } 100% { transform: translateX(50cqw); }
+}
+.scene-coin-tower .ct-hero .me {
+  position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #9ff5e4, #2fbfa5 55%, var(--accent));
+  box-shadow: 0 0 0 .6cqw #fff, 0 1.4cqw 0 rgba(0, 0, 0, .3);
+}
+.scene-coin-tower .ct-hero .me::before {
+  content: ""; position: absolute; left: 32%; top: 36%; width: 1.4cqw; height: 2cqw; border-radius: 50%; background: #0a3a40; box-shadow: 3cqw 0 #0a3a40;
+}
+.scene-coin-tower .ct-hero .finger {
+  position: absolute; left: 50%; top: 125%; width: 8cqw; height: 8cqw; margin-left: -4cqw; border-radius: 50%;
+  background: rgba(255, 255, 255, .22); box-shadow: 0 0 0 .5cqw rgba(255, 255, 255, .15);
+}
+.scene-coin-tower .ct-hero .shot {
+  position: absolute; left: 50%; top: 0; width: 2cqw; height: 4cqw; margin-left: -1cqw; border-radius: 99px; opacity: 0;
+  background: linear-gradient(#ffffff, #8ff0ff); box-shadow: 0 0 8px #8ff0ff; animation: coin-tower-shot .6s linear infinite;
+}
+.scene-coin-tower .ct-hero .shot:nth-child(2) { animation-delay: -.2s; }
+.scene-coin-tower .ct-hero .shot:nth-child(3) { animation-delay: -.4s; }
+@keyframes coin-tower-shot { 0% { opacity: 0; transform: translateY(0); } 10% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; transform: translateY(-58cqw); } }
+
+/* 레벨 업 — 카드 3장 중 하나 */
+.scene-coin-tower .ct-levelup {
+  position: absolute; z-index: 3; inset: 0; display: grid; align-content: center; justify-items: center; gap: 1rem; padding: 0 5cqw;
+  background: rgba(6, 26, 31, .72); animation: coin-tower-dim var(--loop) ease infinite both;
+}
+@keyframes coin-tower-dim { 0%, 57% { opacity: 0; } 59%, 88% { opacity: 1; } 92%, 100% { opacity: 0; } }
+.scene-coin-tower .ct-levelup strong { font-size: 1.35rem; letter-spacing: -.03em; color: #ffd84d; text-shadow: 0 2px 0 rgba(0, 0, 0, .4); }
+.scene-coin-tower .ct-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3cqw; width: 100%; }
+.scene-coin-tower .ct-card {
+  position: relative; display: grid; justify-items: center; gap: .2rem; padding: .9rem .3rem .8rem; border-radius: .8rem;
+  background: var(--sheet); color: var(--ink); font-size: .82rem; font-weight: 800; letter-spacing: -.03em; white-space: nowrap;
+  border: 3px solid var(--line); opacity: .45; transform: scale(.95);
+  animation: coin-tower-card var(--loop) cubic-bezier(.2, 1.3, .4, 1) infinite both;
+}
+.scene-coin-tower .ct-card:nth-child(2) { animation-delay: .25s; }
+.scene-coin-tower .ct-card:nth-child(3) { animation-delay: .5s; }
+.scene-coin-tower .ct-card em { font-style: normal; font-size: 1.7rem; line-height: 1.1; }
+.scene-coin-tower .ct-card small { font-size: .68rem; font-weight: 700; color: var(--muted); }
+.scene-coin-tower .ct-card.pick { opacity: 1; transform: translateY(-3cqw) scale(1.08); border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent), 0 14px 26px -12px #000; animation-name: coin-tower-pick; }
+@keyframes coin-tower-card {
+  0%, 58% { opacity: 0; transform: translateY(30%); }
+  62%, 68% { opacity: 1; transform: none; }
+  72%, 88% { opacity: .45; transform: scale(.95); }
+  92%, 100% { opacity: 0; transform: scale(.95); }
+}
+@keyframes coin-tower-pick {
+  0%, 58% { opacity: 0; transform: translateY(30%); border-color: var(--line); box-shadow: none; }
+  62%, 66% { opacity: 1; transform: none; border-color: var(--line); box-shadow: none; }
+  70%, 86% { opacity: 1; transform: translateY(-3cqw) scale(1.08); border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent), 0 14px 26px -12px #000; }
+  92%, 100% { opacity: 0; transform: translateY(-3cqw) scale(1.08); }
+}
+/* 고르는 손가락 */
+.scene-coin-tower .ct-card.pick::after {
+  content: ""; position: absolute; left: 50%; top: 60%; width: 9cqw; height: 9cqw; margin-left: -4.5cqw; border-radius: 50%;
+  border: 3px solid var(--accent); opacity: 0; animation: coin-tower-tap var(--loop) ease-out infinite both; animation-delay: -.5s;
+}
+@keyframes coin-tower-tap { 0%, 66% { opacity: 0; transform: scale(.4); } 68% { opacity: .9; } 74%, 100% { opacity: 0; transform: scale(1.5); } }
+
+@media (max-width: 700px) {
+  .scene-coin-tower .ct-hud { font-size: .7rem; gap: .4rem; }
+  .scene-coin-tower .ct-levelup strong { font-size: 1.15rem; }
+  .scene-coin-tower .ct-card { font-size: .7rem; padding: .7rem .2rem .6rem; }
+  .scene-coin-tower .ct-card em { font-size: 1.35rem; }
+  .scene-coin-tower .ct-card small { font-size: .62rem; }
+}
+/* 멈춰 있을 때 — 적들 앞에서 레벨 업, 무기 진화 카드를 고른 장면 */
+@media (prefers-reduced-motion: reduce) {
+  .scene-coin-tower .ct-levelup { background: rgba(6, 26, 31, .6); }
+  .scene-coin-tower .ct-hero .shot:nth-child(1) { opacity: 1; transform: translateY(-14cqw); }
+}
+
 :root { --accent: #0b7285; }

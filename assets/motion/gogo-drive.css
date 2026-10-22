@@ -1,0 +1,123 @@
+/* ── 고고 드라이브: 3D 도시 도로를 달리며 차선을 바꿔 앞차 세 대를 앞지르고, 레벨을 깬다 ───────── */
+/* 원근: 지평선(38cqw)의 소실점에서 길 아래(110cqw)까지. 길 위의 물체는 s(0~1)에 따라 함께 커지고 벌어진다 */
+.scene-gogo-drive { --loop: 11s; }
+.scene-gogo-drive .gd-stage { position: relative; aspect-ratio: 1 / 1.1; container-type: inline-size; overflow: hidden; background: #bfe3ff; }
+.scene-gogo-drive .gd-world { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scene-gogo-drive .gd-world .sky { fill: #bfe3ff; }
+.scene-gogo-drive .gd-world .sun { fill: #fff2b8; }
+.scene-gogo-drive .gd-world .far { fill: #9cc3e6; }
+.scene-gogo-drive .gd-world .near { fill: #f2a7a0; }
+.scene-gogo-drive .gd-world .grass { fill: #8fd18a; }
+.scene-gogo-drive .gd-world .walk { fill: #e9e4da; }
+.scene-gogo-drive .gd-world .road { fill: #5b6270; }
+.scene-gogo-drive .gd-world .edge { fill: none; stroke: #fff; stroke-width: .8; vector-effect: non-scaling-stroke; stroke-width: 3; }
+
+/* 차선 점선 — 소실점에서 나와 커지며 흘러온다 */
+.scene-gogo-drive .gd-dash {
+  position: absolute; left: 50%; top: 38cqw; width: 1.8cqw; height: 8cqw; margin: -8cqw 0 0 -.9cqw; border-radius: 1cqw; background: #fff;
+  transform-origin: 50% 100%; animation: gogo-drive-dash 1.2s cubic-bezier(.75, 0, .95, .5) infinite; animation-delay: var(--d);
+}
+@keyframes gogo-drive-dash {
+  from { transform: translate(calc((var(--l) - 50) * .02cqw), 1.4cqw) scale(.02); }
+  to { transform: translate(calc((var(--l) - 50) * 1.3cqw), 94cqw) scale(1.3); }
+}
+
+/* 차 — 뒷모습 */
+.scene-gogo-drive svg .cab { fill: color-mix(in srgb, var(--c) 80%, black); }
+.scene-gogo-drive svg .win { fill: #2c3a52; }
+.scene-gogo-drive svg .bod { fill: var(--c); }
+.scene-gogo-drive svg .tail { fill: #ff5a4f; }
+.scene-gogo-drive svg .plate { fill: #fff; }
+.scene-gogo-drive svg .tire { fill: #23262d; }
+.scene-gogo-drive .gd-car {
+  position: absolute; left: 50%; top: 38cqw; width: 26cqw; margin: -17.3cqw 0 0 -13cqw; transform-origin: 50% 100%;
+  animation: gogo-drive-car var(--loop) infinite both; animation-delay: var(--dl);
+}
+.scene-gogo-drive .gd-car svg, .scene-gogo-drive .gd-me svg { display: block; width: 100%; filter: drop-shadow(0 1cqw .4cqw rgba(0, 0, 0, .25)); }
+.scene-gogo-drive .c1 { --dl: 0s; transform: translate(0, 30cqw) scale(.42); }
+.scene-gogo-drive .c2 { --dl: 3s; transform: translate(10cqw, 12cqw) scale(.17); opacity: 0; }
+.scene-gogo-drive .c3 { --dl: 5.5s; transform: translate(-8cqw, 17cqw) scale(.24); }
+@keyframes gogo-drive-car {
+  0% { opacity: 1; transform: translate(calc((var(--l) - 50) * .04cqw), 2.9cqw) scale(.04); animation-timing-function: cubic-bezier(.75, 0, .95, .55); }
+  22% { opacity: 1; transform: translate(calc((var(--l) - 50) * 1.35cqw), 97cqw) scale(1.35); }
+  22.1%, 100% { opacity: 0; transform: translate(calc((var(--l) - 50) * 1.35cqw), 97cqw) scale(1.35); }
+}
+
+/* 내 차 — 조이스틱을 따라 차선을 바꾼다 */
+.scene-gogo-drive .gd-me {
+  --c: var(--accent); position: absolute; left: 50%; bottom: 4cqw; width: 30cqw; margin-left: -15cqw;
+  transform: translateX(32cqw); animation: gogo-drive-me var(--loop) ease-in-out infinite both;
+}
+@keyframes gogo-drive-me {
+  0%, 9% { transform: translateX(0); }
+  11% { transform: translateX(16cqw) rotate(4deg); }
+  13%, 38% { transform: translateX(32cqw); }
+  40% { transform: translateX(16cqw) rotate(-4deg); }
+  42%, 100% { transform: translateX(0); }
+}
+.scene-gogo-drive .gd-me svg { animation: gogo-drive-hum .3s ease-in-out infinite alternate; }
+@keyframes gogo-drive-hum { to { transform: translateY(.4cqw); } }
+
+/* 미션 카드 · 속도 · 조이스틱 */
+.scene-gogo-drive .gd-mission {
+  position: absolute; top: 3cqw; left: 3cqw; display: grid; grid-template-columns: auto auto; align-items: center; gap: .15rem .6rem;
+  padding: .55rem .75rem .6rem; border-radius: .8rem; background: var(--sheet); box-shadow: 0 10px 22px -14px rgba(0, 0, 0, .5);
+  font-size: .8rem; font-weight: 800; letter-spacing: -.02em; color: var(--ink); white-space: nowrap;
+}
+.scene-gogo-drive .gd-mission small { grid-column: 1 / -1; font-size: .66rem; font-weight: 800; color: var(--accent); }
+.scene-gogo-drive .gd-count { color: var(--accent); }
+.scene-gogo-drive .gd-count::after { content: "1/3"; animation: gogo-drive-count var(--loop) steps(1) infinite; }
+@keyframes gogo-drive-count { 0% { content: "0/3"; } 22% { content: "1/3"; } 49% { content: "2/3"; } 72%, 100% { content: "3/3"; } }
+.scene-gogo-drive .gd-goal { grid-column: 1 / -1; display: block; height: .3rem; margin-top: .25rem; border-radius: 99px; background: var(--line); overflow: hidden; }
+.scene-gogo-drive .gd-goal i { display: block; height: 100%; width: 40%; background: var(--accent); border-radius: inherit; animation: gogo-drive-goal var(--loop) linear infinite both; }
+@keyframes gogo-drive-goal { 0% { width: 4%; } 74%, 100% { width: 100%; } }
+.scene-gogo-drive .gd-speed {
+  position: absolute; top: 3cqw; right: 3cqw; padding: .4rem .7rem; border-radius: .8rem; background: #23262d; color: #fff;
+  font-size: .8rem; font-weight: 800; white-space: nowrap;
+}
+.scene-gogo-drive .gd-speed::before { content: "112"; font-size: 1.1rem; animation: gogo-drive-speed var(--loop) steps(1) infinite; }
+@keyframes gogo-drive-speed { 0% { content: "96"; } 6% { content: "104"; } 18% { content: "112"; } 34% { content: "108"; } 46% { content: "116"; } 62% { content: "121"; } 76%, 100% { content: "96"; } }
+.scene-gogo-drive .gd-stick {
+  position: absolute; left: 4cqw; bottom: 4cqw; width: 15cqw; height: 15cqw; border-radius: 50%;
+  background: rgba(255, 255, 255, .35); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .7);
+}
+.scene-gogo-drive .gd-stick i {
+  position: absolute; left: 50%; top: 50%; width: 7cqw; height: 7cqw; margin: -3.5cqw; border-radius: 50%; background: var(--sheet);
+  box-shadow: 0 4px 10px -4px rgba(0, 0, 0, .5); animation: gogo-drive-stick var(--loop) ease-in-out infinite both;
+}
+@keyframes gogo-drive-stick {
+  0%, 8% { transform: translateY(-2cqw); } 10%, 12% { transform: translate(4cqw, -2cqw); } 14%, 37% { transform: translateY(-2cqw); }
+  39%, 41% { transform: translate(-4cqw, -2cqw); } 43%, 74% { transform: translateY(-3cqw); } 78%, 100% { transform: none; }
+}
+
+/* 레벨 클리어 */
+.scene-gogo-drive .gd-clear {
+  position: absolute; left: 50%; top: 52%; display: grid; justify-items: center; gap: .25rem; padding: .85rem 1.3rem; border-radius: .9rem;
+  background: var(--sheet); box-shadow: 0 18px 36px -16px rgba(0, 0, 0, .55); white-space: nowrap;
+  opacity: 0; transform: translate(-50%, -50%); animation: gogo-drive-clear var(--loop) cubic-bezier(.2, 1.4, .4, 1) infinite both;
+}
+.scene-gogo-drive .gd-clear strong { font-size: 1.15rem; color: var(--accent); letter-spacing: -.03em; }
+.scene-gogo-drive .gd-clear span { font-size: .8rem; font-weight: 700; color: var(--ink); }
+@keyframes gogo-drive-clear {
+  0%, 75% { opacity: 0; transform: translate(-50%, -30%) scale(.8); }
+  79%, 93% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  97%, 100% { opacity: 0; transform: translate(-50%, -55%) scale(.95); }
+}
+
+@media (max-width: 700px) {
+  .scene-gogo-drive .gd-mission { font-size: .7rem; padding: .45rem .6rem .5rem; }
+  .scene-gogo-drive .gd-mission small { font-size: .6rem; }
+  .scene-gogo-drive .gd-speed { font-size: .68rem; padding: .35rem .55rem; }
+  .scene-gogo-drive .gd-speed::before { font-size: .92rem; }
+  .scene-gogo-drive .gd-clear strong { font-size: 1rem; }
+  .scene-gogo-drive .gd-clear span { font-size: .72rem; }
+}
+/* 멈춰 있을 때 — 오른쪽 차선으로 비켜 파란 차를 앞지르는 순간 */
+@media (prefers-reduced-motion: reduce) {
+  .scene-gogo-drive .gd-dash:nth-of-type(4n+1) { transform: translate(calc((var(--l) - 50) * .8cqw), 57.6cqw) scale(.8); }
+  .scene-gogo-drive .gd-dash:nth-of-type(4n+2) { transform: translate(calc((var(--l) - 50) * .4cqw), 28.8cqw) scale(.4); }
+  .scene-gogo-drive .gd-dash:nth-of-type(4n+3) { transform: translate(calc((var(--l) - 50) * .18cqw), 13cqw) scale(.18); }
+  .scene-gogo-drive .gd-dash:nth-of-type(4n) { transform: translate(calc((var(--l) - 50) * .07cqw), 5cqw) scale(.07); }
+  .scene-gogo-drive .c1 { transform: translate(0, 50cqw) scale(.7); }
+  .scene-gogo-drive .gd-stick i { transform: translate(4cqw, -2cqw); }
+}

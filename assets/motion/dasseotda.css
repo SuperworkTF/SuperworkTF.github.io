@@ -1,0 +1,134 @@
+/* ── 다썼다: 영수증을 찍으면 스캔 선이 지나가고, AI 가 품목·기한 카드를 채우고, 「다 썼어요」로 기록한다 ── */
+.scene-dasseotda { --loop: 10s; }
+.scene-dasseotda .dst-stage {
+  position: relative; aspect-ratio: 1.16; display: flex; flex-direction: column; gap: .6rem; padding: 1rem;
+  background: color-mix(in srgb, var(--accent) 5%, var(--sheet));
+}
+
+/* 카메라 뷰파인더 + 영수증 */
+.scene-dasseotda .dst-cam {
+  position: relative; flex: 0 0 40%; border-radius: 1rem; overflow: hidden;
+  background: radial-gradient(circle at 50% 40%, #3a4150, #1d222c);
+  display: grid; place-items: center;
+}
+.scene-dasseotda .dst-tag {
+  position: absolute; top: .55rem; left: .6rem; z-index: 2; padding: .2rem .55rem; border-radius: 99px;
+  background: rgba(255, 255, 255, .14); color: #fff; font-size: .72rem; font-weight: 700;
+}
+.scene-dasseotda .dst-view { position: relative; padding: .7rem 1rem .4rem; }
+.scene-dasseotda .dst-receipt {
+  position: relative; width: 9.5rem; padding: .55rem .7rem .7rem; display: grid; gap: .22rem;
+  background: #fffdf7; color: #333; font-size: .68rem; line-height: 1.2; transform: rotate(-4deg) translateY(.5rem);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, .6);
+  -webkit-mask: radial-gradient(circle at 50% 100%, transparent .22rem, #000 .24rem) 0 0 / .6rem 100% repeat-x;
+          mask: radial-gradient(circle at 50% 100%, transparent .22rem, #000 .24rem) 0 0 / .6rem 100% repeat-x;
+  animation: dasseotda-receipt var(--loop) ease infinite;
+}
+.scene-dasseotda .dst-receipt b { font-size: .74rem; text-align: center; letter-spacing: .2em; border-bottom: 1px dashed #bbb; padding-bottom: .2rem; }
+.scene-dasseotda .dst-receipt span { display: flex; justify-content: space-between; }
+.scene-dasseotda .dst-receipt span::after { content: ""; width: 1.6rem; margin-left: .5rem; border-bottom: 2px dotted #bbb; translate: 0 -.25rem; }
+.scene-dasseotda .dst-receipt i { height: .55rem; background: repeating-linear-gradient(90deg, #333 0 1px, transparent 1px 3px, #333 3px 5px, transparent 5px 6px); opacity: .7; margin-top: .1rem; }
+@keyframes dasseotda-receipt { 0% { opacity: 0; transform: rotate(-10deg) translateY(2rem); } 5%, 92% { opacity: 1; transform: rotate(-4deg) translateY(.5rem); } 98%, 100% { opacity: 0; transform: rotate(-4deg) translateY(.5rem); } }
+
+.scene-dasseotda .dst-corner { position: absolute; width: 1.1rem; height: 1.1rem; border: 3px solid rgba(255, 255, 255, .85); }
+.scene-dasseotda .dst-corner.tl { top: 0; left: 0; border-right: 0; border-bottom: 0; border-radius: .4rem 0 0 0; }
+.scene-dasseotda .dst-corner.tr { top: 0; right: 0; border-left: 0; border-bottom: 0; border-radius: 0 .4rem 0 0; }
+.scene-dasseotda .dst-corner.bl { bottom: -.3rem; left: 0; border-right: 0; border-top: 0; border-radius: 0 0 0 .4rem; }
+.scene-dasseotda .dst-corner.br { bottom: -.3rem; right: 0; border-left: 0; border-top: 0; border-radius: 0 0 .4rem 0; }
+
+.scene-dasseotda .dst-scan {
+  position: absolute; left: -.4rem; right: -.4rem; top: 0; height: 3px; border-radius: 3px; opacity: 0;
+  background: var(--accent); box-shadow: 0 0 14px 4px color-mix(in srgb, var(--accent) 70%, #7fb2ff);
+  animation: dasseotda-scan var(--loop) ease-in-out infinite;
+}
+@keyframes dasseotda-scan { 0%, 6% { top: 4%; opacity: 0; } 8% { opacity: 1; } 18% { top: 96%; } 28% { top: 4%; opacity: 1; } 30%, 100% { top: 4%; opacity: 0; } }
+
+/* 읽는 중 → 다 채웠어요 */
+.scene-dasseotda .dst-status { position: relative; height: 1.4rem; font-size: .8rem; font-weight: 800; }
+.scene-dasseotda .dst-status span { position: absolute; inset: 0 auto auto 0; white-space: nowrap; }
+.scene-dasseotda .dst-status .reading { color: var(--muted); opacity: 0; animation: dasseotda-reading var(--loop) steps(1) infinite; }
+.scene-dasseotda .dst-status .done { color: var(--accent); animation: dasseotda-done var(--loop) ease infinite; }
+@keyframes dasseotda-reading { 0%, 6% { opacity: 0; } 7%, 30% { opacity: 1; } 31%, 100% { opacity: 0; } }
+@keyframes dasseotda-done { 0%, 30% { opacity: 0; transform: translateY(.3rem); } 33%, 92% { opacity: 1; transform: none; } 97%, 100% { opacity: 0; } }
+
+/* AI 가 채운 카드 */
+.scene-dasseotda .dst-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
+.scene-dasseotda .dst-card {
+  position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .6rem;
+  padding: .5rem .65rem; border-radius: .8rem; background: var(--sheet); border: 1px solid var(--line); overflow: hidden;
+  box-shadow: 0 6px 14px -12px rgba(0, 0, 0, .5);
+}
+.scene-dasseotda .dst-ico { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .6rem; background: var(--wash); font-size: 1.05rem; }
+.scene-dasseotda .dst-txt { display: grid; line-height: 1.25; min-width: 0; }
+.scene-dasseotda .dst-txt strong { font-size: .88rem; color: var(--ink); }
+.scene-dasseotda .dst-txt small { font-size: .7rem; color: var(--muted); white-space: nowrap; }
+.scene-dasseotda .c1 { grid-template-columns: auto 1fr auto auto; border-color: color-mix(in srgb, #e5484d 45%, var(--line)); }
+.scene-dasseotda .c1 small { color: #d63b40; font-weight: 700; }
+.scene-dasseotda .dst-soon {
+  padding: .15rem .45rem; border-radius: 99px; background: color-mix(in srgb, #e5484d 13%, var(--sheet)); color: #d63b40;
+  font-size: .66rem; font-weight: 800; white-space: nowrap; animation: dasseotda-soon var(--loop) ease infinite;
+}
+@keyframes dasseotda-soon { 0%, 50% { transform: scale(1); } 53% { transform: scale(1.18); } 56% { transform: scale(1); } 59% { transform: scale(1.12); } 62%, 100% { transform: scale(1); } }
+.scene-dasseotda .dst-btn {
+  position: relative; padding: .32rem .6rem; border-radius: .5rem; background: var(--accent); color: #fff;
+  font-size: .72rem; font-weight: 800; white-space: nowrap; animation: dasseotda-press var(--loop) ease infinite;
+}
+.scene-dasseotda .dst-btn::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 1.8rem; height: 1.8rem; margin: -.9rem; border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 35%, #fff); opacity: 0; mix-blend-mode: screen;
+  animation: dasseotda-tap var(--loop) ease-out infinite;
+}
+@keyframes dasseotda-press { 0%, 64% { transform: none; } 66% { transform: scale(.9); } 69%, 100% { transform: none; } }
+@keyframes dasseotda-tap { 0%, 63% { opacity: 0; transform: scale(.4); } 65% { opacity: .9; transform: scale(.8); } 70%, 100% { opacity: 0; transform: scale(2); } }
+
+/* 카드는 하나씩 들어오고, 잠깐 회색 뼈대(읽는 중)였다가 글자가 채워진다 */
+.scene-dasseotda .c1 { animation: dasseotda-c1 var(--loop) ease infinite; }
+.scene-dasseotda .c2 { animation: dasseotda-c2 var(--loop) ease infinite; }
+.scene-dasseotda .c3 { animation: dasseotda-c3 var(--loop) ease infinite; }
+@keyframes dasseotda-c1 { 0%, 30% { opacity: 0; transform: translateY(.8rem); } 34%, 70% { opacity: 1; transform: none; } 77%, 100% { opacity: 0; transform: translateX(105%); } }
+/* 우유가 빠지면 아래 카드가 한 칸씩 올라온다 */
+@keyframes dasseotda-c2 { 0%, 35% { opacity: 0; transform: translateY(.8rem); } 39%, 74% { opacity: 1; transform: none; } 79%, 91% { opacity: 1; transform: translateY(calc(-100% - .45rem)); } 97%, 100% { opacity: 0; transform: translateY(calc(-100% - .45rem)); } }
+@keyframes dasseotda-c3 { 0%, 40% { opacity: 0; transform: translateY(.8rem); } 44%, 74% { opacity: 1; transform: none; } 79%, 91% { opacity: 1; transform: translateY(calc(-100% - .45rem)); } 97%, 100% { opacity: 0; transform: translateY(calc(-100% - .45rem)); } }
+.scene-dasseotda .dst-skel {
+  position: absolute; inset: 0; opacity: 0; border-radius: inherit;
+  background:
+    linear-gradient(var(--line), var(--line)) 3.3rem 34% / 34% .5rem no-repeat,
+    linear-gradient(var(--line), var(--line)) 3.3rem 68% / 48% .4rem no-repeat,
+    linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--accent) 12%, transparent) 50%, transparent 70%) -100% 0 / 60% 100% no-repeat,
+    var(--sheet);
+  animation: dasseotda-skel var(--loop) linear infinite;
+}
+.scene-dasseotda .c1 .dst-skel { animation-delay: 3.1s; }
+.scene-dasseotda .c2 .dst-skel { animation-delay: 3.6s; }
+.scene-dasseotda .c3 .dst-skel { animation-delay: 4.1s; }
+/* 카드가 나타나는 순간(제 지연 시작점)에만 뼈대가 덮여 있다 */
+@keyframes dasseotda-skel {
+  0% { opacity: 1; background-position: 3.3rem 34%, 3.3rem 68%, -100% 0, 0 0; }
+  6% { opacity: 1; background-position: 3.3rem 34%, 3.3rem 68%, 250% 0, 0 0; }
+  9%, 100% { opacity: 0; background-position: 3.3rem 34%, 3.3rem 68%, 250% 0, 0 0; }
+}
+
+/* 기록으로 옮겼어요 */
+.scene-dasseotda .dst-toast {
+  position: absolute; left: 50%; bottom: 1.1rem; translate: -50% 0; padding: .5rem .9rem; border-radius: 99px; white-space: nowrap;
+  background: var(--ink); color: var(--sheet); font-size: .78rem; font-weight: 700; box-shadow: 0 10px 22px -12px rgba(0, 0, 0, .6);
+  opacity: 0; animation: dasseotda-toast var(--loop) ease infinite;
+}
+@keyframes dasseotda-toast { 0%, 72% { opacity: 0; transform: translateY(.8rem); } 76%, 89% { opacity: 1; transform: none; } 93%, 100% { opacity: 0; transform: none; } }
+
+@media (max-width: 700px) {
+  .scene-dasseotda .dst-stage { padding: .75rem; gap: .45rem; aspect-ratio: 1; }
+  .scene-dasseotda .dst-view { translate: 2.6rem 0; padding: .6rem .8rem .3rem; }
+  .scene-dasseotda .dst-receipt { width: 8rem; }
+  .scene-dasseotda .dst-tag { font-size: .66rem; }
+  .scene-dasseotda .dst-card { gap: .45rem; padding: .42rem .5rem; }
+  .scene-dasseotda .dst-ico { width: 1.7rem; height: 1.7rem; font-size: .9rem; }
+  .scene-dasseotda .dst-txt strong { font-size: .8rem; }
+  .scene-dasseotda .dst-txt small { font-size: .64rem; }
+  .scene-dasseotda .dst-soon { display: none; }
+  .scene-dasseotda .dst-btn { font-size: .66rem; padding: .28rem .45rem; }
+  .scene-dasseotda .dst-skel { background-position: 2.7rem 34%, 2.7rem 68%, -100% 0, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-dasseotda .dst-scan, .scene-dasseotda .dst-toast, .scene-dasseotda .dst-status .reading, .scene-dasseotda .dst-skel { opacity: 0; }
+}

@@ -72,7 +72,7 @@
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="분식대란 소개"><img src="../assets/apps/bunsik-madness/icon.png" alt="" width="30" height="30">분식대란</a>
@@ -86,7 +86,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">MATCH · COOK · SERVE</p>
-        <h1 id="intro-heading">맞추고, 끓이고,<br>손님상에 척척.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">맞추고, 끓이고,</span></span><span class="line"><span style="--l:1">손님상에 척척.</span></span></h1>
         <p class="hero-copy">분식대란은 떡·어묵·김 같은 재료를 3개 이상 맞춰 모으고, 그 재료로 떡볶이와 김밥을 만들어 손님에게 내는 매치3 분식집 게임입니다. 번 매출로 장비를 들여 가게를 키워 보세요.</p>
         <div class="actions">
           <a class="button" href="https://play.google.com/store/apps/details?id=com.superwork.bunsikmadness">Google Play 에서 받기</a><a class="button" href="https://minion.toss.im/rjut6Vsr">토스 앱에서 열기</a>
@@ -94,9 +94,65 @@
         </div>
         <p class="age-note">세로 화면 · 한 손 조작 · 무료</p>
       </div>
-      <figure class="shot-card">
-        <img src="../assets/apps/bunsik-madness/thumb.jpg" alt="분식대란 대표 이미지" style="object-position:center">
-        <figcaption><strong>분식대란</strong><span>분식 퍼즐 게임</span></figcaption>
+      <figure class="scene scene-bunsik-madness" aria-label="6×6 재료 판에서 떡 3개를 맞춰 모으고, 조리대에서 떡볶이를 만들어 손님에게 내는 모습">
+        <div class="scene-frame" aria-hidden="true">
+        <div class="bs-wrap">
+          <div class="bs-shop">
+            <span class="bs-guest"><i class="wait">🧑</i><i class="happy">😋</i></span>
+            <span class="bs-bubble order">떡볶이 주세요!</span>
+            <span class="bs-bubble paid">💰 매출 +</span>
+            <div class="bs-counter"><small>조리대</small><span class="bs-cook"><i></i></span></div>
+            <span class="bs-get">떡 +3</span>
+            <span class="bs-done">완성!</span>
+            <span class="bs-dish"><i></i><i></i><i></i></span>
+          </div>
+          <div class="bs-board">
+            <div class="bs-play">
+              <span class="bs-t o" style="--r:0;--c:0"><b>어묵</b></span>
+              <span class="bs-t g fall" style="--r:1;--c:1"><b>김</b></span>
+              <span class="bs-t d fall" style="--r:1;--c:2"><b>떡</b></span>
+              <span class="bs-t o fall" style="--r:1;--c:3"><b>어묵</b></span>
+              <span class="bs-t g" style="--r:0;--c:4"><b>김</b></span>
+              <span class="bs-t d" style="--r:0;--c:5"><b>떡</b></span>
+              <span class="bs-t g" style="--r:1;--c:0"><b>김</b></span>
+              <span class="bs-t d fall" style="--r:2;--c:1"><b>떡</b></span>
+              <span class="bs-t o fall" style="--r:2;--c:2"><b>어묵</b></span>
+              <span class="bs-t g fall" style="--r:2;--c:3"><b>김</b></span>
+              <span class="bs-t o" style="--r:1;--c:4"><b>어묵</b></span>
+              <span class="bs-t g" style="--r:1;--c:5"><b>김</b></span>
+              <span class="bs-t d" style="--r:2;--c:0"><b>떡</b></span>
+              <span class="bs-t o fall" style="--r:3;--c:1"><b>어묵</b></span>
+              <span class="bs-t g fall" style="--r:3;--c:2"><b>김</b></span>
+              <span class="bs-t d fall" style="--r:3;--c:3"><b>떡</b></span>
+              <span class="bs-t g" style="--r:2;--c:4"><b>김</b></span>
+              <span class="bs-t o" style="--r:2;--c:5"><b>어묵</b></span>
+              <span class="bs-t o" style="--r:3;--c:0"><b>어묵</b></span>
+              <span class="bs-t d hit" style="--r:3;--c:1"><b>떡</b></span>
+              <span class="bs-t d hit" style="--r:3;--c:2"><b>떡</b></span>
+              <span class="bs-t g sw-dn" style="--r:4;--c:3"><b>김</b></span>
+              <span class="bs-t o" style="--r:3;--c:4"><b>어묵</b></span>
+              <span class="bs-t g" style="--r:3;--c:5"><b>김</b></span>
+              <span class="bs-t g" style="--r:4;--c:0"><b>김</b></span>
+              <span class="bs-t o" style="--r:4;--c:1"><b>어묵</b></span>
+              <span class="bs-t g" style="--r:4;--c:2"><b>김</b></span>
+              <span class="bs-t d sw-up hit" style="--r:3;--c:3"><b>떡</b></span>
+              <span class="bs-t d" style="--r:4;--c:4"><b>떡</b></span>
+              <span class="bs-t o" style="--r:4;--c:5"><b>어묵</b></span>
+              <span class="bs-t d" style="--r:5;--c:0"><b>떡</b></span>
+              <span class="bs-t g" style="--r:5;--c:1"><b>김</b></span>
+              <span class="bs-t o" style="--r:5;--c:2"><b>어묵</b></span>
+              <span class="bs-t o" style="--r:5;--c:3"><b>어묵</b></span>
+              <span class="bs-t g" style="--r:5;--c:4"><b>김</b></span>
+              <span class="bs-t d" style="--r:5;--c:5"><b>떡</b></span>
+              <span class="bs-t d fall" style="--r:0;--c:1"><b>떡</b></span>
+              <span class="bs-t g fall" style="--r:0;--c:2"><b>김</b></span>
+              <span class="bs-t d fall" style="--r:0;--c:3"><b>떡</b></span>
+            </div>
+            <span class="bs-hand">👆</span>
+          </div>
+        </div>
+        </div>
+        <figcaption><strong>분식대란</strong><span>떡 3개 맞춰 떡볶이 한 그릇</span></figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
@@ -104,17 +160,17 @@
       <h2 id="how-heading">재료를 모아 메뉴를 고르고, 늦기 전에 내요.</h2>
       <p class="section-intro">맞춘 재료가 바로 요리가 되지는 않아요. 어떤 메뉴를 언제 올릴지 고르는 게 분식대란의 재미예요.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>재료 맞추기</h3>
           <p>6×6 판에서 같은 재료를 3개 이상 맞춰요. 끌어서 바꾸거나, 두 칸을 차례로 눌러 바꿀 수 있어요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>메뉴 골라 조리하기</h3>
           <p>모인 재료로 손님이 기다리는 메뉴를 골라 조리대에 올려요. 다 된 요리를 너무 오래 두면 타 버려요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>서빙하고 가게 키우기</h3>
           <p>손님에게 요리를 내면 매출이 들어와요. 매출로 장비와 인테리어를 사고, 노점에서 포장마차, 골목가게로 가게를 키워요.</p>
