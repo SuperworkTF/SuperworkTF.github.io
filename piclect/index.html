@@ -70,8 +70,9 @@
   }
   </script>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./motion.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="셀렉터 소개"><span class="brand-mark" aria-hidden="true"></span>셀렉터</a>
@@ -85,7 +86,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">GROUP · KEEP ONE · REVIEW</p>
-        <h1 id="intro-heading"><em>남길 사진</em>을<br>먼저 정합니다.</h1>
+        <h1 id="intro-heading"><span class="line" style="--l:0"><span><em>남길 사진</em>을</span></span><br><span class="line" style="--l:1"><span>먼저 정합니다.</span></span></h1>
         <p class="hero-copy">지울 사진을 고르는 일은 어렵습니다. 셀렉터는 비슷한 사진 묶음마다 남길 한 장을 먼저 빼 두고, 나머지를 삭제 후보로 보여줍니다.</p>
         <div class="actions">
           <a class="button" href="https://play.google.com/store/apps/details?id=com.piclect.app">Google Play 에서 받기 <span aria-hidden="true">↗</span></a>
@@ -95,32 +96,42 @@
       </div>
       <figure class="frame-figure">
         <div class="frame-legend"><span>거의 같은 사진 묶음</span><strong>KEEP 1</strong></div>
-        <svg viewBox="0 0 340 250" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-          <!-- the burst: near-identical frames on one baseline -->
-          <g stroke="#8A9099" stroke-width="1.5">
-            <rect x="30" y="176" width="48" height="48" rx="4" fill="#17171A"/>
-            <rect x="88" y="176" width="48" height="48" rx="4" fill="#17171A"/>
-            <rect x="204" y="176" width="48" height="48" rx="4" fill="#17171A"/>
-            <rect x="262" y="176" width="48" height="48" rx="4" fill="#17171A"/>
+        <svg class="pc-svg" viewBox="0 0 340 250" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <g class="pc-play">
+            <!-- the burst: near-identical frames on one baseline -->
+            <g class="pc-frame pc-f0"><rect x="30" y="176" width="48" height="48" rx="4" fill="#17171A" stroke="#8A9099" stroke-width="1.5"/><g stroke="#8A9099" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="43" cy="190" r="3.5"/><path d="M37 210L48 196L56 204L63 197L71 210"/></g></g>
+            <g class="pc-frame pc-f1"><rect x="88" y="176" width="48" height="48" rx="4" fill="#17171A" stroke="#8A9099" stroke-width="1.5"/><g stroke="#8A9099" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="101" cy="190" r="3.5"/><path d="M95 210L106 196L114 204L121 197L129 210"/></g></g>
+            <g class="pc-frame pc-f3"><rect x="204" y="176" width="48" height="48" rx="4" fill="#17171A" stroke="#8A9099" stroke-width="1.5"/><g stroke="#8A9099" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="217" cy="190" r="3.5"/><path d="M211 210L222 196L230 204L237 197L245 210"/></g></g>
+            <g class="pc-frame pc-f4"><rect x="262" y="176" width="48" height="48" rx="4" fill="#17171A" stroke="#8A9099" stroke-width="1.5"/><g stroke="#8A9099" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="275" cy="190" r="3.5"/><path d="M269 210L280 196L288 204L295 197L303 210"/></g></g>
+            <!-- the slot the kept photo was lifted out of -->
+            <rect class="pc-slot" x="146" y="176" width="48" height="48" rx="4" stroke="#8A9099" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <!-- lifted out and marked: the one to keep -->
+            <g class="pc-lift">
+              <path d="M170 170V126" stroke="#D4F24A" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/>
+              <path d="M163 132L170 124L177 132" stroke="#D4F24A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <g class="pc-keep">
+              <rect class="pc-keep-edge" x="112" y="28" width="116" height="88" rx="7" fill="#17171A" stroke="#D4F24A" stroke-width="2"/>
+              <g stroke="#B0B8C1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="140" cy="54" r="7"/>
+                <path d="M124 100L148 70L165 86L180 72L216 100"/>
+              </g>
+            </g>
+            <g class="pc-check">
+              <circle cx="228" cy="28" r="16" fill="#D4F24A"/>
+              <path d="M221 28.5L226 34L236 22" stroke="#101609" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <!-- why this one: the first rule of the pick -->
+            <g class="pc-reason">
+              <rect x="0" y="59" width="106" height="26" rx="13" fill="#1D1D21" stroke="#D4F24A" stroke-width="1"/>
+              <text x="53" y="76.5" text-anchor="middle" fill="#F2F4F6" font-size="12" font-weight="700">해상도 가장 높음</text>
+            </g>
+            <!-- the rest: candidates only, nothing pre-selected -->
+            <g class="pc-cand">
+              <path d="M30 231V235H136V231M204 231V235H310V231" stroke="#8A9099" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="170" y="241" text-anchor="middle" fill="#B0B8C1" font-size="12.5" font-weight="700">삭제 후보</text>
+            </g>
           </g>
-          <g stroke="#8A9099" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="43" cy="190" r="3.5"/><path d="M37 210L48 196L56 204L63 197L71 210"/>
-            <circle cx="101" cy="190" r="3.5"/><path d="M95 210L106 196L114 204L121 197L129 210"/>
-            <circle cx="217" cy="190" r="3.5"/><path d="M211 210L222 196L230 204L237 197L245 210"/>
-            <circle cx="275" cy="190" r="3.5"/><path d="M269 210L280 196L288 204L295 197L303 210"/>
-          </g>
-          <!-- the slot the kept photo was lifted out of -->
-          <rect x="146" y="176" width="48" height="48" rx="4" stroke="#8A9099" stroke-width="1.5" stroke-dasharray="5 5"/>
-          <!-- lifted out and marked: the one to keep -->
-          <path d="M170 170V126" stroke="#D4F24A" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/>
-          <path d="M163 132L170 124L177 132" stroke="#D4F24A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <rect x="112" y="28" width="116" height="88" rx="7" fill="#17171A" stroke="#D4F24A" stroke-width="2"/>
-          <g stroke="#B0B8C1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="140" cy="54" r="7"/>
-            <path d="M124 100L148 70L165 86L180 72L216 100"/>
-          </g>
-          <circle cx="228" cy="28" r="16" fill="#D4F24A"/>
-          <path d="M221 28.5L226 34L236 22" stroke="#101609" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <figcaption>묶음에서 남길 한 장을 먼저 빼 두는 방식의 예시</figcaption>
       </figure>
@@ -131,17 +142,17 @@
       <h2 id="how-heading">쌓인 것부터 세고, 남길 것부터 정합니다.</h2>
       <p class="section-intro">사진 정리는 한 번 하고 끝나는 일이 아닙니다. 정리한 다음 날에도 스크린샷은 쌓이고, 연달아 찍은 사진은 늘어납니다. 셀렉터는 지난번에 끝낸 지점에서 이어서 시작합니다.</p>
       <ol class="steps" role="list">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">STEP 01</span>
           <h3>마지막 정리 이후부터</h3>
           <p>검사를 시작하기 전에, 지난 정리 이후 새로 쌓인 항목이 몇 개인지부터 보여줍니다. 보관함 전체 정리도 언제든 고를 수 있습니다.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">STEP 02</span>
           <h3>묶음마다 남길 한 장</h3>
           <p>중복이나 비슷한 사진 묶음에서는 남길 한 장을 먼저 정하고, 나머지만 삭제 후보로 올립니다. 왜 그 한 장인지 이유를 함께 보여줍니다 — 해상도, 선명도, 파일 용량, 먼저 저장된 사진.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">STEP 03</span>
           <h3>나머지를 한 장씩</h3>
           <p>미리 선택되어 있는 사진은 없습니다. 기본값은 언제나 「보관」이고, 삭제 버튼을 누르기 전에는 한 장도 지워지지 않습니다.</p>

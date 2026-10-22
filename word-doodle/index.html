@@ -74,8 +74,9 @@
   }
   </script>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./motion.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="그려보카 소개"><span class="brand-mark" aria-hidden="true"></span>그려보카</a>
@@ -89,7 +90,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">DRAW · REMEMBER · REVIEW</p>
-        <h1 id="intro-heading">단어 하나,<br>나만의 그림 하나.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">단어 하나,</span></span><br><span class="line"><span style="--l:1">나만의 그림 하나.</span></span></h1>
         <p class="hero-copy">그려보카는 영단어를 낙서로 기억하는 학습 앱입니다. 잘 그릴 필요는 없어요. 단어를 보고 떠오른 그림이 나만의 기억 단서가 됩니다.</p>
         <div class="actions">
           <a class="button" href="https://play.google.com/store/apps/details?id=com.worddoodle.app">Google Play 에서 받기</a>
@@ -98,14 +99,21 @@
         </div>
         <p class="age-note">만 14세 이상을 위한 영단어 학습</p>
       </div>
-      <figure class="doodle-card">
-        <div class="doodle-word"><strong lang="en">apple</strong><span>사과</span></div>
+      <figure class="doodle-card doodle-scene">
+        <div class="doodle-word"><strong lang="en">apple</strong><span>사과</span><span class="doodle-review" aria-hidden="true">복습 · 이 그림은?</span></div>
+        <span class="doodle-timer" aria-hidden="true"></span>
         <svg viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-          <path d="M151 70C120 41 74 61 66 101C52 147 84 201 113 207C132 212 143 198 154 201C172 211 193 210 210 189C238 155 248 104 222 77C199 55 172 60 151 70Z" stroke="#24372e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M152 75C149 57 150 41 160 27M161 45C173 19 198 23 211 29C197 51 180 57 162 46" stroke="#24372e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M94 101C85 117 85 140 96 157M204 177L215 161M188 189L205 168" stroke="#8d442a" stroke-width="3" stroke-linecap="round"/>
-          <path d="M55 217C112 222 197 222 242 217" stroke="#d4d9cb" stroke-width="2" stroke-linecap="round"/>
+          <path class="stroke stroke-1" pathLength="1" d="M151 70C120 41 74 61 66 101C52 147 84 201 113 207C132 212 143 198 154 201C172 211 193 210 210 189C238 155 248 104 222 77C199 55 172 60 151 70Z" stroke="#24372e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="stroke stroke-2" pathLength="1" d="M152 75C149 57 150 41 160 27M161 45C173 19 198 23 211 29C197 51 180 57 162 46" stroke="#24372e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="stroke stroke-3" pathLength="1" d="M94 101C85 117 85 140 96 157M204 177L215 161M188 189L205 168" stroke="#8d442a" stroke-width="3" stroke-linecap="round"/>
+          <path class="stroke stroke-4" pathLength="1" d="M55 217C112 222 197 222 242 217" stroke="#d4d9cb" stroke-width="2" stroke-linecap="round"/>
         </svg>
+        <ul class="doodle-quiz" lang="en" aria-hidden="true">
+          <li>banana</li>
+          <li class="pick">apple<span class="doodle-next" lang="ko">1일 뒤</span></li>
+          <li>cup</li>
+          <li>tree</li>
+        </ul>
         <figcaption>단어를 그림으로 기억하는 학습 방식의 예시</figcaption>
       </figure>
     </section>
@@ -114,17 +122,17 @@
       <h2 id="how-heading">읽고, 그리고, 다시 떠올려요.</h2>
       <p class="section-intro">반듯한 그림보다 중요한 건 단어와 연결되는 나만의 생각. 짧은 낙서를 남기고, 복습할 때 다시 만나 보세요.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>단어를 읽고</h3>
           <p>영단어와 뜻을 확인하며 머릿속에 떠오르는 장면을 생각해요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>낙서로 남기고</h3>
           <p>직접 그린 그림으로 단어를 표현해요. 나에게 의미 있는 낙서면 충분해요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>내 그림으로 복습</h3>
           <p>기기에 저장한 그림과 학습기록을 바탕으로 단어를 다시 떠올려요.</p>

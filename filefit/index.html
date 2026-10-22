@@ -61,8 +61,9 @@
   }
   </script>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./motion.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="파일핏 소개"><span class="brand-mark" aria-hidden="true"></span>파일핏</a>
@@ -76,7 +77,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">업로드 전 · 마지막 한 단계</p>
-        <h1 id="intro-heading">파일 준비,<br>가볍게 끝내요.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">파일 준비,</span></span><span class="line"><span style="--l:1">가볍게 끝내요.</span></span></h1>
         <p class="hero-copy">파일핏은 제출할 사진의 용량·형식·크기를 한 번에 맞추는 도구입니다. 정한 KB 이하로 줄이고, 형식을 바꾸고, 여러 장을 PDF 한 개로 묶습니다.</p>
         <div class="actions">
           <a class="button" href="#how-it-works">파일핏 알아보기 <span aria-hidden="true">↓</span></a>
@@ -84,23 +85,32 @@
         </div>
         <p class="age-note">가입 없이, 파일 업로드 없이</p>
       </div>
-      <figure class="doodle-card">
-        <svg viewBox="0 0 300 250" role="img" aria-labelledby="hero-art-title" focusable="false">
-          <title id="hero-art-title">큰 사진이 정해진 용량에 맞게 준비되는 모습</title>
-          <rect x="150" y="42" width="104" height="132" rx="10" fill="#e4eacb" stroke="#536944" stroke-width="3" transform="rotate(12 202 108)"/>
-          <rect x="62" y="36" width="124" height="156" rx="10" fill="#ffffff" stroke="#536944" stroke-width="3" transform="rotate(-8 124 114)"/>
-          <rect x="76" y="54" width="96" height="74" rx="5" fill="#e4eadf" transform="rotate(-8 124 91)"/>
-          <circle cx="152" cy="74" r="10" fill="#d6dea3"/>
-          <path d="M80 122 L108 92 L130 116 L146 102 L170 126 Z" fill="#b8c59e" transform="rotate(-8 124 110)"/>
-          <rect x="80" y="142" width="74" height="6" rx="3" fill="#edf0e9" transform="rotate(-8 117 145)"/>
-          <rect x="80" y="156" width="46" height="6" rx="3" fill="#edf0e9" transform="rotate(-8 103 159)"/>
-          <circle cx="196" cy="176" r="26" fill="#d1e48f" stroke="#f7f8fa" stroke-width="5"/>
-          <path d="M184 176 L193 185 L209 167" stroke="#4f6b34" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <rect x="38" y="186" width="96" height="30" rx="7" fill="#fffef9" stroke="#536944" stroke-width="2.5"/>
-          <text x="86" y="206" text-anchor="middle" font-size="15" font-weight="700" fill="#536944">500 KB</text>
-          <path d="M40 24 L40 14 L50 14 M260 14 L270 14 L270 24 M270 226 L270 236 L260 236 M50 236 L40 236 L40 226" stroke="#8fa06f" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <figure class="doodle-card filefit-fit">
+        <svg viewBox="0 0 300 250" aria-hidden="true" focusable="false">
+          <g class="filefit-back">
+            <rect x="150" y="42" width="104" height="132" rx="10" fill="#e4eacb" stroke="#536944" stroke-width="3" transform="rotate(12 202 108)"/>
+          </g>
+          <g class="filefit-photo">
+            <rect x="62" y="36" width="124" height="156" rx="10" fill="#ffffff" stroke="#536944" stroke-width="3" transform="rotate(-8 124 114)"/>
+            <rect x="76" y="54" width="96" height="74" rx="5" fill="#e4eadf" transform="rotate(-8 124 91)"/>
+            <circle cx="152" cy="74" r="10" fill="#d6dea3"/>
+            <path d="M80 122 L108 92 L130 116 L146 102 L170 126 Z" fill="#b8c59e" transform="rotate(-8 124 110)"/>
+            <rect x="80" y="142" width="74" height="6" rx="3" fill="#edf0e9" transform="rotate(-8 117 145)"/>
+            <rect x="80" y="156" width="46" height="6" rx="3" fill="#edf0e9" transform="rotate(-8 103 159)"/>
+          </g>
+          <g class="filefit-check">
+            <circle cx="196" cy="176" r="26" fill="#d1e48f" stroke="#f7f8fa" stroke-width="5"/>
+            <path d="M184 176 L193 185 L209 167" stroke="#4f6b34" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </g>
+          <g class="filefit-chip">
+            <rect x="38" y="184" width="96" height="36" rx="7" fill="#fffef9" stroke="#536944" stroke-width="2.5"/>
+            <text x="86" y="203" text-anchor="middle" font-size="15" font-weight="700" fill="#536944">500 KB</text>
+            <rect x="50" y="209" width="72" height="4" rx="2" fill="#e4e9dc"/>
+            <rect class="filefit-gauge" x="50" y="209" width="72" height="4" rx="2" fill="#536944"/>
+          </g>
+          <path class="filefit-frame" d="M40 24 L40 14 L50 14 M260 14 L270 14 L270 24 M270 226 L270 236 L260 236 M50 236 L40 236 L40 226" stroke="#8fa06f" stroke-width="3" stroke-linecap="round" fill="none"/>
         </svg>
-        <figcaption>정한 용량 이하로 사진을 준비하는 방식의 예시</figcaption>
+        <figcaption>큰 사진이 정한 용량(500 KB) 이하로 줄어 틀 안에 맞춰지는 예시</figcaption>
       </figure>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-heading">
@@ -108,17 +118,17 @@
       <h2 id="how-heading">조건을 정하고, 한 번에 맞춰요.</h2>
       <p class="section-intro">몇 번씩 저장하며 용량을 맞춰 볼 필요가 없습니다. 상한을 입력하면 그 이하로 만들어 실제 결과를 보여줍니다.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>사진을 고르고</h3>
           <p>JPG·PNG·WebP 사진을 한 번에 최대 10개까지 선택해요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>조건을 정하고</h3>
           <p>용량 상한, 바꿀 형식, 최대 가로·세로 크기를 정해요. 자주 쓰는 조건은 저장해 두고 다시 써요.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>확인하고 저장</h3>
           <p>원본과 결과를 비교하고 실제 용량을 확인한 뒤 저장해요. 여러 장은 PDF 한 개로 묶을 수도 있어요.</p>

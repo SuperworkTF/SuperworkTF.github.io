@@ -74,8 +74,9 @@
   }
   </script>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./motion.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="우르르 소개"><span class="brand-mark" aria-hidden="true"></span>우르르</a>
@@ -90,7 +91,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">MY SCHOOL · 20 SECONDS · OUR SCORE</p>
-        <h1 id="intro-heading">내 학교를 걸고,<br>20초.</h1>
+        <h1 id="intro-heading"><span class="line"><span style="--l:0">내 학교를 걸고,</span></span><span class="line"><span style="--l:1">20초.</span></span></h1>
         <p class="hero-copy">우르르는 내가 고른 소속(학교·학과)을 걸고 다른 학교와 겨루는 미니게임입니다. 한 판은 20초 안팎, 이긴 판은 우리 학교 점수가 됩니다.</p>
         <div class="actions">
           <a class="button" href="https://play.google.com/store/apps/details?id=com.ururu.app">Google Play 에서 받기</a>
@@ -99,21 +100,23 @@
         </div>
         <p class="age-note">만 15세 이상 · 인앱 결제와 광고가 없습니다</p>
       </div>
-      <figure class="doodle-card">
+      <figure class="doodle-card ururu-match" aria-label="3초 카운트다운 뒤 두 소속이 한 판을 겨루고, 판이 끝나면 이긴 쪽에 표시가 붙는 장면 (예시)">
         <p class="tape">잇기</p>
         <div class="hero-board">
           <div class="side plate tilt-a">
             <span class="school">가천대</span>
             <span class="dept">AI인문대학</span>
             <span class="tally">22</span>
+            <span class="ururu-win" aria-hidden="true">이긴 판</span>
           </div>
-          <span class="vs" aria-hidden="true">VS</span>
+          <span class="vs" aria-hidden="true"><span class="ururu-vs">VS</span><span class="ururu-count"><i>3</i><i>2</i><i>1</i></span></span>
           <div class="side plate rival tilt-b">
             <span class="school">연세대</span>
             <span class="dept">&nbsp;</span>
             <span class="tally">3</span>
           </div>
         </div>
+        <div class="ururu-clock" aria-hidden="true"><span class="ururu-clock-bar"><i></i></span><span class="ururu-clock-num">20초</span></div>
         <figcaption>한 판이 끝나면 두 소속의 결과가 이렇게 섭니다 (예시)</figcaption>
       </figure>
     </section>
@@ -122,17 +125,17 @@
       <h2 id="how-heading">고르고, 겨루고, 보태요.</h2>
       <p class="section-intro">실력을 증명하는 자리가 아니라 내 소속을 한 칸 올리는 자리입니다. 게임은 20종이고, 한 판은 5초에서 20초 사이에 끝납니다.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>소속을 고르고</h3>
           <p>교육부가 공개한 명부에서 내 학교와 학과를 고릅니다. 학적을 확인하지 않는 자기 신고입니다.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>20초 겨루고</h3>
           <p>다른 학교의 누군가와 미니게임 한 판. 이번 시즌 상대 학교는 순위표에서 직접 고를 수도 있습니다.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>우리 학교에 보태요</h3>
           <p>이긴 판이 소속 점수가 됩니다. 시즌은 2주마다 서고 상대가 바뀝니다.</p>

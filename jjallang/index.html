@@ -74,8 +74,9 @@
   }
   </script>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./motion.css">
 </head>
-<body>
+<body class="motion">
   <a class="skip-link" href="#main">본문 바로가기</a>
   <header class="site-header shell">
     <a class="brand" href="./" aria-label="짤랑 소개"><span class="brand-mark" aria-hidden="true"></span>짤랑</a>
@@ -89,7 +90,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <div>
         <p class="eyebrow">출근 · 퇴근 · 정산</p>
-        <h1 id="intro-heading">버튼 하나 누르면,<br>오늘 번 돈이 계산됩니다.</h1>
+        <h1 id="intro-heading"><span class="hl"><span style="--l:0">버튼 하나 누르면,</span></span><span class="hl"><span style="--l:1">오늘 번 돈이 계산됩니다.</span></span></h1>
         <p class="hero-copy">짤랑은 시급제 알바와 교대근무자를 위한 근무 기록 앱입니다.
           야간·연장·휴일·주휴수당을 근로기준법 기준으로 대신 계산하고, 퇴근하면 근로명세서 한 장으로 보여줍니다.</p>
         <div class="actions">
@@ -99,7 +100,7 @@
         </div>
         <p class="age-note">회원가입이 없습니다 · 기록은 기기에만 저장됩니다 · 표시 금액은 세전 기준입니다</p>
       </div>
-      <figure class="receipt" aria-label="앱이 만드는 근로 영수증의 예시">
+      <figure class="receipt jjallang-slip" aria-label="근로 영수증에 기본·야간 가산·연장 가산이 한 줄씩 찍히고 오늘 합계가 나온 뒤 잘라 보내는 장면 (예시)">
         <div class="receipt-head" aria-hidden="true">짤랑 근로 영수증</div>
         <p class="receipt-sub">00:00 출근 · 10시간 42분째</p>
         <div class="rule" aria-hidden="true"></div>
@@ -120,17 +121,17 @@
       <h2 id="how-heading">누르고, 잊고, 받아 보세요.</h2>
       <p class="section-intro">근무 중에 앱을 들여다볼 필요가 없습니다. 출근을 누른 뒤에는 홈 화면 위젯이 대신 셉니다.</p>
       <ol class="steps">
-        <li class="step">
+        <li class="step" style="--i:0">
           <span class="step-number" aria-hidden="true">01</span>
           <h3>출근을 누르고</h3>
           <p>일터를 한 번 만들어 두면 그다음부터는 버튼 하나입니다. 홈 화면 위젯을 가로로 넓게 두면 위젯에서도 바로 누를 수 있습니다.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:1">
           <span class="step-number" aria-hidden="true">02</span>
           <h3>위젯이 세는 동안</h3>
           <p>홈 화면 위젯에 오늘 번 돈이 1~2분마다 쌓입니다. 앱을 열지 않아도 됩니다.</p>
         </li>
-        <li class="step">
+        <li class="step" style="--i:2">
           <span class="step-number" aria-hidden="true">03</span>
           <h3>퇴근하면 명세서</h3>
           <p>기본·야간·연장·휴일이 항목별로 갈린 근로명세서가 나옵니다. 합계와 가산 내역은 조항 번호를 붙인 글로 보낼 수 있습니다.</p>

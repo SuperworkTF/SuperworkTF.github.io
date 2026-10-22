@@ -1,0 +1,115 @@
+/* 우르르 소개 첫 화면의 움직임 — 이 페이지(ururu/index.html)만 싣는다. 정책 페이지는 styles.css 만 쓴다.
+   오른쪽 대전판이 한 판을 12초에 돈다: 3·2·1 카운트다운 → 20초 막대가 줄며 두 소속의 점수가 오른다 → 이긴 쪽에 「이긴 판」.
+   styles.css 의 결을 따라 흐림을 쓰지 않는다. 뒤의 장식도 칠한 색면이다. 스크립트 없이 CSS 로만 움직인다. */
+:root:has(> body.motion), .motion { overflow-x: clip; }
+
+/* ── 첫 화면 글: 차례로 떠오른다 ── */
+.motion .hero { position: relative; isolation: isolate; }
+.motion .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+.motion .hero h1 .line > span { display: inline-block; animation: ururu-rise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(.12s + var(--l) * .14s); }
+.motion .hero .eyebrow, .motion .hero-copy, .motion .hero .actions, .motion .hero .age-note { animation: ururu-fade .8s ease both; }
+.motion .hero-copy { animation-delay: .45s; }
+.motion .hero .actions { animation-delay: .6s; }
+.motion .hero .age-note { animation-delay: .75s; }
+@keyframes ururu-rise { from { transform: translateY(105%); } }
+@keyframes ururu-fade { from { opacity: 0; transform: translateY(14px); } }
+
+/* ── 첫 화면 뒤: 빛 대신 어긋나게 깔린 두 장의 색면이 천천히 움직인다 ── */
+.motion .hero::before, .motion .hero::after {
+  content: ""; position: absolute; z-index: -1; pointer-events: none; border-radius: .6rem;
+}
+.motion .hero::before { width: 15rem; height: 11rem; right: 2%; top: 9%; background: var(--wash); rotate: -7deg;
+  animation: ururu-drift-a 13s ease-in-out infinite alternate; }
+.motion .hero::after { width: 9rem; height: 7rem; right: 34%; bottom: 8%; background: color-mix(in srgb, var(--rival) 16%, var(--paper)); rotate: 9deg;
+  animation: ururu-drift-b 11s ease-in-out infinite alternate; }
+@keyframes ururu-drift-a { to { translate: -2.5rem 1.5rem; rotate: -2deg; } }
+@keyframes ururu-drift-b { to { translate: 2rem -1.2rem; rotate: 3deg; } }
+
+/* ── 대전판 한 판 (12초) ──
+   0~3초 카운트다운 · 3~9초 겨루기(20초 막대가 준다) · 9초 판 끝, 이긴 쪽에 표시 · 11.5초부터 다음 판 준비 */
+.ururu-match { --round: 12s; animation: ururu-float 6s ease-in-out infinite alternate; }
+@keyframes ururu-float { to { translate: 0 -8px; } }
+
+/* VS 자리에서 3·2·1 이 차례로 튀어나온다. 멈춰 있을 때는 VS 만 선다 */
+.ururu-match .vs { display: grid; place-items: center; }
+.ururu-match .vs > * { grid-area: 1 / 1; }
+.ururu-count { display: grid; place-items: center; }
+.ururu-count i { grid-area: 1 / 1; font-style: normal; font-size: 1.7rem; font-weight: 800; color: var(--accent); opacity: 0; }
+.motion .ururu-count i { animation: ururu-tick var(--round) linear infinite both; }
+.motion .ururu-count i:nth-child(2) { animation-delay: 1s; }
+.motion .ururu-count i:nth-child(3) { animation-delay: 2s; }
+@keyframes ururu-tick {
+  0% { opacity: 0; scale: 1.8; }
+  1.5% { opacity: 1; scale: 1; }
+  6.5% { opacity: 1; scale: 1; }
+  8.3%, 100% { opacity: 0; scale: .6; }
+}
+.motion .ururu-vs { animation: ururu-vs var(--round) ease infinite; }
+@keyframes ururu-vs { 0%, 24% { opacity: 0; scale: .4; } 27% { opacity: 1; scale: 1.25; } 30%, 100% { opacity: 1; scale: 1; } }
+
+/* 점수: 0 에서 판이 끝날 때의 수까지 오른다. 실제 글자(22·3)는 그대로 두고 그 위에 세는 수를 겹친다.
+   @property 를 모르는 브라우저에서는 수가 한 번에 바뀔 뿐 끝 장면은 같다 */
+@property --ururu-n { syntax: "<integer>"; inherits: true; initial-value: 0; }
+.motion .ururu-match .tally { position: relative; color: transparent; }
+.motion .ururu-match .tally::after {
+  content: counter(ururu-score); counter-reset: ururu-score var(--ururu-n);
+  position: absolute; left: 0; top: 0; color: #FFF8EC;
+}
+.motion .ururu-match .rival .tally::after { color: #0B2B2D; }
+.motion .ururu-match .side:not(.rival) .tally { --ururu-n: 22; animation: ururu-score-a var(--round) linear infinite; }
+.motion .ururu-match .rival .tally { --ururu-n: 3; animation: ururu-score-b var(--round) linear infinite; }
+@keyframes ururu-score-a { 0%, 25% { --ururu-n: 0; } 75%, 96% { --ururu-n: 22; } 100% { --ururu-n: 0; } }
+@keyframes ururu-score-b { 0%, 35% { --ururu-n: 0; } 75%, 96% { --ururu-n: 3; } 100% { --ururu-n: 0; } }
+
+/* 판이 끝나면 이긴 쪽이 살짝 들리고 「이긴 판」 딱지가 붙는다 */
+.ururu-win {
+  position: absolute; right: -.7rem; top: -.9rem; padding: .1rem .55rem; background: var(--sheet); color: var(--ink);
+  border: 1px solid var(--ink); font-size: .74rem; font-weight: 800; line-height: 1.6; white-space: nowrap; rotate: 6deg;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.motion .ururu-win { animation: ururu-stamp var(--round) ease infinite; }
+@keyframes ururu-stamp {
+  0%, 75% { opacity: 0; scale: 1.7; }
+  77.5% { opacity: 1; scale: .92; }
+  79%, 94% { opacity: 1; scale: 1; }
+  97%, 100% { opacity: 0; scale: 1; }
+}
+.motion .ururu-match .side:not(.rival) { animation: ururu-lift var(--round) ease infinite; }
+.motion .ururu-match .rival { animation: ururu-sink var(--round) ease infinite; }
+@keyframes ururu-lift { 0%, 75%, 97%, 100% { translate: 0 0; scale: 1; } 79%, 94% { translate: 0 -6px; scale: 1.04; } }
+@keyframes ururu-sink { 0%, 75%, 97%, 100% { translate: 0 0; } 79%, 94% { translate: 0 3px; } }
+
+/* 20초 막대: 카운트다운 동안 가득 찼다가 겨루는 동안 줄어든다. 멈춰 있을 때는 가득 찬 막대 */
+.ururu-clock { display: flex; align-items: center; gap: .7rem; margin-top: 1.3rem; }
+.ururu-clock-bar { flex: 1; height: .55rem; background: var(--line); overflow: hidden; }
+.ururu-clock-bar i { display: block; height: 100%; background: var(--ink); transform-origin: left; }
+.ururu-clock-num { font-size: .78rem; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; }
+.motion .ururu-clock-bar i { animation: ururu-time var(--round) linear infinite; }
+@keyframes ururu-time { 0%, 25% { scale: 1 1; background: var(--ink); } 65% { background: var(--ink); } 75% { scale: 0 1; background: var(--accent); } 96% { scale: 0 1; } 100% { scale: 1 1; background: var(--ink); } }
+.ururu-match figcaption { margin-top: 1rem; }
+
+/* ── 한 판이 흐르는 방식: 세 단계에 차례로 불이 들어온다 ── */
+.motion #how-it-works .step { --slot: 2.4s; position: relative; overflow: hidden; animation: ururu-step calc(var(--slot) * 3) ease infinite; animation-delay: calc(var(--i) * var(--slot)); }
+.motion #how-it-works .step::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0); animation: ururu-bar calc(var(--slot) * 3) linear infinite; animation-delay: calc(var(--i) * var(--slot));
+}
+@keyframes ururu-step { 0%, 33% { border-color: var(--ink); box-shadow: 5px 5px 0 var(--wash); } 40%, 100% { border-color: var(--line); box-shadow: none; } }
+@keyframes ururu-bar { 0% { transform: scaleX(0); } 33% { transform: scaleX(1); opacity: 1; } 38%, 100% { transform: scaleX(1); opacity: 0; } }
+
+/* ── 아래 구역은 화면에 들어올 때 떠오른다 (스크롤 타임라인을 아는 브라우저만) ── */
+@supports (animation-timeline: view()) {
+  .motion .section, .motion .local-note { animation: ururu-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+@media (max-width: 700px) {
+  .motion .hero::before { width: 11rem; height: 8rem; top: auto; bottom: 30%; right: -2rem; }
+  .motion .hero::after { right: auto; left: -1.5rem; bottom: 4%; }
+}
+
+/* 동작 줄이기 — 모두 멈추고 판이 끝난 장면(VS·점수·이긴 판·가득 찬 막대)이 선다 */
+@media (prefers-reduced-motion: reduce) {
+  .motion *, .motion *::before, .motion *::after, .motion .hero::before, .motion .hero::after { animation: none !important; }
+  .motion .ururu-match .tally { color: inherit; }
+  .motion .ururu-match .tally::after { content: none; }
+}
