@@ -1,0 +1,68 @@
+/* ── 멀티 채널 업로드: 영상 하나에서 선이 네 갈래로 뻗고, 채널마다 막대가 차오른 뒤 「완료」가 켜진다 ──
+   멈춘 화면(동작 줄이기)에는 네 채널이 모두 완료된 마지막 장면이 서 있다. 플랫폼 로고는 쓰지 않고 이름만 적는다. */
+.scene-multipost { --loop: 9s; --gap: .55s; }
+.scene-multipost .mp-stage {
+  position: relative; aspect-ratio: 1.12; display: flex; flex-direction: column; padding: 1.05rem 1.1rem;
+  background: linear-gradient(165deg, color-mix(in srgb, var(--accent) 10%, var(--sheet)), var(--sheet) 60%);
+}
+
+/* 올릴 영상 한 개 */
+.scene-multipost .mp-source {
+  display: flex; align-items: center; gap: .7rem; padding: .6rem .7rem; border-radius: .9rem; background: var(--sheet);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); box-shadow: 0 10px 20px -16px var(--accent);
+  animation: multipost-source var(--loop) ease infinite;
+}
+.scene-multipost .mp-thumb { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .6rem; background: var(--accent); display: grid; place-items: center; }
+.scene-multipost .mp-thumb svg { width: 1.5rem; height: 1.5rem; fill: #fff; }
+.scene-multipost .mp-file { display: grid; gap: .05rem; min-width: 0; flex: 1; }
+.scene-multipost .mp-file b { font-size: .92rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.scene-multipost .mp-file span { font-size: .74rem; color: var(--muted); }
+.scene-multipost .mp-go {
+  flex: none; padding: .3rem .7rem; border-radius: 99px; background: var(--accent); color: #fff; font-size: .76rem; font-weight: 800;
+  animation: multipost-go var(--loop) ease infinite;
+}
+@keyframes multipost-source { 0% { opacity: 0; transform: translateY(-.6rem); } 6%, 100% { opacity: 1; transform: none; } }
+@keyframes multipost-go { 0%, 8% { transform: scale(1); } 11% { transform: scale(.88); } 15%, 100% { transform: scale(1); } }
+
+/* 네 갈래로 뻗는 선 */
+.scene-multipost .mp-wires { width: 100%; height: 2.4rem; flex: none; overflow: visible; animation: multipost-wire var(--loop) ease-out infinite; }
+.scene-multipost .mp-wires path { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+/* 선은 위에서 아래로 드러난다 (non-scaling-stroke 와 점선 길이 계산이 어긋나 clip-path 로 그린다) */
+@keyframes multipost-wire { 0%, 12% { clip-path: inset(-10% -2% 110% -2%); } 24%, 100% { clip-path: inset(-10% -2% -10% -2%); } }
+
+/* 채널마다 막대가 차오르고 완료가 켜진다 */
+.scene-multipost .mp-channels { list-style: none; margin: 0; padding: 0; flex: 1; display: grid; gap: .45rem; align-content: center; }
+.scene-multipost .mp-channels li {
+  display: grid; grid-template-columns: 5.2rem 1fr 3.6rem; align-items: center; gap: .6rem; padding: .45rem .65rem;
+  border-radius: .7rem; background: var(--sheet); border: 1px solid var(--line);
+  animation: multipost-row var(--loop) ease infinite; animation-delay: calc(var(--i) * var(--gap));
+}
+.scene-multipost .mp-channels b { font-size: .84rem; color: var(--ink); white-space: nowrap; }
+.scene-multipost .mp-bar { height: .45rem; border-radius: 99px; background: var(--wash); overflow: hidden; }
+.scene-multipost .mp-bar i {
+  display: block; height: 100%; border-radius: 99px; background: var(--accent); transform-origin: left;
+  animation: multipost-fill var(--loop) cubic-bezier(.4, 0, .2, 1) infinite; animation-delay: calc(var(--i) * var(--gap));
+}
+.scene-multipost .mp-state { position: relative; height: 1.3rem; font-size: .72rem; font-weight: 800; text-align: right; }
+.scene-multipost .mp-state em { position: absolute; inset: 0; font-style: normal; line-height: 1.3rem; white-space: nowrap; }
+.scene-multipost .mp-state .ing { color: var(--muted); opacity: 0; animation: multipost-ing var(--loop) ease infinite; animation-delay: calc(var(--i) * var(--gap)); }
+.scene-multipost .mp-state .done { color: var(--accent); animation: multipost-done var(--loop) ease infinite; animation-delay: calc(var(--i) * var(--gap)); }
+.scene-multipost .mp-state .done::before { content: "✓ "; }
+@keyframes multipost-row { 0%, 20% { opacity: .35; border-color: var(--line); } 26%, 58% { opacity: 1; border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); } 64%, 100% { opacity: 1; border-color: var(--line); } }
+@keyframes multipost-fill { 0%, 24% { transform: scaleX(0); } 56%, 100% { transform: scaleX(1); } }
+@keyframes multipost-ing { 0%, 24% { opacity: 0; } 28%, 54% { opacity: 1; } 58%, 100% { opacity: 0; } }
+@keyframes multipost-done { 0%, 56% { opacity: 0; transform: scale(.6); } 61% { opacity: 1; transform: scale(1.15); } 66%, 100% { opacity: 1; transform: none; } }
+
+/* 마지막에 뜨는 결과 */
+.scene-multipost .mp-result {
+  margin: .6rem 0 0; align-self: center; padding: .3rem .8rem; border-radius: 99px; background: var(--accent); color: #fff;
+  font-size: .78rem; font-weight: 800; box-shadow: 0 8px 16px -10px var(--accent); animation: multipost-result var(--loop) ease infinite;
+}
+.scene-multipost .mp-result span { opacity: .85; font-weight: 700; }
+@keyframes multipost-result { 0%, 82% { opacity: 0; transform: scale(.5); } 86% { opacity: 1; transform: scale(1.1); } 89%, 100% { opacity: 1; transform: none; } }
+
+@media (max-width: 700px) {
+  .scene-multipost .mp-stage { aspect-ratio: .95; padding: .85rem; }
+  .scene-multipost .mp-channels li { grid-template-columns: 4.6rem 1fr 3.3rem; gap: .45rem; padding: .4rem .55rem; }
+  .scene-multipost .mp-channels b { font-size: .78rem; }
+}

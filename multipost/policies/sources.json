@@ -1,0 +1,27 @@
+{
+  "app": {
+    "dir": "multipost",
+    "brand": "멀티 채널 업로드",
+    "theme_color": "#f5f6fb"
+  },
+  "privacy": {
+    "public_url": "https://superwork.ai.kr/multipost/privacy/",
+    "title": "개인정보처리방침",
+    "editions": [
+      {
+        "path": "privacy",
+        "source": "privacy"
+      }
+    ]
+  },
+  "terms": {
+    "public_url": "https://superwork.ai.kr/multipost/terms/",
+    "title": "서비스 이용약관",
+    "editions": [
+      {
+        "path": "terms",
+        "source": "terms"
+      }
+    ]
+  }
+}
